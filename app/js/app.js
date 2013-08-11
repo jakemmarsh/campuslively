@@ -7,6 +7,7 @@ define([
     'angular',
     'angular-sanitize',
     'angular-ui-router',
+    './config',
     './controllers/index',
     './directives/index',
     './filters/index',
@@ -15,6 +16,7 @@ define([
     'use strict';
 
     return ng.module('app', [
+        'app.constants',
         'app.services',
         'app.controllers',
         'app.filters',
