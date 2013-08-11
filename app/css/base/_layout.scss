@@ -1,0 +1,301 @@
+#main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    min-width: 1000px;
+    height: 100%;
+    min-height: 100%;
+    padding-left: 100px;
+    background: #f9f8f8;
+    overflow-y: scroll;
+    @extend .table;
+}
+
+#content {
+    background: #f9f8f8;
+    width: 100%;
+    height: auto;
+    z-index: 988;
+    padding: $half-space;
+    clear: both;
+    z-index: 2;
+}
+
+    #content > #inner {
+        margin: 0 auto;
+        height: 100%;
+        position: relative;
+    }
+
+.center_main {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background: #f0f0f0 url('../img/bg.png') repeat;
+    @extend .td;
+    vertical-align: middle;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.island {
+    padding: $full-space;
+}
+
+.islet {
+    padding: $half-space;
+}
+
+.soft {
+    padding: $full-space;
+}
+
+.soft--top {
+    padding-top: $full-space;
+}
+
+.soft--bottom {
+    padding-bottom: $full-space;
+}
+
+.soft--left {
+    padding-left: $full-space;
+}
+
+.soft--right {
+    padding-right: $full-space;
+}
+
+.soft--ends {
+    padding-top: $full-space;
+    padding-bottom: $full-space;
+}
+
+.soft--sides {
+    padding-left: $full-space;
+    padding-right: $full-space;
+}
+
+.soft-half {
+    padding: $half-space;
+}
+
+.soft-half--top {
+    padding-top: $half-space;
+}
+
+.soft-half--bottom {
+    padding-bottom: $half-space;
+}
+
+.soft-half--left {
+    padding-left: $half-space;
+}
+
+.soft-half--right {
+    padding-right: $half-space;
+}
+
+.soft-half--ends {
+    padding-top: $half-space;
+    padding-bottom: $half-space;
+}
+
+.soft-half--sides {
+    padding-left: $half-space;
+    padding-right: $half-space;
+}
+
+.hard {
+    padding: 0 !important;
+}
+
+.hard--top {
+    padding-top: 0 !important;
+}
+
+.hard--bottom {
+    padding-bottom: 0 !important;
+}
+
+.hard--left {
+    padding-left: 0 !important;
+}
+
+.hard--right {
+    padding-right: 0 !important;
+}
+
+.hard--ends {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.hard--sides {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.nudge {
+    margin: $full-space;
+}
+
+.nudge--top {
+    margin-top: $full-space;
+}
+
+.nudge--bottom {
+    margin-bottom: $full-space;
+}
+
+.nudge--left {
+    margin-left: $full-space;
+}
+
+.nudge--right {
+    margin-right: $full-space;
+}
+
+.nudge--ends {
+    margin-top: $full-space;
+    margin-bottom: $full-space;
+}
+
+.nudge--sides {
+    margin-left: $full-space;
+    margin-right: $full-space;
+}
+
+.nudge-half {
+    margin: $half-space;
+}
+
+.nudge-half--top {
+    margin-top: $half-space;
+}
+
+.nudge-half--bottom {
+    margin-bottom: $half-space;
+}
+
+.nudge-half--left {
+    margin-left: $half-space;
+}
+
+.nudge-half--right {
+    margin-right: $half-space;
+}
+
+.nudge-half--ends {
+    margin-top: $half-space;
+    margin-bottom: $half-space;
+}
+
+.nudge-half--sides {
+    margin-left: $half-space;
+    margin-right: $half-space;
+}
+
+.flush {
+    margin: 0 !important;
+}
+
+.flush--top {
+    margin-top: 0 !important;
+}
+
+.flush--bottom {
+    margin-bottom: 0 !important;
+}
+
+.flush--left {
+    margin-left: 0 !important;
+}
+
+.flush--right {
+    margin-right: 0 !important;
+}
+
+.flush--ends {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.flush--sides {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.vertical-align--middle {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.one-whole {
+    width: 100%;
+}
+
+.one-half {
+    width: 50%;
+}
+
+.one-third {
+    width: 33.33%;
+}
+
+.two-thirds {
+    width: 66.66%;
+}
+
+.one-fourth {
+    width: 25%;
+}
+
+.two-fourths {
+    @extend .one-half;
+}
+
+.three-fourths {
+    width: 75%;
+}
+
+.table {
+    display: table;
+}
+
+.td {
+    display: table-cell;
+}
+
+.tr {
+    display: table-row;
+}
