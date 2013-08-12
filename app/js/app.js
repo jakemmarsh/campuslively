@@ -1,8 +1,3 @@
-/**
- * loads sub modules and wraps them up into the main module
- * this should be used for top-level module definitions only
- * (in other words... you probably don't need to do stuff here)
- */
 define([
     'angular',
     'angular-sanitize',

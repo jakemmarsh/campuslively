@@ -1,7 +1,6 @@
 /**
  * Defines the main routes in the application.
  */
-
 define(['./app', './config'], function (app) {
     'use strict';
     app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {

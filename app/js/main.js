@@ -1,4 +1,4 @@
-/**
+/*
  * configure RequireJS
  * prefer named modules to long paths, especially for version mgt
  * or 3rd party libraries
@@ -6,7 +6,6 @@
 require.config({
 
     paths: {
-        /*named modules for src*/
         'lib': './lib',
         'domReady': './lib/requirejs/domReady',
         'angular': './lib/angular/angular.min',
@@ -15,10 +14,6 @@ require.config({
         'angular-ui-router' : './lib/angular/angular-ui-router.min'
     },
 
-    /**
-     * for libs that either do not support AMD out of the box, or
-     * require some fine tuning to dependency mgt'
-     */
     shim: {
         'angular': {
             exports: 'angular',

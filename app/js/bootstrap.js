@@ -6,17 +6,18 @@ define([
     'require',
     'angular',
     'app',
-    'routes',
-    'run'
-], function (require, ng) {
+    'routes'
+], function (require, ng, app) {
     'use strict';
 
-    /*place operations that need to initialize prior to app start here
-     * using the `run` function on the top-level module
-     */
+    app.run(function ($rootScope) {
+        // change page title based on state
+        $rootScope.$on('$stateChangeSuccess', function(event, toState) {
+            $rootScope.pageTitle = toState.title;
+        });
+    });
 
     require(['domReady!'], function (document) {
-        /* everything is loaded...go! */
         return ng.bootstrap(document, ['app']);
     });
 });
