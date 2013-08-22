@@ -5,7 +5,7 @@ var categorySchema = new mongoose.Schema({
     	type: String,
     	required: true,
     	unique: true
-    }
+    },
     // TODO: should this exist?
     subscribers: Number
 });

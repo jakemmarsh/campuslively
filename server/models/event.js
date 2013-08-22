@@ -7,17 +7,17 @@ var eventSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
-    }
+    },
     location: {
         // TODO: should this be a string?
         type: String,
         required: true
-    }
+    },
     description: String,
     start: {
         type: String,
         required: true
-    }
+    },
     end: String,
     categories: [Category],
     creator: {
@@ -32,7 +32,7 @@ var eventSchema = new mongoose.Schema({
     attending: {
         type: Number,
         required: true
-    }
+    },
     comments: [Comment]
 });
 
