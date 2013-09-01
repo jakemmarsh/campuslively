@@ -10,6 +10,8 @@
 
 @import "vars";
 
+@import "font-awesome/font-awesome";
+
 /**
  * Base Styles
  */
@@ -32,3 +34,4 @@
 /**
  * Page-Specific Styles
  */
+ @import "pages/index";
