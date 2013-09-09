@@ -4,15 +4,14 @@ var path     = require('path'),
     mongoose = require('mongoose'),
     routes   = require(path.join(__dirname, 'routes'));
 
-var dbusr = 'jakemmarsh',
-    dbpw  = 'kenneth5030',
-    db    = 'app16713328';
+// var dbusr = 'jakemmarsh',
+//     dbpw  = 'kenneth5030',
+//     db    = 'app16713328';
 
 
-mongoose.connect('mongodb://'+dbusr+':'+dbpw+'@dharma.mongohq.com:10004/'+db);
+// mongoose.connect('mongodb://'+dbusr+':'+dbpw+'@dharma.mongohq.com:10004/'+db);
 
-mongoose.set('debug', true);
-
+// mongoose.set('debug', true);
 
 app.configure(function() {
     app.use(express.logger('dev'));
