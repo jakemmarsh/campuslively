@@ -9,7 +9,6 @@ require.config({
         'lib': './lib',
         'domReady': './lib/requirejs/domReady',
         'angular': './lib/angular/angular.min',
-        'angular-resource': './lib/angular/angular-resource.min',
         'angular-sanitize' : './lib/angular/angular-sanitize.min',
         'angular-ui-router' : './lib/angular/angular-ui-router.min'
     },
@@ -18,9 +17,6 @@ require.config({
         'angular': {
             exports: 'angular',
             deps: []
-        },
-        'angular-resource': {
-            deps: ['angular']
         },
         'angular-sanitize': {
             deps: ['angular']
