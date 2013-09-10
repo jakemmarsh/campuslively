@@ -1,0 +1,42 @@
+#sidebar {
+	width: 100px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	background: $dark-grey;
+}
+
+	#sidebar ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		-webkit-padding-start: 0px;
+		@extend .table;
+		@extend .full-width;
+		@extend .full-height;
+	}
+
+		#sidebar ul li {
+			@extend .full-width;
+			height: 100px;
+			margin: 0;
+			background: $dark-grey;
+			@extend .td;
+			vertical-align: middle;
+			@extend .text-center;
+		}
+
+			#sidebar ul li.active {
+				background: $light-grey;
+			}
+
+			#sidebar ul li.post {
+				background: $highlight;
+			}
+
+			@sidebar ul li.logout {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
