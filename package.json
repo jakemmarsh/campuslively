@@ -1,12 +1,12 @@
 {
-  "name": "Event-app",
+  "name": "Campuslively",
   "version": "0.0.1",
   "author": "Jake Marsh",
-  "description": "The source code for new event app",
+  "description": "Source code for Campuslively",
   "main": "./server/server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jakemmarsh/events.git"
+    "url": "https://github.com/jakemmarsh/campuslively.git"
   },
   "dependencies" : {
     "mongoose" :  ">=3.6.x",
