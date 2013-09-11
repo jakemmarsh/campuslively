@@ -34,15 +34,15 @@
 					color: $dark-grey;
 				}
 
-			.sidebar ul li.post {
+			.sidebar ul li.highlight {
 				background: $highlight;
 			}
 
-				.sidebar ul li.post.active {
+				.sidebar ul li.highlight.active {
 					background: $white;
 				}
 
-					.sidebar ul li.post.active .link {
+					.sidebar ul li.highlight.active .link {
 						color: $highlight;
 					}
 

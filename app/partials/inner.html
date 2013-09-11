@@ -1,6 +1,30 @@
 <nav class="sidebar">
-	<ul>
-		<li class="post" data-ng-class="{true:'active', false:''}[getClass('/post')]">
+	<ul data-ng-show="getClass('/login')">
+		<li class="highlight active">
+			<div class="link">
+				<i class="icon-signin"></i>
+				Login
+			</div>
+		</li>
+	</ul>
+	<ul data-ng-show="getClass('/register')">
+		<li class="highlight active">
+			<div class="link">
+				<i class="icon-plus"></i>
+				Register
+			</div>
+		</li>
+	</ul>
+	<ul data-ng-show="getClass('/forgot')">
+		<li class="highlight active">
+			<div class="link">
+				<i class="icon-question"></i>
+				Forgot
+			</div>
+		</li>
+	</ul>
+	<ul data-ng-hide="getClass('/login') || getClass('/register') || getClass('/forgot')">
+		<li class="highlight" data-ng-class="{true:'active', false:''}[getClass('/post')]">
 			<a href="/post" class="link">
 				<i class="icon-plus"></i>
 				Post
