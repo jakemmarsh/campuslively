@@ -38,6 +38,14 @@
 				background: $highlight;
 			}
 
+				.sidebar ul li.post.active {
+					background: $white;
+				}
+
+					.sidebar ul li.post.active .link {
+						color: $highlight;
+					}
+
 			.sidebar ul li.logout {
 				position: absolute;
 				bottom: 0;
