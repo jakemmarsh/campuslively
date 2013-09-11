@@ -57,6 +57,12 @@ define(['./app'], function (app) {
             controller: 'eventCtrl',
             title: 'Event' // TODO: GET ACTUAL NAME OF CURRENT EVENT
         })
+        .state('inner.post', {
+            url: '/post',
+            templateUrl: '/partials/post.html',
+            controller: 'postCtrl',
+            title: 'Post An Event'
+        })
         .state('inner.settings', {
             url: '/settings',
             templateUrl: '/partials/settings.html',

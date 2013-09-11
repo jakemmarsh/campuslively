@@ -12,6 +12,7 @@ define([
     'controllers/feed-ctrl',
     'controllers/events-ctrl',
     'controllers/event-ctrl',
+    'controllers/post-ctrl',
     'controllers/calendar-ctrl',
     'controllers/contact-ctrl'
 ], function () {});
