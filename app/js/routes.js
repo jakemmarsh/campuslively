@@ -10,7 +10,6 @@ define(['./app'], function (app) {
         .state('index', {
             url: '/',
             templateUrl: '/partials/home.html',
-            controller: 'homeCtrl',
             title: 'Home'
         })
         .state('inner', {

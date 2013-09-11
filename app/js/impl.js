@@ -4,6 +4,14 @@
  * but implementations' `define`s placed elsewhere void the warranty
  */
 define([
-    'controllers/home-ctrl',
-    'controllers/login-ctrl'
+    'controllers/login-ctrl',
+    'controllers/register-ctrl',
+    'controllers/forgot-ctrl',
+    'controllers/settings-ctrl',
+    'controllers/profile-ctrl',
+    'controllers/feed-ctrl',
+    'controllers/events-ctrl',
+    'controllers/event-ctrl',
+    'controllers/calendar-ctrl',
+    'controllers/contact-ctrl'
 ], function () {});
