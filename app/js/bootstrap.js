@@ -11,11 +11,19 @@ define([
 ], function (require, ng, app) {
     'use strict';
 
-    app.run(function ($rootScope) {
+    app.run(function ($rootScope, $location) {
         // change page title based on state
         $rootScope.$on('$stateChangeSuccess', function(event, toState) {
             $rootScope.pageTitle = toState.title;
         });
+
+        $rootScope.getClass = function(path) {
+            if ($location.path().substr(0, path.length) == path) {
+              return "active"
+            } else {
+              return ""
+            }
+        }
     });
 
     require(['domReady!'], function (document) {

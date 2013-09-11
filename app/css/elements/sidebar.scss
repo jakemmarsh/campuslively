@@ -1,42 +1,61 @@
-#sidebar {
+.sidebar {
 	width: 100px;
 	position: absolute;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	background: $dark-grey;
+	font-weight: bold;
+	font-size: 1em;
 }
 
-	#sidebar ul {
+	.sidebar ul {
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
 		-webkit-padding-start: 0px;
-		@extend .table;
 		@extend .full-width;
 		@extend .full-height;
 	}
 
-		#sidebar ul li {
+		.sidebar ul li {
 			@extend .full-width;
 			height: 100px;
 			margin: 0;
 			background: $dark-grey;
-			@extend .td;
-			vertical-align: middle;
-			@extend .text-center;
+			display: table;
 		}
 
-			#sidebar ul li.active {
+			.sidebar ul li.active {
 				background: $light-grey;
 			}
 
-			#sidebar ul li.post {
+				.sidebar ul li.active .link {
+					color: $dark-grey;
+				}
+
+			.sidebar ul li.post {
 				background: $highlight;
 			}
 
-			@sidebar ul li.logout {
+			.sidebar ul li.logout {
 				position: absolute;
 				bottom: 0;
 				left: 0;
 			}
+
+			.sidebar ul li .link {
+				@extend .td;
+				@extend .full-width;
+				@extend .full-height;
+				vertical-align: middle;
+				@extend .text-center;
+				color: $light-grey;
+			}
+
+				.sidebar ul li .link i {
+					font-weight: normal;
+					font-size: 1.6em;
+					display: block;
+					margin-bottom: 5px;
+				}

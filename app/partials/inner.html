@@ -1,23 +1,41 @@
-<nav id="sidebar">
+<nav class="sidebar">
 	<ul>
 		<li class="post">
-			Post
+			<a href="/post" class="link">
+				<i class="icon-plus"></i>
+				Post
+			</a>
 		</li>
-		<li>
-			My Feed
+		<li ng-class="getClass('/feed')">
+			<a href="/feed" class="link">
+				<i class="icon-list-ul"></i>
+				My Feed
+			</a>
 		</li>
-		<li>
-			Events
+		<li ng-class="getClass('/events')">
+			<a href="/events" class="link">
+				<i class="icon-list-ul"></i>
+				Events
+			</a>
 		</li>
-		<li>
-			Calendar
+		<li ng-class="getClass('/calendar')">
+			<a href="/calendar" class="link">
+				<i class="icon-calendar-empty"></i>
+				Calendar
+			</a>
 		</li>
-		<li>
-			Settings
+		<li ng-class="getClass('/settings')">
+			<a href="/settings" class="link">
+				<i class="icon-cogs"></i>
+				Settings
+			</a>
 		</li>
-		<li>
-			Sign Out
+		<li class="logout">
+			<a href="/logout" class="link">
+				<i class="icon-signout"></i>
+				Sign Out
+			</a>
 		</li>
 	</ul>
 </nav>
-<section id="main" data-ui-view></section>
+<section class="main" data-ui-view></section>

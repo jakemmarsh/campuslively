@@ -1,23 +1,30 @@
-#main {
+.main {
     position: absolute;
     top: 0;
     left: 100px;
     right: 0;
     bottom: 0;
+    @extend .full-width;
     min-width: 1000px;
     background: $light-grey;
     overflow-y: scroll;
+    display: table;
 }
 
-#white-top {
+.white-top {
     @extend .full-width;
     height: 100px;
     background: $white;
+    line-height: 100px;
 }
 
 .container {
     width: 960px;
     margin: 0 auto;
+}
+
+.block {
+    display: block;
 }
 
 .full-width {
@@ -216,8 +223,7 @@
     margin-right: 0 !important;
 }
 
-.vertical-align--middle {
-    display: inline-block;
+.vertical-align-middle {
     vertical-align: middle;
 }
 
