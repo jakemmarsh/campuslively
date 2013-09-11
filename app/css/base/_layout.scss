@@ -1,13 +1,11 @@
 .main {
-    position: absolute;
-    top: 0;
-    left: 100px;
-    right: 0;
-    bottom: 0;
-    @extend .full-width;
+    margin-left: 100px;
+    width: 100%;
+    width: -webkit-calc(100% - 100px);
+    width: -moz-calc(100% - 100px);
+    width: calc(100% - 100px);
     min-width: 1000px;
     background: $light-grey;
-    overflow-y: scroll;
     display: table;
 }
 
