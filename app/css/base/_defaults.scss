@@ -58,6 +58,14 @@ h6, .zeta {
 	line-height: .75em;
 }
 
+hr {
+	background: darken($border-grey, 7);
+	height: 1px;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
 h1,h2,h3,h4,h5,h6 {
 	@extend .weight--bold;
 }
