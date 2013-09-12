@@ -11,3 +11,19 @@ $muted-text: #9d9c9c;
 // SPACING
 $full-space: 20px;
 $half-space: 10px;
+
+
+// MIX-INS
+@mixin transition($transition-property, $transition-time, $method) {
+    -webkit-transition: $transition-property $transition-time $method;
+    -moz-transition: $transition-property $transition-time $method;
+    -ms-transition: $transition-property $transition-time $method;
+    -o-transition: $transition-property $transition-time $method;
+    transition: $transition-property $transition-time $method;
+}
+
+@mixin corners($top-left: 3px, $top-right: 3px, $bottom-right: 3px, $bottom-left: 3px) {
+  -moz-border-radius: $top-left $top-right $bottom-right $bottom-left;
+  -webkit-border-radius: $top-left $top-right $bottom-right $bottom-left;
+   border-radius: $top-left $top-right $bottom-right $bottom-left;
+}

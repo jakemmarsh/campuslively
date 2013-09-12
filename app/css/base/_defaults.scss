@@ -35,7 +35,7 @@ h5 { font-size: .83em; }
 h6 { font-size: .75em; }
 
 h1,h2,h3,h4,h5,h6 {
-	@extend .weight--heavy;
+	@extend .weight--bold;
 }
 
 p {

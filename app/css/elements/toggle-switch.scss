@@ -1,0 +1,160 @@
+/* Shared
+ */
+@mixin switch-shared() {
+
+	display: block;
+	height: 35px;
+
+	.slide-button {
+		display: block;
+
+		@include transition(all, 0.3s, ease-out);
+	}
+
+	label,
+	> span {
+		line-height: 35px;
+		vertical-align: middle;
+	}
+
+	/* Outline the toggles when the inputs are focused
+	 */
+	input:focus ~ .slide-button,
+	input:focus + label {
+		outline: 1px dotted #888;
+	}
+
+}
+
+/* Checkbox
+ */
+@mixin toggle() {
+
+	@include switch-shared();
+
+	position: relative;
+	padding: 0;
+
+	/* Position the label over all the elements, except the slide-button
+	 * Clicking anywhere on the label will change the switch-state
+	 */
+	label {
+		position: relative;
+		z-index: 3;
+		display: block;
+		width: 100px;
+	}
+
+	/* Don't hide the input from screen-readers and keyboard access
+	 */
+	input {
+		position: absolute;
+		opacity: 0;
+		z-index: 5;
+
+		&:checked ~ .slide-button {
+			right: 0%;
+		}
+
+	}
+
+	> span {
+		position: absolute;
+		left: -100px;
+
+		width: 100%;
+		margin: 0;
+		padding-right: 100px;
+
+		text-align: left;
+
+		span {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 5;
+
+			display: block;
+			width: 50%;
+			margin-left: 100px;
+
+			text-align: center;
+
+			&:last-child {
+				left: 50%;
+			}
+		}
+
+	}
+
+	.slide-button {
+		position: absolute;
+		right: 50%;
+		top: 0;
+		z-index: 4;
+
+		display: block;
+		width: 50%;
+		height: 100%;
+		padding: 0;
+	}
+
+}
+
+/* Hide by default
+ */
+.switch .slide-button,
+.toggle span span {
+	display: none;
+}
+
+/* We can't test for a specific feature,
+ * so we only target browsers with support for media queries.
+ */
+@media only screen {
+
+	/* Checkbox toggle
+	 */
+	.toggle {
+		@include toggle();
+		display: inline-block;
+		width: 250px;
+		background-color: $light-grey;
+		@include corners();
+		font-weight: bold;
+		text-align: center;
+
+		label {
+			@include transition(color, 0.2s, ease-out);
+		}
+
+		.slide-button {
+			background-color: $highlight;
+			@include corners();
+		}
+
+		> span {
+			color: $white;
+		}
+	}
+
+}
+
+/* Bugfix for older Webkit, including mobile Webkit. Adapted from
+ * http://css-tricks.com/webkit-sibling-bug/
+ *
+ * Improved by @seantimm, to fix memory use issues
+ * https://github.com/zurb/foundation/pull/2725
+ */
+.toggle,
+.switch {
+	@media only screen and (-webkit-min-device-pixel-ratio:0) and (max-device-width:480px) {
+		-webkit-animation: webkitSiblingBugfix infinite 1s;
+	}
+
+	@media only screen and (-webkit-min-device-pixel-ratio:1.5) {
+		-webkit-animation: none 0;
+	}
+}
+
+@-webkit-keyframes webkitSiblingBugfix { from { position: relative; } to { position: relative; } }
