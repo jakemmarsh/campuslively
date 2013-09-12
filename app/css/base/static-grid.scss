@@ -35,4 +35,18 @@
 .seven-tenths{width:70%;}
 .eight-tenths{@extend .four-fifths;}
 .nine-tenths{width:90%;}
+.one-twelfth{width:8.33%;}
+.two-twelfths{@extend .one-sixth;}
+.three-twelfths{@extend .one-fourth;}
+.four-twelfths{@extend .one-third;}
+.five-twelfths{width:41.66%;}
+.six-twelfths{@extend .one-half;}
+.seven-twelfths{width:58.33%;}
+.eight-twelfths{@extend .two-thirds;}
+.nine-twelfths{@extend .three-fourths;}
+.ten-twelfths{@extend .five-sixths;}
+.eleven-twelfths{width:91.66%;}
+
+.icon{width:3%;}
+.icon-text{width:97%;}
 .last-unit {display: table-cell; *display:block;*zoom:1;float:none;_position:relative; _left:-3px; _margin-right: -3px;width:auto;}
