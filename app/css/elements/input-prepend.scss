@@ -28,6 +28,10 @@
 		width: $width;
 	}
 
-	.input-prepend input {
+	.input-prepend input.search {
 		@include input-prepend-input(250px);
 	}
+
+		.input-prepend input.search {
+			@include input-prepend-input(300px);
+		}
