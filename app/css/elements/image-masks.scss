@@ -16,11 +16,19 @@
 	@include user-img(60px);
 }
 
+.user-img-subcomment, .user-img-going {
+	@include user-img(35px);
+}
+
+	.user-img-going {
+		display: inline-block;
+	}
+
 .user-img-event {
 	@include user-img(70px);
 }
 
-	.user-img-comment a, .user-img-event a {
+	.user-img-comment a, .user-img-event a, .user-img-subcomment a, .user-img-going a {
 		display: block;
 		height: 100%;
 		width: 100%;
