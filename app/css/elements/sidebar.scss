@@ -22,9 +22,13 @@
 			@extend .full-width;
 			height: 100px;
 			margin: 0;
-			background: $dark-grey;
+			@include gradient($dark-grey);
 			display: table;
 		}
+
+			.sidebar ul li:hover, .sidebar ul li:focus, .sidebar ul li:active {
+				@include gradient($dark-grey, darken($dark-grey, 3));
+			}
 
 			.sidebar ul li.active {
 				background: $light-grey;
