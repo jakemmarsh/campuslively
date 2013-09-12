@@ -1,0 +1,10 @@
+.event-img {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	background-position: center center;
+	@include corners();
+	width: 100%;
+	height: 200px;
+	overflow: hidden;
+}
