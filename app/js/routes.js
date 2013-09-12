@@ -55,7 +55,11 @@ define(['./app'], function (app) {
             url: '/event/:eventId',
             templateUrl: '/partials/event.html',
             controller: 'eventCtrl',
-            title: 'Event' // TODO: GET ACTUAL NAME OF CURRENT EVENT
+            resolve: {
+                setTitle: function($stateParams, $rootScope){
+                    $rootScope.pageTitle = $stateParams.eventId; // TODO: DO HTTP CALL TO GET ACTUAL EVENT NAME
+                }
+            }
         })
         .state('inner.post', {
             url: '/post',
@@ -70,10 +74,14 @@ define(['./app'], function (app) {
             title: 'Account Settings'
         })
         .state('inner.profile', {
-            url: '/profile/:userId',
+            url: '/profile/:userName',
             templateUrl: '/partials/profile.html',
             controller: 'profileCtrl',
-            title: 'Profile' // TODO: GET ACTUAL NAME OF CURRENT PROFILE
+            resolve: {
+                setTitle: function($stateParams, $rootScope){
+                    $rootScope.pageTitle = $stateParams.userName;
+                }
+            }
         })
         .state('inner.contact', {
             url: '/contact',

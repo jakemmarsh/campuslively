@@ -14,7 +14,9 @@ define([
     app.run(function ($rootScope, $location) {
         // change page title based on state
         $rootScope.$on('$stateChangeSuccess', function(event, toState) {
-            $rootScope.pageTitle = toState.title;
+            if(toState.title) {
+                $rootScope.pageTitle = toState.title;
+            }
         });
 
         $rootScope.getClass = function(path) {
