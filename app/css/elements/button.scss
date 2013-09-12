@@ -2,16 +2,19 @@
 	@include corners();
 	@include gradient($highlight);
 	color: $white;
-	text-shadow: 0px 1px 1px darken($highlight, 20);
 	display: inline-block;
 	height: 35px;
 	line-height: 25px;
-	font-size: 1.3em;
+	font-size: 0.9em;
+	text-transform: uppercase;
+	font-weight: bold;
 	padding: 4px 10px;
 	cursor: pointer;
+	border: 1px solid $highlight;
 }
 
 .btn:hover, .btn:active, .btn:focus {
 	color: $white;
 	@include gradient($highlight, darken($highlight, 3));
+	border: 1px solid darken($highlight, 5);
 }
