@@ -1,11 +1,19 @@
-.user-img {
+@mixin user-img($size) {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;
 	background-position: center center;
-	height: 45px;
-	width: 45px;
-	@include corners(45px, 45px, 45px, 45px);
+	height: $size;
+	width: $size;
+	@include corners($size, $size, $size, $size);
+}
+
+.user-img-sidebar {
+	@include user-img(45px);
+}
+
+.user-img-post {
+	@include user-img(60px);
 }
 
 .event-img {
