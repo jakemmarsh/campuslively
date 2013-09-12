@@ -1,0 +1,17 @@
+/* **************** GRIDS ***************** */
+.line:after{content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.last-unit:after{content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";visibility:hidden; clear:both;height:0 !important;display:block;line-height:0;}
+.line{*zoom:1;}
+.unit{float:left;}
+.span-1-of-1{float:none;}
+.span-1-of-2{width:50%;}
+.span-1-of-3{width:33.33333%;}
+.span-2-of-3{width:66.66666%;}
+.span-1-of-4{width:25%;}
+.span-2-of-4{width:50%;}
+.span-3-of-4{width:75%;}
+.span-1-of-5{width:20%;}
+.span-2-of-5{width:40%;}
+.span-3-of-5{width:60%;}
+.span-4-of-5{width:80%;}
+.last-unit {display: table-cell; *display:block;*zoom:1;float:none;_position:relative; _left:-3px; _margin-right: -3px;width:auto;}
