@@ -34,17 +34,25 @@
 					color: $dark-grey;
 				}
 
-			.sidebar ul li.highlight {
+			.sidebar ul li.post {
 				background: $highlight;
 			}
 
-				.sidebar ul li.highlight.active {
+				.sidebar ul li.post.active {
 					background: $white;
 				}
 
-					.sidebar ul li.highlight.active .link {
+					.sidebar ul li.post.active .link {
 						color: $highlight;
 					}
+
+			.sidebar ul li.solo {
+				background: $light-grey;
+			}
+
+				.sidebar ul li.solo .link {
+					color: $highlight;
+				}
 
 			.sidebar ul li.logout {
 				position: absolute;
