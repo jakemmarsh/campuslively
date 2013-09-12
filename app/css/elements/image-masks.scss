@@ -12,9 +12,19 @@
 	@include user-img(45px);
 }
 
-.user-img-post {
+.user-img-comment {
 	@include user-img(60px);
 }
+
+.user-img-event {
+	@include user-img(70px);
+}
+
+	.user-img-comment a, .user-img-event a {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
 
 .event-img {
 	-webkit-background-size: cover;
