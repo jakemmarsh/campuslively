@@ -11,11 +11,17 @@
 		padding: 2px 5px;
 		float: left;
 		text-align: center;
-		font-size: 0.7em;
+		font-size: 0.9em;
+		line-height: 0.9em;
 		text-transform: uppercase;
 		font-weight: bold;
 		margin: 0;
 	}
+
+		.box .action-buttons.comment a {
+			font-size: 0.7em;
+			line-height: 0.7em;
+		}
 
 		.box .action-buttons a:hover, .box .action-buttons a:focus, .box .action-buttons a:active {
 			color: $highlight;
