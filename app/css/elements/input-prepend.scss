@@ -17,18 +17,18 @@
 		text-align: center;
 	}
 
-	@mixin input-prepend-input($width) {
-		display: inline-block;
-		vertical-align: top;
-		border: none;
-		color: $dark-grey;
-		@include corners(0, 3px, 3px, 0);
-		height: 33px;
-		margin-left: -4px;
-		width: $width;
-	}
+@mixin input-prepend-input($width) {
+	display: inline-block;
+	vertical-align: top;
+	border: none;
+	color: $dark-grey;
+	@include corners(0, 3px, 3px, 0);
+	height: 33px;
+	margin-left: -4px;
+	width: $width;
+}
 
-	.input-prepend input.search {
+	.input-prepend input {
 		@include input-prepend-input(250px);
 	}
 

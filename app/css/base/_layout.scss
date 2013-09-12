@@ -245,34 +245,6 @@
     float: right;
 }
 
-.one-whole {
-    width: 100%;
-}
-
-.one-half {
-    width: 50%;
-}
-
-.one-third {
-    width: 33.33%;
-}
-
-.two-thirds {
-    width: 66.66%;
-}
-
-.one-fourth {
-    width: 25%;
-}
-
-.two-fourths {
-    @extend .one-half;
-}
-
-.three-fourths {
-    width: 75%;
-}
-
 .table {
     display: table;
 }
