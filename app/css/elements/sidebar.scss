@@ -35,8 +35,12 @@
 				}
 
 			.sidebar ul li.post {
-				background: $highlight;
+				@include gradient($highlight);
 			}
+
+				.sidebar ul li.post:hover, .sidebar ul li.post:active, .sidebar ul li.post:focus {
+					@include gradient($highlight, darken($highlight, 3));
+				}
 
 				.sidebar ul li.post.active {
 					background: $white;

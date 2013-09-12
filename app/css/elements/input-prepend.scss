@@ -2,7 +2,7 @@
 	@include corners();
 	border: 1px solid $border-grey;
 	display: inline-block;
-	line-height: 35px;
+	line-height: 33px;
 }
 	
 	.input-prepend .icon {
@@ -11,9 +11,9 @@
 		@include corners(3px, 0, 0, 3px);
 		display: inline-block;
 		vertical-align: top;
-		height: 35px;
-		width: 35px;
-		line-height: 35px;
+		height: 33px;
+		width: 33px;
+		line-height: 33px;
 		text-align: center;
 	}
 
@@ -23,7 +23,7 @@
 		border: none;
 		color: $dark-grey;
 		@include corners(0, 3px, 3px, 0);
-		height: 35px;
+		height: 33px;
 		margin-left: -4px;
 		width: $width;
 	}

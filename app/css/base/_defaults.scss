@@ -46,28 +46,25 @@ textarea, input { outline: none; }
 
 textarea, input {
 	font-size: 16px;
-	height: 35px;
+	height: 33px;
 	padding: 4px 8px;
-	line-height: 35px;
-	//@include corner();
-	//border: 1px solid $light-grey;
+	line-height: 33px;
+	@include corners();
+	border: 1px solid $border-grey;
 }
 
 textarea:focus {
-	//border: 1px solid $green;
-}
-
-a, span, i {
-	//@include transition();
-	text-decoration: none;
+	border: 1px solid $highlight;
 }
 
 a {
-	//color: $green;
+	color: $highlight;
+	text-decoration: none;
+	@include transition();
 }
 
 a:hover, a:active {
-	//color: $hover-green;
+	color: lighten($highlight, 20);
 }
 
 .pointer {
