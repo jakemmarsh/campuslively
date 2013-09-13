@@ -1,0 +1,16 @@
+.input-append {
+	vertical-align: baseline;
+}
+
+	.input-append input, .input-append .btn {
+		height: 35px;
+		float: left;
+	}
+
+	.input-append input {
+		@include corners(3px, 0, 0, 3px);
+	}
+
+	.input-append .btn {
+		@include corners(0, 3px, 3px, 0);
+	}

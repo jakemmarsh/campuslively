@@ -85,7 +85,7 @@ textarea, input {
 	border: 1px solid $border-grey;
 }
 
-textarea:focus {
+input:focus, input:active, textarea:focus, textarea:active {
 	border: 1px solid $highlight;
 }
 
