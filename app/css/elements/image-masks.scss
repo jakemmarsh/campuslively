@@ -16,13 +16,17 @@
 	@include user-img(60px);
 }
 
-.user-img-subcomment, .user-img-going {
+.user-img-going {
 	@include user-img(35px);
 }
 
 	.user-img-going {
 		display: inline-block;
 	}
+
+.user-img-subcomment {
+	@include user-img(40px);
+}
 
 .user-img-event {
 	@include user-img(70px);

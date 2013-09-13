@@ -12,10 +12,14 @@
 
 @import "font-awesome/font-awesome";
 
+@import "base/normalize";
+
+@import "bootstrap";
+
 /**
  * Base Styles
  */
-@import "base/normalize";
+ @import "base/normalize";
 @import "base/defaults";
 @import "base/responsive-grid";
 @import "base/static-grid";
