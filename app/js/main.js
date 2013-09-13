@@ -19,7 +19,7 @@ require.config({
     shim: {
         'angular': {
             exports: 'angular',
-            deps: []
+            deps: ['jQuery']
         },
         'angular-sanitize': {
             deps: ['angular']
