@@ -1,6 +1,5 @@
 .input-prepend {
 	@include corners();
-	border: 1px solid $border-grey;
 	display: inline-block;
 	line-height: 33px;
 }
@@ -20,12 +19,12 @@
 @mixin input-prepend-input($width) {
 	display: inline-block;
 	vertical-align: top;
-	border: none;
 	color: $dark-grey;
 	@include corners(0, 3px, 3px, 0);
 	height: 33px;
 	margin-left: -4px;
 	width: $width;
+	border-width: 1px 1px 1px 0;
 }
 
 	.input-prepend input {
