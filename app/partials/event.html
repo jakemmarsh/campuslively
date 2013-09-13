@@ -6,7 +6,7 @@
 				<h3 class="flush muted weight--normal">hosted by <a href data-ng-href="/profile/jakemmarsh">jakemmarsh</a></h3>
 			</div>
 			<div class="unit one-half last-unit text-right">
-				<a class="btn nudge-half--right"><i class="icon-plus-sign"></i> RSVP</a>
+				<a href class="btn nudge-half--right" ng-click="open()"><i class="icon-plus-sign"></i> RSVP</a>
 				<a class="btn"><i class="icon-share"></i> Share</a>
 			</div>
 		</div>
@@ -16,34 +16,42 @@
 	<div class="event-img nudge--bottom" style="background-image: url('http://wallpaperdj.com/wallpapers/dash_berlin-1280x720.jpg')"></div>
 	<div class="line text-left">
 		<div class="unit three-fourths">
-			<div class="box islet">
-				<div class="line">
-					<div class="unit three-percent">
-						<h4 class="flush--top nudge-half--bottom"><i class="muted icon-time"></i></h4>
+			<div class="box">
+				<div class="islet hard--bottom">
+					<div class="line">
+						<div class="unit three-percent">
+							<h4 class="flush--top nudge-half--bottom"><i class="muted icon-time"></i></h4>
+						</div>
+						<div class="unit ninety-seven-percent last-unit">
+							<h4 class="flush--top nudge-half--bottom weight--normal">Friday at 11:30pm</h4>
+						</div>
 					</div>
-					<div class="unit ninety-seven-percent last-unit">
-						<h4 class="flush--top nudge-half--bottom weight--normal">Friday at 11:30pm</h4>
+					<div class="line">
+						<div class="unit three-percent">
+							<h4 class="flush--top nudge-half--bottom"><i class="muted icon-map-marker"></i></h4>
+						</div>
+						<div class="unit ninety-seven-percent last-unit">
+							<h4 class="flush--top nudge-half--bottom weight--normal">Bijou Nightclub</h4>
+						</div>
 					</div>
 				</div>
-				<div class="line">
-					<div class="unit three-percent">
-						<h4 class="flush--top nudge-half--bottom"><i class="muted icon-map-marker"></i></h4>
-					</div>
-					<div class="unit ninety-seven-percent last-unit">
-						<h4 class="flush--top nudge-half--bottom weight--normal">Bijou Nightclub</h4>
-					</div>
-				</div>
-				map here
-				<div class="line">
-					<div class="unit three-percent">
-						<h4 class="flush"><i class="muted icon-align-left"></i></h4>
-					</div>
-					<div class="unit ninety-seven-percent last-unit">
-						<p>event details here</p>
+				<div class="map"></div>
+				<div class="islet">
+					<div class="line">
+						<div class="unit three-percent">
+							<h4 class="flush"><i class="muted icon-align-left"></i></h4>
+						</div>
+						<div class="unit ninety-seven-percent last-unit">
+							<p>event details here</p>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="line soft--ends">
+			<div class="input-append full-width nudge--ends clearfix">
+				<input type="text" placeholder="Write a comment..." class="nine-tenths" />
+				<button type="submit" class="btn one-tenth">Post</button>
+			</div>
+			<div class="line">
 				<div class="unit one-tenth">
 					<div class="user-img-comment" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
 						<a href data-ng-href="profile/jakemmarsh"></a>
@@ -53,10 +61,47 @@
 					<div class="box islet">
 						<h4 class="flush"><a href data-ng-href="/profile/jakemmarsh">Jake Marsh:</a></h4>
 						<p class="nudge-half--top">Comment text goes here</p>
-						<div class="action-buttons comment nudge-half--top">
-							<a href><i class="icon-thumbs-up-alt"></i> Like</a>
+						<div class="line nudge-half--ends">
+							<div class="unit one-half">
+								<div class="action-buttons comment nudge-half--top">
+									<a href><i class="icon-heart"></i> Like</a>
+								</div>
+							</div>
+							<div class="unit one-half text-right">
+								<span class="muted epsilon">25 minutes ago</span>
+							</div>
 						</div>
-
+						<hr class="nudge-half--ends" />
+						<div class="line nudge-half--bottom">
+							<div class="unit one-twelfth">
+								<div class="user-img-subcomment" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
+									<a href data-ng-href="profile/jakemmarsh"></a>
+								</div>
+							</div>
+							<div class="unit eleven-twelfths last-unit subcomment-body islet">
+								<p class="epsilon">subcomment text</p>
+								<div class="text-right nudge-half--top">
+									<span class="muted epsilon">15 minutes ago</span>
+								</div>
+							</div>
+						</div>
+						<div class="line nudge-half--bottom">
+							<div class="unit one-twelfth">
+								<div class="user-img-subcomment" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
+									<a href data-ng-href="profile/jakemmarsh"></a>
+								</div>
+							</div>
+							<div class="unit eleven-twelfths last-unit subcomment-body islet">
+								<p class="epsilon">subcomment text</p>
+								<div class="text-right nudge-half--top">
+									<span class="muted epsilon">15 minutes ago</span>
+								</div>
+							</div>
+						</div>
+						<div class="input-append full-width clearfix epsilon">
+							<input type="text" placeholder="Write a comment..." class="nine-tenths delta" />
+							<button type="submit" class="btn one-tenth">Post</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -75,22 +120,40 @@
 				</div>
 				<div class="islet text-center">
 					<div class="user-img-going" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-						<a href data-ng-href="profile/jakemmarsh"></a>
+						<a href data-ng-href="profile/jakemmarsh" tooltip="Jake Marsh"></a>
 					</div>
 					<div class="user-img-going" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-						<a href data-ng-href="profile/jakemmarsh"></a>
+						<a href data-ng-href="profile/jakemmarsh" tooltip="Jake Marsh"></a>
 					</div>
 					<div class="user-img-going" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-						<a href data-ng-href="profile/jakemmarsh"></a>
+						<a href data-ng-href="profile/jakemmarsh" tooltip="Jake Marsh"></a>
 					</div>
 					<div class="user-img-going" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-						<a href data-ng-href="profile/jakemmarsh"></a>
+						<a href data-ng-href="profile/jakemmarsh" tooltip="Jake Marsh"></a>
 					</div>
 					<div class="user-img-going" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-						<a href data-ng-href="profile/jakemmarsh"></a>
+						<a href data-ng-href="profile/jakemmarsh" tooltip="Jake Marsh"></a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3>I'm a modal!</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

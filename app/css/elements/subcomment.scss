@@ -1,0 +1,5 @@
+.subcomment-body {
+	background: lighten($light-grey, 2);
+	border: 1px solid $border-grey;
+	@include corners();
+}
