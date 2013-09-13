@@ -10,6 +10,7 @@ require.config({
         'domReady': './lib/requirejs/domReady',
         'angular': './lib/angular/angular.min',
         'angular-sanitize' : './lib/angular/angular-sanitize.min',
+        'angular-ui-bootstrap' : './lib/ui-bootstrap-tpls-0.6.0.min',
         'angular-ui-router' : './lib/angular/angular-ui-router.min'
     },
 
@@ -19,6 +20,9 @@ require.config({
             deps: []
         },
         'angular-sanitize': {
+            deps: ['angular']
+        },
+        'angular-ui-bootstrap': {
             deps: ['angular']
         },
         'angular-ui-router': {
