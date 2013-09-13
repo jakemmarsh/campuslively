@@ -59,11 +59,8 @@ h6, .zeta {
 }
 
 hr {
-	background: darken($border-grey, 7);
-	height: 1px;
-	border: none;
-	margin: 0;
-	padding: 0;
+	border: 0;
+	border-top: 1px solid darken($border-grey, 4);
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -86,7 +83,7 @@ textarea, input {
 }
 
 input:focus, input:active, textarea:focus, textarea:active {
-	border: 1px solid $highlight;
+	border: 1px solid lighten($highlight, 50);
 }
 
 a {
