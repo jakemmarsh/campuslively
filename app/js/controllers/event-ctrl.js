@@ -5,21 +5,41 @@ define(['./index'], function (controllers) {
 
     	$scope.items = ['item1', 'item2', 'item3'];
 
-		  $scope.open = function () {
-
-		    var modalInstance = $modal.open({
-		      templateUrl: 'myModalContent.html',
-		      resolve: {
-		        items: function () {
-		          return $scope.items;
-		        }
-		      }
-		    });
+		$scope.open = function (modal) {
+		  	if (modal.toLowerCase() == 'rsvp') {
+			    var modalInstance = $modal.open({
+			      templateUrl: 'rsvpModal.html',
+			      resolve: {
+			        items: function () {
+			          return $scope.items;
+			        }
+			      }
+			    });
+			}
+			else if (modal.toLowerCase() == 'share') {
+				var modalInstance = $modal.open({
+			      templateUrl: 'shareModal.html',
+			      resolve: {
+			        items: function () {
+			          return $scope.items;
+			        }
+			      }
+			    });
+			}
 
 		    modalInstance.result.then(function (selectedItem) {
-		      $scope.selected = selectedItem;
+		    	$scope.selected = selectedItem;
 		    }, function () {
+		    	$log.info('Modal dismissed at: ' + new Date());
 		    });
-		  };
+		};
+
+		$scope.okModal = function () {
+			$modalInstance.close($scope.selected.item);
+		};
+
+		$scope.cancelModal = function () {
+			$modalInstance.dismiss('cancel');
+		};
     });
 });
