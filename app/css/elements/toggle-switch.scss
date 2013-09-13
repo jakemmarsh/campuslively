@@ -1,91 +1,69 @@
-/* Shared
- */
-@mixin switch-shared() {
+/* Hide by default */
 
-	display: block;
-	height: 35px;
-	cursor: pointer;
-	border: 1px solid $border-grey;
-
-	.slide-button {
-		display: block;
-		@include transition(all, 0.2s, ease-out);
-	}
-
-	label,
-	> span {
-		line-height: 35px;
-		vertical-align: middle;
-	}
-
-	/* Outline the toggles when the inputs are focused
-	 */
-	input:focus ~ .slide-button,
-	input:focus + label {
-		outline: 1px solid #888;
-	}
-
+.ngst-switch .slide-button,
+.ngst-toggle p span {
+	display: none;
 }
 
-/* Checkbox
- */
-@mixin toggle() {
+/* Toggle Switches */
 
-	@include switch-shared();
-	position: relative;
-	padding: 0;
+/* We can't test for a specific feature,
+ * so we only target browsers with support for media queries.
+ */
+@media only screen {
+	/* Checkbox
+	 */
+	.ngst-toggle {
+		position: relative;
+		padding: 0;
+		/*margin-left: 100px;*/
+	}
 
 	/* Position the label over all the elements, except the slide-button
 	 * Clicking anywhere on the label will change the switch-state
 	 */
-	label {
+	.ngst-toggle label {
 		position: relative;
 		z-index: 3;
 		display: block;
-		width: 100px;
+		width: 100%;
 	}
 
 	/* Don't hide the input from screen-readers and keyboard access
 	 */
-	input {
+	.ngst-toggle input {
 		position: absolute;
 		opacity: 0;
 		z-index: 5;
-
-		&:checked ~ .slide-button {
-			right: 0%;
-		}
-
 	}
-
-	> span {
+	
+	.ngst-toggle p {
 		position: absolute;
 		left: -100px;
 		width: 100%;
 		margin: 0;
 		padding-right: 100px;
 		text-align: left;
-
-		span {
-			position: absolute;
-			top: 0;
-			left: 0;
-			z-index: 5;
-			display: block;
-			width: 50%;
-			margin-left: 100px;
-			text-align: center;
-
-			&:last-child {
-				left: 50%;
-			}
-		}
-
+	}
+	
+	.ngst-toggle p span {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 5;
+		display: block;
+		width: 50%;
+		margin-left: 100px;
+		text-align: center;
+	}
+	
+	.ngst-toggle p span:last-child {
+		left: 50%;
 	}
 
-	.slide-button {
+	.ngst-toggle .slide-button {
 		position: absolute;
-		right: 50%;
+		right: 0;
 		top: 0;
 		z-index: 4;
 		display: block;
@@ -94,66 +72,107 @@
 		padding: 0;
 	}
 
-}
-
-/* Hide by default
- */
-.switch .slide-button,
-.toggle span span {
-	display: none;
-}
-
-/* We can't test for a specific feature,
- * so we only target browsers with support for media queries.
- */
-@media only screen {
-
-	/* Checkbox toggle
+	/* Radio Switch
 	 */
-	.toggle {
-		@include toggle();
-		display: inline-block;
-		width: 250px;
-		background-color: $light-grey;
-		@include corners();
-		font-weight: bold;
+	.ngst-switch {
+		position: relative;
+		padding: 0;
+	}
+	
+	.ngst-switch input {
+		position: absolute;
+		opacity: 0;
+	}
+	
+	.ngst-switch label {
+		position: relative;
+		z-index: 2;
+		float: left;
+		width: 50%;
+		height: 100%;
+		margin: 0;
 		text-align: center;
-
-		label {
-			@include transition(color, 0.2s, ease-out);
-		}
-
-		.slide-button {
-			@include gradient($highlight);
-			@include corners();
-		}
-
-			.slide-button:hover, .slide-button:active, .slide-button:focus {
-				@include gradient($highlight, darken($highlight, 3));
-			}
-
-		> span {
-			color: $white;
-		}
 	}
 
+	.ngst-switch .slide-button {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 0;
+		z-index: 1;
+		width: 50%;
+		height: 100%;
+	}
+
+	.ngst-switch input:last-of-type:checked ~ .slide-button {
+		left: 50%;
+	}
+
+	/* Shared */
+	.ngst-toggle,
+	.ngst-switch {
+		display: inline-block;
+		width: 200px;
+		height: 35px;
+	}
+	
+	.ngst-switch .slide-button,
+	.ngst-toggle .slide-button {
+		display: block;
+		@include transition(all, 0.3s, ease-out);
+	}
+	
+	.ngst-toggle label,
+	.ngst-toggle p,
+	.ngst-switch label {
+		line-height: 30px;
+		vertical-align: middle;
+	}
+	
+	.ngst-toggle input:checked ~ .slide-button {
+		right: 50%;
+	}
+	
+	/* Outline the toggles when the inputs are focused */
+	.ngst-toggle input:focus ~ .slide-button,
+	.ngst-switch input:focus + label {
+		outline: 1px dotted #888;
+	}
+	
+	/* Bugfix for older Webkit, including mobile Webkit. Adapted from:
+	 * http://css-tricks.com/webkit-sibling-bug/
+	 */
+	.ngst-switch, .ngst-toggle {
+		-webkit-animation: bugfix infinite 1s;
+	}
+	
+	@-webkit-keyframes bugfix { from { position: relative; } to { position: relative; } }
+
+
+	/* Standalone Themes */
+
+
+	/* Candy Theme
+	 * Based on the "Sort Switches / Toggles (PSD)" by Ormal Clarck
+	 * http://www.premiumpixels.com/freebies/sort-switches-toggles-psd/
+	 */
+	 
+	.candy {
+		background-color: $light-grey;
+		color: darken($border-grey, 7);
+		border: 1px solid $border-grey;
+		font-weight: bold;
+		text-align: center;		
+		@include corners();
+	}
+
+	.candy label.selected {
+		color: #fff;
+	}
+		
+	.candy .slide-button {
+		background-color: $highlight;		
+		@include corners();
+	}
+	
 }
-
-/* Bugfix for older Webkit, including mobile Webkit. Adapted from
- * http://css-tricks.com/webkit-sibling-bug/
- *
- * Improved by @seantimm, to fix memory use issues
- * https://github.com/zurb/foundation/pull/2725
- */
-.toggle,
-.switch {
-	@media only screen and (-webkit-min-device-pixel-ratio:0) and (max-device-width:480px) {
-		-webkit-animation: webkitSiblingBugfix infinite 1s;
-	}
-
-	@media only screen and (-webkit-min-device-pixel-ratio:1.5) {
-		-webkit-animation: none 0;
-	}
-}
-
-@-webkit-keyframes webkitSiblingBugfix { from { position: relative; } to { position: relative; } }

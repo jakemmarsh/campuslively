@@ -3,6 +3,7 @@ define([
     'angular-sanitize',
     'angular-ui-bootstrap',
     'angular-ui-router',
+    'angular-switch-toggle',
     './controllers/index',
     './directives/index',
     './filters/index',
@@ -17,6 +18,7 @@ define([
         'app.directives',
         'ngSanitize',
         'ui.bootstrap', 
-        'ui.state'
+        'ui.state',
+        'ngSwitchToggle'
     ]);
 });

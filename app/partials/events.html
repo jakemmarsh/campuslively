@@ -2,15 +2,7 @@
 	<div class="container">
 		<div class="line">
 			<div class="unit one-half text-left">
-				<label class="checkbox toggle" onclick="">
-					<input type="checkbox" />
-					<span>
-						<span>My School</span>
-						<span>All Nearby</span>
-					</span>
-
-					<a class="slide-button"></a>
-				</label>
+				<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions"></ng-switch-toggle-group>
 			</div>
 			<div class="unit one-half last-unit text-right">
 				<div class="input-prepend">
