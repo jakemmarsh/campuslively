@@ -9,6 +9,7 @@ define(['./index'], function (controllers) {
 		  	if (modal.toLowerCase() == 'rsvp') {
 			    var modalInstance = $modal.open({
 			      templateUrl: 'rsvpModal.html',
+			      controller: 'modalInstanceCtrl',
 			      resolve: {
 			        items: function () {
 			          return $scope.items;
@@ -19,6 +20,7 @@ define(['./index'], function (controllers) {
 			else if (modal.toLowerCase() == 'share') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'shareModal.html',
+			      controller: 'modalInstanceCtrl',
 			      resolve: {
 			        items: function () {
 			          return $scope.items;
@@ -26,20 +28,6 @@ define(['./index'], function (controllers) {
 			      }
 			    });
 			}
-
-		    modalInstance.result.then(function (selectedItem) {
-		    	$scope.selected = selectedItem;
-		    }, function () {
-		    	$log.info('Modal dismissed at: ' + new Date());
-		    });
-		};
-
-		$scope.okModal = function () {
-			$modalInstance.close($scope.selected.item);
-		};
-
-		$scope.cancelModal = function () {
-			$modalInstance.dismiss('cancel');
 		};
     });
 });
