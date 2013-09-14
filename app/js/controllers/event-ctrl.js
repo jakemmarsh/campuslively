@@ -3,7 +3,16 @@ define(['./index'], function (controllers) {
     controllers.controller('eventCtrl', function ($scope, $stateParams, $modal) {
     	$scope.eventId = $stateParams.eventId;
 
-    	$scope.items = ['item1', 'item2', 'item3'];
+    	$scope.mapOptions = {
+			center: new google.maps.LatLng(44.883125, -68.671977),
+			zoom: 15,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			disableDefaultUI: true,
+			disableDoubleClickZoom: true,
+			draggable: false,
+			scrollwheel: false,
+			panControl: false
+	    };
 
 		$scope.open = function (modal) {
 		  	if (modal.toLowerCase() == 'rsvp') {

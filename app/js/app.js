@@ -4,6 +4,7 @@ define([
     'angular-ui-bootstrap',
     'angular-ui-router',
     'angular-switch-toggle',
+    'angular-ui-map',
     './controllers/index',
     './directives/index',
     './filters/index',
@@ -19,6 +20,7 @@ define([
         'ngSanitize',
         'ui.bootstrap', 
         'ui.state',
-        'ngSwitchToggle'
+        'ngSwitchToggle',
+        'ui.map'
     ]);
 });
