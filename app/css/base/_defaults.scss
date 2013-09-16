@@ -82,6 +82,11 @@ textarea, input {
 	border: 1px solid $border-grey;
 }
 
+textarea.big {
+	height: 200px;
+	resize: vertical;
+}
+
 input:focus, input:active, textarea:focus, textarea:active {
 	border: 1px solid lighten($highlight, 50);
 }

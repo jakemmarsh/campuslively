@@ -2,6 +2,7 @@
 	@include corners();
 	display: inline-block;
 	line-height: 33px;
+	@extend .clearfix;
 }
 	
 	.input-prepend .icon {
@@ -14,6 +15,7 @@
 		width: 33px;
 		line-height: 33px;
 		text-align: center;
+		float: left;
 	}
 
 @mixin input-prepend-input($width) {
@@ -22,7 +24,7 @@
 	color: $dark-grey;
 	@include corners(0, 3px, 3px, 0);
 	height: 33px;
-	margin-left: -4px;
+	float: left;
 	width: $width;
 	border-width: 1px 1px 1px 0;
 }
@@ -34,3 +36,15 @@
 		.input-prepend input.search {
 			@include input-prepend-input(300px);
 		}
+
+.input-prepend.full {
+	width: 100%;
+	display: block;
+}
+
+	.input-prepend.full input {
+		@include input-prepend-input(250px);
+		width: -webkit-calc(100% - 33px);
+		width: -moz-calc(100% - 33px);
+		width: calc(100% - 33px);
+	}
