@@ -1,6 +1,11 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('profileCtrl', function ($scope, $stateParams) {
-    	$scope.userName = $stateParams.userName;
+    	if($stateParams.userName == 'jakemmarsh') {
+    		$scope.userName = "Jake Marsh";
+    	}
+    	else {
+    		$scope.userName = $stateParams.userName;
+    	}
     });
 });
