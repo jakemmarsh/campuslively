@@ -16,7 +16,6 @@
 	.ngst-toggle {
 		position: relative;
 		padding: 0;
-		/*margin-left: 100px;*/
 	}
 
 	/* Position the label over all the elements, except the slide-button
@@ -92,6 +91,7 @@
 		height: 100%;
 		margin: 0;
 		text-align: center;
+		cursor: pointer;
 	}
 
 	.ngst-switch .slide-button {
@@ -158,8 +158,8 @@
 	 */
 	 
 	.candy {
-		background-color: $light-grey;
-		color: darken($border-grey, 7);
+		background-color: darken($border-grey, 4);
+		color: $white;
 		border: 1px solid $border-grey;
 		font-weight: bold;
 		text-align: center;		
