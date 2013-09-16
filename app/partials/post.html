@@ -1,8 +1,74 @@
 <div class="white-top">
 	<div class="container">
-		white
+		<h1 class="flush">Create An Event</h1>
 	</div>
 </div>
 <div class="container soft--ends">
-	post an event
+	<div class="table full-width">
+		<div class="tr">
+			<div class="td one-twelfth soft--right soft-bottom">
+				<label for="name" class="caps weight--bold">Name</label>
+			</div>
+			<div class="td eleven-twelfths soft-bottom">
+				<input type="text" id="name" class="full-width" placeholder="Event name..." />
+			</div>
+		</div>
+		<div class="tr">
+			<div class="td one-twelfth soft--bottom">
+				<label for="details" class="caps weight--bold">Details</label>
+			</div>
+			<div class="td eleven-twelfths soft--ends">
+				<textarea id="details" class="full-width big" placeholder="Details about the event..."></textarea>
+			</div>
+		</div>
+		<div class="tr">
+			<div class="td one-twelfth soft--bottom vertical-align-middle">
+				<label for="location" class="caps weight--bold">Where</label>
+			</div>
+			<div class="td eleven-twelfths soft--bottom">
+				<div class="input-prepend full">
+					<div class="icon">
+						<i class="icon-map-marker"></i>
+					</div>
+					<input type="text" id="location" placeholder="Location of event..." />
+				</div>
+			</div>
+		</div>
+		<div class="tr">
+			<div class="td one-twelfth soft--bottom">
+			</div>
+			<div class="td eleven-twelfths soft--bottom">
+				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map"></div>
+			</div>
+		</div>
+	</div>
+	<div class="table full-width">
+		<div class="tr">
+			<div class="td one-twelfth soft--bottom vertical-align-middle">
+				<label for="starts" class="caps weight--bold">Starts</label>
+			</div>
+			<div class="td five-twelfths soft--bottom soft--right">
+				<div class="input-prepend full">
+					<div class="icon">
+						<i class="icon-time"></i>
+					</div>
+					<input type="text" id="starts" placeholder="Start date and time..." />
+				</div>
+			</div>
+			<div class="td one-twelfth soft--bottom text-right soft--right vertical-align-middle">
+				<label for="ends" class="caps weight--bold">Ends</label>
+			</div>
+			<div class="td five-twelfths soft--bottom">
+				<div class="input-prepend full">
+					<div class="icon">
+						<i class="icon-time"></i>
+					</div>
+					<input type="text" id="starts" placeholder="End date and time..." />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="text-right">
+		<input type="submit" class="btn" value="Post Event" />
+	</div>
 </div>
