@@ -1,74 +1,94 @@
 <div class="white-top">
 	<div class="container">
-		<h1 class="flush">Create An Event</h1>
+		<h1 class="flush" data-ng-hide="eventPosted">Create An Event</h1>
+		<h1 class="flush" data-ng-show="eventPosted">Your event has been posted!</h1>
 	</div>
 </div>
 <div class="container soft--ends">
-	<div class="table full-width">
-		<div class="tr">
-			<div class="td one-twelfth soft--right soft-bottom">
-				<label for="name" class="caps weight--bold">Name</label>
+	<form name="eventForm" data-ng-submit="postEvent()" data-ng-hide="eventPosted">
+		<div class="table full-width">
+			<div class="tr">
+				<div class="td one-twelfth soft--right soft-bottom">
+					<label for="name" class="caps weight--bold">Name</label>
+				</div>
+				<div class="td eleven-twelfths soft-bottom">
+					<input type="text" id="name" data-ng-model="eventName" class="full-width" placeholder="Event name..." required />
+				</div>
 			</div>
-			<div class="td eleven-twelfths soft-bottom">
-				<input type="text" id="name" class="full-width" placeholder="Event name..." />
+			<div class="tr">
+				<div class="td one-twelfth soft--bottom">
+					<label for="details" class="caps weight--bold">Details</label>
+				</div>
+				<div class="td eleven-twelfths soft--ends">
+					<textarea id="details" data-ng-model="eventDetails" class="full-width big" placeholder="Details about the event..."></textarea>
+				</div>
 			</div>
-		</div>
-		<div class="tr">
-			<div class="td one-twelfth soft--bottom">
-				<label for="details" class="caps weight--bold">Details</label>
-			</div>
-			<div class="td eleven-twelfths soft--ends">
-				<textarea id="details" class="full-width big" placeholder="Details about the event..."></textarea>
-			</div>
-		</div>
-		<div class="tr">
-			<div class="td one-twelfth soft--bottom vertical-align-middle">
-				<label for="location" class="caps weight--bold">Where</label>
-			</div>
-			<div class="td eleven-twelfths soft--bottom">
-				<div class="input-prepend full">
-					<div class="icon">
-						<i class="icon-map-marker"></i>
+			<div class="tr">
+				<div class="td one-twelfth soft--bottom vertical-align-middle">
+					<label for="location" class="caps weight--bold">Where</label>
+				</div>
+				<div class="td eleven-twelfths soft--bottom">
+					<div class="input-prepend full">
+						<div class="icon">
+							<i class="icon-map-marker"></i>
+						</div>
+						<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event..." required />
 					</div>
-					<input type="text" id="location" placeholder="Location of event..." />
+				</div>
+			</div>
+			<div class="tr">
+				<div class="td one-twelfth soft--bottom">
+				</div>
+				<div class="td eleven-twelfths soft--bottom">
+					<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map"></div>
 				</div>
 			</div>
 		</div>
-		<div class="tr">
-			<div class="td one-twelfth soft--bottom">
-			</div>
-			<div class="td eleven-twelfths soft--bottom">
-				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map"></div>
-			</div>
-		</div>
-	</div>
-	<div class="table full-width">
-		<div class="tr">
-			<div class="td one-twelfth soft--bottom vertical-align-middle">
-				<label for="starts" class="caps weight--bold">Starts</label>
-			</div>
-			<div class="td five-twelfths soft--bottom soft--right">
-				<div class="input-prepend full">
-					<div class="icon">
-						<i class="icon-time"></i>
-					</div>
-					<input type="text" id="starts" placeholder="Start date and time..." />
+		<div class="table full-width">
+			<div class="tr">
+				<div class="td one-twelfth soft--bottom vertical-align-middle">
+					<label for="starts" class="caps weight--bold">Starts</label>
 				</div>
-			</div>
-			<div class="td one-twelfth soft--bottom text-right soft--right vertical-align-middle">
-				<label for="ends" class="caps weight--bold">Ends</label>
-			</div>
-			<div class="td five-twelfths soft--bottom">
-				<div class="input-prepend full">
-					<div class="icon">
-						<i class="icon-time"></i>
+				<div class="td five-twelfths soft--bottom soft--right">
+					<div class="input-prepend full">
+						<div class="icon">
+							<i class="icon-time"></i>
+						</div>
+						<input type="text" id="starts" data-ng-model="eventStart" placeholder="Start date and time..." required />
 					</div>
-					<input type="text" id="starts" placeholder="End date and time..." />
+				</div>
+				<div class="td one-twelfth soft--bottom text-right soft--right vertical-align-middle">
+					<label for="ends" class="caps weight--bold">Ends</label>
+				</div>
+				<div class="td five-twelfths soft--bottom">
+					<div class="input-prepend full">
+						<div class="icon">
+							<i class="icon-time"></i>
+						</div>
+						<input type="text" id="starts" data-ng-model="eventEnd" placeholder="End date and time..." />
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="text-right">
-		<input type="submit" class="btn" value="Post Event" />
+		<div class="table full-width">
+			<div class="tr">
+				<div class="td one-twelfth vertical-align-middle">
+					<label for="private" class="caps weight--bold">Make Private</label>
+				</div>
+				<div class="td five-twelfths">
+					<input type="checkbox" id="private" data-ng-model="eventPrivate" />
+				</div>
+				<div class="td one-half text-right">
+					<input type="submit" class="btn" value="Post Event" data-ng-disabled="eventForm.$invalid" />
+				</div>
+			</div>
+		</div>
+	</form>
+	<div data-ng-show="eventPosted">
+		<h2 class="flush--top">Invite your friends:</h2>
+		Facebook friends list
+
+		<h2>Share the event:</h2>
+		Twitter/Facebook/Direct Link
 	</div>
 </div>
