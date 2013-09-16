@@ -13,8 +13,18 @@
 	border: 1px solid $highlight;
 }
 
-.btn:hover, .btn:active, .btn:focus {
-	color: $white;
-	@include gradient($highlight, darken($highlight, 3));
-	border: 1px solid darken($highlight, 5);
-}
+	.btn:hover, .btn:active, .btn:focus {
+		color: $white;
+		@include gradient($highlight, darken($highlight, 3));
+		border: 1px solid darken($highlight, 5);
+	}
+
+	.btn:disabled {
+		background: darken($border-grey, 4);
+		border: 1px solid darken($border-grey, 4);
+	}
+
+		.btn:disabled:hover, .btn:disabled:active, .btn:disabled:focus {
+			background: darken($border-grey, 4);
+			border: 1px solid darken($border-grey, 4);
+		}
