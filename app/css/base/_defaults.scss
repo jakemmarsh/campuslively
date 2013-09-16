@@ -28,43 +28,9 @@ body {
 	line-height: 18px;
 }
 
-h1, .alpha { 
-	font-size: 2em;
-	line-height: 2em; 
-}
-
-h2, .beta { 
-	font-size: 1.5em;
-	line-height: 1.5em; 
-}
-
-h3, .gamma { 
-	font-size: 1.17em;
-	line-height: 1.17em;
-}
-
-h4, .delta {
-	font-size: 1em;
-	line-height: 1em;
-}
-
-h5, .epsilon { 
-	font-size: .83em; 
-	line-height: .83em;
-}
-
-h6, .zeta { 
-	font-size: .75em; 
-	line-height: .75em;
-}
-
 hr {
 	border: 0;
 	border-top: 1px solid darken($border-grey, 4);
-}
-
-h1,h2,h3,h4,h5,h6 {
-	@extend .weight--bold;
 }
 
 p {
