@@ -7,5 +7,15 @@ define(['./index'], function (controllers) {
     	else {
     		$scope.userName = $stateParams.userName;
     	}
+
+    	$scope.viewOptions = [{
+				label : 'Upcoming',
+				value : 'upcoming'
+			},
+			{
+				label : 'Newest',
+				value : 'newest'
+			}
+		];
     });
 });
