@@ -32,6 +32,10 @@
 	@include user-img(70px);
 }
 
+.user-img-profile {
+	@include user-img(90px);
+}
+
 	.user-img-comment a, .user-img-event a, .user-img-subcomment a, .user-img-going a {
 		display: block;
 		height: 100%;
