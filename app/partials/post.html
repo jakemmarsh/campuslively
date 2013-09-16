@@ -1,7 +1,11 @@
 <div class="white-top">
-	<div class="container">
-		<h1 class="flush highlight" data-ng-hide="eventPosted">Create An Event</h1>
-		<h1 class="flush" data-ng-show="eventPosted">Your event has been posted!</h1>
+	<div class="container full-height">
+		<div class="table full-height">
+			<div class="td vertical-align-middle">
+				<h1 class="flush highlight" data-ng-hide="eventPosted">Create An Event</h1>
+				<h1 class="flush highlight" data-ng-show="eventPosted">Your event has been posted!</h1>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="container soft--ends">
@@ -9,7 +13,7 @@
 		<div class="table full-width">
 			<div class="tr">
 				<div class="td one-twelfth soft--right soft-bottom">
-					<label for="name" class="caps weight--bold">Name</label>
+					<label for="name" class="caps weight--bold">Name <span class="highlight">*</span></label>
 				</div>
 				<div class="td eleven-twelfths soft-bottom">
 					<input type="text" id="name" data-ng-model="eventName" class="full-width" placeholder="Event name..." required />
@@ -25,7 +29,7 @@
 			</div>
 			<div class="tr">
 				<div class="td one-twelfth soft--bottom vertical-align-middle">
-					<label for="location" class="caps weight--bold">Where</label>
+					<label for="location" class="caps weight--bold">Where <span class="highlight">*</span></label>
 				</div>
 				<div class="td eleven-twelfths soft--bottom">
 					<div class="input-prepend full">
@@ -47,7 +51,7 @@
 		<div class="table full-width">
 			<div class="tr">
 				<div class="td one-twelfth soft--bottom vertical-align-middle">
-					<label for="starts" class="caps weight--bold">Starts</label>
+					<label for="starts" class="caps weight--bold">Starts <span class="highlight">*</span></label>
 				</div>
 				<div class="td five-twelfths soft--bottom soft--right">
 					<div class="input-prepend full">
