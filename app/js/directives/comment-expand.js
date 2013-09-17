@@ -2,8 +2,6 @@ define(['./index'], function (directives) {
   'use strict';
   // expand input and show post button on focus
   directives.directive('expandComment', function() {
-    var origHeight;
-
     return {
       restrict: 'A',
  
@@ -12,14 +10,15 @@ define(['./index'], function (directives) {
         element.bind('blur', contract);
  
         function expand() {
-          origHeight = $(element).height();
           $(element).css('height', '150px');
-          $(element).siblings('.btn').toggleClass('hidden');
+          $(element).siblings('.btn').removeClass('hidden');
         }
 
         function contract() {
-          $(element).height(origHeight);
-          $(element).siblings('.btn').toggleClass('hidden');
+          if(!$(element).val()) {
+            $(element).height(33);
+            $(element).siblings('.btn').addClass('hidden');
+          }
         }
       }
     };
