@@ -21,10 +21,16 @@ define([
 
         $rootScope.getClass = function(path) {
             if ($location.path().substr(0, path.length) == path) {
-              return true
-            } else {
-              return false
+              return true;
+            } 
+            else {
+              return false;
             }
+        }
+
+        $rootScope.logout = function() {
+            console.log('signing out');
+            $location.path('/');
         }
     });
 
