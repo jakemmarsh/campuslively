@@ -3,6 +3,14 @@ define(['./index'], function (controllers) {
     controllers.controller('eventCtrl', function ($scope, $stateParams, $modal) {
     	$scope.eventId = $stateParams.eventId;
 
+    	$scope.postComment = function() {
+    		console.log('post comment');
+    	}
+
+    	$scope.postSubComment = function() {
+    		console.log('post SUBcomment');
+    	}
+
     	$scope.mapOptions = {
 			center: new google.maps.LatLng(44.883125, -68.671977),
 			zoom: 15,
