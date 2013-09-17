@@ -8,5 +8,72 @@
 	</div>
 </div>
 <div class="container soft--ends">
-	settings
+	<div class="line">
+		<form name="settingsForm" data-ng-submit="submitChanges()" class="unit three-fourths">
+			<div class="table full-width">
+				<div class="tr">
+					<div class="td one-tenth soft--bottom">
+						<label for="email" class="caps weight--bold">Email</label>
+					</div>
+					<div class="td nine-tenths soft--bottom">
+						<input type="text" class="full-width" id="email" placeholder="jacob.marsh@maine.edu" />
+					</div>
+				</div>
+				<div class="tr">
+					<div class="td one-tenth soft--bottom">
+						<label for="school" class="caps weight--bold">School</label>
+					</div>
+					<div class="td nine-tenths soft--bottom">
+						<input type="text" class="full-width" id="school" placeholder="University of Maine" />
+					</div>
+				</div>
+				<div class="tr">
+					<div class="td one-tenth"></div>
+					<div class="td nine-tenths text-right">
+						<input type="submit" class="btn" value="Save Changes" />
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="unit one-fourth soft--left last-unit">
+			<a href data-ng-click="open('twitter')" class="btn twitter nudge--bottom full-width"><i class="icon-twitter"></i> Add Twitter</a>
+			<a href data-ng-click="open('facebook')" class="btn fb full-width"><i class="icon-facebook"></i> Add Facebook</a>
+		</div>
+	</div>
 </div>
+
+<script type="text/ng-template" id="twitterModal.html">
+    <div class="modal-header">
+        <h3>Add Twitter Account</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="ok()">OK</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="facebookModal.html">
+    <div class="modal-header">
+        <h3>Add Facebook Account</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="ok()">OK</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+    </div>
+</script>
