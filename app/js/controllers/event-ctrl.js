@@ -26,23 +26,13 @@ define(['./index'], function (controllers) {
 		  	if (modal.toLowerCase() == 'rsvp') {
 			    var modalInstance = $modal.open({
 			      templateUrl: 'rsvpModal.html',
-			      controller: 'modalInstanceCtrl',
-			      resolve: {
-			        items: function () {
-			          return $scope.items;
-			        }
-			      }
+			      controller: 'modalInstanceCtrl'
 			    });
 			}
 			else if (modal.toLowerCase() == 'share') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'shareModal.html',
-			      controller: 'modalInstanceCtrl',
-			      resolve: {
-			        items: function () {
-			          return $scope.items;
-			        }
-			      }
+			      controller: 'modalInstanceCtrl'
 			    });
 			}
 		};
