@@ -47,10 +47,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="input-append full-width nudge--ends clearfix">
-				<input type="text" placeholder="Write a comment..." class="nine-tenths" />
-				<button type="submit" class="btn one-tenth">Post</button>
-			</div>
+			<form name="commentForm" class="full-width nudge--ends clearfix" data-ng-submit="postComment()">
+				<textarea placeholder="Write a comment..." class="full-width no-resize" data-ng-model="commentBody" data-expand-comment required></textarea>
+				<button type="submit" class="btn nudge--top float-right hidden" data-ng-disabled="commentForm.$invalid">Post</button>
+			</form>
 			<div class="line">
 				<div class="unit one-tenth">
 					<div class="user-img-comment" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
@@ -98,10 +98,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="input-append full-width clearfix epsilon">
-							<input type="text" placeholder="Write a comment..." class="nine-tenths delta" />
-							<button type="submit" class="btn one-tenth">Post</button>
-						</div>
+						<form name="subCommentForm" class="input-append full-width clearfix epsilon" data-ng-submit="postSubComment()">
+							<input type="text" placeholder="Write a comment..." data-ng-model="subCommentBody" class="nine-tenths delta" required />
+							<button type="submit" class="btn one-tenth" data-ng-disabled="subCommentForm.$invalid">Post</button>
+						</form>
 					</div>
 				</div>
 			</div>

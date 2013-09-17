@@ -15,5 +15,6 @@ define([
     'controllers/post-ctrl',
     'controllers/calendar-ctrl',
     'controllers/contact-ctrl',
-    'controllers/modalInstance-ctrl'
+    'controllers/modalInstance-ctrl',
+    'directives/comment-expand'
 ], function () {});
