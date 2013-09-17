@@ -28,3 +28,25 @@
 			background: darken($border-grey, 4);
 			border: 1px solid darken($border-grey, 4);
 		}
+
+	.btn.twitter {
+		@include gradient($twitter-blue);
+		border: 1px solid $twitter-blue;
+	}
+
+		.btn.twitter:hover, .btn.twitter:active, .btn.twitter:focus {
+			color: $white;
+			@include gradient($twitter-blue, darken($twitter-blue, 3));
+			border: 1px solid darken($twitter-blue, 5);
+		}
+
+	.btn.fb {
+		@include gradient($fb-blue);
+		border: 1px solid $fb-blue;
+	}
+
+		.btn.fb:hover, .btn.fb:active, .btn.fb:focus {
+			color: $white;
+			@include gradient($fb-blue, darken($fb-blue, 3));
+			border: 1px solid darken($fb-blue, 5);
+		}
