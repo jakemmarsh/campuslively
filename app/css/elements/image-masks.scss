@@ -6,6 +6,7 @@
 	height: $size;
 	width: $size;
 	@include corners($size, $size, $size, $size);
+	border: 2px solid $border-grey;
 }
 
 .user-img-sidebar {
