@@ -33,37 +33,42 @@
 	<div class="nudge-half--bottom">
 		<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions"></ng-switch-toggle-group>
 	</div>
-	<div class="line soft--ends">
-		<div class="unit one-twelfth">
-			<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-				<a href data-tooltip="Jake Marsh" data-tooltip-placement="left" data-ng-href="/profile/jakemmarsh"></a>
-			</div>
-		</div>
-		<div class="unit eleven-twelfths last-unit">
-			<div class="box">
-				<div class="header soft-half--sides">
-					<h2 class="flush"><a href="/event/1">DJ Hardo</a></h2>
-				</div>
-				<div class="islet">
-					<div class="line">
-						<div class="unit four-fifths">
-							<h4 class="flush">Bijou Nightclub  |  June 10th  |  11:30pm - 2am</h4>
-						</div>
-						<div class="unit one-fifth last-unit text-right">
-							<ul class="tags">
-								<li>club</li>
-								<li>live music</li>
-							</ul>
-						</div>
-					</div>
-					<p>Event details go here</p>
-					<div class="action-buttons nudge-half--top">
-						<a href tooltip="RSVP"><i class="icon-plus-sign"></i></a>
-						<a href tooltip="People Attending"><span class="gamma">357</span></a>
-						<a href data-ng-href="/event/1" tooltip="More Info"><i class="icon-ellipsis-horizontal"></i></a>
-					</div>
+	<div data-ng-show="currentView == 'upcoming'">
+		<div class="line soft--ends">
+			<div class="unit one-twelfth">
+				<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
+					<a href data-tooltip="Jake Marsh" data-tooltip-placement="left" data-ng-href="/profile/jakemmarsh"></a>
 				</div>
 			</div>
-		</div>
-	</div><!-- event end -->
+			<div class="unit eleven-twelfths last-unit">
+				<div class="box">
+					<div class="header soft-half--sides">
+						<h2 class="flush"><a href="/event/1">DJ Hardo</a></h2>
+					</div>
+					<div class="islet">
+						<div class="line">
+							<div class="unit four-fifths">
+								<h4 class="flush">Bijou Nightclub  |  June 10th  |  11:30pm - 2am</h4>
+							</div>
+							<div class="unit one-fifth last-unit text-right">
+								<ul class="tags">
+									<li>club</li>
+									<li>live music</li>
+								</ul>
+							</div>
+						</div>
+						<p>Event details go here</p>
+						<div class="action-buttons nudge-half--top">
+							<a href tooltip="RSVP"><i class="icon-plus-sign"></i></a>
+							<a href tooltip="People Attending"><span class="gamma">357</span></a>
+							<a href data-ng-href="/event/1" tooltip="More Info"><i class="icon-ellipsis-horizontal"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- event end -->
+	</div>
+	<div data-ng-show="currentView == 'newest'">
+		newest events here
+	</div>
 </div>

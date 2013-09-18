@@ -1,6 +1,8 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('profileCtrl', function ($scope, $stateParams) {
+    	$scope.currentView = 'upcoming';
+    	
     	if($stateParams.userName == 'jakemmarsh') {
     		$scope.userName = "Jake Marsh";
     	}
