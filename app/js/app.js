@@ -5,6 +5,7 @@ define([
     'angular-ui-router',
     'angular-switch-toggle',
     'angular-ui-map',
+    'angular-ui-calendar',
     './controllers/index',
     './directives/index',
     './filters/index',
@@ -21,6 +22,7 @@ define([
         'ui.bootstrap', 
         'ui.state',
         'ngSwitchToggle',
-        'ui.map'
+        'ui.map',
+        'ui.calendar'
     ]);
 });
