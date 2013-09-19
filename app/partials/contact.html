@@ -8,22 +8,22 @@
 		</div>
 	</div>
 </div>
-<div class="container soft--ends">
+<div class="container soft-half--ends">
 	<form name="contactForm" data-ng-submit="sendMessage()" data-ng-hide="messageSent">
 		<div class="table full-width">
 			<div class="tr">
-				<div class="td one-twelfth soft--right soft-bottom">
+				<div class="td one-twelfth soft--right soft-half--bottom">
 					<label for="subject" class="caps weight--bold">Subject</label>
 				</div>
-				<div class="td eleven-twelfths soft-bottom">
+				<div class="td eleven-twelfths soft-half--bottom">
 					<input type="text" id="subject" data-ng-model="messageSubject" class="full-width" placeholder="Message subject..." />
 				</div>
 			</div>
 			<div class="tr">
-				<div class="td one-twelfth soft--bottom">
+				<div class="td one-twelfth soft-half--bottom">
 					<label for="message" class="caps weight--bold">Message <span class="highlight">*</span></label>
 				</div>
-				<div class="td eleven-twelfths soft--ends">
+				<div class="td eleven-twelfths soft-half--bottom">
 					<textarea id="message" data-ng-model="messageBody" class="full-width big" placeholder="Your message..." required></textarea>
 				</div>
 			</div>

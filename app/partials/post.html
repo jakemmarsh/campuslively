@@ -8,30 +8,30 @@
 		</div>
 	</div>
 </div>
-<div class="container soft--ends">
+<div class="container soft-half--ends">
 	<form name="eventForm" data-ng-submit="postEvent()" data-ng-hide="eventPosted">
 		<div class="table full-width">
 			<div class="tr">
-				<div class="td one-twelfth soft--right soft-bottom">
+				<div class="td one-twelfth soft-half--right soft-half--bottom">
 					<label for="name" class="caps weight--bold">Name <span class="highlight">*</span></label>
 				</div>
-				<div class="td eleven-twelfths soft-bottom">
+				<div class="td eleven-twelfths soft-half--bottom">
 					<input type="text" id="name" data-ng-model="eventName" class="full-width" placeholder="Event name..." required />
 				</div>
 			</div>
 			<div class="tr">
-				<div class="td one-twelfth soft--bottom">
+				<div class="td one-twelfth soft-half--bottom">
 					<label for="details" class="caps weight--bold">Details</label>
 				</div>
-				<div class="td eleven-twelfths soft--ends">
+				<div class="td eleven-twelfths soft-half--bottom">
 					<textarea id="details" data-ng-model="eventDetails" class="full-width big" placeholder="Details about the event..."></textarea>
 				</div>
 			</div>
 			<div class="tr">
-				<div class="td one-twelfth soft--bottom vertical-align-middle">
+				<div class="td one-twelfth soft-half--bottom vertical-align-middle">
 					<label for="location" class="caps weight--bold">Where <span class="highlight">*</span></label>
 				</div>
-				<div class="td eleven-twelfths soft--bottom">
+				<div class="td eleven-twelfths soft-half--bottom">
 					<div class="input-prepend full">
 						<div class="icon">
 							<i class="icon-map-marker"></i>
@@ -41,19 +41,19 @@
 				</div>
 			</div>
 			<div class="tr">
-				<div class="td one-twelfth soft--bottom">
+				<div class="td one-twelfth soft-half--bottom">
 				</div>
-				<div class="td eleven-twelfths soft--bottom">
+				<div class="td eleven-twelfths soft-half--bottom">
 					<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map"></div>
 				</div>
 			</div>
 		</div>
 		<div class="table full-width">
 			<div class="tr">
-				<div class="td one-twelfth soft--bottom vertical-align-middle">
+				<div class="td one-twelfth soft-half--bottom vertical-align-middle">
 					<label for="starts" class="caps weight--bold">Starts <span class="highlight">*</span></label>
 				</div>
-				<div class="td five-twelfths soft--bottom soft--right">
+				<div class="td five-twelfths soft-half--bottom soft--right">
 					<div class="input-prepend full">
 						<div class="icon">
 							<i class="icon-time"></i>
@@ -61,10 +61,10 @@
 						<input type="text" id="starts" data-ng-model="eventStart" placeholder="Start date and time..." required />
 					</div>
 				</div>
-				<div class="td one-twelfth soft--bottom text-right soft--right vertical-align-middle">
+				<div class="td one-twelfth soft-half--bottom text-right soft-half--right vertical-align-middle">
 					<label for="ends" class="caps weight--bold">Ends</label>
 				</div>
-				<div class="td five-twelfths soft--bottom">
+				<div class="td five-twelfths soft-half--bottom">
 					<div class="input-prepend full">
 						<div class="icon">
 							<i class="icon-time"></i>
