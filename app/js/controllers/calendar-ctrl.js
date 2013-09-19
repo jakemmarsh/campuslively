@@ -5,8 +5,6 @@ define(['./index'], function (controllers) {
 	        height: 600,
 	        editable: false,
 	        header:{
-	          left: 'month agendaWeek agendaDay',
-	          center: 'title',
 	          right: 'today prev,next'
 	        },
 	        dayClick: $scope.dayClick
