@@ -95,6 +95,11 @@ html .fc,
 	z-index: 4;
 	}
 	
+.fc-day-header {
+	background: $highlight;
+	color: $white;
+	padding: $half-space/3 0 !important;
+}
 	
 	
 /* Content
@@ -117,11 +122,15 @@ html .fc,
 
 .fc-widget-header,    /* <th>, usually */
 .fc-widget-content {  /* <td>, usually */
-	border: 1px solid #ddd;
+	border: 1px solid $border-grey;
 	}
 	
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
-	background: #fcf8e3;
+	background: $white;
+	}
+
+	.fc-state-highlight:hover {
+		background: $white !important;
 	}
 	
 .fc-cell-overlay { /* semi-transparent rectangle while dragging */
@@ -129,35 +138,23 @@ html .fc,
 	opacity: .3;
 	filter: alpha(opacity=30); /* for IE */
 	}
+
+.fc-day:hover {
+	background: lighten($light-grey, 1);
+	cursor: pointer;
+}
 	
 
 
 /* Buttons
 ------------------------------------------------------------------------*/
 
-.fc-button {
-	position: relative;
-	display: inline-block;
-	padding: 0 .6em;
-	overflow: hidden;
-	height: 1.9em;
-	line-height: 1.9em;
-	white-space: nowrap;
-	cursor: pointer;
-	}
-	
-.fc-state-default { /* non-theme */
-	border: 1px solid;
-	}
-
 .fc-state-default.fc-corner-left { /* non-theme */
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
+	@include corners(3px, 0, 0, 3px);
 	}
 
 .fc-state-default.fc-corner-right { /* non-theme */
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
+	@include corners(0, 3px, 3px, 0);
 	}
 
 /*
@@ -199,53 +196,25 @@ html .fc,
 */
 
 .fc-state-default {
-	background-color: #f5f5f5;
-	background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
-	background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
-	background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
-	background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
-	background-repeat: repeat-x;
-	border-color: #e6e6e6 #e6e6e6 #bfbfbf;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-	color: #333;
-	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-	}
-
-.fc-state-hover,
-.fc-state-down,
-.fc-state-active,
-.fc-state-disabled {
-	color: #333333;
-	background-color: #e6e6e6;
-	}
-
-.fc-state-hover {
-	color: #333333;
-	text-decoration: none;
-	background-position: 0 -15px;
-	-webkit-transition: background-position 0.1s linear;
-	   -moz-transition: background-position 0.1s linear;
-	     -o-transition: background-position 0.1s linear;
-	        transition: background-position 0.1s linear;
+	@extend .btn;
 	}
 
 .fc-state-down,
 .fc-state-active {
-	background-color: #cccccc;
-	background-image: none;
-	outline: 0;
 	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
 	}
 
 .fc-state-disabled {
-	cursor: default;
-	background-image: none;
-	opacity: 0.65;
-	filter: alpha(opacity=65);
-	box-shadow: none;
+	background: darken($border-grey, 4);
+	border: 1px solid darken($border-grey, 4);
+	color: $white;
 	}
+
+	.fc-state-disabled:hover, .fc-state-disabled:active, .fc-state-disabled:focus {
+			background: darken($border-grey, 4);
+			border: 1px solid darken($border-grey, 4);
+			color: $white;
+		}
 
 	
 
@@ -262,9 +231,8 @@ html .fc,
 	}
 	 
 .fc-event {
-	border: 1px solid #3a87ad; /* default BORDER color */
-	background-color: #3a87ad; /* default BACKGROUND color */
-	color: #fff;               /* default TEXT color */
+	background-color: $highlight; /* default BACKGROUND color */
+	color: $white;               /* default TEXT color */
 	font-size: .85em;
 	cursor: default;
 	}
@@ -488,7 +456,7 @@ table.fc-border-separate {
 	}
 	
 .fc-widget-header .fc-agenda-divider-inner {
-	background: #eee;
+	background: $border-grey;
 	}
 	
 /* slot rows */
@@ -531,14 +499,12 @@ table.fc-border-separate {
 
 .fc-event-vert.fc-event-start {
 	border-top-width: 1px;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+	@include corners(3px, 3px, 0, 0);
 	}
 
 .fc-event-vert.fc-event-end {
 	border-bottom-width: 1px;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
+	@include corners(0, 0, 3px, 3px);
 	}
 	
 .fc-event-vert .fc-event-time {
@@ -558,7 +524,7 @@ table.fc-border-separate {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: #fff;
+	background: $white;
 	opacity: .25;
 	filter: alpha(opacity=25);
 	}
