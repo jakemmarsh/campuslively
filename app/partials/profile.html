@@ -36,9 +36,7 @@
 	<div data-ng-show="currentView == 'upcoming'">
 		<div class="line nudge-half--ends">
 			<div class="unit one-twelfth">
-				<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-					<a href data-tooltip="Jake Marsh" data-tooltip-placement="left" data-ng-href="/profile/jakemmarsh"></a>
-				</div>
+				<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')"></div>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
 				<div class="box">
@@ -59,8 +57,8 @@
 						</div>
 						<p>Event details go here</p>
 						<div class="action-buttons nudge-half--top">
-							<a href tooltip="RSVP"><i class="icon-plus-sign"></i></a>
-							<a href tooltip="People Attending"><span class="gamma">357</span></a>
+							<a href data-ng-click="openRSVP(1)" data-tooltip="RSVP"><i class="icon-plus-sign"></i></a>
+							<a href data-ng-click="openAttending(1)" data-tooltip="People Attending"><span class="gamma">357</span></a>
 							<a href data-ng-href="/event/1" tooltip="More Info"><i class="icon-ellipsis-horizontal"></i></a>
 						</div>
 					</div>
@@ -72,3 +70,39 @@
 		newest events here
 	</div>
 </div>
+
+<script type="text/ng-template" id="rsvpModal.html">
+    <div class="modal-header">
+        <h3>RSVP</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="ok()">OK</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="attendingModal.html">
+    <div class="modal-header">
+        <h3>Attending</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="ok()">OK</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+    </div>
+</script>
