@@ -48,18 +48,20 @@
 				Calendar
 			</a>
 		</li>
-		<li data-ng-class="{true:'active', false:''}[getClass('/settings')]">
-			<a href="/settings" class="link">
-				<i class="icon-cogs"></i>
-				Settings
-			</a>
-		</li>
-		<li class="logout">
-			<a href data-ng-click="logout()" class="link">
-				<i class="icon-signout"></i>
-				Sign Out
-			</a>
-		</li>
+		<div class="bottom">
+			<li data-ng-class="{true:'active', false:''}[getClass('/settings')]">
+				<a href="/settings" class="link">
+					<i class="icon-cogs"></i>
+					Settings
+				</a>
+			</li>
+			<li class="logout">
+				<a href data-ng-click="logout()" class="link">
+					<i class="icon-signout"></i>
+					Sign Out
+				</a>
+			</li>
+		</div>
 	</ul>
 </nav>
 <section class="main" data-ui-view></section>
