@@ -7,16 +7,16 @@
 			<div class="td three-tenths full-height">
 				<h1 class="flush" data-ng-bind="userName"></h1>
 				<div class="normal-lh">
-					<a href="#" data-tooltip="Location">
+					<a href data-ng-click="openLocation()" data-tooltip="Location">
 						<i class="beta icon-map-marker nudge-half--right"></i>
 					</a>
-					<a href="#" data-tooltip="Website">
+					<a href="http://www.google.com/" target="_blank" data-tooltip="Website">
 						<i class="beta icon-paper-clip nudge-half--right"></i>
 					</a>
-					<a href="#" data-tooltip="Twitter">
+					<a href="http://www.twitter.com/" target="_blank" data-tooltip="Twitter">
 						<i class="beta icon-twitter nudge-half--right"></i>
 					</a>
-					<a href="#" data-tooltip="Facebook">
+					<a href="http://www.facebook.com" target="_blank" data-tooltip="Facebook">
 						<i class="beta icon-facebook nudge-half--right"></i>
 					</a>
 
@@ -92,6 +92,24 @@
 <script type="text/ng-template" id="attendingModal.html">
     <div class="modal-header">
         <h3>Attending</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="ok()">OK</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="locationModal.html">
+    <div class="modal-header">
+        <h3>Location</h3>
     </div>
     <div class="modal-body">
         <ul>

@@ -33,5 +33,12 @@ define(['./index'], function (controllers) {
               controller: 'modalInstanceCtrl'
             });
         };
+
+        $scope.openLocation = function () {
+            var modalInstance = $modal.open({
+              templateUrl: 'locationModal.html',
+              controller: 'modalInstanceCtrl'
+            });
+        };
     });
 });
