@@ -1,6 +1,6 @@
 .input-prepend {
 	@include corners();
-	display: inline-block;
+	display: block;
 	line-height: 33px;
 	@extend .clearfix;
 }
