@@ -35,6 +35,12 @@ define(['./index'], function (controllers) {
 			      controller: 'modalInstanceCtrl'
 			    });
 			}
+			else if (modal.toLowerCase() == 'invite') {
+				var modalInstance = $modal.open({
+			      templateUrl: 'inviteModal.html',
+			      controller: 'modalInstanceCtrl'
+			    });
+			}
 		};
     });
 });

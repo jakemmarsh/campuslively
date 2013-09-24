@@ -3,10 +3,11 @@
 		<div class="line">
 			<div class="unit one-half text-left">
 				<h1 class="flush">Event Name <i class="muted weight--normal zeta icon-unlock"></i></h1>
-				<h3 class="flush muted weight--normal">hosted by <a href data-ng-href="/profile/jakemmarsh">jakemmarsh</a></h3>
+				<h3 class="flush muted weight--normal">hosted by <a href data-ng-href="/profile/jakemmarsh">Jake Marsh</a></h3>
 			</div>
 			<div class="unit one-half last-unit text-right">
-				<a href class="btn nudge-half--right" data-ng-click="open('rsvp')"><i class="icon-plus-sign"></i> RSVP</a>
+				<a href class="btn nudge-half--right" data-ng-click="open('rsvp')"><i class="icon-thumbs-up"></i> RSVP</a>
+				<a href class="btn nudge-half--right" data-ng-click="open('invite')"><i class="icon-plus-sign"></i> Invite</a>
 				<a class="btn" data-ng-click="open('share')"><i class="icon-share"></i> Share</a>
 			</div>
 		</div>
@@ -172,6 +173,24 @@
 <script type="text/ng-template" id="rsvpModal.html">
     <div class="modal-header">
         <h3>RSVP</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="ok()">OK</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="inviteModal.html">
+    <div class="modal-header">
+        <h3>Invite Friends</h3>
     </div>
     <div class="modal-body">
         <ul>
