@@ -38,6 +38,13 @@
     height: 100%;
 }
 
+    .full-height__header {
+        height: 100%;
+        height: -webkit-calc(100% - 100px);
+        height: -moz-calc(100% - 100px);
+        height: calc(100% - 100px);
+    }
+
 .island {
     padding: $full-space;
 }
