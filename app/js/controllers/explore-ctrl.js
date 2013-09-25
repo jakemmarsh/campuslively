@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('eventsCtrl', function ($scope, $modal) {
+    controllers.controller('exploreCtrl', function ($scope, $modal) {
     	$scope.currentView = 'school';
     	
     	$scope.viewOptions = [{

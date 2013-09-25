@@ -10,7 +10,7 @@ define([
     'controllers/settings-ctrl',
     'controllers/profile-ctrl',
     'controllers/feed-ctrl',
-    'controllers/events-ctrl',
+    'controllers/explore-ctrl',
     'controllers/event-ctrl',
     'controllers/post-ctrl',
     'controllers/calendar-ctrl',

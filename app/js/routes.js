@@ -39,11 +39,11 @@ define(['./app'], function (app) {
             controller: 'feedCtrl',
             title: 'My Feed'
         })
-        .state('inner.events', {
-            url: '/events',
-            templateUrl: '/partials/events.html',
-            controller: 'eventsCtrl',
-            title: 'Events'
+        .state('inner.explore', {
+            url: '/explore',
+            templateUrl: '/partials/explore.html',
+            controller: 'exploreCtrl',
+            title: 'Explore'
         })
         .state('inner.calendar', {
             url: '/calendar',
