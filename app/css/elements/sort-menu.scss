@@ -2,7 +2,7 @@
 	background: $white;
 	@include corners();
 	padding: $half-space/2 $half-space;
-	border: 2px solid $border-grey;
+	border: 1px solid $border-grey;
 	color: $dark-grey;
 	text-transform: lowercase;
 }
