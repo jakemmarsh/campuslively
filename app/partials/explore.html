@@ -16,6 +16,19 @@
 	</div>
 </div>
 <div class="container soft-half--ends" data-ng-show="currentView == 'school'">
+	<div class="soft-half--ends text-right">
+		<div class="dropdown">
+			<a href class="dropdown-toggle sort-toggle">
+				{{ currentSort.label }} <i class="icon-chevron-down muted weight--normal"></i>
+			</a>
+			<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
+				<li data-ng-repeat="option in sortOptions">
+					<a href data-ng-bind="option.label" data-ng-click="changeSort(option)"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<hr />
 	<div class="line nudge-half--ends">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
@@ -51,6 +64,19 @@
 	</div><!-- event end -->
 </div>
 <div class="container soft-half--ends" data-ng-show="currentView == 'nearby'">
+	<div class="soft-half--ends text-right">
+		<div class="dropdown">
+			<a href class="dropdown-toggle sort-toggle">
+				{{ currentSort.label }} <i class="icon-chevron-down muted weight--normal"></i>
+			</a>
+			<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
+				<li data-ng-repeat="option in sortOptions">
+					<a href data-ng-bind="option.label" data-ng-click="changeSort(option)"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<hr />
 	All events nearby
 </div>
 

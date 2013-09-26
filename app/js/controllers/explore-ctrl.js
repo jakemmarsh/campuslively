@@ -4,14 +4,33 @@ define(['./index'], function (controllers) {
     	$scope.currentView = 'school';
     	
     	$scope.viewOptions = [{
-				label : 'My School',
-				value : 'school'
+				label: 'My School',
+				value: 'school'
 			},
 			{
-				label : 'Nearby',
-				value : 'nearby'
+				label: 'Nearby',
+				value: 'nearby'
 			}
 		];
+
+		$scope.currentSort = {
+			label: 'by start date',
+			value: 'startDate'
+		};
+
+		$scope.sortOptions = [{
+				label: 'by start date',
+				value: 'startDate'
+			},
+			{
+				label: 'by post date',
+				value: 'postDate'
+			}
+		];
+
+		$scope.changeSort = function(option) {
+			$scope.currentSort = option;
+		}
 
 		$scope.openRSVP = function (eventId) {
 		    var modalInstance = $modal.open({
