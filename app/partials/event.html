@@ -17,36 +17,32 @@
 	<div class="event-img nudge-half--bottom" style="background-image: url('http://wallpaperdj.com/wallpapers/dash_berlin-1280x720.jpg')"></div>
 	<div class="line text-left">
 		<div class="unit three-fourths">
-			<div class="box">
-				<div class="islet hard--bottom">
-					<div class="line">
-						<div class="unit three-percent">
-							<h4 class="flush--top nudge-half--bottom"><i class="muted icon-time"></i></h4>
-						</div>
-						<div class="unit ninety-seven-percent last-unit">
-							<h4 class="flush--top nudge-half--bottom weight--normal">Friday at 11:30pm</h4>
-						</div>
+			<div class="box islet">
+				<div class="line">
+					<div class="unit three-percent">
+						<h4 class="flush--top nudge-half--bottom"><i class="muted icon-time"></i></h4>
 					</div>
-					<div class="line">
-						<div class="unit three-percent">
-							<h4 class="flush--top nudge-half--bottom"><i class="muted icon-map-marker"></i></h4>
-						</div>
-						<div class="unit ninety-seven-percent last-unit">
-							<h4 class="flush--top nudge-half--bottom weight--normal">Bijou Nightclub</h4>
-						</div>
+					<div class="unit ninety-seven-percent last-unit">
+						<p class="nudge-half--bottom">Friday at 11:30pm</p>
 					</div>
 				</div>
-				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map"></div>
-				<div class="islet">
-					<div class="line">
-						<div class="unit three-percent">
-							<h4 class="flush"><i class="muted icon-align-left"></i></h4>
-						</div>
-						<div class="unit ninety-seven-percent last-unit">
-							<p>Famous Miami-based DJ Hardo LIVE at Bijou tonight! Tickets are $20 at the door. Order now and get them for $15! www.bijounightclub.com</p>
-						</div>
+				<div class="line">
+					<div class="unit three-percent">
+						<h4 class="flush--top nudge-half--bottom"><i class="muted icon-map-marker"></i></h4>
+					</div>
+					<div class="unit ninety-seven-percent last-unit">
+						<p class="nudge-half--bottom">Bijou Nightclub</p>
 					</div>
 				</div>
+				<div class="line">
+					<div class="unit three-percent">
+						<h4 class="flush"><i class="muted icon-align-left"></i></h4>
+					</div>
+					<div class="unit ninety-seven-percent last-unit">
+						<p>Famous Miami-based DJ Hardo LIVE at Bijou tonight! Tickets are $20 at the door. Order now and get them for $15! www.bijounightclub.com</p>
+					</div>
+				</div>
+				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map nudge-half--top"></div>
 			</div>
 			<form name="commentForm" class="full-width nudge-half--ends clearfix" data-ng-submit="postComment()">
 				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" data-ng-model="commentBody" data-expand-comment required></textarea>
