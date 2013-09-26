@@ -22,17 +22,27 @@
 
 				</div>
 			</div>
-			<div class="td six-tenths full-height normal-lh vertical-align-middle">
-				<p>Bijou Nightclub is the premier club in Boston. Get a table with your close friends and enjoy premium bottle services. The hottest DJ's in Boston!</p>
+			<div class="td six-tenths full-height normal-lh vertical-align-middle text-right">
+				<a href class="btn nudge-half--right" data-ng-click="subscribe()"><i class="icon-star"></i> Subscribe</a>
 			</div>
 
 		</div>
 	</div>
 </div>
 <div class="container soft-half--ends">
-	<div class="nudge-half--bottom">
-		<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions"></ng-switch-toggle-group>
+	<div class="box islet nudge-half--bottom">
+		<div class="line nudge-half--bottom">
+			<div class="unit three-percent">
+				<h4 class="flush"><i class="muted icon-align-left"></i></h4>
+			</div>
+			<div class="unit ninety-seven-percent last-unit">
+				<p>Bijou Nightclub is the premier club in Boston. Get a table with your close friends and enjoy premium bottle services. The hottest DJ's in Boston!</p>
+			</div>
+		</div>
+		<div style="background:#f6f6f6;height:200px;"></div>
 	</div>
+	<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions"></ng-switch-toggle-group>
+	<hr />
 	<div data-ng-show="currentView == 'upcoming'">
 		<div class="line nudge-half--ends">
 			<div class="unit one-twelfth">
