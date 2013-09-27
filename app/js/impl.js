@@ -17,5 +17,6 @@ define([
     'controllers/contact-ctrl',
     'controllers/modalInstance-ctrl',
     'directives/comment-expand',
+    'directives/fixed-sidebar',
     'filters/parse-url'
 ], function () {});
