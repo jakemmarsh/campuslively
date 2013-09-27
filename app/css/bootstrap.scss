@@ -430,7 +430,7 @@
 .dropdown-submenu:focus > a {
   text-decoration: none;
   color: #ffffff;
-  background-color: $highlight;
+  background-color: $green;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
@@ -438,7 +438,7 @@
   color: #ffffff;
   text-decoration: none;
   outline: 0;
-  background-color: $highlight;
+  background-color: $green;
 }
 .dropdown-menu > .disabled > a,
 .dropdown-menu > .disabled > a:hover,

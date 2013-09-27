@@ -32,8 +32,7 @@
 	#dark_top #browser {
 		width: 90%;
 		max-width: 890px;
-		height: auto;
-		margin-top: 20px;
+		@extend .nudge--top;
 	}
 
 .index_button {
@@ -51,7 +50,7 @@
 }
 
 	.index_item > h3 > i {
-		color: $highlight;
+		color: $blue;
 	}
 
 .index_item > p {
