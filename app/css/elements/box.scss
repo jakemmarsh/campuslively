@@ -17,3 +17,7 @@
 		.box .header a, .box .header a:hover, .box .header a:focus, .box .header a:active {
 			color: $white !important;
 		}
+
+	.box.top-highlight {
+		border-top: 3px solid $blue;
+	}
