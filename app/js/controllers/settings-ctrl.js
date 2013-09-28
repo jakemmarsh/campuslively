@@ -14,6 +14,10 @@ define(['./index'], function (controllers) {
 			      controller: 'modalInstanceCtrl'
 			    });
 			}
-		};
+		}
+
+		$scope.removeSubscription = function(subscriptionId) {
+			console.log('unsubscribe');
+		}
     });
 });

@@ -6,6 +6,7 @@
 	height: $size;
 	width: $size;
 	@include corners($size, $size, $size, $size);
+	position: relative;
 }
 
 .user-img-sidebar {
@@ -28,15 +29,39 @@
 	@include user-img(40px);
 }
 
-.user-img-event {
+.user-img-event, .user-img-subscriptions {
 	@include user-img(70px);
 }
+
+	.user-img-subscriptions {
+		display: inline-block;
+		@extend .nudge-half--sides;
+	}
+
+	.user-img-subscriptions .remove {
+		background: $dark-grey;
+		color: $white;
+		height: 15px;
+		width: 15px;
+		@include corners(15px, 15px, 15px, 15px);
+		position: absolute;
+		top: 0;
+		right: 0;
+		text-align: center;
+		font-size: 0.8em;
+		line-height: 1.2em;
+		display: none;
+	}
+
+	.user-img-subscriptions:hover .remove {
+		display: block;
+	}
 
 .user-img-profile {
 	@include user-img(90px);
 }
 
-	.user-img-comment a, .user-img-event a, .user-img-subcomment a, .user-img-going a {
+	.user-img-comment a, .user-img-event a, .user-img-subcomment a, .user-img-going a, .user-img-subscriptions a {
 		display: block;
 		height: 100%;
 		width: 100%;
