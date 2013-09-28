@@ -19,5 +19,6 @@ define([
     'directives/comment-expand',
     'directives/fixed-sidebar',
     'directives/confirm-check',
+    'services/location',
     'filters/parse-url'
 ], function () {});
