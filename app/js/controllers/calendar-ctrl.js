@@ -14,11 +14,25 @@ define(['./index'], function (controllers) {
 	        }
     	];
 
+    	var formatDate = function(date) {
+    		var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    		    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+				weekDay = weekdays[date.getDay()],
+    		    dayNumber = date.getDate(),
+    		    month = months[date.getMonth()],
+    		    year = date.getFullYear(),
+				formattedDate = weekDay + ", " + month + " " + dayNumber + ", " + year;
+
+    		return formattedDate;
+
+    	}
+
     	$scope.dayClick = function( date, allDay, jsEvent, view ){
     		if(!$scope.$$phase) {         
           		$scope.$apply(function() {
           			$scope.showDay = true;
-    				$scope.selectedDay = date;
+    				$scope.selectedDay = formatDate(date);
+
 
     				$scope.$watch('showDay', function(newval){
     					if(newval === true) {
