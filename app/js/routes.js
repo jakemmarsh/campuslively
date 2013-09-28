@@ -65,7 +65,17 @@ define(['./app'], function (app) {
             url: '/post',
             templateUrl: '/partials/post.html',
             controller: 'postCtrl',
-            title: 'Post An Event'
+            title: 'Post An Event',
+            resolve: {
+                resolvedLocation: function(locationService) {
+                    return locationService.getGeo().then(function (data) {
+                        return data;
+                    },
+                    function (errorMessage) {
+                        return errorMessage;
+                    });
+                }
+            }
         })
         .state('inner.settings', {
             url: '/settings',
