@@ -7,8 +7,104 @@
 		</div>
 	</div>
 </div>
-<div class="table full-width full-height__header">
-	<div class="td full-height full-width vertical-align-middle text-center">
-		Register
+<div class="container soft-half--ends">
+	<div class="line">
+		<div class="unit six-tenths">
+			<form name="registerForm" data-ng-submit="register()" data-ng-hide="emailSent">
+				<div class="table full-width">
+					<div class="tr">
+						<div class="td two-twelfths soft-half--right soft-half--bottom">
+							<label for="username" class="caps weight--bold">Username <span class="red">*</span></label>
+						</div>
+						<div class="td ten-twelfths soft-half--bottom">
+							<input type="text" id="username" data-ng-model="username" class="full-width" placeholder="Account username..." required />
+						</div>
+					</div>
+					<div class="tr">
+						<div class="td two-twelfths soft-half--right soft-half--bottom">
+							<label for="email" class="caps weight--bold">Email <span class="red">*</span></label>
+						</div>
+						<div class="td ten-twelfths soft-half--bottom">
+							<input type="text" id="email" data-ng-model="email" class="full-width" placeholder="Your email address..." required />
+						</div>
+					</div>
+					<div class="tr">
+						<div class="td two-twelfths soft-half--right soft-half--bottom">
+							<label for="emailConfirm" class="caps weight--bold">Confirm <span class="red">*</span></label>
+						</div>
+						<div class="td ten-twelfths soft-half--bottom">
+							<input type="text" id="emailConfirm" data-ng-model="emailConfirm" class="full-width" placeholder="Your email address again..." required data-confirm-check="email" data-confirm-model="emailMatch" />
+						</div>
+					</div>
+				</div>
+				<div class="table full-width">
+					<div class="tr">
+						<div class="td two-twelfths soft-half--bottom vertical-align-middle">
+							<label for="firstName" class="caps weight--bold">First <span class="red">*</span></label>
+						</div>
+						<div class="td four-twelfths soft-half--bottom soft--right">
+							<input type="text" id="firstName" data-ng-model="firstName" class="full-width" placeholder="Your first name..." required />
+						</div>
+						<div class="td two-twelfths soft-half--bottom vertical-align-middle text-right soft-half--right">
+							<label for="lastName" class="caps weight--bold">Last <span class="red">*</span></label>
+						</div>
+						<div class="td four-twelfths soft-half--bottom">
+							<input type="text" id="lastName" data-ng-model="lastName" class="full-width" placeholder="Your last name..." required />
+						</div>
+					</div>
+				</div>
+				<div class="table full-width">
+					<div class="tr">
+						<div class="td two-twelfths soft-half--right soft-half--bottom">
+							<label for="password" class="caps weight--bold">Password <span class="red">*</span></label>
+						</div>
+						<div class="td ten-twelfths soft-half--bottom">
+							<input type="password" id="password" data-ng-model="password" class="full-width" placeholder="Your password..." required />
+						</div>
+					</div>
+					<div class="tr">
+						<div class="td two-twelfths soft-half--right soft-half--bottom">
+							<label for="passwordConfirm" class="caps weight--bold">Confirm <span class="red">*</span></label>
+						</div>
+						<div class="td ten-twelfths soft-half--bottom">
+							<input type="password" id="passwordConfirm" data-ng-model="passwordConfirm" class="full-width" placeholder="Your password again..." required data-confirm-check="password" data-confirm-model="passwordMatch" />
+						</div>
+					</div>
+					<div class="tr">
+						<div class="td two-twelfths soft-half--right soft-half--bottom">
+							<label for="gender" class="caps weight--bold">Gender</label>
+						</div>
+						<div class="td ten-twelfths soft-half--bottom">
+							<input type="radio" name="gender" data-ng-model="gender" value="male"> <span class="nudge--right">Male</span>
+							<input type="radio" name="gender" data-ng-model="gender" value="female" checked> Female
+						</div>
+					</div>
+					<div class="tr">
+						<div class="td two-twelfths soft-half--right soft-half--bottom">
+							<label for="school" class="caps weight--bold">School <span class="red">*</span></label>
+						</div>
+						<div class="td ten-twelfths soft-half--bottom">
+							<input type="text" id="school" data-ng-model="school" class="full-width" placeholder="Your school..." required data-confirm-check="password" data-confirm-model="passwordMatch" />
+						</div>
+					</div>
+				</div>
+				<div class="table full-width">
+					<div class="tr">
+						<div class="td full-width text-right">
+							<input type="submit" class="btn" value="Register" data-ng-disabled="registerForm.$invalid" />
+						</div>
+					</div>
+				</div>
+				<span class="red weight--bold" data-ng-show="registerForm.$error.emailMatch">
+					Email addresses don't match.
+				</span>
+				<span class="red weight--bold" data-ng-show="registerForm.$error.passwordMatch">
+					Passwords don't match.
+				</span>
+			</form>
+		</div>
+		<div class="unit four-tenths last-unit soft-half--left">
+			<h2 class="flush blue">Why Register?</h2>
+		</div>
 	</div>
 </div>

@@ -18,5 +18,6 @@ define([
     'controllers/modalInstance-ctrl',
     'directives/comment-expand',
     'directives/fixed-sidebar',
+    'directives/confirm-check',
     'filters/parse-url'
 ], function () {});
