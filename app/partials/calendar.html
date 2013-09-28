@@ -8,5 +8,77 @@
 	</div>
 </div>
 <div class="container soft-half--ends">
-	<div data-ui-calendar="calendarOptions" data-ng-model="eventSource"></div>
+	<div data-ui-calendar="calendarOptions" data-ng-model="eventSource" class="nudge-half--bottom"></div>
+	<div data-ng-show="showDay" id="dayEvents">
+		<h1 class="flush nudge-half--bottom" data-ng-bind="selectedDay"></h1>
+		<div class="line nudge-half--ends">
+			<div class="unit one-twelfth">
+				<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
+					<a href data-tooltip="Jake Marsh" data-tooltip-placement="left" data-ng-href="/profile/jakemmarsh"></a>
+				</div>
+			</div>
+			<div class="unit eleven-twelfths last-unit">
+				<div class="box">
+					<div class="header soft-half--sides">
+						<h2 class="flush"><a href="/event/1">DJ Hardo</a></h2>
+					</div>
+					<div class="islet">
+						<div class="line">
+							<div class="unit four-fifths">
+								<h4 class="flush">Bijou Nightclub  |  June 10th  |  11:30pm - 2am</h4>
+							</div>
+							<div class="unit one-fifth last-unit text-right">
+								<ul class="tags">
+									<li>club</li>
+									<li>live music</li>
+								</ul>
+							</div>
+						</div>
+						<p>Famous Miami-based DJ Hardo LIVE at Bijou tonight! Tickets are $20 at the door. Order now and get them for $15! www.bijounightclub.com</p>
+						<div class="action-buttons nudge-half--top">
+							<a href data-ng-click="openRSVP(1)" data-tooltip="RSVP"><i class="icon-thumbs-up"></i></a>
+							<a href data-ng-click="openAttending(1)" data-tooltip="People Attending"><span class="gamma">357</span></a>
+							<a href data-ng-href="/event/1" tooltip="More Info"><i class="icon-ellipsis-horizontal"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- event end -->
+	</div>
 </div>
+
+<script type="text/ng-template" id="rsvpModal.html">
+    <div class="modal-header">
+        <h3>RSVP</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn__blue" data-ng-click="ok()">OK</button>
+        <button class="btn__red" data-ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="attendingModal.html">
+    <div class="modal-header">
+        <h3>Attending</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn__blue" data-ng-click="ok()">OK</button>
+        <button class="btn__red" data-ng-click="cancel()">Cancel</button>
+    </div>
+</script>

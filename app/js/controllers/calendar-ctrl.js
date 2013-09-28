@@ -1,14 +1,7 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('calendarCtrl', function ($scope) {
-    	$scope.calendarOptions = {
-	        height: 600,
-	        editable: false,
-	        header:{
-	          right: 'today prev,next'
-	        },
-	        dayClick: $scope.dayClick
-      	};
+    controllers.controller('calendarCtrl', function ($scope, $location, $anchorScroll, $timeout, $modal) {
+    	$scope.showDay = false;
 
       	$scope.eventSource = [
 	        {
@@ -22,7 +15,46 @@ define(['./index'], function (controllers) {
     	];
 
     	$scope.dayClick = function( date, allDay, jsEvent, view ){
-	        console.log('Day Clicked ' + date);
-	    };
+    		if(!$scope.$$phase) {         
+          		$scope.$apply(function() {
+          			$scope.showDay = true;
+    				$scope.selectedDay = date;
+
+    				$scope.$watch('showDay', function(newval){
+    					if(newval === true) {
+    						// scroll to specific day's events
+		    				var old = $location.hash();
+		    				$location.hash('dayEvents');
+		    				$anchorScroll();
+		    				// reset to old to keep any additional routing logic from kicking in
+		    				$location.hash(old);
+    					}
+    				});
+          		});        
+        	}
+	    }
+
+	    $scope.calendarOptions = {
+	        height: 600,
+	        editable: false,
+	        header:{
+	          right: 'today prev,next'
+	        },
+	        dayClick: $scope.dayClick
+      	};
+
+      	$scope.openRSVP = function (eventId) {
+		    var modalInstance = $modal.open({
+		      templateUrl: 'rsvpModal.html',
+		      controller: 'modalInstanceCtrl'
+		    });
+		}
+
+		$scope.openAttending = function (eventId) {
+		    var modalInstance = $modal.open({
+		      templateUrl: 'attendingModal.html',
+		      controller: 'modalInstanceCtrl'
+		    });
+		}
     });
 });
