@@ -18,7 +18,6 @@ define([
     'controllers/modalInstance-ctrl',
     'directives/comment-expand',
     'directives/fixed-sidebar',
-    'directives/confirm-check',
     'directives/ng-blur',
     'services/location',
     'filters/parse-url'
