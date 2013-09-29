@@ -18,7 +18,7 @@ define(['./index'], function (services) {
 
         return deferred.promise;
       },
-      foursquare: function(pos) {
+      getFoursquareVenues: function(pos) {
         var deferred = $q.defer(),
             clientSecret = 'R4IVY3OSER10BUFMKODGCWFHXITCTRGXS5UJED1HRCEGQZSS',
             clientID = 'GA3OVFMEIKL1UC3ZXAUPS5ZOIJ3FIQPEWSTGRXOOYHFPC554';
@@ -26,11 +26,35 @@ define(['./index'], function (services) {
         $http.get('https://api.foursquare.com/v2/venues/search?ll=' + pos.latitude.toFixed(2) + ',' + pos.longitude.toFixed(2) + '&client_id=' + clientID + '&client_secret=' + clientSecret).success(function(data) {
           deferred.resolve(data);
         }).error(function() {
-          deferred.reject("An error occurred while logging a user in.");
+          deferred.reject("An error occurred while fetching venues from Foursquare.");
         });
 
         return deferred.promise;
       },
+      createFoursquareVenue: function(venue) {
+        var deferred = $q.defer(),
+            clientSecret = 'R4IVY3OSER10BUFMKODGCWFHXITCTRGXS5UJED1HRCEGQZSS',
+            clientID = 'GA3OVFMEIKL1UC3ZXAUPS5ZOIJ3FIQPEWSTGRXOOYHFPC554';
+
+        $http.post('https://api.foursquare.com/v2/venues/add?client_id=' + clientID + '&client_secret=' + clientSecret, venue).success(function(data) {
+          deferred.resolve(data);
+        }).error(function() {
+          deferred.reject("An error occurred while sending venue to Foursquare.");
+        });
+
+        return deferred.promise;
+      },
+      checkAddress: function(address) {
+        var deferred = $q.defer();
+
+        $http.get('http://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&sensor=true').success(function(data) {
+          deferred.resolve(data);
+        }).error(function() {
+          deferred.reject("An error occurred while validating the address given.");
+        });
+
+        return deferred.promise;
+      }
     }
   });
 });
