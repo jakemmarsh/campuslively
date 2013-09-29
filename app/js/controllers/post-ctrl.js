@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('postCtrl', function ($scope, locationService, resolvedLocation) {
+    controllers.controller('postCtrl', function ($scope, $rootScope, locationService, resolvedLocation) {
     	$scope.userPosition = resolvedLocation;
     	$scope.showAddressInput = true;
     	$scope.eventPosted = false;
@@ -13,8 +13,8 @@ define(['./index'], function (controllers) {
     	// make call to foursquare to get list of venues near user's location
     	var getVenues = function(position) {
     		locationService.getFoursquareVenues(position).then(function (data) {
-    			for(var i = 0; i < data.response.groups[0].items.length; i++) {
-    				$scope.venues.push(data.response.groups[0].items[i]);
+    			for(var i = 0; i < data.response.venues.length; i++) {
+    				$scope.venues.push(data.response.venues[i]);
     			}
 		    },
 		    function (errorMessage) {
@@ -44,7 +44,7 @@ define(['./index'], function (controllers) {
 		    			// hide extra address input
 		    			$scope.showAddressInput = false;
 		    			// pan map to venue's location
-		    			$scope.locationMap.setCenter(new google.maps.LatLng($scope.venues[i].location.lat, $scope.venues[i].location.lng));
+		    			$scope.locationMap.panTo(new google.maps.LatLng($scope.venues[i].location.lat, $scope.venues[i].location.lng));
 		    			break;
 		    		}
 		    		else {
@@ -64,7 +64,7 @@ define(['./index'], function (controllers) {
 					if(data) {
 			    		if(data.results.length > 0) {
 			    			address = data.results[0];
-			    			$scope.locationMap.setCenter(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
+			    			$scope.locationMap.panTo(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
 			    		}
 			    	}
 				},
