@@ -36,8 +36,15 @@
 						<div class="icon">
 							<i class="icon-map-marker"></i>
 						</div>
-						<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event..." required />
+						<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event..." required data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="1" data-ng-blur="checkLocation()" />
 					</div>
+				</div>
+			</div>
+			<div class="tr" data-ng-show="showAddressInput">
+				<div class="td one-twelfth soft-half--bottom vertical-align-middle">
+				</div>
+				<div class="td eleven-twelfths soft-half--bottom">
+					<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location..." data-ng-blur="checkAddress()" />
 				</div>
 			</div>
 			<div class="tr">

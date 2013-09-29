@@ -19,6 +19,7 @@ define([
     'directives/comment-expand',
     'directives/fixed-sidebar',
     'directives/confirm-check',
+    'directives/ng-blur',
     'services/location',
     'filters/parse-url'
 ], function () {});
