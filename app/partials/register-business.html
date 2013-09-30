@@ -1,0 +1,86 @@
+<div class="white-top">
+	<div class="container full-height">
+		<div class="table full-height">
+			<div class="td vertical-align-middle">
+				<h1 class="flush highlight">Register for Campuslively: Business</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container soft-half--ends">
+	<div class="line" data-ng-hide="emailSent">
+		<div class="unit six-tenths">
+			<form name="registerForm" data-ng-submit="register()">
+				<div class="line nudge-half--bottom">
+					<div class="unit full-width last-unit">
+						<input type="text" id="username" data-ng-model="username" class="full-width" placeholder="Account username" required />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit full-width last-unit">
+						<input type="email" id="email" name="email" data-ng-model="email" class="full-width" placeholder="Your email address" required />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit full-width last-unit">
+						<input type="text" id="businessName" name="businessName" data-ng-model="businessName" class="full-width" placeholder="Your business name" required />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit full-width last-unit">
+						<input type="password" id="password" data-ng-model="password" class="full-width" placeholder="Your password" required />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit full-width last-unit">
+						<input type="text" id="school" data-ng-model="school" class="full-width" placeholder="Your school" required data-typeahead="school for school in schools | filter:$viewValue | limitTo:8" data-typeahead-min-length="4" />
+					</div>
+				</div>
+				<div class="line">
+					<div class="unit six-tenths">
+						<span class="block red weight--bold" data-ng-show="registerForm.email.$error.pattern">
+							Email address must end in .edu.
+						</span>
+					</div>
+					<div class="unit four-tenths text-right last-unit">
+						<input type="submit" class="btn" value="Register" data-ng-disabled="registerForm.$invalid" />
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="unit four-tenths last-unit soft--left">
+			<h2 class="flush nudge--bottom blue">A new way to connect with your student customers.</h2>
+			<div class="table full-width">
+				<div class="tr">
+					<div class="td one-tenth vertical-align-middle text-center">
+						<h1 class="huge flush green"><i class="icon-thumbs-up"></i></h1>
+					</div>
+					<div class="td nine-tenths vertical-align-middle soft-half--left">
+						<h3 class="flush">Automatically connect to your registered Facebook and Twitter followers</h3>
+					</div>
+				</div>
+				<div class="tr">
+					<div class="td one-tenth vertical-align-middle text-center">
+						<h1 class="huge flush green"><i class="icon-map-marker"></i></h1>
+					</div>
+					<div class="td nine-tenths vertical-align-middle soft-half--left">
+						<h3>Your events become visible to all users near you</h3>
+					</div>
+				</div>
+				<div class="tr">
+					<div class="td one-tenth vertical-align-middle text-center">
+						<h1 class="huge flush green"><i class="icon-bullhorn"></i></h1>
+					</div>
+					<div class="td nine-tenths vertical-align-middle soft-half--left">
+						<h3>Interact directly with your target audience</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div data-ng-show="emailSent">
+		<h1 class="blue flush">Thank you for registering!</h1>
+		<p class="gamma nudge--ends">An email has been sent to the .edu address you provided. There will be a link in the email that you must click to activate your account before you will be able to log in.</p>
+		<a href="/" class="btn">Front Page</a>
+	</div>
+</div>

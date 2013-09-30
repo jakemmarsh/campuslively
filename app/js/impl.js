@@ -5,7 +5,8 @@
  */
 define([
     'controllers/login-ctrl',
-    'controllers/register-ctrl',
+    'controllers/registerBusiness-ctrl',
+    'controllers/registerStudent-ctrl',
     'controllers/forgot-ctrl',
     'controllers/settings-ctrl',
     'controllers/profile-ctrl',
