@@ -52,6 +52,10 @@ define(['./index'], function (controllers) {
 			panControl: false
 	    };
 
+	    $scope.$watch('eventLocation', function() {
+	    	$scope.checkLocation();
+	    });
+
 	    // check if entered location already exists from foursquare
 	    $scope.checkLocation = function() {
 	    	if($scope.eventLocation) {
