@@ -24,6 +24,7 @@ app.configure(function() {
     app.use("/img", express.static(__dirname + "/../app/img"));
     app.use("/css", express.static(__dirname + "/../app/css"));
     app.use("/partials", express.static(__dirname + "/../app/partials"));
+    app.use("/templates", express.static(__dirname + "/../app/templates"));
 
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {
