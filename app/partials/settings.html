@@ -10,7 +10,7 @@
 <div class="container soft-half--ends">
 	<div class="line">
 		<div class="unit three-fourths">
-			<form name="settingsForm" data-ng-submit="submitChanges()" class="nudge-half--bottom">
+			<form name="settingsForm" data-ng-submit="saveChanges()" class="nudge-half--bottom">
 				<div class="table full-width">
 					<div class="tr">
 						<div class="td one-tenth soft-half--bottom">
@@ -39,6 +39,7 @@
 					<div class="tr">
 						<div class="td one-tenth"></div>
 						<div class="td nine-tenths text-right">
+							<span class="blue weight--bold nudge--right" data-ng-show="changesSaved">Changes saved!</span>
 							<input type="submit" class="btn" value="Save Changes" />
 						</div>
 					</div>

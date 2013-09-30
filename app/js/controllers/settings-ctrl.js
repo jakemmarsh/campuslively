@@ -1,6 +1,8 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('settingsCtrl', function ($scope, $modal) {
+    	$scope.changesSaved = false;
+
     	$scope.open = function (modal) {
 		  	if (modal.toLowerCase() == 'twitter') {
 			    var modalInstance = $modal.open({
@@ -14,6 +16,10 @@ define(['./index'], function (controllers) {
 			      controller: 'modalInstanceCtrl'
 			    });
 			}
+		}
+
+		$scope.saveChanges = function() {
+			$scope.changesSaved = true;
 		}
 
 		$scope.removeSubscription = function(subscriptionId) {
