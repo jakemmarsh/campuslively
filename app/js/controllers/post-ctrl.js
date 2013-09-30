@@ -6,6 +6,23 @@ define(['./index'], function (controllers) {
     	$scope.eventPosted = false;
     	$scope.venues = [];
 
+    	$scope.eventPrivacy = {
+			label: 'Public',
+			value: 'public'
+		};
+
+		$scope.privacyOptions = [{
+				label: 'Public',
+				value: 'public'
+			},
+			{
+				label: 'Invite Only',
+				value: 'inviteOnly'
+			}
+		];
+
+		$scope.today = new Date();
+
     	// in case a venue needs to be created and sent to Foursquare
     	var venue = {},
     		address = null;
@@ -73,6 +90,16 @@ define(['./index'], function (controllers) {
 		        });
 		    }
 	    }
+
+	    $scope.openDatepicker = function() {
+			$timeout(function() {
+				$scope.datepickerOpened = true;
+			});
+		};
+
+	    $scope.changePrivacy = function(option) {
+			$scope.eventPrivacy = option;
+		}
 
 	    // post event and show necessary message(s)
 	    $scope.postEvent = function() {

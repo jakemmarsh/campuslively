@@ -15,7 +15,7 @@
 					<label for="name" class="caps weight--bold">Name <span class="red">*</span></label>
 				</div>
 				<div class="td eleven-twelfths soft-half--bottom">
-					<input type="text" id="name" data-ng-model="eventName" class="full-width" placeholder="Event name..." required />
+					<input type="text" id="name" data-ng-model="eventName" class="full-width" placeholder="Event name" required />
 				</div>
 			</div>
 			<div class="tr">
@@ -23,7 +23,7 @@
 					<label for="details" class="caps weight--bold">Details</label>
 				</div>
 				<div class="td eleven-twelfths soft-half--bottom">
-					<textarea id="details" data-ng-model="eventDetails" class="full-width big" placeholder="Details about the event..."></textarea>
+					<textarea id="details" data-ng-model="eventDetails" class="full-width big" placeholder="Details about the event"></textarea>
 				</div>
 			</div>
 			<div class="tr">
@@ -35,7 +35,7 @@
 						<div class="icon">
 							<i class="icon-map-marker"></i>
 						</div>
-						<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event..." required data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="1" data-ng-blur="checkLocation()" />
+						<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event" required data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="1" data-ng-blur="checkLocation()" />
 					</div>
 				</div>
 			</div>
@@ -43,7 +43,7 @@
 				<div class="td one-twelfth soft-half--bottom vertical-align-middle">
 				</div>
 				<div class="td eleven-twelfths soft-half--bottom">
-					<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location..." data-ng-blur="checkAddress()" />
+					<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location" data-ng-blur="checkAddress()" />
 				</div>
 			</div>
 			<div class="tr">
@@ -54,44 +54,55 @@
 				</div>
 			</div>
 		</div>
-		<div class="table full-width">
+		<div class="table full-width soft-half--bottom">
 			<div class="tr">
 				<div class="td one-twelfth soft-half--bottom vertical-align-middle">
-					<label for="starts" class="caps weight--bold">Starts <span class="red">*</span></label>
+					<label for="starts" class="caps weight--bold">When <span class="red">*</span></label>
 				</div>
-				<div class="td five-twelfths soft-half--bottom soft--right">
+				<div class="td three-twelfths soft-half--bottom soft--right">
+					<div class="input-prepend full">
+						<div class="icon pointer" data-ng-click="openDatepicker()">
+							<i class="icon-calendar-empty"></i>
+						</div>
+						<input type="text" id="starts" data-ng-model="eventDate" placeholder="Date" data-datepicker-popup="MM/dd/yy" data-is-open="datepickerOpened" data-min="today" data-show-weeks="false" required />
+					</div>
+				</div>
+				<div class="td three-twelfths soft-half--bottom">
 					<div class="input-prepend full">
 						<div class="icon">
 							<i class="icon-time"></i>
 						</div>
-						<input type="text" id="starts" data-ng-model="eventStart" placeholder="Start date and time..." required />
+						<input type="text" id="starts" data-ng-model="startTime" placeholder="Start time" />
 					</div>
 				</div>
-				<div class="td one-twelfth soft-half--bottom text-right soft-half--right vertical-align-middle">
-					<label for="ends" class="caps weight--bold">Ends</label>
-				</div>
-				<div class="td five-twelfths soft-half--bottom">
-					<div class="input-prepend full">
-						<div class="icon">
-							<i class="icon-time"></i>
-						</div>
-						<input type="text" id="starts" data-ng-model="eventEnd" placeholder="End date and time..." />
-					</div>
-				</div>
+				<div class="td five-twelfths soft-half--bottom"></div>
 			</div>
 		</div>
 		<div class="table full-width">
 			<div class="tr">
-				<div class="td one-twelfth vertical-align-middle">
-					<label for="private" class="caps weight--bold">Make Private</label>
+				<div class="td one-twelfth vertical-align-middle soft-half--bottom">
+					<label for="private" class="caps weight--bold">Privacy</label>
 				</div>
-				<div class="td five-twelfths">
-					<input type="checkbox" id="private" data-ng-model="eventPrivate" />
+				<div class="td five-twelfths soft-half--bottom">
+					<div class="dropdown">
+						<a href class="dropdown-toggle sort-toggle">
+							{{ eventPrivacy.label }} <i class="icon-chevron-down muted weight--normal"></i>
+						</a>
+						<ul class="dropdown-menu">
+							<li data-ng-repeat="option in privacyOptions">
+								<a href data-ng-bind="option.label" data-ng-click="changePrivacy(option)"></a>
+							</li>
+						</ul>
+					</div>
 				</div>
+				<div class="td one-half text-right soft-half--bottom"></div>
+			</div>
+			<div class="tr">
+				<div class="td one-twelft"></div>
+				<div class="td five-twelfths"></div>
 				<div class="td one-half text-right">
 					<input type="submit" class="btn" value="Post Event" data-ng-disabled="eventForm.$invalid" />
 				</div>
-			</div>
 		</div>
 	</form>
 	<div data-ng-show="eventPosted">
