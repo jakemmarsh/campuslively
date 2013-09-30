@@ -29,14 +29,14 @@ define(['./app'], function (app) {
         .state('inner.registerBusiness', {
             url: '/register/business',
             templateUrl: '/partials/register-business.html',
-            controller: 'registerStudentCtrl',
-            title: 'Business Register'
+            controller: 'registerBusinessCtrl',
+            title: 'Register'
         })
         .state('inner.registerStudent', {
             url: '/register/student',
             templateUrl: '/partials/register-student.html',
-            controller: 'registerBusinessCtrl',
-            title: 'Student Register'
+            controller: 'registerStudentCtrl',
+            title: 'Register'
         })
         .state('inner.forgot', {
             url: '/forgot',
