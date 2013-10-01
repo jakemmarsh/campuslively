@@ -53,6 +53,11 @@ textarea.big {
 	resize: vertical;
 }
 
+textarea.medium {
+	height: 125px;
+	resize: vertical;
+}
+
 textarea.no-resize {
 	resize: none;
 }

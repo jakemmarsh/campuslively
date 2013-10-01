@@ -39,28 +39,20 @@
 				}
 
 			.sidebar ul li.post {
-				@include gradient($primary);
+				@include gradient($secondary);
 			}
 
 				.sidebar ul li.post:hover, .sidebar ul li.post:active, .sidebar ul li.post:focus {
-					@include gradient($primary, darken($primary, 3));
+					@include gradient($secondary, darken($secondary, 3));
 				}
 
-				.sidebar ul li.post.active {
+				.sidebar ul li.post.active, .sidebar ul li.solo {
 					background: $white;
 				}
 
-					.sidebar ul li.post.active .link {
-						color: $primary;
+					.sidebar ul li.post.active .link, .sidebar ul li.solo .link {
+						color: $secondary;
 					}
-
-			.sidebar ul li.solo {
-				background: $white;
-			}
-
-				.sidebar ul li.solo .link {
-					color: $primary;
-				}
 
 			.sidebar ul .bottom {
 				position: absolute;
