@@ -19,7 +19,9 @@ require.config({
         'jQuery' : '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
         'jQuery-ui' : '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min',
         'fullCalendar' : './lib/fullcalendar.min',
-        'angular-ui-calendar' : './lib/angular/ui-calendar'
+        'angular-ui-calendar' : './lib/angular/ui-calendar',
+        'select2' : './lib/select2.min',
+        'angular-ui-select2' : './lib/angular/ui-select2'
     },
 
     shim: {
@@ -53,6 +55,9 @@ require.config({
         },
         'angular-ui-calendar': {
             deps: ['angular', 'fullCalendar']
+        },
+        'angular-ui-select2': {
+            deps: ['angular', 'select2']
         }
     }
 });

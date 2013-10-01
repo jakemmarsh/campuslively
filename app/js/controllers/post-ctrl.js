@@ -23,6 +23,14 @@ define(['./index'], function (controllers) {
 
 		$scope.today = new Date();
 
+		$scope.tagOptions = {
+	        'multiple': true,
+	        'simple_tags': true,
+	        'tags': [],
+	        'tokenSeparators': [","],
+	        'maximumSelectionSize': 3
+	    };
+
     	// in case a venue needs to be created and sent to Foursquare
     	var venue = {},
     		address = null;

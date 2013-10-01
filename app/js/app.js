@@ -6,6 +6,7 @@ define([
     'angular-switch-toggle',
     'angular-ui-map',
     'angular-ui-calendar',
+    'angular-ui-select2',
     './controllers/index',
     './directives/index',
     './filters/index',
@@ -23,6 +24,7 @@ define([
         'ui.state',
         'ngSwitchToggle',
         'ui.map',
-        'ui.calendar'
+        'ui.calendar',
+        'ui.select2'
     ]);
 });
