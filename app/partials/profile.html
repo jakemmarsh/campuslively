@@ -96,7 +96,7 @@
 
 <script type="text/ng-template" id="attendingModal.html">
     <div class="modal-header">
-        <h3>Attending</h3>
+        <h2 class="flush">Attending</h2>
     </div>
     <div class="modal-body">
         <ul>
@@ -107,14 +107,13 @@
         Selected: <b>{{ selected.item }}</b>
     </div>
     <div class="modal-footer">
-        <button class="btn__blue" data-ng-click="ok()">OK</button>
-        <button class="btn__red" data-ng-click="cancel()">Cancel</button>
+        <button class="btn" data-ng-click="ok()">Close</button>
     </div>
 </script>
 
 <script type="text/ng-template" id="locationModal.html">
     <div class="modal-header">
-        <h3>Location</h3>
+        <h2 class="flush">Location</h2>
     </div>
     <div class="modal-body">
         <ul>
@@ -125,7 +124,6 @@
         Selected: <b>{{ selected.item }}</b>
     </div>
     <div class="modal-footer">
-        <button class="btn__blue" data-ng-click="ok()">OK</button>
-        <button class="btn__red" data-ng-click="cancel()">Cancel</button>
+        <button class="btn" data-ng-click="ok()">Close</button>
     </div>
 </script>

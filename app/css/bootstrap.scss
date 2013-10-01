@@ -307,8 +307,9 @@
   top: 10%;
 }
 .modal-header {
-  padding: 9px 15px;
-  border-bottom: 1px solid $border-grey;
+  @extend .islet;
+  background: $primary;
+  color: $white;
 }
 .modal-header .close {
   margin-top: 2px;
@@ -327,7 +328,7 @@
   margin-bottom: 0;
 }
 .modal-footer {
-  padding: 14px 15px 15px;
+  @extend .islet;
   margin-bottom: 0;
   text-align: right;
   background-color: $light-grey;
