@@ -10,6 +10,16 @@ define(['./index'], function (controllers) {
     		$scope.userName = $stateParams.userName;
     	}
 
+        var slides = $scope.slides = [];
+        $scope.addSlide = function() {
+            slides.push({
+                image: 'http://placekitten.com/958/200'
+            });
+        };
+        for (var i=0; i<4; i++) {
+            $scope.addSlide();
+        }
+
     	$scope.viewOptions = [{
 				label : 'Upcoming',
 				value : 'upcoming'

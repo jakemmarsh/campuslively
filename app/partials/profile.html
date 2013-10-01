@@ -40,9 +40,20 @@
 				<p>Bijou Nightclub is the premier club in Boston. Get a table with your close friends and enjoy premium bottle services. The hottest DJ's in Boston!</p>
 			</div>
 		</div>
-		<div style="background:#f6f6f6;height:200px;"></div>
+		<carousel interval="5000" class="flush">
+			<slide ng-repeat="slide in slides" active="slide.active">
+				<img ng-src="{{slide.image}}" style="margin:auto;">
+			</slide>
+		</carousel>
 	</div>
-	<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions"></ng-switch-toggle-group>
+	<div class="line">
+		<div class="unit one-half">
+			<h2 class="flush">Posted Events</h2>
+		</div>
+		<div class="unit one-half last-unit clearfix">
+			<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions" class="float-right"></ng-switch-toggle-group>
+		</div>
+	</div>
 	<hr />
 	<div data-ng-show="currentView == 'upcoming'">
 		<div class="line nudge-half--ends">
