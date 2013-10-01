@@ -23,7 +23,7 @@ define(['./index'], function (services) {
             clientSecret = 'R4IVY3OSER10BUFMKODGCWFHXITCTRGXS5UJED1HRCEGQZSS',
             clientID = 'GA3OVFMEIKL1UC3ZXAUPS5ZOIJ3FIQPEWSTGRXOOYHFPC554';
 
-        $http.get('https://api.foursquare.com/v2/venues/search?ll=' + pos.latitude.toFixed(2) + ',' + pos.longitude.toFixed(2) + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20130929').success(function(data) {
+        $http.get('https://api.foursquare.com/v2/venues/search?ll=' + pos.latitude.toFixed(2) + ',' + pos.longitude.toFixed(2) + '&radius=10000&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20130929').success(function(data) {
           deferred.resolve(data);
         }).error(function() {
           deferred.reject("An error occurred while fetching venues from Foursquare.");
