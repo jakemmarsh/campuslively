@@ -21,9 +21,13 @@ define(['./index'], function (services) {
       getFoursquareVenues: function(pos) {
         var deferred = $q.defer(),
             clientSecret = 'R4IVY3OSER10BUFMKODGCWFHXITCTRGXS5UJED1HRCEGQZSS',
-            clientID = 'GA3OVFMEIKL1UC3ZXAUPS5ZOIJ3FIQPEWSTGRXOOYHFPC554';
+            clientID = 'GA3OVFMEIKL1UC3ZXAUPS5ZOIJ3FIQPEWSTGRXOOYHFPC554',
+            year = (new Date()).getFullYear(),
+            month = (new Date()).getMonth() + 1,
+            day = ((new Date()).getDate().length > 1) ? (new Date()).getDate() : '0'+String((new Date()).getDate()),
+            date = String(year) + String(month) + String(day);
 
-        $http.get('https://api.foursquare.com/v2/venues/search?ll=' + pos.latitude.toFixed(2) + ',' + pos.longitude.toFixed(2) + '&radius=10000&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20130929').success(function(data) {
+        $http.get('https://api.foursquare.com/v2/venues/search?ll=' + pos.latitude.toFixed(2) + ',' + pos.longitude.toFixed(2) + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=' + date).success(function(data) {
           deferred.resolve(data);
         }).error(function() {
           deferred.reject("An error occurred while fetching venues from Foursquare.");
