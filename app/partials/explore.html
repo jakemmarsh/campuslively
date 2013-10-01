@@ -9,7 +9,7 @@
 					<div class="icon">
 						<i class="icon-search"></i>
 					</div>
-					<input type="text" class="search" placeholder="Search events..." />
+					<input type="text" class="search" data-ng-model="searchEvents" placeholder="Search events..." />
 				</div>
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	<hr />
-	<div class="line nudge-half--ends" data-ng-repeat="event in events | orderBy:currentSort.value">
+	<div class="line nudge-half--ends" data-ng-repeat="event in events | filter:searchEvents | orderBy:currentSort.value">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
 				<a href data-tooltip="Jake Marsh" data-tooltip-placement="left" data-ng-href="/profile/jakemmarsh"></a>
