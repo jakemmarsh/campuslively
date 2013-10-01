@@ -24,8 +24,7 @@ define(['./index'], function (controllers) {
 				formattedDate = weekDay + ", " + month + " " + dayNumber + ", " + year;
 
     		return formattedDate;
-
-    	}
+    	};
 
     	$scope.dayClick = function( date, allDay, jsEvent, view ){
     		if(!$scope.$$phase) {         

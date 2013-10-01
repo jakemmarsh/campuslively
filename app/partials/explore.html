@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	<hr />
-	<div class="line nudge-half--ends">
+	<div class="line nudge-half--ends" data-ng-repeat="event in events | orderBy:currentSort.value">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
 				<a href data-tooltip="Jake Marsh" data-tooltip-placement="left" data-ng-href="/profile/jakemmarsh"></a>
@@ -38,17 +38,17 @@
 		<div class="unit eleven-twelfths last-unit">
 			<div class="box">
 				<div class="header soft-half--sides">
-					<h2 class="flush"><a href="/event/1">DJ Hardo</a></h2>
+					<a href="/event/1" class="block-link"></a>
+					<h2 class="flush" data-ng-bind="event.title"></h2>
 				</div>
 				<div class="islet">
 					<div class="line">
 						<div class="unit four-fifths">
-							<h4 class="flush">Bijou Nightclub  |  June 10th  |  11:30pm - 2am</h4>
+							<h4 class="flush"><span data-ng-bind="event.location"></span>  |  <span data-ng-bind="event.formattedDay"></span>  |  <span data-ng-bind="event.time"></span></h4>
 						</div>
 						<div class="unit one-fifth last-unit text-right">
 							<ul class="tags">
-								<li>club</li>
-								<li>live music</li>
+								<li data-ng-repeat="tag in event.tags" data-ng-bind="tag"></li>
 							</ul>
 						</div>
 					</div>
@@ -63,6 +63,7 @@
 			</div>
 		</div>
 	</div><!-- event end -->
+	<a href data-ng-click="loadMore()" class="btn full-width text-center">Load More Events</a>
 </div>
 <div class="container soft-half--ends" data-ng-show="currentView == 'nearby'">
 	<div class="soft-half--ends text-right">
