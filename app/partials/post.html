@@ -35,15 +35,16 @@
 						<div class="icon">
 							<i class="icon-map-marker"></i>
 						</div>
-						<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event" required data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" data-ng-blur="checkLocation()" />
+						<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event" data-ng-required="!locationAddress" data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" data-ng-blur="checkLocation()" />
 					</div>
+					<span class="epsilon">If the venue you're looking for doesn't appear, you can enter the name and/or address separately.</span>
 				</div>
 			</div>
 			<div class="tr" data-ng-show="showAddressInput">
 				<div class="td one-twelfth soft-half--bottom vertical-align-middle">
 				</div>
 				<div class="td eleven-twelfths soft-half--bottom">
-					<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location" data-ng-blur="checkAddress()" />
+					<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location" data-ng-blur="checkAddress()" data-ng-required="!eventLocation" />
 				</div>
 			</div>
 			<div class="tr">
