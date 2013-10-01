@@ -20,6 +20,10 @@ define(['./index'], function (controllers) {
 			}
 		];
 
+        $scope.toggleSubscribe = function() {
+            $scope.subscribed = !$scope.subscribed;
+        }
+
         $scope.toggleAttending = function(eventId) {
             $scope.attending = !$scope.attending;
         };

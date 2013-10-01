@@ -23,7 +23,8 @@
 				</div>
 			</div>
 			<div class="td six-tenths full-height normal-lh vertical-align-middle text-right">
-				<a href class="btn nudge-half--right" data-ng-click="subscribe()"><i class="icon-star"></i> Subscribe</a>
+				<a href class="btn nudge-half--right" data-ng-click="toggleSubscribe()" data-ng-hide="subscribed"><i class="icon-star"></i> Subscribe</a>
+				<a href class="btn nudge-half--right" data-ng-click="toggleSubscribe()" data-ng-show="subscribed"><i class="icon-star-empty"></i> Unsubscribe</a>
 			</div>
 
 		</div>
@@ -67,7 +68,6 @@
 						</div>
 						<p>Famous Miami-based DJ Hardo LIVE at Bijou tonight! Tickets are $20 at the door. Order now and get them for $15! www.bijounightclub.com</p>
 						<div class="action-buttons nudge-half--top">
-							<a href data-ng-click="openRSVP(1)" data-tooltip="RSVP"><i class="icon-thumbs-up"></i></a>
 							<a href data-ng-click="toggleAttending(1)" data-tooltip="RSVP"><i class="icon-thumbs-up" data-ng-class="{true:'blue', false:''}[attending]"></i></a>
 							<a href data-ng-click="openAttending(1)" data-tooltip="People Attending"><span class="gamma">357</span></a>
 							<a href data-ng-href="/event/1" tooltip="More Info"><i class="icon-ellipsis-horizontal"></i></a>
