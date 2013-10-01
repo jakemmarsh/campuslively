@@ -57,12 +57,9 @@ define(['./index'], function (controllers) {
 	        dayClick: $scope.dayClick
       	};
 
-      	$scope.openRSVP = function (eventId) {
-		    var modalInstance = $modal.open({
-		      templateUrl: 'rsvpModal.html',
-		      controller: 'modalInstanceCtrl'
-		    });
-		}
+      	$scope.toggleAttending = function(eventId) {
+      		$scope.attending = !$scope.attending;
+      	}
 
 		$scope.openAttending = function (eventId) {
 		    var modalInstance = $modal.open({

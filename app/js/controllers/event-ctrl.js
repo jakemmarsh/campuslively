@@ -3,13 +3,17 @@ define(['./index'], function (controllers) {
     controllers.controller('eventCtrl', function ($scope, $stateParams, $modal) {
     	$scope.eventId = $stateParams.eventId;
 
+    	$scope.toggleAttending = function() {
+    		$scope.attending = !$scope.attending;
+    	};
+
     	$scope.postComment = function() {
     		console.log('post comment');
-    	}
+    	};
 
     	$scope.postSubComment = function() {
     		console.log('post SUBcomment');
-    	}
+    	};
 
     	$scope.mapOptions = {
 			center: new google.maps.LatLng(44.883125, -68.671977),
@@ -23,13 +27,7 @@ define(['./index'], function (controllers) {
 	    };
 
 		$scope.open = function (modal) {
-		  	if (modal.toLowerCase() == 'rsvp') {
-			    var modalInstance = $modal.open({
-			      templateUrl: 'rsvpModal.html',
-			      controller: 'modalInstanceCtrl'
-			    });
-			}
-			else if (modal.toLowerCase() == 'share') {
+		  	if (modal.toLowerCase() == 'share') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'shareModal.html',
 			      controller: 'modalInstanceCtrl'

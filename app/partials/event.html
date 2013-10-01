@@ -6,7 +6,8 @@
 				<h3 class="flush muted weight--normal">hosted by <a href data-ng-href="/profile/jakemmarsh">Jake Marsh</a></h3>
 			</div>
 			<div class="unit one-half last-unit text-right">
-				<a href class="btn nudge-half--right" data-ng-click="open('rsvp')"><i class="icon-thumbs-up"></i> RSVP</a>
+				<a href class="btn nudge-half--right" data-ng-click="toggleAttending()" data-ng-hide="attending"><i class="icon-thumbs-up"></i> RSVP</a>
+				<a href class="btn nudge-half--right" data-ng-click="toggleAttending()" data-ng-show="attending"><i class="icon-thumbs-down"></i> Un-RSVP</a>
 				<a href class="btn nudge-half--right" data-ng-click="open('invite')"><i class="icon-plus-sign"></i> Invite</a>
 				<a class="btn" data-ng-click="open('share')"><i class="icon-share"></i> Share</a>
 			</div>

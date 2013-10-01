@@ -33,6 +33,10 @@ define(['./index'], function (controllers) {
 			$scope.currentSort = option;
 		}
 
+		$scope.toggleAttending = function(eventId) {
+			$scope.attending = !$scope.attending;
+		}
+
 		$scope.openRSVP = function (eventId) {
 		    var modalInstance = $modal.open({
 		      templateUrl: 'rsvpModal.html',
