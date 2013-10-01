@@ -32,7 +32,7 @@
 							</ul>
 						</div>
 					</div>
-					<p>Famous Miami-based DJ Hardo LIVE at Bijou tonight! Tickets are $20 at the door. Order now and get them for $15! www.bijounightclub.com</p>
+					<p class="pre-wrap" ng-bind-html="event.description | parseUrl"></p>
 					<div class="action-buttons nudge-half--top">
 						<a href data-ng-click="toggleAttending(1)" data-tooltip="RSVP" data-ng-hide="attending"><i class="icon-thumbs-up"></i></a>
 						<a href data-ng-click="toggleAttending(1)" data-tooltip="Un-RSVP" data-ng-show="attending"><i class="icon-thumbs-up green"></i></a>
