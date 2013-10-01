@@ -27,17 +27,22 @@
 				</div>
 			</div>
 			<div class="tr">
-				<div class="td one-twelfth soft-half--bottom vertical-align-middle">
+				<div class="td one-twelfth vertical-align-middle">
 					<label for="location" class="caps weight--bold">Where <span class="red">*</span></label>
 				</div>
-				<div class="td eleven-twelfths soft-half--bottom">
+				<div class="td eleven-twelfths">
 					<div class="input-prepend full">
 						<div class="icon">
 							<i class="icon-map-marker"></i>
 						</div>
 						<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event" data-ng-required="!locationAddress" data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" data-ng-blur="checkLocation()" />
 					</div>
-					<span class="epsilon">If the venue you're looking for doesn't appear, you can enter the name and/or address separately.</span>
+				</div>
+			</div>
+			<div class="tr">
+				<div class="td one-twelfth soft-half--bottom"></div>
+				<div class="td eleven-twelfths soft-half--bottom">
+					<span class="epsilon">If the venue you're looking for doesn't appear, you can enter a new name and/or address separately.</span>
 				</div>
 			</div>
 			<div class="tr" data-ng-show="showAddressInput">
