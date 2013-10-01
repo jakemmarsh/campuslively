@@ -78,7 +78,7 @@
 						<div class="icon">
 							<i class="icon-time"></i>
 						</div>
-						<input type="text" id="starts" data-ng-model="startTime" placeholder="Start time" />
+						<input type="text" id="starts" data-ng-model="startTime" name="startTime" placeholder="9:00pm" data-ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
 					</div>
 				</div>
 				<div class="td five-twelfths soft-half--bottom"></div>
@@ -105,7 +105,9 @@
 			</div>
 			<div class="tr">
 				<div class="td one-twelfth"></div>
-				<div class="td five-twelfths"></div>
+				<div class="td five-twelfths">
+					<span class="red weight--bold" data-ng-show="eventForm.startTime.$error.pattern">Not a valid time. Must be of format HH:MM(am/pm)</span>
+				</div>
 				<div class="td one-half text-right">
 					<input type="submit" class="btn" value="Post Event" data-ng-disabled="eventForm.$invalid" />
 				</div>
