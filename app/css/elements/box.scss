@@ -3,12 +3,11 @@
 	border: 1px solid $border-grey;
 	color: $dark-grey;
 	@include corners();
-	overflow: hidden;
 }
 
 	.box .header {
 		width: 100%;
-		background: $blue;
+		background: $primary;
 		color: $white;
 		@include corners(3px, 3px, 0, 0);
 		line-height: 2.3em;
@@ -19,5 +18,5 @@
 		}
 
 	.box.top-highlight {
-		border-top: 3px solid $blue;
+		border-top: 3px solid $primary;
 	}

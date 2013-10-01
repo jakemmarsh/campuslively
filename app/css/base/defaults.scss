@@ -62,18 +62,18 @@ textarea.to-expand {
 }
 
 input:focus, input:active, textarea:focus, textarea:active {
-	border: 1px solid lighten($green, 10);
+	border: 1px solid lighten($secondary, 10);
 }
 
 a {
-	color: darken($green, 10);
+	color: darken($secondary, 10);
 	text-decoration: none;
 	@include transition();
 	font-weight: bold;
 }
 
 a:hover, a:active {
-	color: $green;
+	color: $secondary;
 }
 
 .pointer {

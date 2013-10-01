@@ -39,11 +39,11 @@
 				}
 
 			.sidebar ul li.post {
-				@include gradient($blue);
+				@include gradient($primary);
 			}
 
 				.sidebar ul li.post:hover, .sidebar ul li.post:active, .sidebar ul li.post:focus {
-					@include gradient($blue, darken($blue, 3));
+					@include gradient($primary, darken($primary, 3));
 				}
 
 				.sidebar ul li.post.active {
@@ -51,7 +51,7 @@
 				}
 
 					.sidebar ul li.post.active .link {
-						color: $blue;
+						color: $primary;
 					}
 
 			.sidebar ul li.solo {
@@ -59,7 +59,7 @@
 			}
 
 				.sidebar ul li.solo .link {
-					color: $blue;
+					color: $primary;
 				}
 
 			.sidebar ul .bottom {

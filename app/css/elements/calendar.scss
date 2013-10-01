@@ -97,7 +97,7 @@ html .fc,
 	}
 	
 .fc-day-header {
-	background: $blue;
+	background: $primary;
 	color: $white;
 	padding: $half-space/3 0 !important;
 }
@@ -238,7 +238,7 @@ html .fc,
 	}
 	 
 .fc-event {
-	background-color: $green; /* default BACKGROUND color */
+	background-color: $secondary; /* default BACKGROUND color */
 	color: $white;               /* default TEXT color */
 	font-size: .85em;
 	cursor: default;
