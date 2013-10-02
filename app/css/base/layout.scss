@@ -211,6 +211,36 @@
     margin-right: $half-space;
 }
 
+.nudge-quarter {
+    margin: $half-space/2;
+}
+
+.nudge-quarter--top {
+    margin-top: $half-space/2;
+}
+
+.nudge-quarter--bottom {
+    margin-bottom: $half-space/2;
+}
+
+.nudge-quarter--left {
+    margin-left: $half-space/2;
+}
+
+.nudge-quarter--right {
+    margin-right: $half-space/2;
+}
+
+.nudge-quarter--ends {
+    margin-top: $half-space/2;
+    margin-bottom: $half-space/2;
+}
+
+.nudge-quarter--sides {
+    margin-left: $half-space/2;
+    margin-right: $half-space/2;
+}
+
 .flush {
     margin: 0 !important;
 }

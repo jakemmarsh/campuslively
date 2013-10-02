@@ -134,11 +134,11 @@ html .fc,
 	}
 	
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
-	background: lighten($light-grey, 1);
+	background: lighten($secondary, 35);
 	}
 
 	.fc-state-highlight:hover {
-		background: lighten($light-grey, 1) !important;
+		background: lighten($secondary, 35) !important;
 	}
 	
 .fc-cell-overlay { /* semi-transparent rectangle while dragging */
@@ -149,6 +149,7 @@ html .fc,
 
 .fc-day:hover {
 	cursor: pointer;
+	background: lighten($light-grey, 2);
 }
 	
 
