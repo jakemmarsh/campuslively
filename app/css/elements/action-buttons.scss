@@ -1,11 +1,41 @@
 .box .action-buttons {
 	display: inline-block;
 	@include corners();
+	height: 26px;
 	border: 1px solid $border-grey;
 	padding: 0;
 }
 
+	.box .action-buttons.green {
+		border: none;
+	}
+
+		.box .action-buttons.green a {
+			@include gradient($secondary);
+			border: 1px solid darken($secondary, 5);
+			color: $white;
+			@include corners();
+			line-height: 1.4em;
+		}
+
+			.box .action-buttons.green a:hover, .box .action-buttons.green a:focus, .box .action-buttons.green a:active {
+				@include gradient($secondary, darken($secondary, 3));
+				border: 1px solid darken($secondary, 5);
+				color: $white;
+				@include corners();
+			}
+
+			.box .action-buttons.green a:active {
+				box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+			}
+
+	.box .action-buttons.comment {
+		height: 20px;
+	}
+
 	.box .action-buttons a {
+		display: block;
+		height: 100%;
 		background: $light-grey;
 		color: $dark-grey;
 		padding: 2px 5px;
@@ -18,6 +48,14 @@
 		margin: 0;
 	}
 
+		.box .action-buttons a.first {
+			border-right: 1px solid $border-grey;
+		}
+
+		.box .action-buttons a.last {
+			border-left: 1px solid $white;
+		}
+
 		.box .action-buttons.comment a {
 			font-size: 0.7em;
 			line-height: 0.7em;
@@ -29,26 +67,4 @@
 
 		.box .action-buttons a i {
 			font-size: 1.2em;
-		}
-
-		.box .action-buttons a:first-child {
-			@include corners(3px, 0, 0, 3px);
-			border-bottom: 1px solid $light-grey;
-		}
-
-		.box .action-buttons a:not(:first-child) {
-			border-left: 1px solid $white;
-		}
-
-		.box .action-buttons a:last-of-type {
-			@include corners(0, 3px, 3px, 0);
-			border-bottom: 1px solid $light-grey;
-		}
-
-		.box .action-buttons a:not(:last-of-type) {
-			border-right: 1px solid $border-grey;
-		}
-
-		.box .action-buttons a:only-child {
-			@include corners();
 		}

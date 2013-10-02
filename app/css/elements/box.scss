@@ -6,7 +6,7 @@
 	position: relative;
 }
 
-	.box .header {
+	.box .header, .box .event-header {
 		position: relative;
 		width: 100%;
 		background: $primary;
@@ -15,8 +15,8 @@
 		line-height: 2.3em;
 	}
 
-		.box .header a, .box .header a:hover, .box .header a:focus, .box .header a:active {
-			color: $white !important;
+		.box .event-header:hover, .box .event-header:focus {
+			background: lighten($primary, 5);
 		}
 
 	.box.top-highlight {

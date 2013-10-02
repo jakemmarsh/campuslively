@@ -8,7 +8,7 @@
 	</div>
 </div>
 <div class="container soft-half--ends">
-	<h3 class="flush weight--normal"><a href data-ng-href="/profile/jakemmarsh">Jake Marsh</a> invited you to:</h3>
+	<p><a href data-ng-href="/profile/jakemmarsh">Jake Marsh</a> invited you to:</p>
 	<div class="line nudge-half--ends">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
@@ -17,7 +17,7 @@
 		</div>
 		<div class="unit eleven-twelfths last-unit">
 			<div class="box">
-				<div class="header soft-half--sides">
+				<div class="event-header soft-half--sides">
 					<a href="/event/1" class="block-link"></a>
 					<h2 class="flush">DJ Hardo</h2>
 				</div>
@@ -34,11 +34,19 @@
 						</div>
 					</div>
 					<p class="pre-wrap" ng-bind-html="event.description | parseUrl"></p>
-					<div class="action-buttons nudge-half--top">
-						<a href data-ng-click="toggleAttending(1)" data-tooltip="RSVP" data-ng-hide="attending"><i class="icon-thumbs-up"></i></a>
-						<a href data-ng-click="toggleAttending(1)" data-tooltip="Un-RSVP" data-ng-show="attending"><i class="icon-thumbs-up green"></i></a>
-						<a href data-ng-click="openAttending(1)" data-tooltip="People Attending"><span class="gamma">357</span></a>
-						<a href data-ng-href="/event/1" tooltip="More Info"><i class="icon-ellipsis-horizontal"></i></a>
+					<div class="line nudge-half--top">
+						<div class="unit one-half">
+							<div class="action-buttons">
+								<a class="first" href data-ng-click="toggleAttending(1)" data-tooltip="RSVP" data-ng-hide="attending"><i class="icon-thumbs-up"></i></a>
+								<a class="first" href data-ng-click="toggleAttending(1)" data-tooltip="Un-RSVP" data-ng-show="attending"><i class="icon-thumbs-up green"></i></a>
+								<a href data-ng-click="openAttending(1)" data-tooltip="People Attending"><span class="gamma">357</span></a>
+							</div>
+						</div>
+						<div class="unit one-half last-unit text-right">
+							<div class="action-buttons green">
+								<a href data-ng-href="/event/1">Details <i class="icon-chevron-right epsilon"></i></a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
