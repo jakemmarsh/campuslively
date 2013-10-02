@@ -21,7 +21,8 @@ require.config({
         'fullCalendar' : './lib/fullcalendar.min',
         'angular-ui-calendar' : './lib/angular/ui-calendar',
         'select2' : './lib/select2.min',
-        'angular-ui-select2' : './lib/angular/ui-select2'
+        'angular-ui-select2' : './lib/angular/ui-select2',
+        'image-upload' : './lib/angular/imageupload'
     },
 
     shim: {
@@ -56,8 +57,14 @@ require.config({
         'angular-ui-calendar': {
             deps: ['angular', 'fullCalendar']
         },
+        'select2': {
+            deps: ['jQuery']
+        },
         'angular-ui-select2': {
             deps: ['angular', 'select2']
+        },
+        'image-upload': {
+            deps: ['angular']
         }
     }
 });

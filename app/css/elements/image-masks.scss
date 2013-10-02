@@ -57,15 +57,19 @@
 		display: block;
 	}
 
-.user-img-profile {
-	@include user-img(90px);
-}
-
 	.user-img-comment a, .user-img-event a, .user-img-subcomment a, .user-img-going a, .user-img-subscriptions a {
 		display: block;
 		height: 100%;
 		width: 100%;
 	}
+
+.user-img-profile {
+	@include user-img(90px);
+}
+
+.user-img-settings {
+	@include user-img(120px);
+}
 
 .event-img {
 	-webkit-background-size: cover;

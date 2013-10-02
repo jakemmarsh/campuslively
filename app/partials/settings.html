@@ -11,7 +11,19 @@
 	<div class="line">
 		<div class="unit three-fourths">
 			<form name="settingsForm" data-ng-submit="saveChanges()" class="nudge-half--bottom">
+				<div class="text-center soft-half--bottom full-width">
+					<div class="user-img-settings center-block" data-ng-show="newUserImage" data-ng-style="{'background-image': 'url(' + newUserImage.resized.dataURL + ')'}"></div>
+					<div class="user-img-settings center-block" data-ng-hide="newUserImage" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')"></div>
+				</div>
 				<div class="table full-width">
+					<div class="tr">
+						<div class="td one-tenth soft-half--bottom">
+							<label for="userImage" class="caps weight--bold">Picture</label>
+						</div>
+						<div class="td nine-tenths soft-half--bottom">
+							<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" data-resize-max-height="200" data-resize-max-width="200" data-resize-quality="0.7" />
+						</div>
+					</div>
 					<div class="tr">
 						<div class="td one-tenth soft-half--bottom">
 							<label for="email" class="caps weight--bold">Email</label>
@@ -26,14 +38,6 @@
 						</div>
 						<div class="td nine-tenths soft-half--bottom">
 							<input type="text" class="full-width" id="school" placeholder="University of Maine" />
-						</div>
-					</div>
-					<div class="tr">
-						<div class="td one-tenth soft-half--bottom">
-							<label for="school" class="caps weight--bold">Picture</label>
-						</div>
-						<div class="td nine-tenths soft-half--bottom">
-							<input type="file" class="full-width" id="picture" placeholder="Profile picture" />
 						</div>
 					</div>
 					<div class="tr">

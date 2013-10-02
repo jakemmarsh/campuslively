@@ -7,6 +7,7 @@ define([
     'angular-ui-map',
     'angular-ui-calendar',
     'angular-ui-select2',
+    'image-upload',
     './controllers/index',
     './directives/index',
     './filters/index',
@@ -25,6 +26,7 @@ define([
         'ngSwitchToggle',
         'ui.map',
         'ui.calendar',
-        'ui.select2'
+        'ui.select2',
+        'imageupload'
     ]);
 });

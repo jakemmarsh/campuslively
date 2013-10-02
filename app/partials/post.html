@@ -101,7 +101,16 @@
 					<input type="text" id="eventSchool" name="eventSchool" class="full-width" data-ng-model="eventSchool" placeholder="Associated school (if any)" />
 				</div>
 			</div>
+			<div class="tr">
+				<div class="td one-twelfth vertical-align-middle soft-half--bottom">
+					<label for="eventImage" class="caps weight--bold">Picture</label>
+				</div>
+				<div class="td eleven-twelfths soft-half--bottom">
+					<input class="full-width" id="eventImage" name="eventImage" type="file" accept="image/*" data-image="eventImage" data-resize-max-height="500" data-resize-max-width="1200" data-resize-quality="0.7" />
+				</div>
+			</div>
 		</div>
+		<div class="event-img nudge-half--bottom" data-ng-show="eventImage" data-ng-style="{'background-image': 'url(' + eventImage.resized.dataURL + ')'}"></div>
 		<div class="table full-width">
 			<div class="tr">
 				<div class="td one-twelfth vertical-align-middle soft-half--bottom">

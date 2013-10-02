@@ -19,6 +19,9 @@ define(['./index'], function (controllers) {
 		}
 
 		$scope.saveChanges = function() {
+			var formData = new FormData();
+			formData.append('image', $scope.newUserImage.resized, $scope.newUserImage.resized.name);
+
 			$scope.changesSaved = true;
 		}
 

@@ -70,6 +70,10 @@ input:focus, input:active, textarea:focus, textarea:active {
 	border: 1px solid $secondary;
 }
 
+input[type=file] {
+	line-height: 20px;
+}
+
 a {
 	color: darken($secondary, 5);
 	text-decoration: none;

@@ -121,6 +121,9 @@ define(['./index'], function (controllers) {
 
 	    // post event and show necessary message(s)
 	    $scope.postEvent = function() {
+	    	var formData = new FormData();
+			formData.append('image', $scope.eventImage.resized, $scope.eventImage.resized.name);
+
 	    	// create venue and send to foursquare if it is new
 	    	if($scope.showAddressInput && (address != null)) {
 	    		venue.name = $scope.eventLocation;
