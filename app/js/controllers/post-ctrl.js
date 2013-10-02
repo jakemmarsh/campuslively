@@ -1,7 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('postCtrl', function ($scope, $rootScope, locationService, resolvedLocation) {
-    	$scope.userPosition = resolvedLocation;
+    controllers.controller('postCtrl', function ($scope, $rootScope, locationService) {
     	$scope.showAddressInput = true;
     	$scope.eventPosted = false;
     	$scope.venues = [];
@@ -46,11 +45,9 @@ define(['./index'], function (controllers) {
 		        console.log(errorMessage);
 		    });
     	}
-    	getVenues($scope.userPosition);
 
     	// initialize map options
     	$scope.mapOptions = {
-			center: new google.maps.LatLng($scope.userPosition.latitude, $scope.userPosition.longitude),
 			zoom: 15,
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			disableDefaultUI: true,
@@ -59,6 +56,15 @@ define(['./index'], function (controllers) {
 			scrollwheel: false,
 			panControl: false
 	    };
+
+	    locationService.getGeo().then(function (data) {
+            $scope.userPosition = data;
+            $scope.locationMap.setCenter(new google.maps.LatLng($scope.userPosition.latitude, $scope.userPosition.longitude));
+            getVenues($scope.userPosition);
+        },
+        function (errorMessage) {
+            console.log(errorMessage);
+        });
 
 	    $scope.$watch('eventLocation', function() {
 	    	$scope.checkLocation();

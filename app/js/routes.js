@@ -54,17 +54,7 @@ define(['./app'], function (app) {
             url: '/explore',
             templateUrl: '/partials/explore.html',
             controller: 'exploreCtrl',
-            title: 'Explore',      
-            resolve: {
-                resolvedLocation: function(locationService) {
-                    return locationService.getGeo().then(function (data) {
-                        return data;
-                    },
-                    function (errorMessage) {
-                        return errorMessage;
-                    });
-                }
-            }
+            title: 'Explore'
         })
         .state('inner.calendar', {
             url: '/calendar',
@@ -86,17 +76,7 @@ define(['./app'], function (app) {
             url: '/post',
             templateUrl: '/partials/post.html',
             controller: 'postCtrl',
-            title: 'Post An Event',
-            resolve: {
-                resolvedLocation: function(locationService) {
-                    return locationService.getGeo().then(function (data) {
-                        return data;
-                    },
-                    function (errorMessage) {
-                        return errorMessage;
-                    });
-                }
-            }
+            title: 'Post An Event'
         })
         .state('inner.settings', {
             url: '/settings',

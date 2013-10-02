@@ -1,7 +1,13 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('exploreCtrl', function ($scope, $modal, resolvedLocation) {
-    	$scope.userPosition = resolvedLocation;
+    controllers.controller('exploreCtrl', function ($scope, $modal, locationService) {
+    	locationService.getGeo().then(function (data) {
+            $scope.userPosition = data;
+        },
+        function (errorMessage) {
+            console.log(errorMessage);
+        });
+
     	$scope.currentView = 'school';
     	
     	$scope.viewOptions = [{
