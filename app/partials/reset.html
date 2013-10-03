@@ -1,0 +1,26 @@
+<div class="white-top">
+	<div class="container full-height">
+		<div class="table full-height">
+			<div class="td vertical-align-middle">
+				<h1 class="flush blue">Reset Your Password</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="table full-width full-height__header">
+	<div class="td full-height full-width vertical-align-middle text-center">
+		<div class="box island inline-block text-left top-highlight" style="width:500px;">
+			<form name="passwordForm" data-ng-submit="changePassword()">
+				<p class="nudge-half--bottom"><strong>Your Username:</strong> <span data-ng-bind="username">Jakemmarsh</span></p>
+				<label for="password" class="muted">New Password</label>
+				<div class="input-prepend full nudge--bottom">
+					<div class="icon">
+						<i class="icon-lock"></i>
+					</div>
+					<input type="text" id="password" data-ng-model="password" placeholder="your new password" required />
+				</div>
+				<input type="submit" value="Change Password" class="btn full-width" data-ng-disabled="passwordForm.$invalid" />
+			</form>
+		</div>
+	</div>
+</div>

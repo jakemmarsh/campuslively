@@ -8,6 +8,7 @@ define([
     'controllers/registerBusiness-ctrl',
     'controllers/registerStudent-ctrl',
     'controllers/forgot-ctrl',
+    'controllers/reset-ctrl',
     'controllers/settings-ctrl',
     'controllers/profile-ctrl',
     'controllers/feed-ctrl',

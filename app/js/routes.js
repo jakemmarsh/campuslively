@@ -50,6 +50,13 @@ define(['./app'], function (app) {
             title: 'Forgotten Password',
             access: 'notLoggedIn'
         })
+        .state('inner.reset', {
+            url: '/reset/:resetKey',
+            templateUrl: '/partials/reset.html',
+            controller: 'resetCtrl',
+            title: 'Reset Password',
+            access: 'notLoggedIn'
+        })
         .state('inner.feed', {
             url: '/feed',
             templateUrl: '/partials/feed.html',
