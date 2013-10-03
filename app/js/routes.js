@@ -10,7 +10,8 @@ define(['./app'], function (app) {
         .state('index', {
             url: '/',
             templateUrl: '/partials/home.html',
-            title: 'Home'
+            title: 'Home',
+            access: 'notLoggedIn'
         })
         .state('inner', {
             templateUrl: '/partials/inner.html',
@@ -19,48 +20,56 @@ define(['./app'], function (app) {
             url: '/login',
             templateUrl: '/partials/login.html',
             controller: 'loginCtrl',
-            title: 'Login'
+            title: 'Login',
+            access: 'notLoggedIn'
         })
         .state('inner.register', {
             url: '/register',
             templateUrl: '/partials/register.html',
-            title: 'Register'
+            title: 'Register',
+            access: 'notLoggedIn'
         })
         .state('inner.registerBusiness', {
             url: '/register/business',
             templateUrl: '/partials/register-business.html',
             controller: 'registerBusinessCtrl',
-            title: 'Register'
+            title: 'Register',
+            access: 'notLoggedIn'
         })
         .state('inner.registerStudent', {
             url: '/register/student',
             templateUrl: '/partials/register-student.html',
             controller: 'registerStudentCtrl',
-            title: 'Register'
+            title: 'Register',
+            access: 'notLoggedIn'
         })
         .state('inner.forgot', {
             url: '/forgot',
             templateUrl: '/partials/forgot.html',
             controller: 'forgotCtrl',
-            title: 'Forgotten Password'
+            title: 'Forgotten Password',
+            access: 'notLoggedIn'
         })
         .state('inner.feed', {
             url: '/feed',
             templateUrl: '/partials/feed.html',
             controller: 'feedCtrl',
-            title: 'My Feed'
+            title: 'My Feed',
+            access: 'loggedIn'
         })
         .state('inner.explore', {
             url: '/explore',
             templateUrl: '/partials/explore.html',
             controller: 'exploreCtrl',
-            title: 'Explore'
+            title: 'Explore',
+            access: 'loggedIn'
         })
         .state('inner.calendar', {
             url: '/calendar',
             templateUrl: '/partials/calendar.html',
             controller: 'calendarCtrl',
-            title: 'Events Calendar'
+            title: 'Events Calendar',
+            access: 'loggedIn'
         })
         .state('inner.event', {
             url: '/event/:eventId',
@@ -70,19 +79,22 @@ define(['./app'], function (app) {
                 setTitle: function($stateParams, $rootScope){
                     $rootScope.pageTitle = $stateParams.eventId; // TODO: DO HTTP CALL TO GET ACTUAL EVENT NAME
                 }
-            }
+            },
+            access: 'loggedIn'
         })
         .state('inner.post', {
             url: '/post',
             templateUrl: '/partials/post.html',
             controller: 'postCtrl',
-            title: 'Post An Event'
+            title: 'Post An Event',
+            access: 'loggedIn'
         })
         .state('inner.settings', {
             url: '/settings',
             templateUrl: '/partials/settings.html',
             controller: 'settingsCtrl',
-            title: 'Account Settings'
+            title: 'Account Settings',
+            access: 'loggedIn'
         })
         .state('inner.profile', {
             url: '/profile/:userName',
@@ -92,7 +104,8 @@ define(['./app'], function (app) {
                 setTitle: function($stateParams, $rootScope){
                     $rootScope.pageTitle = $stateParams.userName;
                 }
-            }
+            },
+            access: 'loggedIn'
         })
         .state('inner.contact', {
             url: '/contact',

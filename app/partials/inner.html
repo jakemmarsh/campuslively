@@ -27,7 +27,27 @@
 			</li>
 		</div>
 	</ul>
-	<ul data-ng-hide="getClass('/login') || getClass('/register') || getClass('/forgot')">
+	<ul data-ng-show="(getClass('/privacy') || getClass('/contact')) && !isLoggedIn()">
+		<li class="solo" data-ng-show="getClass('/privacy')">
+			<div class="link">
+				<i class="icon-question"></i>
+			</div>
+		</li>
+		<li class="solo" data-ng-show="getClass('/contact')">
+			<div class="link">
+				<i class="icon-envelope"></i>
+			</div>
+		</li>
+		<div class="bottom">
+			<li>
+				<a href="/" class="link">
+					<i class="icon-home"></i>
+					Home
+				</a>
+			</li>
+		</div>
+	</ul>
+	<ul data-ng-hide="getClass('/login') || getClass('/register') || getClass('/forgot') || !isLoggedIn()">
 		<li class="post" data-ng-class="{true:'active', false:''}[getClass('/post')]">
 			<a href="/post" class="link">
 				<i class="icon-plus"></i>

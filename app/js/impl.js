@@ -21,5 +21,6 @@ define([
     'directives/fixed-sidebar',
     'directives/ng-blur',
     'services/location',
+    'services/user',
     'filters/parse-url'
 ], function () {});

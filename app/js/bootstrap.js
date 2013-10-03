@@ -11,7 +11,26 @@ define([
 ], function (require, ng, app) {
     'use strict';
 
-    app.run(function ($rootScope, $location) {
+    app.run(function ($rootScope, $location, userService) {
+        // take actions based on user's logged in status and destination page's protection level
+        $rootScope.$on('$stateChangeStart', function(event, toState) {
+            // if page requires user to be logged in
+            if(toState.access == 'loggedIn') {
+                // if user isn't logged in
+                if(!userService.isLoggedIn()) {
+                    userService.originalDestination = toState.url;
+                    $location.path('/login');
+                }
+            }
+            // if page requiresu ser to NOT be logged in
+            else if(toState.access == 'notLoggedIn') {
+                // if user is already logged in
+                if(userService.isLoggedIn()) {
+                    $location.path('/feed');
+                }
+            }
+        });
+
         // change page title based on state
         $rootScope.$on('$stateChangeSuccess', function(event, toState) {
             if(toState.title) {
@@ -29,7 +48,14 @@ define([
             }
         }
 
+        // global function to get user's logged in status
+        $rootScope.isLoggedIn = function() {
+            return userService.isLoggedIn();
+        }
+
+        // global function to log user out
         $rootScope.logout = function() {
+            userService.loggedIn = false;
             $location.path('/');
         }
     });
