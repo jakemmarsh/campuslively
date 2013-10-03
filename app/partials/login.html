@@ -9,23 +9,24 @@
 </div>
 <div class="table full-width full-height__header">
 	<div class="td full-height full-width vertical-align-middle text-center">
-		<div class="box island inline-block text-left top-highlight">
-			<form name="loginForm" data-ng-submit="login()" class="nudge-half--bottom">
-				<h1 class="flush text-center">Logo Here</h1>
+		<div class="box island inline-block text-left top-highlight" style="min-width:325px">
+			<h1 class="flush text-center">Logo Here</h1>
+			<form name="loginForm" data-ng-submit="login()" class="nudge-half--ends">
 				<label for="username" class="muted">Username</label>
-				<div class="input-prepend nudge--bottom">
+				<div class="input-prepend full nudge--bottom">
 					<div class="icon">
 						<i class="icon-user"></i>
 					</div>
 					<input type="text" id="username" data-ng-model="username" placeholder="username" required autofocus />
 				</div>
 				<label for="password" class="muted">Password</label>
-				<div class="input-prepend nudge--bottom">
+				<div class="input-prepend full nudge--bottom">
 					<div class="icon">
 						<i class="icon-lock"></i>
 					</div>
 					<input type="password" id="password" data-ng-model="password" placeholder="password" required />
 				</div>
+				<span class="block red weight--bold nudge--bottom" data-ng-show="loginError" data-ng-bind="loginError"></span>
 				<input type="submit" value="Login" class="btn full-width" data-ng-disabled="loginForm.$invalid" />
 			</form>
 			<a href="/forgot">Forgot your password?</a>
