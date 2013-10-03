@@ -20,19 +20,28 @@ define(['./index'], function (controllers) {
             $scope.addSlide();
         }
 
-    	$scope.viewOptions = [{
-				label : 'Upcoming',
-				value : 'upcoming'
-			},
-			{
-				label : 'Newest',
-				value : 'newest'
-			}
-		];
+    	$scope.currentSort = {
+            label: 'by start date',
+            value: 'day'
+        };
+
+        $scope.sortOptions = [{
+                label: 'by start date',
+                value: 'day'
+            },
+            {
+                label: 'by post date',
+                value: 'posted'
+            }
+        ];
+
+        $scope.changeSort = function(option) {
+            $scope.currentSort = option;
+        };
 
         $scope.toggleSubscribe = function() {
             $scope.subscribed = !$scope.subscribed;
-        }
+        };
 
         $scope.toggleAttending = function(eventId) {
             $scope.attending = !$scope.attending;

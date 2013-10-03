@@ -46,12 +46,23 @@
 			</slide>
 		</carousel>
 	</div>
-	<div class="line">
-		<div class="unit one-half">
-			<h2 class="flush">Posted Events</h2>
-		</div>
-		<div class="unit one-half last-unit clearfix">
-			<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions" class="float-right"></ng-switch-toggle-group>
+	<div class="table full-width">
+		<div class="tr">
+			<div class="td one-half vertical-align-middle">
+				<h2 class="flush">Posted Events</h2>
+			</div>
+			<div class="td one-half vertical-align-middle text-right">
+				<div class="dropdown">
+					<a href class="dropdown-toggle">
+						{{ currentSort.label }} <i class="icon-chevron-down muted weight--normal"></i>
+					</a>
+					<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
+						<li data-ng-repeat="option in sortOptions">
+							<a href data-ng-bind="option.label" data-ng-click="changeSort(option)"></a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 	<hr />
