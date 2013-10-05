@@ -3,7 +3,7 @@ define(['./index'], function (controllers) {
     controllers.controller('calendarCtrl', function ($scope, $location, $anchorScroll, $timeout, $modal) {
     	$scope.showDay = false;
 
-      	$scope.eventSource = [
+      $scope.eventSource = [
 	        {
 	            title: 'Event1',
 	            start: '2013-09-18'
@@ -45,26 +45,46 @@ define(['./index'], function (controllers) {
     				});
           		});        
         	}
-	    }
+	    };
 
-	    $scope.calendarOptions = {
-	        height: 600,
-	        editable: false,
-	        header:{
-	          right: 'today prev,next'
-	        },
-	        dayClick: $scope.dayClick
-      	};
+      $scope.calendarOptions = {
+          height: 600,
+          editable: false,
+          header:{
+            right: 'today prev,next'
+          },
+          dayClick: $scope.dayClick
+      };
 
-      	$scope.toggleAttending = function(eventId) {
-      		$scope.attending = !$scope.attending;
-      	}
+    	$scope.toggleAttending = function(eventId) {
+    		$scope.attending = !$scope.attending;
+    	};
 
-		$scope.openAttending = function (eventId) {
-		    var modalInstance = $modal.open({
-		      templateUrl: 'attendingModal.html',
-		      controller: 'modalInstanceCtrl'
-		    });
-		}
+  		$scope.openAttending = function (eventId) {
+  		    var modalInstance = $modal.open({
+  		      templateUrl: 'attendingModal.html',
+  		      controller: 'modalInstanceCtrl'
+  		    });
+  		};
+
+      $scope.currentSort = {
+          label: 'by start date',
+          value: 'day'
+      };
+
+      $scope.sortOptions = [{
+              label: 'by start date',
+              value: 'day'
+          },
+          {
+              label: 'by post date',
+              value: 'posted'
+          }
+      ];
+
+      $scope.changeSort = function(option) {
+          $scope.currentSort = option;
+      };
+        
     });
 });

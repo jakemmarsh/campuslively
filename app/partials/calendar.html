@@ -10,7 +10,25 @@
 <div class="container soft-half--ends">
 	<div data-ui-calendar="calendarOptions" data-ng-model="eventSource" class="nudge-half--bottom"></div>
 	<div data-ng-show="showDay" id="dayEvents">
-		<h2 class="flush nudge-half--bottom" data-ng-bind="'Events on ' + selectedDay"></h2>
+		<div class="table full-width">
+			<div class="tr">
+				<div class="td one-half vertical-align-middle">
+					<h2 class="flush nudge-half--bottom" data-ng-bind="'Events on ' + selectedDay"></h2>
+				</div>
+				<div class="td one-half vertical-align-middle text-right">
+					<div class="dropdown">
+						<a href class="dropdown-toggle">
+							{{ currentSort.label }} <i class="icon-chevron-down muted weight--normal"></i>
+						</a>
+						<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
+							<li data-ng-repeat="option in sortOptions">
+								<a href data-ng-bind="option.label" data-ng-click="changeSort(option)"></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 		<hr />
 		<div class="line nudge-half--ends">
 			<div class="unit one-twelfth">
