@@ -18,7 +18,7 @@ define([
             if(toState.access == 'loggedIn') {
                 // if user isn't logged in
                 if(!userService.isLoggedIn()) {
-                    userService.originalDestination = toState.url;
+                    userService.originalDestination = $location.path();
                     $location.path('/login');
                 }
             }
