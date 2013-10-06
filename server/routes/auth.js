@@ -53,7 +53,15 @@ function authenticate(name, pass, fn) {
 
 exports.check = function(req, res) {
     if (req.session.user) {
-        res.send(200, "User is logged in.");
+        var returnUser = JSON.parse(JSON.stringify(req.session.user));
+        delete returnUser.salt;
+        delete returnUser.hash;
+        var data = {
+            loggedIn: true,
+            user: returnUser
+        };
+
+        res.json(data);
     } 
     else {
         res.send(401, "No session exists for user.");

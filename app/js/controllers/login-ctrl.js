@@ -9,6 +9,7 @@ define(['./index'], function (controllers) {
 
     		userService.login(user).then(function (data, status) {
     			$scope.loginError = null;
+    			$rootScope.user = data;
 	    		// redirect to original destination if one exists
 	    		if($rootScope.originalDestination) {
 	    			var originalDestination = $rootScope.originalDestination;

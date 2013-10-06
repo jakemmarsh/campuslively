@@ -9,9 +9,9 @@ define(['./index'], function (services) {
 			var deferred = $q.defer();
 			
 			$http.get(this.apiPath + 'check').success(function(data, status) {
-				deferred.resolve(true);
+				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.resolve(false);
+				deferred.resolve(err);
 			});
 
 			return deferred.promise;
@@ -31,6 +31,17 @@ define(['./index'], function (services) {
 			var deferred = $q.defer();
 
 			$http.post(this.apiPath + 'register', newUser).success(function(data, status) {
+				deferred.resolve(data, status);
+			}).error(function(err, status) {
+				deferred.reject(err, status);
+			});
+
+			return deferred.promise;
+		},
+		logout: function(user) {
+			var deferred = $q.defer();
+
+			$http.post(this.apiPath + 'logout', user).success(function(data, status) {
 				deferred.resolve(data, status);
 			}).error(function(err, status) {
 				deferred.reject(err, status);

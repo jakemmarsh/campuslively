@@ -12,32 +12,29 @@ define([
     'use strict';
 
     app.run(function ($rootScope, $location, userService) {
+        $rootScope.user = null;
         // take actions based on user's logged in status and destination page's protection level
         $rootScope.$on('$stateChangeStart', function(event, toState) {
-            // if page requires user to be logged in
-            if(toState.access == 'loggedIn') {
-                userService.isLoggedIn().then(function (loggedIn, status) {
-                    if(!loggedIn) {
+            userService.isLoggedIn().then(function (data, status) {
+                // if user is not logged in
+                if(!data.loggedIn) {
+                    // if page requires user to be logged in
+                    if(toState.access == 'loggedIn') {
                         $rootScope.originalDestination = $location.path();
                         $location.path('/login');
                     }
-                },
-                function (errorMessage, status) {
-                    console.log(errorMessage);
-                });
-            }
-            // if page requiresu ser to NOT be logged in
-            else if(toState.access == 'notLoggedIn') {
+                }
                 // if user is already logged in
-                userService.isLoggedIn().then(function (loggedIn, status) {
-                    if(loggedIn) {
+                else if(data.loggedIn) {
+                    $rootScope.user = data.user;
+                    // if page requires user to NOT be logged in
+                    if(toState.access == 'notLoggedIn') {
                         $location.path('/feed');
                     }
-                },
-                function (errorMessage, status) {
+                }
+            }, function (errorMessage, status) {
                     console.log(errorMessage);
-                });
-            }
+            });
         });
 
         // change page title based on state
@@ -59,7 +56,7 @@ define([
 
         // global function to get user's logged in status
         $rootScope.isLoggedIn = function() {
-            return userService.isLoggedIn();
+            return ($rootScope.user !== null);
         }
 
         // global function to log user out
