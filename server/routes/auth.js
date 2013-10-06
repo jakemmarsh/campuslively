@@ -33,30 +33,21 @@ function hash(pwd, salt, fn) {
     }
 }
 
-var users = {
-    tj: {name: 'tj'}
-};
-
-// when you create a user, generate a salt
-// and hash the password
-hash('foobar', function(err, salt, hash){
-    if (err) throw err;
-    // store the salt & hash in the "db"
-    users.tj.salt = salt;
-    users.tj.hash = hash;
-});
-
 function authenticate(name, pass, fn) {
-    var user = users[name];
-    // query the db for the given username
-    if (!user) return fn(new Error('cannot find user'));
-    // apply the same algorithm to the POSTed password, applying
-    // the hash against the pass / salt, if there is a match we
-    // found the user
-    hash(pass, user.salt, function(err, hash){
-        if (err) return fn(err);
-        if (hash == user.hash) return fn(null, user);
-        fn(new Error('invalid password'));
+    User.findOne({ username: name }, function (err, retrievedUser) {
+        if (err) {
+            return fn('Cannot find user.');
+        }
+        else {
+            // apply the same algorithm to the POSTed password, applying
+            // the hash against the pass / salt, if there is a match we
+            // found the user
+            hash(pass, retrievedUser.salt, function(err, hash){
+                if (err) return fn(err);
+                if (hash == retrievedUser.hash) return fn(null, retrievedUser);
+                return fn('Invalid password.');
+            });
+        }
     });
 }
 
@@ -80,25 +71,43 @@ exports.login = function(req, res) {
                 // or in this case the entire user object
                 req.session.user = user;
             });
-            // respond with user object
-            res.json(user);
+            // respond with user object, minus salt and hash properties
+            var returnUser = JSON.parse(JSON.stringify(user));
+            delete returnUser.salt;
+            delete returnUser.hash;
+            res.json(returnUser);
         } 
         else {
-            res.send(401, "User does not exist.");
+            res.send(401, err);
         }
     });
 };
 
 exports.logout = function(req, res) {
-	var username = req.body.username,
-        password = req.body.password;
+	var username = req.body.username;
 
-    req.session.destroy();
-    res.send(200, "User successfully logged out.");
+    req.session.destroy(function(){
+        // TODO: delete session from mongo?
+        res.send(200, "User successfully logged out.");
+    });
 };
 
 exports.register = function(req, res) {
-    var newUser;
+    var newUser,
+        registerUser = function(user) {
+            var deferred = Q.defer();
+
+            user.save(function (err, savedUser) {
+                if (err) {
+                    deferred.reject(err.message);
+                }
+                else {
+                    deferred.resolve(savedUser);
+                }
+            });
+
+            return deferred.promise;
+        }
 
     // generate a salt and hash the password
     hash(req.body.password, function(err, salt, hash){
@@ -124,6 +133,12 @@ exports.register = function(req, res) {
                 newUser.lastName = req.body.lastName;
                 newUser.gender = req.body.gender;
                 newUser.school = req.body.school;
+
+                registerUser(newUser).then(function(data) {
+                    res.json(data);
+                }, function(){
+                    res.send(500, 'Failed to register new user.');
+                });
             }
             else if(req.body.type.toLowerCase() == 'business') {
                 newUser.type = 'business';
@@ -133,6 +148,12 @@ exports.register = function(req, res) {
                 if(req.body.school) {
                     newUser.school = req.body.school;
                 }
+
+                registerUser(newUser).then(function(data) {
+                    res.json(data);
+                }, function(){
+                    res.send(500, 'Failed to register new user.');
+                });
             }
         }
 
