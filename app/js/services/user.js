@@ -6,11 +6,15 @@ define(['./index'], function (services) {
     return {
     	apiPath: '/api/v1/auth/',
 		isLoggedIn: function() {
+			var deferred = $q.defer();
+			
 			$http.get(this.apiPath + 'check').success(function(data, status) {
-				return true;
+				deferred.resolve(true);
 			}).error(function(err, status) {
-				return false;
+				deferred.resolve(false);
 			});
+
+			return deferred.promise;
 		},
 		login: function(user) {
 			var deferred = $q.defer();

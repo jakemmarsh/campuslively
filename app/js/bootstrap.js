@@ -16,18 +16,27 @@ define([
         $rootScope.$on('$stateChangeStart', function(event, toState) {
             // if page requires user to be logged in
             if(toState.access == 'loggedIn') {
-                // if user isn't logged in
-                if(!userService.isLoggedIn()) {
-                    $rootScope.originalDestination = $location.path();
-                    $location.path('/login');
-                }
+                userService.isLoggedIn().then(function (loggedIn, status) {
+                    if(!loggedIn) {
+                        $rootScope.originalDestination = $location.path();
+                        $location.path('/login');
+                    }
+                },
+                function (errorMessage, status) {
+                    console.log(errorMessage);
+                });
             }
             // if page requiresu ser to NOT be logged in
             else if(toState.access == 'notLoggedIn') {
                 // if user is already logged in
-                if(userService.isLoggedIn()) {
-                    $location.path('/feed');
-                }
+                userService.isLoggedIn().then(function (loggedIn, status) {
+                    if(loggedIn) {
+                        $location.path('/feed');
+                    }
+                },
+                function (errorMessage, status) {
+                    console.log(errorMessage);
+                });
             }
         });
 
