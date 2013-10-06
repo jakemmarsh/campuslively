@@ -18,6 +18,7 @@ define([
             userService.isLoggedIn().then(function (data, status) {
                 // if user is not logged in
                 if(!data.loggedIn) {
+                    $rootScope.user = null;
                     // if page requires user to be logged in
                     if(toState.access == 'loggedIn') {
                         $rootScope.originalDestination = $location.path();
@@ -62,6 +63,7 @@ define([
         // global function to log user out
         $rootScope.logout = function() {
             userService.logout($rootScope.user).then(function (data, status) {
+                $rootScope.user = null;
                 $location.path('/');
             },
             function (errorMessage, status) {
