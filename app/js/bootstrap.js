@@ -55,8 +55,12 @@ define([
 
         // global function to log user out
         $rootScope.logout = function() {
-            userService.loggedIn = false;
-            $location.path('/');
+            userService.logout($rootScope.user).then(function (data, status) {
+                $location.path('/');
+            },
+            function (errorMessage, status) {
+                console.log(errorMessage);
+            });
         }
     });
 
