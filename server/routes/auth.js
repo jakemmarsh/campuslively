@@ -70,12 +70,13 @@ exports.login = function(req, res) {
                 // in the session store to be retrieved,
                 // or in this case the entire user object
                 req.session.user = user;
+
+                // respond with user object, minus salt and hash properties
+                var returnUser = JSON.parse(JSON.stringify(user));
+                delete returnUser.salt;
+                delete returnUser.hash;
+                res.json(returnUser);
             });
-            // respond with user object, minus salt and hash properties
-            var returnUser = JSON.parse(JSON.stringify(user));
-            delete returnUser.salt;
-            delete returnUser.hash;
-            res.json(returnUser);
         } 
         else {
             res.send(401, err);
