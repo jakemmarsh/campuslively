@@ -17,10 +17,7 @@ var userSchema = new mongoose.Schema({
     username: { 
         type: String, 
         required: true, 
-        unique: true, 
-        index: { 
-            unique: true 
-        } 
+        unique: true
     },
     salt: {
         type: String, 
@@ -32,7 +29,8 @@ var userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     firstName: String,
     lastName: String,
