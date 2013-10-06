@@ -32,7 +32,9 @@
 					</div>
 				</div>
 				<div class="line">
-					<div class="unit six-tenths"></div>
+					<div class="unit six-tenths">
+						<span class="block red weight--bold nudge-half--top" data-ng-show="registerError" data-ng-bind="registerError"></span>
+					</div>
 					<div class="unit four-tenths text-right last-unit">
 						<input type="submit" class="btn" value="Register" data-ng-disabled="registerForm.$invalid" />
 					</div>
