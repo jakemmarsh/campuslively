@@ -38,6 +38,28 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		forgotPassword: function(username) {
+			var deferred = $q.defer();
+
+			$http.post(this.apiPath + 'forgot', username).success(function(data, status) {
+				deferred.resolve(data, status);
+			}).error(function(err, status) {
+				deferred.reject(err, status);
+			});
+
+			return deferred.promise;
+		},
+		resetPassword: function(password) {
+			var deferred = $q.defer();
+
+			$http.post(this.apiPath + 'reset', password).success(function(data, status) {
+				deferred.resolve(data, status);
+			}).error(function(err, status) {
+				deferred.reject(err, status);
+			});
+
+			return deferred.promise;
+		},
 		logout: function(user) {
 			var deferred = $q.defer();
 

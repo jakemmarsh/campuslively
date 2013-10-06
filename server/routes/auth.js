@@ -35,7 +35,7 @@ function hash(pwd, salt, fn) {
 
 function authenticate(name, pass, fn) {
     User.findOne({ username: name }, function (err, retrievedUser) {
-        if (err) {
+        if (err || !retrievedUser) {
             return fn('Cannot find user.');
         }
         else {
@@ -165,7 +165,51 @@ exports.register = function(req, res) {
                 });
             }
         }
-
-        // TODO: store user
     });
 };
+
+exports.forgotPassword = function(req, res) {
+    User.findOne({ username: req.body.username }, function (err, retrievedUser) {
+        var randomString;
+        if (err || !retrievedUser) {
+            res.send(404, 'No user exists with specified username.');
+        }
+        else {
+            crypto.randomBytes(16, function(ex, buf) {
+                retrievedUser.passwordResetKey = buf.toString('hex');
+                retrievedUser.save(function(err) {
+                    if(err) {
+                        res.send(500, "Failed to set user's password reset key.");
+                    }
+                    else {
+                        // TODO: send email to user
+                        res.send(200, "Successfully set user's password reset key.");
+                    }
+                });
+            });
+        }
+    });
+};
+
+exports.resetPassword = function(req, res) {
+    User.findOne({ passwordResetKey: req.body.resetKey }, function (err, retrievedUser) {
+        if (err || !retrievedUser) {
+            res.send(404, 'No user exists with specified reset key.');
+        }
+        else {
+            hash(req.body.password, function(err, salt, hash){
+                retrievedUser.salt = salt;
+                retrievedUser.hash = hash;
+                retrievedUser.passwordResetKey = null;
+                retrievedUser.save(function(err) {
+                    if(err) {
+                        res.send(500, "Failed to update user's password.");
+                    }
+                    else {
+                        res.send(200, "Successfully updated user's password.");
+                    }
+                });
+            });
+        }
+    });
+}

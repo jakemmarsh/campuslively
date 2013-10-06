@@ -39,7 +39,14 @@ var userSchema = new mongoose.Schema({
     subscribers: [User],
     attending: [Event],
     invites: [Invite],
-    school: String
+    school: String,
+    activated: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    activationKey: String,
+    passwordResetKey: String
 });
 
 module.exports = mongoose.model('User', userSchema);

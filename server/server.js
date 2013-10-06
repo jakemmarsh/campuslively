@@ -48,6 +48,8 @@ app.configure(function() {
     app.post('/api/v1/auth/login', routes.auth.login);
     app.post('/api/v1/auth/logout', restrict, routes.auth.logout);
     app.post('/api/v1/auth/register', routes.auth.register);
+    app.post('/api/v1/auth/forgot', routes.auth.forgotPassword);
+    app.post('/api/v1/auth/reset', routes.auth.resetPassword);
 
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {
