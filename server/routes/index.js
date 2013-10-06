@@ -1,1 +1,1 @@
-//exports.auth = require('../routes/auth');
+exports.auth = require('../routes/auth');

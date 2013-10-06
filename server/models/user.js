@@ -1,11 +1,19 @@
 var mongoose         = require('mongoose'),
-    bcrypt           = require('bcrypt'),
     Category         = require('./category'),
     Event            = require('./event'),
     Invite           = require('./invite'),
     User             = require('./user');
 
 var userSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        required: true
+    },
+    dateJoined: {
+        type: Date, 
+        default: Date.now,
+        required: true
+    },
     username: { 
         type: String, 
         required: true, 
@@ -14,20 +22,26 @@ var userSchema = new mongoose.Schema({
             unique: true 
         } 
     },
-    password: {
+    salt: {
         type: String, 
+        required: true
+    },
+    hash: {
+        type: String,
         required: true
     },
     email: {
         type: String,
         required: true
     },
-    categories: [Category],
+    firstName: String,
+    lastName: String,
+    businessName: String,
     subscriptions: [User],
+    subscribers: [User],
     attending: [Event],
     invites: [Invite],
-    // TODO: should this be a string?
-    location: String
+    school: String
 });
 
 module.exports = mongoose.model('User', userSchema);
