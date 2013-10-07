@@ -5,7 +5,8 @@
 				<div class="user-img-profile" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')"></div>
 			</div>
 			<div class="td three-tenths full-height">
-				<h1 class="flush"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span></h1>
+				<h1 class="flush" data-ng-show="profile.type == 'student'"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span></h1>
+				<h1 class="flush" data-ng-show="profile.type == 'business'" data-ng-bind="profile.businessName"></h1>
 				<div class="normal-lh">
 					<a href data-ng-click="openLocation()" data-tooltip="Location">
 						<i class="beta icon-map-marker nudge-half--right"></i>
@@ -23,21 +24,21 @@
 				</div>
 			</div>
 			<div class="td six-tenths full-height normal-lh vertical-align-middle text-right">
-				<a href class="btn nudge-half--right" data-ng-click="toggleSubscribe()" data-ng-hide="subscribed"><i class="icon-star"></i> Subscribe</a>
-				<a href class="btn nudge-half--right" data-ng-click="toggleSubscribe()" data-ng-show="subscribed"><i class="icon-star-empty"></i> Unsubscribe</a>
+				<a href class="btn nudge-half--right" data-ng-click="toggleSubscribe()" data-ng-hide="isSubscribed()"><i class="icon-star"></i> Subscribe</a>
+				<a href class="btn nudge-half--right" data-ng-click="toggleSubscribe()" data-ng-show="isSubscribed()"><i class="icon-star-empty"></i> Unsubscribe</a>
 			</div>
 
 		</div>
 	</div>
 </div>
 <div class="container soft-half--ends">
-	<div class="box top-highlight islet nudge-half--bottom">
+	<div class="box top-highlight islet nudge-half--bottom" data-ng-show="profile.type == 'business' && profile.businessDescription">
 		<div class="line nudge-half--bottom">
 			<div class="unit three-percent">
 				<h4 class="flush"><i class="muted icon-align-left"></i></h4>
 			</div>
 			<div class="unit ninety-seven-percent last-unit">
-				<p class="pre-wrap">Bijou Nightclub is the premier club in Boston. Get a table with your close friends and enjoy premium bottle services. The hottest DJ's in Boston!</p>
+				<p class="pre-wrap" data-ng-bind="profile.businessDescription">Bijou Nightclub is the premier club in Boston. Get a table with your close friends and enjoy premium bottle services. The hottest DJ's in Boston!</p>
 			</div>
 		</div>
 		<carousel interval="5000" class="flush">
@@ -46,7 +47,7 @@
 			</slide>
 		</carousel>
 	</div>
-	<div class="table full-width">
+	<div class="table full-width" data-ng-show="profile.postedEvents">
 		<div class="tr">
 			<div class="td one-half vertical-align-middle">
 				<h2 class="flush">Posted Events</h2>
@@ -65,8 +66,8 @@
 			</div>
 		</div>
 	</div>
-	<hr />
-	<div data-ng-show="currentView == 'upcoming'">
+	<hr data-ng-show="profile.postedEvents" />
+	<div data-ng-show="profile.postedEvents">
 		<div class="line nudge-half--ends">
 			<div class="unit one-twelfth">
 				<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')"></div>
@@ -109,8 +110,9 @@
 			</div>
 		</div><!-- event end -->
 	</div>
-	<div data-ng-show="currentView == 'newest'">
-		newest events here
+	<div class="text-center" data-ng-hide="profile.posted">
+		<h1 class="flush blue" data-ng-show="profile.type == 'student'"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span> has not posted any events!</h1>
+		<h1 class="flush blue" data-ng-show="profile.type == 'business'"><span data-ng-bind="profile.businessName"></span> has not posted any events!</h1>
 	</div>
 </div>
 
