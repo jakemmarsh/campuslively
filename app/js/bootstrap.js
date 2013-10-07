@@ -11,11 +11,11 @@ define([
 ], function (require, ng, app) {
     'use strict';
 
-    app.run(function ($rootScope, $location, userService) {
+    app.run(function ($rootScope, $location, authService) {
         $rootScope.user = null;
         // take actions based on user's logged in status and destination page's protection level
         $rootScope.$on('$stateChangeStart', function(event, toState) {
-            userService.isLoggedIn().then(function (data, status) {
+            authService.isLoggedIn().then(function (data, status) {
                 // if user is not logged in
                 if(!data.loggedIn) {
                     $rootScope.user = null;
@@ -62,7 +62,7 @@ define([
 
         // global function to log user out
         $rootScope.logout = function() {
-            userService.logout($rootScope.user).then(function (data, status) {
+            authService.logout($rootScope.user).then(function (data, status) {
                 $rootScope.user = null;
                 $location.path('/');
             },

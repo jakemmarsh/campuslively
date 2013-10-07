@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('resetCtrl', function ($scope, $stateParams, $location, userService) {
+    controllers.controller('resetCtrl', function ($scope, $stateParams, $location, authService) {
         // redirect if given reset key isn't legitimate
         if(!$stateParams.resetKey) {
             $location.path('/login');
@@ -12,7 +12,7 @@ define(['./index'], function (controllers) {
                 password: $scope.password
             };
 
-            userService.resetPassword(dataToSend).then(function (data, status) {
+            authService.resetPassword(dataToSend).then(function (data, status) {
                 $scope.resetError = null;
                 $scope.passwordChanged = true;
             },

@@ -1,13 +1,13 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('loginCtrl', function ($scope, $rootScope, $location, userService) {
+    controllers.controller('loginCtrl', function ($scope, $rootScope, $location, authService) {
     	$scope.login = function() {
     		var user = {
     			username: $scope.username,
     			password: $scope.password
     		};
 
-    		userService.login(user).then(function (data, status) {
+    		authService.login(user).then(function (data, status) {
     			$scope.loginError = null;
     			$rootScope.user = data;
 	    		// redirect to original destination if one exists

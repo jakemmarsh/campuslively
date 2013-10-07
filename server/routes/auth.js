@@ -66,7 +66,7 @@ exports.check = function(req, res) {
     else {
         res.send(401, "No session exists for user.");
     }
-}
+};
 
 exports.login = function(req, res) {
     authenticate(req.body.username, req.body.password, function(err, user){
@@ -170,7 +170,6 @@ exports.register = function(req, res) {
 
 exports.forgotPassword = function(req, res) {
     User.findOne({ username: req.body.username }, function (err, retrievedUser) {
-        var randomString;
         if (err || !retrievedUser) {
             res.send(404, 'No user exists with specified username.');
         }
