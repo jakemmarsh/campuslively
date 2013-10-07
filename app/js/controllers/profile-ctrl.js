@@ -1,7 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('profileCtrl', function ($scope, $stateParams, $modal, resolvedUser) {
-        console.log(resolvedUser);
+    controllers.controller('profileCtrl', function ($scope, $rootScope, $stateParams, $modal, resolvedUser, userService) {
         $scope.profile = resolvedUser;
     	
     	if($stateParams.userName == 'jakemmarsh') {
@@ -40,8 +39,34 @@ define(['./index'], function (controllers) {
             $scope.currentSort = option;
         };
 
+        $scope.isSubscribed = function() {
+            for(var i = 0; i < $rootScope.user.subscriptions.length; i++) {
+                if($rootScope.user.subscriptions[i] == $scope.profile._id) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
         $scope.toggleSubscribe = function() {
-            $scope.subscribed = !$scope.subscribed;
+            if($scope.isSubscribed()) {
+                userService.unsubscribe($rootScope.user._id, $scope.profile._id).then(function (data, status) {
+                    $rootScope.user = data;
+                },
+                function (errorMessage, status) {
+                    $scope.subscribeError = "Error occurred while subscribing to user.";
+                });
+            }
+            else {
+                userService.subscribe($rootScope.user._id, $scope.profile._id).then(function (data, status) {
+                    $rootScope.user = data;
+                },
+                function (errorMessage, status) {
+                    $scope.subscribeError = "Error occurred while subscribing to user.";
+                });
+            }
+            $scope.isSubscribed();
         };
 
         $scope.toggleAttending = function(eventId) {

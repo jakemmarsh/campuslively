@@ -15,6 +15,28 @@ define(['./index'], function (services) {
 			});
 
 			return deferred.promise;
+		},
+		subscribe: function(userId, subscriptionId) {
+			var deferred = $q.defer();
+			
+			$http.post(this.apiPath + userId + '/subscribe/' + subscriptionId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.resolve(err);
+			});
+
+			return deferred.promise;
+		},
+		unsubscribe: function(userId, subscriptionId) {
+			var deferred = $q.defer();
+			
+			$http.post(this.apiPath + userId + '/unsubscribe/' + subscriptionId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.resolve(err);
+			});
+
+			return deferred.promise;
 		}
     }
   });
