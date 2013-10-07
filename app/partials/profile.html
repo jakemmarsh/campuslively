@@ -112,7 +112,7 @@
 	</div>
 	<div class="text-center" data-ng-hide="profile.posted">
 		<h1 class="flush blue" data-ng-show="profile.type == 'student' && profile._id !== user._id"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span> has not posted any events!</h1>
-		<h1 class="flush blue" data-ng-show="profile.type == 'business'"><span data-ng-bind="profile.businessName"></span> has not posted any events!</h1>
+		<h1 class="flush blue" data-ng-show="profile.type == 'business' && profile._id !== user._id"><span data-ng-bind="profile.businessName"></span> has not posted any events!</h1>
 		<div data-ng-show="profile._id == user._id">
 			<h1 class="flush blue">You haven't posted any events!</h1>
 			<a href="/post" class="btn nudge--top">Create Event</a>
