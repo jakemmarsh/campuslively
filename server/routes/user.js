@@ -53,6 +53,10 @@ exports.getUserByName = function(req, res) {
 	});
 };
 
+exports.updateUser = function(req, res) {
+
+};
+
 exports.subscribe = function(req, res) {
 	if(req.params.subscribeId == req.params.userId) {
 		res.send(400, "Cannot subscribe user to themselves.");
