@@ -36,7 +36,7 @@ var userSchema = new mongoose.Schema({
     lastName: String,
     businessName: String,
     businessDescription: String,
-    subscriptions: [User],
+    subscriptions: [mongoose.Schema.Types.ObjectID],
     postedEvents: [Event],
     attending: [Event],
     invites: [Invite],
