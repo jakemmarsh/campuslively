@@ -83,7 +83,7 @@ define(['./app'], function (app) {
             templateUrl: '/partials/event.html',
             controller: 'eventCtrl',
             resolve: {
-                setTitle: function($stateParams, $rootScope){
+                setTitle: function($stateParams, $rootScope, userService){
                     $rootScope.pageTitle = $stateParams.eventId; // TODO: DO HTTP CALL TO GET ACTUAL EVENT NAME
                 }
             },
@@ -104,12 +104,18 @@ define(['./app'], function (app) {
             access: 'loggedIn'
         })
         .state('inner.profile', {
-            url: '/profile/:userName',
+            url: '/profile/:username',
             templateUrl: '/partials/profile.html',
             controller: 'profileCtrl',
             resolve: {
-                setTitle: function($stateParams, $rootScope){
-                    $rootScope.pageTitle = $stateParams.userName;
+                resolvedUser: function($stateParams, $rootScope, userService, $location){
+                    return userService.getUserByName($stateParams.username).then(function (data, status) {
+                        $rootScope.pageTitle = data.firstName + ' ' + data.lastName;
+                        return data;
+                    },
+                    function (errorMessage, status) {
+                        $location.path('/feed');
+                    });
                 }
             },
             access: 'loggedIn'
