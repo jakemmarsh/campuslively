@@ -179,71 +179,52 @@ exports.register = function(req, res) {
 };
 
 exports.forgotPassword = function(req, res) {
-    var setResetKey = function(username) {
+    var getUserAndSetKey = function(username) {
         var deferred = Q.defer();
 
-        User.findOne({ username: username }, function (err, retrievedUser) {
-            if (err || !retrievedUser) {
-                deferred.reject(err);
-            }
-            else {
-                deferred.resolve(retrievedUser);
-            }
+        crypto.randomBytes(16, function(ex, buf) {
+            User.findOneAndUpdate({ username: username }, { $set: { passwordResetKey: buf.toString('hex') } }, function (err, retrievedUser) {
+                if (err) {
+                    deferred.reject(err);
+                }
+                else {
+                    deferred.resolve(retrievedUser);
+                }
+            });
         });
 
         return deferred.promise;
     };
 
-    setResetKey(req.body.username).then(function(data) {
-        crypto.randomBytes(16, function(ex, buf) {
-            data.passwordResetKey = buf.toString('hex');
-            data.save(function(err) {
-                if(err) {
-                    res.send(500, "Failed to set user's password reset key.");
-      ß          }
-                else {
-                    // TODO: send email to user
-                    res.send(200, "Successfully set user's password reset key.");
-                }
-            });
-        });
+    getUserAndSetKey(req.body.username).then(function(data) {
+        res.send(200, "Successfully set user's password reset key.");
     }), function() {
         res.send(500, "Failed to set user's password reset key.");
     }
 };
 
 exports.resetPassword = function(req, res) {
-    var updatePassword = function(resetKey) {
+    var getUserAndUpdatePassword = function(resetKey) {
         var deferred = Q.defer();
 
-        User.findOne({ passwordResetKey: resetKey }, function (err, retrievedUser) {
-            if (err || !retrievedUser) {
-                deferred.reject(err);
-            }
-            else {
-                deferred.resolve(retrievedUser);
-            }
+        hash(req.body.password, function(err, salt, hash){
+            User.findOneAndUpdate({ passwordResetKey: resetKey }, { $set: { passwordResetKey: null, hash: hash, salt: salt }}, function (err, retrievedUser) {
+                if (err) {
+                    deferred.reject(err);
+                }
+                else {
+                    deferred.resolve(retrievedUser);
+                }
+            });
         });
 
         return deferred.promise;
     };
 
-    updatePassword(req.body.resetKey).then(function(data) {
-        hash(req.body.password, function(err, salt, hash){
-            data.salt = salt;
-            data.hash = hash;
-            data.passwordResetKey = null;
-            data.save(function(err) {
-                if(err) {
-                    res.send(500, "Failed to update user's password.");
-                }
-                else {
-                    res.send(200, "Successfully updated user's password.");
-                }
-            });
-        });
+    getUserAndUpdatePassword(req.body.resetKey).then(function(data) {
+        res.send(200, "Successfully updated user's password.");
     }, function(){
-        res.send(500, 'Failed to update user\'s password.');
+        res.send(500, "Failed to update user's password.");
     });
 
 };
