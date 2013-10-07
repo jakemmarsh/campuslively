@@ -2,7 +2,7 @@
 	<div class="container full-height">
 		<div class="table full-height">
 			<div class="td one-tenth full-height vertical-align-middle soft-half--right">
-				<div class="user-img-profile" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')"></div>
+				<div class="user-img-profile" data-ng-style="{'background-image': 'url(' + profile.pictureUrl + ')'}"></div>
 			</div>
 			<div class="td three-tenths full-height">
 				<h1 class="flush" data-ng-show="profile.type == 'student'"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span></h1>

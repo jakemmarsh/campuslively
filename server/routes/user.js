@@ -62,7 +62,7 @@ exports.subscribe = function(req, res) {
 		res.send(400, "Cannot subscribe user to themselves.");
 		return;
 	}
-	
+
 	var findSubscription = function(userId) {
 		var deferred = Q.defer();
 
@@ -80,7 +80,7 @@ exports.subscribe = function(req, res) {
 	addSubscription = function(subscription) {
 		var deferred = Q.defer();
 
-		User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { subscriptions: subscription._id } }, function(err, updatedUser) {
+		User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { subscriptions: subscription } }, function(err, updatedUser) {
          	console.log('inside');
          	if(err) {
          		deferred.reject(err);
@@ -130,11 +130,31 @@ exports.unsubscribe = function(req, res) {
 
 		return deferred.promise;
 	},
-	removeSubscription = function(user, subscriptionId) {
-		var deferred = Q.defer(),
-			subscriptionIndex = user.subscriptions.indexOf(subscriptionId);
+	findSubscription = function(userId) {
+		var deferred = Q.defer();
 
-		if(subscriptionIndex !== -1) {
+		User.findOne({ _id: userId }, function (err, retrievedUser) {
+	        if (err || !retrievedUser) {
+	        	deferred.reject(new Error("No user exists with specified ID."));
+	        }
+	        else {
+	        	deferred.resolve(retrievedUser);
+	        }
+	    });
+
+	    return deferred.promise;
+	},
+	removeSubscription = function(user, subscription) {
+		var deferred = Q.defer(),
+			subscriptionIndex = null;
+
+		for(var i = 0; i < user.subscriptions.length; i++) {
+			if(user.subscriptions[i]._id.toString() == subscription._id.toString()) {
+				subscriptionIndex = i;
+			}
+		}
+
+		if(subscriptionIndex !== null) {
 			user.subscriptions.splice(subscriptionIndex, 1);
 			user.save(function (err, savedUser) {
                 if (err) {
@@ -153,21 +173,25 @@ exports.unsubscribe = function(req, res) {
 	};
 
 	findUser(req.params.userId).then(function(retrievedUser) {
-		removeSubscription(retrievedUser, req.params.subscribeId).then(function(updatedUser) {
-			req.session.regenerate(function(){
-	            // Store the user's primary key 
-	            // in the session store to be retrieved,
-	            // or in this case the entire user object
-	            req.session.user = updatedUser;
+		findSubscription(req.params.subscribeId).then(function(retrievedSubscription) {
+			removeSubscription(retrievedUser, retrievedSubscription).then(function(updatedUser) {
+				req.session.regenerate(function(){
+		            // Store the user's primary key 
+		            // in the session store to be retrieved,
+		            // or in this case the entire user object
+		            req.session.user = updatedUser;
 
-	            // respond with user object, minus salt and hash properties
-	            var returnUser = JSON.parse(JSON.stringify(updatedUser));
-	            delete returnUser.salt;
-	            delete returnUser.hash;
-	            res.json(returnUser);
-	        });
+		            // respond with user object, minus salt and hash properties
+		            var returnUser = JSON.parse(JSON.stringify(updatedUser));
+		            delete returnUser.salt;
+		            delete returnUser.hash;
+		            res.json(returnUser);
+		        });
+			}, function(err) {
+				res.send(500, "Failed to remove user subscription.");
+			});
 		}, function(err) {
-			res.send(500, "Failed to remove user subscription.");
+			res.send(500, "Failed to find user to subscribe to.");
 		});
 	}, function(err) {
 		res.send(500, "Failed to find user by ID.");

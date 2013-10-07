@@ -41,7 +41,7 @@ define(['./index'], function (controllers) {
 
         $scope.isSubscribed = function() {
             for(var i = 0; i < $rootScope.user.subscriptions.length; i++) {
-                if($rootScope.user.subscriptions[i] == $scope.profile._id) {
+                if($rootScope.user.subscriptions[i]._id == $scope.profile._id) {
                     return true;
                 }
             }

@@ -36,7 +36,12 @@ var userSchema = new mongoose.Schema({
     lastName: String,
     businessName: String,
     businessDescription: String,
-    subscriptions: [mongoose.Schema.Types.ObjectID],
+    pictureUrl: {
+        type: String,
+        default: 'http://s3.amazonaws.com/campuslively/user_imgs/default.png',
+        required: true
+    },
+    subscriptions: [User],
     postedEvents: [Event],
     attending: [Event],
     invites: [Invite],
