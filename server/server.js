@@ -51,6 +51,10 @@ app.configure(function() {
     app.post('/api/v1/auth/forgot', routes.auth.forgotPassword);
     app.post('/api/v1/auth/reset', routes.auth.resetPassword);
 
+    // users
+    app.get('/api/v1/user/:userId', restrict, routes.user.getUser);
+    app.get('/api/v1/user/name/:username', restrict, routes.user.getUserByName);
+
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {
         res.sendfile("index.html", { root: __dirname + "/../app" });
