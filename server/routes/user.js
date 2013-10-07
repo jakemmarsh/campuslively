@@ -54,6 +54,11 @@ exports.getUserByName = function(req, res) {
 };
 
 exports.subscribe = function(req, res) {
+	if(req.params.subscribeId == req.params.userId) {
+		res.send(400, "Cannot subscribe user to themselves.");
+		return;
+	}
+	
 	var findSubscription = function(userId) {
 		var deferred = Q.defer();
 
