@@ -54,6 +54,8 @@ app.configure(function() {
     // users
     app.get('/api/v1/user/:userId', restrict, routes.user.getUser);
     app.get('/api/v1/user/name/:username', restrict, routes.user.getUserByName);
+    app.post('/api/v1/user/:userId/subscribe/:subscribeId', restrict, routes.user.subscribe);
+    app.post('/api/v1/user/:userId/unsubscribe/:subscribeId', restrict, routes.user.unsubscribe);
 
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {
