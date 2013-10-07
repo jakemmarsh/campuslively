@@ -34,20 +34,32 @@ function hash(pwd, salt, fn) {
 }
 
 function authenticate(name, pass, fn) {
-    User.findOne({ username: name }, function (err, retrievedUser) {
-        if (err || !retrievedUser) {
-            return fn('Cannot find user.');
-        }
-        else {
-            // apply the same algorithm to the POSTed password, applying
-            // the hash against the pass / salt, if there is a match we
-            // found the user
-            hash(pass, retrievedUser.salt, function(err, hash){
-                if (err) return fn(err);
-                if (hash == retrievedUser.hash) return fn(null, retrievedUser);
-                return fn('Invalid password.');
-            });
-        }
+    var findUser = function(username) {
+        var deferred = Q.defer();
+
+        User.findOne({ username: name }, function (err, retrievedUser) {
+            if (err || !retrievedUser) {
+                deferred.reject('Cannot find user.');
+            }
+            else {
+                deferred.resolve(retrievedUser);
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    findUser(name).then(function(data) {
+        // apply the same algorithm to the POSTed password, applying
+        // the hash against the pass / salt, if there is a match we
+        // found the user
+        hash(pass, data.salt, function(err, hash){
+            if (err) return fn(err);
+            if (hash == data.hash) return fn(null, data);
+            return fn('Invalid password.');
+        });
+    }, function() {
+        return fn('Failed to retrieve user.');
     });
 }
 
@@ -93,9 +105,7 @@ exports.login = function(req, res) {
 };
 
 exports.logout = function(req, res) {
-	var username = req.body.username;
-
-    req.session.destroy(function(){
+	req.session.destroy(function(){
         // TODO: delete session from mongo?
         res.send(200, "User successfully logged out.");
     });
@@ -169,46 +179,71 @@ exports.register = function(req, res) {
 };
 
 exports.forgotPassword = function(req, res) {
-    User.findOne({ username: req.body.username }, function (err, retrievedUser) {
-        if (err || !retrievedUser) {
-            res.send(404, 'No user exists with specified username.');
-        }
-        else {
-            crypto.randomBytes(16, function(ex, buf) {
-                retrievedUser.passwordResetKey = buf.toString('hex');
-                retrievedUser.save(function(err) {
-                    if(err) {
-                        res.send(500, "Failed to set user's password reset key.");
-                    }
-                    else {
-                        // TODO: send email to user
-                        res.send(200, "Successfully set user's password reset key.");
-                    }
-                });
+    var setResetKey = function(username) {
+        var deferred = Q.defer();
+
+        User.findOne({ username: username }, function (err, retrievedUser) {
+            if (err || !retrievedUser) {
+                deferred.reject(err);
+            }
+            else {
+                deferred.resolve(retrievedUser);
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    setResetKey(req.body.username).then(function(data) {
+        crypto.randomBytes(16, function(ex, buf) {
+            data.passwordResetKey = buf.toString('hex');
+            data.save(function(err) {
+                if(err) {
+                    res.send(500, "Failed to set user's password reset key.");
+      ß          }
+                else {
+                    // TODO: send email to user
+                    res.send(200, "Successfully set user's password reset key.");
+                }
             });
-        }
-    });
+        });
+    }), function() {
+        res.send(500, "Failed to set user's password reset key.");
+    }
 };
 
 exports.resetPassword = function(req, res) {
-    User.findOne({ passwordResetKey: req.body.resetKey }, function (err, retrievedUser) {
-        if (err || !retrievedUser) {
-            res.send(404, 'No user exists with specified reset key.');
-        }
-        else {
-            hash(req.body.password, function(err, salt, hash){
-                retrievedUser.salt = salt;
-                retrievedUser.hash = hash;
-                retrievedUser.passwordResetKey = null;
-                retrievedUser.save(function(err) {
-                    if(err) {
-                        res.send(500, "Failed to update user's password.");
-                    }
-                    else {
-                        res.send(200, "Successfully updated user's password.");
-                    }
-                });
+    var updatePassword = function(resetKey) {
+        var deferred = Q.defer();
+
+        User.findOne({ passwordResetKey: resetKey }, function (err, retrievedUser) {
+            if (err || !retrievedUser) {
+                deferred.reject(err);
+            }
+            else {
+                deferred.resolve(retrievedUser);
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    updatePassword(req.body.resetKey).then(function(data) {
+        hash(req.body.password, function(err, salt, hash){
+            data.salt = salt;
+            data.hash = hash;
+            data.passwordResetKey = null;
+            data.save(function(err) {
+                if(err) {
+                    res.send(500, "Failed to update user's password.");
+                }
+                else {
+                    res.send(200, "Successfully updated user's password.");
+                }
             });
-        }
+        });
+    }, function(){
+        res.send(500, 'Failed to update user\'s password.');
     });
-}
+
+};
