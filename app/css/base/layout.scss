@@ -53,6 +53,11 @@
         height: calc(100% - 100px);
     }
 
+.label-container {
+    height: 33px;
+    line-height: 33px;
+}
+
 .island {
     padding: $full-space;
 }
@@ -119,6 +124,36 @@
 .soft-half--sides {
     padding-left: $half-space;
     padding-right: $half-space;
+}
+
+.soft-quarter {
+    padding: $half-space/2;
+}
+
+.soft-quarter--top {
+    padding-top: $half-space/2;
+}
+
+.soft-quarter--bottom {
+    padding-bottom: $half-space/2;
+}
+
+.soft-quarter--left {
+    padding-left: $half-space/2;
+}
+
+.soft-quarter--right {
+    padding-right: $half-space/2;
+}
+
+.soft-quarter--ends {
+    padding-top: $half-space/2;
+    padding-bottom: $half-space/2;
+}
+
+.soft-quarter--sides {
+    padding-left: $half-space/2;
+    padding-right: $half-space/2;
 }
 
 .hard {
