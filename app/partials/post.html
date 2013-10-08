@@ -9,140 +9,131 @@
 </div>
 <div class="container soft-half--top soft--bottom">
 	<form name="eventForm" data-ng-submit="postEvent()" data-ng-hide="eventPosted">
-		<div class="table full-width">
-			<div class="tr">
-				<div class="td one-twelfth soft-half--right soft-half--bottom">
-					<label for="name" class="caps weight--bold">Name <span class="red">*</span></label>
-				</div>
-				<div class="td eleven-twelfths soft-half--bottom">
-					<input type="text" id="name" data-ng-model="eventName" class="full-width" placeholder="Event name" required />
-				</div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-twelfth label-container">
+				<label for="name" class="caps weight--bold">Name <span class="red">*</span></label>
 			</div>
-			<div class="tr">
-				<div class="td one-twelfth soft-half--bottom">
-					<label for="details" class="caps weight--bold">Details</label>
-				</div>
-				<div class="td eleven-twelfths soft-half--bottom">
-					<textarea id="details" data-ng-model="eventDetails" class="full-width medium" placeholder="Details about the event"></textarea>
-				</div>
+			<div class="unit eleven-twelfths last-unit">
+				<input type="text" id="name" data-ng-model="eventName" class="full-width" placeholder="Event name" required />
 			</div>
-			<div class="tr">
-				<div class="td one-twelfth vertical-align-middle">
-					<label for="location" class="caps weight--bold">Where <span class="red">*</span></label>
-				</div>
-				<div class="td eleven-twelfths">
-					<div class="input-prepend full">
-						<div class="icon">
-							<i class="icon-map-marker"></i>
-						</div>
-						<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event" data-ng-required="!locationAddress" data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" data-ng-blur="checkLocation()" />
+		</div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-twelfth label-container">
+				<label for="details" class="caps weight--bold">Details</label>
+			</div>
+			<div class="unit eleven-twelfths last-unit">
+				<textarea id="details" data-ng-model="evenunitetails" class="full-width medium" placeholder="Details about the event"></textarea>
+			</div>
+		</div>
+		<div class="line">
+			<div class="unit one-twelfth label-container">
+				<label for="location" class="caps weight--bold">Where <span class="red">*</span></label>
+			</div>
+			<div class="unit eleven-twelfths last-unit">
+				<div class="input-prepend full">
+					<div class="icon">
+						<i class="icon-map-marker"></i>
 					</div>
-				</div>
-			</div>
-			<div class="tr">
-				<div class="td one-twelfth soft-half--bottom"></div>
-				<div class="td eleven-twelfths soft-half--bottom">
-					<span class="epsilon">If the venue you're looking for doesn't appear, you can separately enter a new name and/or address.</span>
-				</div>
-			</div>
-			<div class="tr" data-ng-show="showAddressInput">
-				<div class="td one-twelfth soft-half--bottom vertical-align-middle">
-				</div>
-				<div class="td eleven-twelfths soft-half--bottom">
-					<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location" data-ng-blur="checkAddress()" data-ng-required="!eventLocation" />
-				</div>
-			</div>
-			<div class="tr">
-				<div class="td one-twelfth soft-half--bottom">
-				</div>
-				<div class="td eleven-twelfths soft-half--bottom">
-					<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map"></div>
+					<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event" data-ng-required="!locationAddress" data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" data-ng-blur="checkLocation()" />
 				</div>
 			</div>
 		</div>
-		<div class="table full-width">
-			<div class="tr">
-				<div class="td one-twelfth soft-half--bottom vertical-align-middle">
-					<label for="eventDate" class="caps weight--bold">When <span class="red">*</span></label>
-				</div>
-				<div class="td three-twelfths soft-half--bottom soft--right">
-					<div class="input-prepend full">
-						<div class="icon pointer" data-ng-click="openDatepicker()">
-							<i class="icon-calendar-empty"></i>
-						</div>
-						<input type="text" id="eventDate" data-ng-model="eventDate" name="eventDate" placeholder="9/30/13" data-datepicker-popup="MM/dd/yy" data-is-open="datepickerOpened" data-min="today" data-show-weeks="false" required />
-					</div>
-				</div>
-				<div class="td three-twelfths soft-half--bottom">
-					<div class="input-prepend full">
-						<div class="icon">
-							<i class="icon-time"></i>
-						</div>
-						<input type="text" id="startTime" data-ng-model="startTime" name="startTime" placeholder="9:00pm" data-ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
-					</div>
-				</div>
-				<div class="td five-twelfths soft-half--bottom"></div>
+		<div class="line">
+			<div class="unit one-twelfth label-container"></div>
+			<div class="unit eleven-twelfths last-unit">
+				<span class="epsilon">If the venue you're looking for doesn't appear, you can separately enter a new name and/or address.</span>
 			</div>
 		</div>
-		<div class="table full-width">
-			<div class="tr">
-				<div class="td one-twelfth vertical-align-middle soft-half--bottom">
-					<label for="eventTags" class="caps weight--bold">Tags</label>
-				</div>
-				<div class="td eleven-twelfths soft-half--bottom">
-					<input type="text" id="eventTags" name="eventTags" class="full-width" data-ui-select2="tagOptions" data-ng-model="eventTags" placeholder="Enter up to 3 tags" />
+		<div class="line nudge-half--bottom" data-ng-show="showAddressInput">
+			<div class="unit one-twelfth label-container"></div>
+			<div class="unit eleven-twelfths last-unit">
+				<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location" data-ng-blur="checkAddress()" data-ng-required="!eventLocation" />
+			</div>
+		</div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-twelfth label-container"></div>
+			<div class="unit eleven-twelfths last-unit">
+				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map"></div>
+			</div>
+		</div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-twelfth label-container">
+				<label for="evenunitate" class="caps weight--bold">When <span class="red">*</span></label>
+			</div>
+			<div class="unit three-twelfths soft--right">
+				<div class="input-prepend full">
+					<div class="icon pointer" data-ng-click="openDatepicker()">
+						<i class="icon-calendar-empty"></i>
+					</div>
+					<input type="text" id="evenunitate" data-ng-model="evenunitate" name="evenunitate" placeholder="9/30/13" data-datepicker-popup="MM/dd/yy" data-is-open="datepickerOpened" data-min="today" data-show-weeks="false" required />
 				</div>
 			</div>
-			<div class="tr">
-				<div class="td one-twelfth vertical-align-middle soft-half--bottom">
-					<label for="eventSchool" class="caps weight--bold">School</label>
-				</div>
-				<div class="td eleven-twelfths soft-half--bottom">
-					<input type="text" id="eventSchool" name="eventSchool" class="full-width" data-ng-model="eventSchool" placeholder="Associated school (if any)" />
+			<div class="unit three-twelfths">
+				<div class="input-prepend full">
+					<div class="icon">
+						<i class="icon-time"></i>
+					</div>
+					<input type="text" id="startTime" data-ng-model="startTime" name="startTime" placeholder="9:00pm" data-ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
 				</div>
 			</div>
-			<div class="tr">
-				<div class="td one-twelfth vertical-align-middle soft-half--bottom">
-					<label for="eventImage" class="caps weight--bold">Picture</label>
-				</div>
-				<div class="td eleven-twelfths soft-half--bottom">
-					<input class="full-width" id="eventImage" name="eventImage" type="file" accept="image/*" data-image="eventImage" data-resize-max-height="500" data-resize-max-width="1200" data-resize-quality="0.7" />
-				</div>
+			<div class="unit five-twelfths last-unit"></div>
+		</div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-twelfth label-container">
+				<label for="eventTags" class="caps weight--bold">Tags</label>
+			</div>
+			<div class="unit eleven-twelfths last-unit">
+				<input type="text" id="eventTags" name="eventTags" class="full-width" data-ui-select2="tagOptions" data-ng-model="eventTags" placeholder="Enter up to 3 tags" />
+			</div>
+		</div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-twelfth label-container">
+				<label for="eventSchool" class="caps weight--bold">School</label>
+			</div>
+			<div class="unit eleven-twelfths last-unit">
+				<input type="text" id="eventSchool" name="eventSchool" class="full-width" data-ng-model="eventSchool" placeholder="Associated school (if any)" />
+			</div>
+		</div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-twelfth label-container">
+				<label for="eventImage" class="caps weight--bold">Picture</label>
+			</div>
+			<div class="unit eleven-twelfths last-unit">
+				<input class="full-width" id="eventImage" name="eventImage" type="file" accept="image/*" data-image="eventImage" data-resize-max-height="500" data-resize-max-width="1200" data-resize-quality="0.7" />
 			</div>
 		</div>
 		<div class="event-img nudge-half--bottom" data-ng-show="eventImage" data-ng-style="{'background-image': 'url(' + eventImage.resized.dataURL + ')'}"></div>
-		<div class="table full-width">
-			<div class="tr">
-				<div class="td one-twelfth vertical-align-middle soft-half--bottom">
-					<label for="private" class="caps weight--bold">Privacy</label>
-				</div>
-				<div class="td five-twelfths soft-half--bottom">
-					<div class="dropdown">
-						<a href class="dropdown-toggle">
-							{{ eventPrivacy.label }} <i class="icon-chevron-down muted weight--normal"></i>
-						</a>
-						<ul class="dropdown-menu">
-							<li data-ng-repeat="option in privacyOptions">
-								<a href data-ng-bind="option.label" data-ng-click="changePrivacy(option)"></a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="td one-half text-right soft-half--bottom"></div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-twelfth label-container">
+				<label for="private" class="caps weight--bold">Privacy</label>
 			</div>
-			<div class="tr">
-				<div class="td one-twelfth"></div>
-				<div class="td five-twelfths">
-					<span class="red weight--bold" data-ng-show="eventForm.startTime.$error.pattern">Not a valid time. Must be of format HH:MM(am/pm)</span>
+			<div class="unit five-twelfths label-container last-unit">
+				<div class="dropdown">
+					<a href class="dropdown-toggle">
+						{{ eventPrivacy.label }} <i class="icon-chevron-down muted weight--normal"></i>
+					</a>
+					<ul class="dropdown-menu">
+						<li data-ng-repeat="option in privacyOptions">
+							<a href data-ng-bind="option.label" data-ng-click="changePrivacy(option)"></a>
+						</li>
+					</ul>
 				</div>
-				<div class="td one-half text-right">
-					<input type="submit" class="btn" value="Post Event" data-ng-disabled="eventForm.$invalid" />
-				</div>
+			</div>
+			<div class="unit one-half text-right"></div>
+		</div>
+		<div class="line">
+			<div class="unit full-width last-unit">
+				<span class="red weight--bold nudge-half--bottom" data-ng-show="eventForm.startTime.$error.pattern">Not a valid time. Must be of format HH:MM(am/pm)</span>
+			</div>
+		</div>
+		<div class="line">
+			<div class="unit full-width last-unit text-right">
+				<input type="submit" class="btn" value="Post Event" data-ng-disabled="eventForm.$invalid" />
 			</div>
 		</div>
 	</form>
 	<div data-ng-show="eventPosted">
-		<h1 class="flush green soft-half--bottom">Your event has been posted!</h1>
+		<h1 class="flush green">Your event has been posted!</h1>
 
 		<h2 class="flush">Invite your friends:</h2>
 		<p class="nudge-half--ends">Facebook friends list</p>
