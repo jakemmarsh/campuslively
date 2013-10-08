@@ -44,7 +44,7 @@ define(['./index'], function (controllers) {
 		    function (errorMessage) {
 		        console.log(errorMessage);
 		    });
-    	}
+    	};
 
     	// initialize map options
     	$scope.mapOptions = {
@@ -90,7 +90,7 @@ define(['./index'], function (controllers) {
 		    else {
 		    	$scope.showAddressInput = true;
 		    }
-	    }
+	    };
 
 	    // attempt to get latitude and longitude as address is entered
 	    $scope.checkAddress = function() {
@@ -107,7 +107,7 @@ define(['./index'], function (controllers) {
 					console.log(errorMessage);
 		        });
 		    }
-	    }
+	    };
 
 	    $scope.openDatepicker = function() {
 			$timeout(function() {
@@ -117,7 +117,7 @@ define(['./index'], function (controllers) {
 
 	    $scope.changePrivacy = function(option) {
 			$scope.eventPrivacy = option;
-		}
+		};
 
 	    // post event and show necessary message(s)
 	    $scope.postEvent = function() {
@@ -161,6 +161,6 @@ define(['./index'], function (controllers) {
 		  //       });
 	    	}
 	    	$scope.eventPosted = true;
-	    }
+	    };
     });
 });

@@ -37,7 +37,7 @@ define(['./index'], function (controllers) {
 
 		$scope.changeSort = function(option) {
 			$scope.currentSort = option;
-		}
+		};
 
 		var formatDate = function(date) {
     		var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -74,7 +74,7 @@ define(['./index'], function (controllers) {
 
 		$scope.toggleAttending = function(eventId) {
 			$scope.attending = !$scope.attending;
-		}
+		};
 
 		$scope.openRSVP = function (eventId) {
 		    var modalInstance = $modal.open({

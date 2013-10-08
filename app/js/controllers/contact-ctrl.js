@@ -5,6 +5,6 @@ define(['./index'], function (controllers) {
 
     	$scope.sendMessage = function() {
     		$scope.messageSent = true;
-    	}
+    	};
     });
 });

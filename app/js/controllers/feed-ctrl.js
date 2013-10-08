@@ -11,7 +11,7 @@ define(['./index'], function (controllers) {
 
     	$scope.toggleAttending = function(eventId) {
 			$scope.attending = !$scope.attending;
-		}
+		};
 
 		$scope.openAttending = function (eventId) {
 		    var modalInstance = $modal.open({

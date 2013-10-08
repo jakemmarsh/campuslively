@@ -16,7 +16,7 @@ define(['./index'], function (controllers) {
 			      controller: 'modalInstanceCtrl'
 			    });
 			}
-		}
+		};
 
 		$scope.saveChanges = function() {
 			var formData = new FormData();
