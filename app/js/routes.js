@@ -110,7 +110,12 @@ define(['./app'], function (app) {
             resolve: {
                 resolvedUser: function($stateParams, $rootScope, userService, $location){
                     return userService.getUserByName($stateParams.username).then(function (data, status) {
-                        $rootScope.pageTitle = data.firstName + ' ' + data.lastName;
+                        if(data.type == 'student') {
+                            $rootScope.pageTitle = data.firstName + ' ' + data.lastName;
+                        }
+                        else if(data.type == 'business') {
+                            $rootScope.pageTitle = data.businessName;
+                        }
                         return data;
                     },
                     function (errorMessage, status) {
