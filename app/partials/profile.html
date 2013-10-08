@@ -8,10 +8,10 @@
 				<h1 class="flush" data-ng-show="profile.type == 'student'"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span></h1>
 				<h1 class="flush" data-ng-show="profile.type == 'business'" data-ng-bind="profile.businessName"></h1>
 				<div class="normal-lh">
-					<a href data-ng-click="openLocation()" data-tooltip="Location">
+					<a href data-ng-click="openLocation()" data-tooltip="Location" data-ng-show="profile.type == 'business'">
 						<i class="beta icon-map-marker nudge-half--right"></i>
 					</a>
-					<a href="http://www.google.com/" target="_blank" data-tooltip="Website">
+					<a href="http://www.google.com/" target="_blank" data-tooltip="Website" data-ng-show="profile.type == 'business'">
 						<i class="beta icon-paper-clip nudge-half--right"></i>
 					</a>
 					<a href="http://www.twitter.com/" target="_blank" data-tooltip="Twitter">
