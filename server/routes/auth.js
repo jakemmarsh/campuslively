@@ -1,6 +1,7 @@
 var Q      = require('q'),
     crypto = require('crypto'),
-    User   = require('../models/user');
+    User   = require('../models/user'),
+    config = require('../config');
 
 /**
  * Hashes a password with optional `salt`, otherwise

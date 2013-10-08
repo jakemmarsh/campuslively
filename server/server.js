@@ -3,13 +3,10 @@ var path       = require('path'),
     MongoStore = require('connect-mongo')(express)
     app        = express(),
     mongoose   = require('mongoose'),
-    routes     = require(path.join(__dirname, 'routes'));
+    routes     = require(path.join(__dirname, 'routes')),
+    config     = require('./config');
 
-var dbusr = 'jakeAdmin',
-    dbpw  = 'ELadmin0530',
-    db    = 'app18051781';
-
-mongoose.connect('mongodb://'+dbusr+':'+dbpw+'@paulo.mongohq.com:10065/'+db);
+mongoose.connect(config.db.dbString);
 
 mongoose.set('debug', true);
 
@@ -33,7 +30,7 @@ app.configure(function() {
         store: new MongoStore({
             mongoose_connection: mongoose.connections[0]
         }),
-        secret: '1234567890QWERTY'
+        secret: config.secret
     }));
 
     // serve all asset files from necessary directories
