@@ -12,30 +12,47 @@
 		<div class="unit six-tenths">
 			<form name="registerForm" data-ng-submit="register()">
 				<div class="line nudge-half--bottom">
-					<div class="unit full-width last-unit">
-						<input type="text" id="username" data-ng-model="username" class="full-width" placeholder="Account username" required />
+					<div class="unit two-tenths label-container">
+						<label for="username" class="caps weight--bold">Username <span class="red">*</span></label>
+					</div>
+					<div class="unit eight-tenths last-unit">
+						<input type="text" id="username" name="username" data-ng-model="username" class="full-width" placeholder="Account username" data-ng-pattern="/^[a-zA-Z0-9.-]*$/" required />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">
-					<div class="unit full-width last-unit">
+					<div class="unit two-tenths label-container">
+						<label for="email" class="caps weight--bold">Email <span class="red">*</span></label>
+					</div>
+					<div class="unit eight-tenths last-unit">
 						<input type="email" id="email" name="email" data-ng-model="email" class="full-width" placeholder="Your email address" required />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">
+					<div class="unit two-tenths label-container">
+						<label for="businessName" class="caps weight--bold">Name <span class="red">*</span></label>
+					</div>
 					<div class="unit full-width last-unit">
 						<input type="text" id="businessName" name="businessName" data-ng-model="businessName" class="full-width" placeholder="Your club or group name" required />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">
+					<div class="unit two-tenths label-container">
+						<label for="password" class="caps weight--bold">Password <span class="red">*</span></label>
+					</div>
 					<div class="unit full-width last-unit">
 						<input type="password" id="password" data-ng-model="password" class="full-width" placeholder="Your password" required />
 					</div>
 				</div>
 				<div class="line">
-					<div class="unit six-tenths">
-						<span class="block red weight--bold nudge-half--top" data-ng-show="registerError" data-ng-bind="registerError"></span>
+					<div class="unit full-width last-unit">
+						<span class="red weight--bold block nudge-half--bottom" data-ng-show="registerForm.username.$error.pattern">
+							Username can only contain letters, numbers, periods, and dashes.
+						</span>
+						<span class="block red weight--bold nudge-half--bottom" data-ng-show="registerError" data-ng-bind="registerError"></span>
 					</div>
-					<div class="unit four-tenths text-right last-unit">
+				</div>
+				<div class="line">
+					<div class="unit full-width text-right last-unit">
 						<input type="submit" class="btn" value="Register" data-ng-disabled="registerForm.$invalid" />
 					</div>
 				</div>
