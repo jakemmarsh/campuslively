@@ -1,25 +1,33 @@
 var mongoose = require('mongoose'),
     User     = require('./user'),
-    Category = require('./category'),
-    Comment  = require('./comment');
+    Comment  = require('./comment'),
+    School   = require('./school'),
+    Location = require('./location');
 
 var eventSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
     },
-    location: {
+    locationName: {
         // TODO: should this be a string?
         type: String,
         required: true
     },
+    locationPoint: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Location'
+    },
     description: String,
-    start: {
-        type: String,
+    startDate: {
+        type: Date,
         required: true
     },
-    end: String,
-    categories: [Category],
+    startTime: String,
+    school: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'School'
+    },
     creator: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
@@ -30,11 +38,9 @@ var eventSchema = new mongoose.Schema({
         default: Date.now,
         required: true
     },
-    attending: {
-        type: Number,
-        required: true
-    },
-    comments: [Comment]
+    attending: [User],
+    comments: [Comment],
+    tags: [String]
 });
 
 module.exports = mongoose.model('Event', eventSchema);

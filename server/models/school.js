@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var categorySchema = new mongoose.Schema({
+var schoolSchema = new mongoose.Schema({
     name: {
     	type: String,
     	required: true,
@@ -10,4 +10,4 @@ var categorySchema = new mongoose.Schema({
     subscribers: Number
 });
 
-module.exports = mongoose.model('Category', categorySchema);
+module.exports = mongoose.model('School', schoolSchema);

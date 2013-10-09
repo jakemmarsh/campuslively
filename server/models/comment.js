@@ -1,7 +1,8 @@
 var mongoose = require('mongoose'),
 	User     = require('./user');
 
-var commentSchema = new mongoose.Schema({
+var comment = new mongoose.Schema();
+comment.add({
     content: {
         type: String,
         required: true
@@ -14,7 +15,8 @@ var commentSchema = new mongoose.Schema({
     posted: {
         type: Date, 
         default: Date.now
-    }
+    },
+    subcomments: [comment]
 });
 
-module.exports = mongoose.model('Comment', commentSchema);
+module.exports = mongoose.model('Comment', comment);

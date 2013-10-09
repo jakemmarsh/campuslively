@@ -1,8 +1,8 @@
 var mongoose         = require('mongoose'),
-    Category         = require('./category'),
     Event            = require('./event'),
     Invite           = require('./invite'),
-    User             = require('./user');
+    User             = require('./user'),
+    School           = require('./school');
 
 var userSchema = new mongoose.Schema({
     type: {
@@ -45,7 +45,7 @@ var userSchema = new mongoose.Schema({
     postedEvents: [Event],
     attending: [Event],
     invites: [Invite],
-    school: String,
+    school: [School],
     activated: {
         type: Boolean,
         default: false,
