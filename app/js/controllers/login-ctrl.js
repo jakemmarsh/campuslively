@@ -22,7 +22,7 @@ define(['./index'], function (controllers) {
 	    		}
 	        },
 	        function (errorMessage, status) {
-	        	$scope.loginError = "Username or password incorrect.";
+	        	$scope.loginError = errorMessage;
 	        });
     	};
     });

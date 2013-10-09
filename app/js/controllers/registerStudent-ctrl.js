@@ -1,8 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('registerStudentCtrl', function ($scope, userService) {
-    	$scope.emailSent = false;
-
+    controllers.controller('registerStudentCtrl', function ($scope, authService) {
     	$scope.schools = ['Boston University', 'University of Maine'];
 
     	$scope.register = function() {
@@ -17,7 +15,7 @@ define(['./index'], function (controllers) {
     			school: $scope.school
     		};
 
-    		userService.register(newUser).then(function (data, status) {
+    		authService.register(newUser).then(function (data, status) {
     			// TODO: send email
     			$scope.emailSent = true;
 	        },

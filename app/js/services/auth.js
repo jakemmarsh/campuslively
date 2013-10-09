@@ -2,7 +2,6 @@ define(['./index'], function (services) {
   'use strict';
   // expand input and show post button on focus
   services.service('authService', function($q, $http) {
-  	function checkStatus() {}
     return {
     	apiPath: '/api/v1/auth/',
 		isLoggedIn: function() {
