@@ -30,7 +30,11 @@ app.configure(function() {
         store: new MongoStore({
             mongoose_connection: mongoose.connections[0]
         }),
-        secret: config.secret
+        secret: config.secret,
+        // set cookie's maxAge to only 30 minutes until user logs in
+        cookie: {
+            maxAge: 1800000
+        }
     }));
 
     // serve all asset files from necessary directories
@@ -43,7 +47,7 @@ app.configure(function() {
     // auth
     app.get('/api/v1/auth/check', routes.auth.check);
     app.post('/api/v1/auth/login', routes.auth.login);
-    app.post('/api/v1/auth/logout', restrict, routes.auth.logout);
+    app.post('/api/v1/auth/logout', routes.auth.logout);
     app.post('/api/v1/auth/register', routes.auth.register);
     app.post('/api/v1/auth/forgot', routes.auth.forgotPassword);
     app.post('/api/v1/auth/reset', routes.auth.resetPassword);

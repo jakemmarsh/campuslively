@@ -84,30 +84,38 @@ exports.check = function(req, res) {
 exports.login = function(req, res) {
     authenticate(req.body.username, req.body.password, function(err, user){
         if (user) {
-            // Regenerate session when signing in
-            // to prevent fixation 
-            req.session.regenerate(function(){
-                // Store the user's primary key 
-                // in the session store to be retrieved,
-                // or in this case the entire user object
-                req.session.user = user;
+            if(user.activated == false) {
+                res.send(401, "Account has not been activated.");
+                return;
+            }
+            else {
+                // Regenerate session when signing in
+                // to prevent fixation 
+                req.session.regenerate(function(){
+                    // Store the user's primary key 
+                    // in the session store to be retrieved,
+                    // or in this case the entire user object
+                    req.session.user = user;
 
-                // respond with user object, minus salt and hash properties
-                var returnUser = JSON.parse(JSON.stringify(user));
-                delete returnUser.salt;
-                delete returnUser.hash;
-                res.json(returnUser);
-            });
+                    // increase duration of cookie
+                    req.session.cookie.maxAge = 604800000;
+
+                    // respond with user object, minus salt and hash properties
+                    var returnUser = JSON.parse(JSON.stringify(user));
+                    delete returnUser.salt;
+                    delete returnUser.hash;
+                    res.json(returnUser);
+                });
+            }
         } 
         else {
-            res.send(401, err);
+            res.send(401, "Username or password incorrect.");
         }
     });
 };
 
 exports.logout = function(req, res) {
 	req.session.destroy(function(){
-        // TODO: delete session from mongo?
         res.send(200, "User successfully logged out.");
     });
 };
