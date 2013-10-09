@@ -11,52 +11,83 @@
 	<div class="line">
 		<div class="unit three-fourths">
 			<form name="settingsForm" data-ng-submit="saveChanges()" class="nudge-half--bottom">
-				<div class="text-center soft-half--bottom full-width">
+				<div class="text-center nudge-half--bottom full-width">
 					<div class="user-img-settings center-block" data-ng-show="newUserImage" data-ng-style="{'background-image': 'url(' + newUserImage.resized.dataURL + ')'}"></div>
-					<div class="user-img-settings center-block" data-ng-hide="newUserImage" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')"></div>
+					<div class="user-img-settings center-block" data-ng-hide="newUserImage" data-ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}"></div>
 				</div>
-				<div class="table full-width">
-					<div class="tr">
-						<div class="td one-tenth soft-half--bottom">
-							<label for="userImage" class="caps weight--bold">Picture</label>
-						</div>
-						<div class="td nine-tenths soft-half--bottom">
-							<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" data-resize-max-height="200" data-resize-max-width="200" data-resize-quality="0.7" />
-						</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit label-container two-twelfths">
+						<label for="userImage" class="caps weight--bold">Picture</label>
 					</div>
-					<div class="tr">
-						<div class="td one-tenth soft-half--bottom">
-							<label for="email" class="caps weight--bold">Email</label>
-						</div>
-						<div class="td nine-tenths soft-half--bottom">
-							<input type="text" class="full-width" id="email" placeholder="jacob.marsh@maine.edu" />
-						</div>
+					<div class="unit ten-twelfths last-unit">
+						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" data-resize-max-height="200" data-resize-max-width="200" data-resize-quality="0.7" />
 					</div>
-					<div class="tr">
-						<div class="td one-tenth soft-half--bottom">
-							<label for="school" class="caps weight--bold">School</label>
-						</div>
-						<div class="td nine-tenths soft-half--bottom">
-							<input type="text" class="full-width" id="school" placeholder="University of Maine" />
-						</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit label-container two-twelfths">
+						<label for="school" class="caps weight--bold">School</label>
 					</div>
-					<div class="tr">
-						<div class="td one-tenth"></div>
-						<div class="td nine-tenths text-right">
-							<span class="blue weight--bold nudge--right" data-ng-show="changesSaved">Changes saved!</span>
-							<input type="submit" class="btn" value="Save Changes" />
-						</div>
+					<div class="unit ten-twelfths last-unit">
+						<input type="text" class="full-width" id="school" placeholder="school" data-ng-model="userSchool" />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom" data-ng-show="user.type == 'student'">
+					<div class="unit label-container two-twelfths">
+						<label for="userFirstName" class="caps weight--bold">First</label>
+					</div>
+					<div class="unit four-twelfths">
+						<input class="full-width" id="userFirstName" name="userFirstName" type="text" data-ng-model="userFirstName" placeholder="first name" />
+					</div>
+					<div class="unit label-container two-twelfths soft-half--right text-right">
+						<label for="userLastName" class="caps weight--bold">Last</label>
+					</div>
+					<div class="unit four-twelfths last-unit">
+						<input class="full-width" id="userLastName" name="userLastName" type="text" data-ng-model="userLastName" placeholder="last name" />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom" data-ng-show="user.type == 'business'">
+					<div class="unit label-container two-twelfths">
+						<label for="userBusinessName" class="caps weight--bold">Name</label>
+					</div>
+					<div class="unit ten-twelfths last-unit">
+						<input type="text" class="full-width" id="userBusinessName" placeholder="business name" data-ng-model="userBusinessName" />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit label-container two-twelfths">
+						<label for="userEmail" class="caps weight--bold">Email</label>
+					</div>
+					<div class="unit ten-twelfths last-unit">
+						<input type="text" class="full-width" name="emailBusiness" id="userEmail" placeholder="email address" data-ng-model="userEmail" data-ng-show="user.type == 'business'" />
+						<input type="text" class="full-width" name="emailStudent" id="userEmail" placeholder="email address" data-ng-model="userEmail" data-ng-pattern="/([a-z0-9][-a-z0-9_\+\.]*[a-z0-9])@([a-z0-9][-a-z0-9\.]*[a-z0-9]\.(edu)|([0-9]{1,3}\.{3}[0-9]{1,3}))/" data-ng-show="user.type == 'student'" />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit label-container two-twelfths">
+						<label for="userPassword" class="caps weight--bold">Password</label>
+					</div>
+					<div class="unit ten-twelfths last-unit">
+						<input type="password" class="full-width" id="userPassword" placeholder="password" data-ng-model="userPassword" />
+					</div>
+				</div>
+				<div class="line">
+					<div class="unit full-width last-unit text-right">
+						<span class="red weight--bold nudge--right" data-ng-show="saveError" data-ng-bind="saveError"></span>
+						<span class="red weight--bold nudge--right" data-ng-show="settingsForm.emailStudent.$error.pattern">
+							Email address must end in .edu.
+						</span>
+						<span class="blue weight--bold nudge--right" data-ng-show="changesSaved">Changes saved!</span>
+						<input type="submit" class="btn" value="Save Changes" />
 					</div>
 				</div>
 			</form>
-			<h2 class="flush soft-half--bottom">Manage Subscriptions</h2>
-			<div class="user-img-subscriptions" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-				<a href="/profile/jakemmarsh" data-tooltip="Jake Marsh" data-tooltip-placement="bottom" data-ng-href="/profile/jakemmarsh" class="ng-scope"></a>
-				<a href class="remove" data-tooltip="Unsubscribe" data-tooltip-placement="top" data-ng-click="removeSubscription(1)"><i class="icon-remove"></i></a>
-			</div>
-			<div class="user-img-subscriptions" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-				<a href="/profile/jakemmarsh" data-tooltip="Jake Marsh" data-tooltip-placement="bottom" data-ng-href="/profile/jakemmarsh" class="ng-scope"></a>
-				<a href class="remove" data-tooltip="Unsubscribe" data-tooltip-placement="top" data-ng-click="removeSubscription(1)"><i class="icon-remove"></i></a>
+			<h2 class="flush soft-half--bottom" data-ng-show="user.subscriptions">Manage Subscriptions</h2>
+			<div class="inline-block" data-ng-repeat="subscription in user.subscriptions">
+				<div class="user-img-subscriptions" data-ng-style="{'background-image': 'url(' + subscription.pictureUrl + ')'}">
+					<a data-ng-show="subscription.type == 'business'" data-ng-href="/profile/{{subscription.username}}" data-tooltip="{{subscription.businessName}}" data-tooltip-placement="bottom"></a>
+					<a data-ng-show="subscription.type == 'student'" data-ng-href="/profile/{{subscription.username}}" data-tooltip="{{subscription.firstName}} {{subscription.lastName}}" data-tooltip-placement="bottom"></a>
+					<a href class="remove" data-tooltip="Unsubscribe" data-tooltip-placement="top" data-ng-click="removeSubscription(subscription._id)"><i class="icon-remove"></i></a>
+				</div>
 			</div>
 		</div>
 		<div class="unit one-fourth soft--left last-unit">

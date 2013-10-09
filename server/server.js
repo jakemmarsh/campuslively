@@ -47,11 +47,12 @@ app.configure(function() {
     app.post('/api/v1/auth/register', routes.auth.register);
     app.post('/api/v1/auth/forgot', routes.auth.forgotPassword);
     app.post('/api/v1/auth/reset', routes.auth.resetPassword);
+    app.get('/api/v1/auth/signS3/:fileName', restrict, routes.auth.S3Signing);
 
     // users
     app.get('/api/v1/user/:userId', restrict, routes.user.getUser);
     app.get('/api/v1/user/name/:username', restrict, routes.user.getUserByName);
-    app.put('/api/v1/user/:userId', restrict, routes.user.updateUser);
+    app.patch('/api/v1/user/:userId', routes.user.updateUser);
     app.post('/api/v1/user/:userId/subscribe/:subscribeId', restrict, routes.user.subscribe);
     app.post('/api/v1/user/:userId/unsubscribe/:subscribeId', restrict, routes.user.unsubscribe);
 

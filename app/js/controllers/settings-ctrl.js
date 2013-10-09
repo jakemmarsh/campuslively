@@ -1,7 +1,14 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('settingsCtrl', function ($scope, $modal) {
+    controllers.controller('settingsCtrl', function ($scope, $rootScope, $modal, userService) {
     	$scope.changesSaved = false;
+
+    	$scope.userEmail = $rootScope.user.email;
+    	if($rootScope.user.type == 'student') {
+    		$scope.userSchool = $rootScope.user.school;
+    		$scope.userFirstName = $rootScope.user.firstName;
+    		$scope.userLastName = $rootScope.user.lastName;
+    	}
 
     	$scope.open = function (modal) {
 		  	if (modal.toLowerCase() == 'twitter') {
@@ -19,14 +26,68 @@ define(['./index'], function (controllers) {
 		};
 
 		$scope.saveChanges = function() {
-			var formData = new FormData();
-			formData.append('image', $scope.newUserImage.resized, $scope.newUserImage.resized.name);
+			var updateParams = {};
+			// populate updateParams with any changed fields
+			if($rootScope.user.type == 'student') {
+				if($rootScope.user.school !== $scope.userSchool) {
+					updateParams.school = $scope.userSchool;
+				}
+				if($rootScope.user.firstName !== $scope.userFirstName && $scope.userFirstName.length > 0) {
+					updateParams.firstName = $scope.userFirstName;
+				}
+				if($rootScope.user.lastName !== $scope.userLastName && $scope.userLastName.length > 0) {
+					updateParams.lastName = $scope.userLastName;
+				}
+				if($scope.userPassword) {
+					if($scope.userPassword.length > 0) {
+						updateParams.password = $scope.userPassword;
+					}
+				}
+			}
+			else if($rootScope.user.type == 'business') {
+				if($rootScope.user.businessName !== $scope.userBusinessName && $scope.userBusinessName.length > 0) {
+					updateParams.businessName = $scope.userBusinessName;
+				}
+			}
+			if($rootScope.user.email !== $scope.userEmail && $scope.userEmail.length > 0) {
+				updateParams.email = $scope.userEmail;
+			}
+			if($scope.userPassword) {
+				if($scope.userPassword.length > 0) {
+					updateParams.password = $scope.userPassword;
+				}
+			}
 
-			$scope.changesSaved = true;
-		}
+			if($scope.newUserImage) {
+				userService.uploadImage($scope.newUserImage.resized, $rootScope.user._id).then(function (data, status) {
+	                $scope.saveError = null;
+	                // make call to update user
+	                $scope.changesSaved = true;
+	            },
+	            function (errorMessage, status) {
+	            	$scope.changesSaved = false;
+	                $scope.saveError = "Error occurred while uploading image.";
+	            });
+			}
+			else {
+				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+					$scope.changesSaved = true;
+					$rootScope.user = data;
+				},
+				function (errorMessage, status) {
+					$scope.changesSaved = false;
+					$scope.saveError = "Error occurred while saving changes.";
+				});
+			}
+		};
 
 		$scope.removeSubscription = function(subscriptionId) {
-			console.log('unsubscribe');
+			userService.unsubscribe($rootScope.user._id, subscriptionId).then(function (data, status) {
+                $rootScope.user = data;
+            },
+            function (errorMessage, status) {
+                $scope.unsubscribeError = "Error occurred while unsubscribing from user.";
+            });
 		}
     });
 });

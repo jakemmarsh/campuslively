@@ -27,10 +27,10 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		updateUser: function(user) {
+		updateUser: function(userId, updatedParams) {
 			var deferred = $q.defer();
 
-			$http.put(this.apiPath + user._id, user).success(function(data, status) {
+			$http({method: 'PATCH', url: this.apiPath + userId, data: updatedParams}).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -54,6 +54,30 @@ define(['./index'], function (services) {
 			
 			$http.post(this.apiPath + userId + '/unsubscribe/' + subscriptionId).success(function(data, status) {
 				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
+		uploadImage: function(image, userId) {
+			var deferred = $q.defer();
+
+			$http.get('/api/v1/auth/signS3/' + userId).success(function(data, status) {
+				var formData = new FormData();
+				formData.append('key', userId);
+				formData.append('AWSAccessKeyId', data.awsKey);
+				formData.append('acl', 'public-read');
+				formData.append('policy', data.policy);
+				formData.append('signature', data.signature);
+				formData.append('Content-Type', image.type);
+				formData.append('file', image);
+
+				$http.post('http://' + data.bucket + '.s3.amazonaws.com/', formData).success(function(data) {
+					deferred.resolve(data);
+				}).error(function(err) {
+					deferred.reject(err);
+				});
 			}).error(function(err, status) {
 				deferred.reject(err);
 			});
