@@ -7,7 +7,11 @@ var schoolSchema = new mongoose.Schema({
     	unique: true
     },
     // TODO: should this exist?
-    subscribers: Number
+    subscribers: {
+    	type: Number,
+    	required: true,
+    	default: 0
+    }
 });
 
 module.exports = mongoose.model('School', schoolSchema);

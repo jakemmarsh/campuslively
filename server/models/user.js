@@ -41,11 +41,11 @@ var userSchema = new mongoose.Schema({
         default: 'http://s3.amazonaws.com/campuslively/user_imgs/default.png',
         required: true
     },
-    subscriptions: [User],
-    postedEvents: [Event],
-    attending: [Event],
-    invites: [Invite],
-    school: [School],
+    subscriptions: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
+    postedEvents: [{type: mongoose.Schema.ObjectId, ref: 'Event'}],
+    attending: [{type: mongoose.Schema.ObjectId, ref: 'Event'}],
+    invites: [{type: mongoose.Schema.ObjectId, ref: 'Invite'}],
+    school: String,
     activated: {
         type: Boolean,
         default: false,

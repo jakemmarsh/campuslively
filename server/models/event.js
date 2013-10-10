@@ -38,8 +38,8 @@ var eventSchema = new mongoose.Schema({
         default: Date.now,
         required: true
     },
-    attending: [User],
-    comments: [Comment],
+    attending: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
+    comments: [{type: mongoose.Schema.ObjectId, ref: 'Comment'}],
     tags: [String]
 });
 
