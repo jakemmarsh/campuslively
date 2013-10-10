@@ -77,7 +77,10 @@
 						<label for="school" class="caps weight--bold">School <span class="red">*</span></label>
 					</div>
 					<div class="unit eight-tenths last-unit">
-						<input type="text" id="school" data-ng-model="school" class="full-width" placeholder="Your school" required data-typeahead="school for school in schools | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" />
+						<select class="full-width" data-ui-select2 ng-model="school" data-placeholder="Select your school">
+						    <option value=""></option>
+						    <option data-ng-repeat="schoolName in schools" value="{{school}}">{{ schoolName }}</option>
+						</select>
 					</div>
 				</div>
 				<div class="line">

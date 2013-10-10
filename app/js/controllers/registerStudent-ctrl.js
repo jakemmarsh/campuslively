@@ -1,7 +1,14 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('registerStudentCtrl', function ($scope, authService) {
-    	$scope.schools = ['Boston University', 'University of Maine'];
+    controllers.controller('registerStudentCtrl', function ($scope, schoolService, authService) {
+    	schoolService.getAllSchools().then(function (data, status) {
+    		$scope.schools = [];
+    		for(var i = 0; i < data.length; i++) {
+    			$scope.schools.push(data[i].name);
+    		}
+    	}, function(errorMessage, status) {
+
+    	});
 
     	$scope.register = function() {
     		var newUser = {
