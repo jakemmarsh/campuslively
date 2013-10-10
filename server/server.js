@@ -63,7 +63,7 @@ app.configure(function() {
     app.post('/api/v1/user/:userId/unsubscribe/:subscribeId', restrict, routes.user.unsubscribe);
 
     // schools
-    app.get('/api/v1/school/all', restrict, routes.school.getAllSchools);
+    app.get('/api/v1/school/all', routes.school.getAllSchools);
 
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {
