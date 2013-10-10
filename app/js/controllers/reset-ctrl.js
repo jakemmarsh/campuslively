@@ -8,6 +8,7 @@ define(['./index'], function (controllers) {
 
         $scope.changePassword = function() {
             var dataToSend = {
+                userId: $stateParams.userId,
                 resetKey: $stateParams.resetKey,
                 password: $scope.password
             };

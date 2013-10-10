@@ -43,6 +43,40 @@ define(['./app'], function (app) {
             title: 'Register',
             access: 'notLoggedIn'
         })
+        .state('inner.activate', {
+            url: '/activate/:userId/:activateKey',
+            templateUrl: '/partials/activate.html',
+            controller: 'activateCtrl',
+            title: 'Activate Account',
+            access: 'notLoggedIn',
+            resolve: {
+                resolvedActivation: function($stateParams, $rootScope, $location, authService){
+                    return authService.activateUser($stateParams.userId, $stateParams.activateKey).then(function (data, status) {
+                        return true;
+                    },
+                    function (errorMessage, status) {
+                        $location.path('/');
+                    });
+                }
+            }
+        })
+        .state('inner.resend', {
+            url: '/resend/:username',
+            templateUrl: '/partials/resend.html',
+            controller: 'resendCtrl',
+            title: 'Activation Link Resent',
+            access: 'notLoggedIn',
+            resolve: {
+                resolvedEmailSent: function($stateParams, $rootScope, $location, authService){
+                    return authService.resendActivation($stateParams.username).then(function (data, status) {
+                        return true;
+                    },
+                    function (errorMessage, status) {
+                        $location.path('/');
+                    });
+                }
+            }
+        })
         .state('inner.forgot', {
             url: '/forgot',
             templateUrl: '/partials/forgot.html',
@@ -51,7 +85,7 @@ define(['./app'], function (app) {
             access: 'notLoggedIn'
         })
         .state('inner.reset', {
-            url: '/reset/:resetKey',
+            url: '/reset/:userId/:resetKey',
             templateUrl: '/partials/reset.html',
             controller: 'resetCtrl',
             title: 'Reset Password',

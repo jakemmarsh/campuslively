@@ -49,6 +49,8 @@ app.configure(function() {
     app.post('/api/v1/auth/login', routes.auth.login);
     app.post('/api/v1/auth/logout', routes.auth.logout);
     app.post('/api/v1/auth/register', routes.auth.register);
+    app.get('/api/v1/auth/user/:username/resend', routes.auth.resendActivation);
+    app.post('/api/v1/auth/user/:userId/activate/:activateKey', routes.auth.activate);
     app.post('/api/v1/auth/forgot', routes.auth.forgotPassword);
     app.post('/api/v1/auth/reset', routes.auth.resetPassword);
     app.get('/api/v1/auth/signS3/:fileName', restrict, routes.auth.S3Signing);

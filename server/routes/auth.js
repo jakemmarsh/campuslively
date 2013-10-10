@@ -1,7 +1,8 @@
-var Q      = require('q'),
-    crypto = require('crypto'),
-    User   = require('../models/user'),
-    config = require('../config');
+var Q          = require('q'),
+    crypto     = require('crypto'),
+    User       = require('../models/user'),
+    config     = require('../config'),
+    mailer     = require('../mailer');
 
 /**
  * Hashes a password with optional `salt`, otherwise
@@ -65,17 +66,22 @@ function authenticate(name, pass, fn) {
 }
 
 exports.check = function(req, res) {
-    if (req.session.user) {
-        var returnUser = JSON.parse(JSON.stringify(req.session.user));
-        delete returnUser.salt;
-        delete returnUser.hash;
-        var data = {
-            loggedIn: true,
-            user: returnUser
-        };
+    if (req.session) {
+        if (req.session.user) {
+            var returnUser = JSON.parse(JSON.stringify(req.session.user));
+            delete returnUser.salt;
+            delete returnUser.hash;
+            var data = {
+                loggedIn: true,
+                user: returnUser
+            };
 
-        res.json(data);
-    } 
+            res.json(data);
+        }
+        else {
+            res.send(401, "No session exists for user.");
+        }
+    }
     else {
         res.send(401, "No session exists for user.");
     }
@@ -135,7 +141,7 @@ exports.register = function(req, res) {
             });
 
             return deferred.promise;
-        }
+        };
 
     // generate a salt and hash the password
     hash(req.body.password, function(err, salt, hash){
@@ -149,41 +155,94 @@ exports.register = function(req, res) {
             email: req.body.email
         });
 
+        // set random activation key
+        newUser.activationKey = crypto.randomBytes(16).toString('hex');
+
         // check for account type
-        if(req.body.type) {
-            if(req.body.type.toLowerCase() == 'student') {
-                if((newUser.email.substring(newUser.email.length - 4)).toLowerCase() != '.edu') {
-                    res.send(400, 'Email address must end in .edu.');
-                }
-
-                newUser.type = 'student';
-                newUser.firstName = req.body.firstName;
-                newUser.lastName = req.body.lastName;
-                newUser.gender = req.body.gender;
-                newUser.school = req.body.school;
-
-                registerUser(newUser).then(function(data) {
-                    res.json(data);
-                }, function(){
-                    res.send(500, 'Failed to register new user.');
-                });
+        if(req.body.type.toLowerCase() == 'student') {
+            if((newUser.email.substring(newUser.email.length - 4)).toLowerCase() != '.edu') {
+                res.send(400, 'Email address must end in .edu.');
             }
-            else if(req.body.type.toLowerCase() == 'business') {
-                newUser.type = 'business';
-                newUser.businessName = req.body.businessName;
 
-                // assign business to a school if one is specified
-                if(req.body.school) {
-                    newUser.school = req.body.school;
-                }
+            newUser.type = 'student';
+            newUser.firstName = req.body.firstName;
+            newUser.lastName = req.body.lastName;
+            newUser.gender = req.body.gender;
+            newUser.school = req.body.school;
+        }
+        else if(req.body.type.toLowerCase() == 'business') {
+            newUser.type = 'business';
+            newUser.businessName = req.body.businessName;
 
-                registerUser(newUser).then(function(data) {
-                    res.json(data);
-                }, function(){
-                    res.send(500, 'Failed to register new user.');
-                });
+            // assign business to a school if one is specified
+            if(req.body.school) {
+                newUser.school = req.body.school;
             }
         }
+        registerUser(newUser).then(function(savedUser) {
+            mailer.sendActivationEmail(savedUser).then(function(data) {
+                res.send(200, 'User registered and email sent.');
+            }, function(err) {
+                res.send(200, 'User registered but failed to send activation email.');
+            });
+        }, function(err) {
+            res.send(500, 'Failed to register new user.');
+        });
+    });
+};
+
+exports.resendActivation = function(req, res) {
+    var findUser = function(username) {
+        var deferred = Q.defer();
+
+        User.findOne({ username: username }, function (err, retrievedUser) {
+            if (err || !retrievedUser) {
+                deferred.reject('Cannot find user.');
+            }
+            else {
+                deferred.resolve(retrievedUser);
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    findUser(req.params.username).then(function(retrievedUser) {
+        mailer.sendActivationEmail(retrievedUser).then(function(data) {
+            res.send(200, "Activation email resent.");
+        }, function() {
+            res.send(500, "Failed to resend activation email.");
+        });
+    }, function(err) {
+        res.send(404, "User could not be found.");
+    })
+};
+
+exports.activate = function(req, res) {
+    var getUserAndActivate = function(userId, activateKey) {
+        var deferred = Q.defer();
+
+        User.findOneAndUpdate({ activationKey: activateKey, _id: userId }, { $set: { activated: true, activationKey: null } }, function (err, updatedUser) {
+            if (err) {
+                deferred.reject(err);
+            }
+            else {
+                deferred.resolve(updatedUser);
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    getUserAndActivate(req.params.userId, req.params.activateKey).then(function(data) {
+        if(data) {
+            res.send(200, "User successfully activated.");
+        }
+        else {
+            res.send(500, "User doesn't exist or is already activated.");
+        }
+    }, function(err) {
+        res.send(500, "Could not activate user.");
     });
 };
 
@@ -205,19 +264,23 @@ exports.forgotPassword = function(req, res) {
         return deferred.promise;
     };
 
-    getUserAndSetKey(req.body.username).then(function(data) {
-        res.send(200, "Successfully set user's password reset key.");
-    }), function() {
+    getUserAndSetKey(req.body.username).then(function(savedUser) {
+        mailer.sendResetEmail(savedUser).then(function(data) {
+            res.send(200, "Successfully set user's password reset key.");
+        }, function() {
+            res.send(500, "Password reset key set, but failed to send email.");
+        });
+    }, function() {
         res.send(500, "Failed to set user's password reset key.");
-    }
+    });
 };
 
 exports.resetPassword = function(req, res) {
-    var getUserAndUpdatePassword = function(resetKey) {
+    var getUserAndUpdatePassword = function(userId, resetKey) {
         var deferred = Q.defer();
 
         hash(req.body.password, function(err, salt, hash){
-            User.findOneAndUpdate({ passwordResetKey: resetKey }, { $set: { passwordResetKey: null, hash: hash, salt: salt }}, function (err, retrievedUser) {
+            User.findOneAndUpdate({ passwordResetKey: resetKey, _id: userId }, { $set: { passwordResetKey: null, hash: hash, salt: salt }}, function (err, retrievedUser) {
                 if (err) {
                     deferred.reject(err);
                 }
@@ -230,9 +293,9 @@ exports.resetPassword = function(req, res) {
         return deferred.promise;
     };
 
-    getUserAndUpdatePassword(req.body.resetKey).then(function(data) {
+    getUserAndUpdatePassword(req.body.userId, req.body.resetKey).then(function(data) {
         res.send(200, "Successfully updated user's password.");
-    }, function(){
+    }, function(err){
         res.send(500, "Failed to update user's password.");
     });
 

@@ -37,6 +37,28 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		activateUser: function(userId, activateKey) {
+			var deferred = $q.defer();
+
+			$http.post(this.apiPath + 'user/' + userId + '/activate/' + activateKey).success(function(data, status) {
+				deferred.resolve(data, status);
+			}).error(function(err, status) {
+				deferred.reject(err, status);
+			});
+
+			return deferred.promise;
+		},
+		resendActivation: function(username) {
+			var deferred = $q.defer();
+
+			$http.get(this.apiPath + 'user/' + username + '/resend').sucess(function(data, status) {
+				deferred.resolve(data, status);
+			}).error(function(err, status) {
+				deferred.reject(err, status);
+			});
+
+			return deferred.promise;
+		},
 		forgotPassword: function(username) {
 			var deferred = $q.defer();
 
