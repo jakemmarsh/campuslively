@@ -1,6 +1,7 @@
 var Q          = require('q'),
     crypto     = require('crypto'),
     User       = require('../models/user'),
+    Event      = require('../models/event'),
     config     = require('../config'),
     mailer     = require('../mailer');
 
@@ -37,10 +38,16 @@ function hash(pwd, salt, fn) {
 
 function authenticate(name, pass, fn) {
     var findUser = function(username) {
-        var deferred = Q.defer();
-
-        User.findOne({ username: name }, function (err, retrievedUser) {
+        var deferred = Q.defer(),
+            populateObj = [
+                { path: 'subscriptions' },
+                { path: 'postedEvents' }, 
+                { path: 'attending' },
+                { path: 'invites' }
+            ];
+        User.findOne({ username: name }).populate(populateObj).exec(function (err, retrievedUser) {
             if (err || !retrievedUser) {
+                console.log(err);
                 deferred.reject('Cannot find user.');
             }
             else {

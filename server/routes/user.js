@@ -1,6 +1,7 @@
 var Q      = require('q'),
 	crypto = require('crypto'),
-    User   = require('../models/user');
+    User   = require('../models/user'),
+    School = require('../models/school');
 
 /**
  * Hashes a password with optional `salt`, otherwise
@@ -29,9 +30,15 @@ function hashSync(pwd, salt, fn) {
 
 exports.getUser = function(req, res) {
 	var findUser = function(userId) {
-		var deferred = Q.defer();
+		var deferred = Q.defer(),
+			populateObj = [
+                { path: 'subscriptions' },
+                { path: 'postedEvents' }, 
+                { path: 'attending' },
+                { path: 'invites' }
+            ];
 
-		User.findOne({ _id: req.params.userId }, function (err, retrievedUser) {
+		User.findOne({ _id: req.params.userId }).populate(populateObj).exec(function (err, retrievedUser) {
 	        if (err || !retrievedUser) {
 	        	deferred.reject(new Error("No user exists with specified ID."));
 	        }
@@ -55,9 +62,15 @@ exports.getUser = function(req, res) {
 
 exports.getUserByName = function(req, res) {
 	var findUser = function(username) {
-		var deferred = Q.defer();
+		var deferred = Q.defer(),
+			populateObj = [
+                { path: 'subscriptions' },
+                { path: 'postedEvents' }, 
+                { path: 'attending' },
+                { path: 'invites' }
+            ];
 
-		User.findOne({ username: username }, function (err, retrievedUser) {
+		User.findOne({ username: username }).populate(populateObj).exec(function (err, retrievedUser) {
 	        if (err || !retrievedUser) {
 	        	deferred.reject(new Error("No user exists with specified username."));
 	        }
@@ -81,7 +94,8 @@ exports.getUserByName = function(req, res) {
 
 exports.updateUser = function(req, res) {
 	var getUpdateParams = function() {
-		var updateParams = {};
+		var updateParams = {},
+			hasSchool;
 
 		// loop through posted properties
 		for (var key in req.body) {
@@ -92,7 +106,6 @@ exports.updateUser = function(req, res) {
 					updateParams[key] = req.body[key];
 				}
 				if(key == 'password') {
-					console.log('hit');
 					hashSync(req.body[key], function(err, salt, hash){
 			            if (err) {
 			            	throw err;
@@ -109,10 +122,15 @@ exports.updateUser = function(req, res) {
 		return updateParams;
 	},
 	updateUser = function(userId, updateParams) {
-		console.log(updateParams);
-		var deferred = Q.defer();
+		var deferred = Q.defer(),
+			populateObj = [
+                { path: 'subscriptions' },
+                { path: 'postedEvents' }, 
+                { path: 'attending' },
+                { path: 'invites' }
+            ];
 
-		User.findOneAndUpdate({ _id: userId }, updateParams, function(err, updatedUser) {
+		User.findOneAndUpdate({ _id: userId }, updateParams).populate(populateObj).exec(function(err, updatedUser) {
 			if(err) {
          		deferred.reject(err);
          	}
@@ -163,9 +181,15 @@ exports.subscribe = function(req, res) {
 	    return deferred.promise;
 	},
 	addSubscription = function(subscription) {
-		var deferred = Q.defer();
+		var deferred = Q.defer(),
+			populateObj = [
+                { path: 'subscriptions' },
+                { path: 'postedEvents' }, 
+                { path: 'attending' },
+                { path: 'invites' }
+            ];
 
-		User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { subscriptions: subscription } }, function(err, updatedUser) {
+		User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { subscriptions: subscription._id } }).populate(populateObj).exec(function(err, updatedUser) {
          	if(err) {
          		deferred.reject(err);
          	}
@@ -200,84 +224,41 @@ exports.subscribe = function(req, res) {
 };
 
 exports.unsubscribe = function(req, res) {
-	var findUser = function(userId) {
-		var deferred = Q.defer();
+	var removeSubscription = function(userId, subscriptionId) {
+		var deferred = Q.defer(),
+			populateObj = [
+                { path: 'subscriptions' },
+                { path: 'postedEvents' }, 
+                { path: 'attending' },
+                { path: 'invites' }
+            ];
 
-		User.findOne({ _id: userId }, function (err, retrievedUser) {
-            if (err || !retrievedUser) {
-                deferred.reject('Cannot find user.');
-            }
-            else {
-                deferred.resolve(retrievedUser);
-            }
-        });
-
-		return deferred.promise;
-	},
-	findSubscription = function(userId) {
-		var deferred = Q.defer();
-
-		User.findOne({ _id: userId }, function (err, retrievedUser) {
-	        if (err || !retrievedUser) {
-	        	deferred.reject(new Error("No user exists with specified ID."));
-	        }
-	        else {
-	        	deferred.resolve(retrievedUser);
-	        }
+		User.findOneAndUpdate({ _id: userId }, { $pull: { 'subscriptions': subscriptionId } }).populate(populateObj).exec(function(err, updatedUser) {
+         	if(err) {
+         		deferred.reject(err);
+         	}
+         	else {
+         		deferred.resolve(updatedUser);
+         	}
 	    });
 
 	    return deferred.promise;
-	},
-	removeSubscription = function(user, subscription) {
-		var deferred = Q.defer(),
-			subscriptionIndex = null;
-
-		for(var i = 0; i < user.subscriptions.length; i++) {
-			if(user.subscriptions[i]._id.toString() == subscription._id.toString()) {
-				subscriptionIndex = i;
-			}
-		}
-
-		if(subscriptionIndex !== null) {
-			user.subscriptions.splice(subscriptionIndex, 1);
-			user.save(function (err, savedUser) {
-                if (err) {
-                    deferred.reject(err.message);
-                }
-                else {
-                    deferred.resolve(savedUser);
-                }
-            });
-		}
-		else {
-			deferred.reject(new Error("Subscription does not exist for user."));
-		}
-
-        return deferred.promise;
 	};
 
-	findUser(req.params.userId).then(function(retrievedUser) {
-		findSubscription(req.params.subscribeId).then(function(retrievedSubscription) {
-			removeSubscription(retrievedUser, retrievedSubscription).then(function(updatedUser) {
-				req.session.regenerate(function(){
-		            // Store the user's primary key 
-		            // in the session store to be retrieved,
-		            // or in this case the entire user object
-		            req.session.user = updatedUser;
+	removeSubscription(req.params.userId, req.params.subscribeId).then(function(updatedUser) {
+		req.session.regenerate(function(){
+            // Store the user's primary key 
+            // in the session store to be retrieved,
+            // or in this case the entire user object
+            req.session.user = updatedUser;
 
-		            // respond with user object, minus salt and hash properties
-		            var returnUser = JSON.parse(JSON.stringify(updatedUser));
-		            delete returnUser.salt;
-		            delete returnUser.hash;
-		            res.json(returnUser);
-		        });
-			}, function(err) {
-				res.send(500, "Failed to remove user subscription.");
-			});
-		}, function(err) {
-			res.send(500, "Failed to find user to subscribe to.");
-		});
+            // respond with user object, minus salt and hash properties
+            var returnUser = JSON.parse(JSON.stringify(updatedUser));
+            delete returnUser.salt;
+            delete returnUser.hash;
+            res.json(returnUser);
+        });
 	}, function(err) {
-		res.send(500, "Failed to find user by ID.");
+		res.send(500, "Failed to remove user subscription.");
 	});
 };
