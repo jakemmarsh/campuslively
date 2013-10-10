@@ -28,7 +28,10 @@
 						<label for="school" class="caps weight--bold">School</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<input type="text" class="full-width" id="school" placeholder="school" data-ng-model="userSchool" />
+						<select class="full-width" data-ui-select2="schoolSelectOptions" ng-model="userSchool" data-placeholder="Select your school">
+						    <option value=""></option>
+						    <option data-ng-repeat="school in schools" value="{{school}}">{{ school }}</option>
+						</select>
 					</div>
 				</div>
 				<div class="line nudge-half--bottom" data-ng-show="user.type == 'student'">

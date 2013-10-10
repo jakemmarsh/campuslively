@@ -1,14 +1,25 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('settingsCtrl', function ($scope, $rootScope, $modal, userService) {
-    	$scope.changesSaved = false;
+    controllers.controller('settingsCtrl', function ($scope, $rootScope, $modal, userService, schoolService) {
+    	schoolService.getAllSchools().then(function (data, status) {
+    		//console.log(data);
+    	}, function(errorMessage, status) {
+
+    	});
+
+		$scope.schools = ['University of Maine', 'Boston University'];
 
     	$scope.userEmail = $rootScope.user.email;
+    	$scope.userSchool = $rootScope.user.school;
+
     	if($rootScope.user.type == 'student') {
-    		$scope.userSchool = $rootScope.user.school;
     		$scope.userFirstName = $rootScope.user.firstName;
     		$scope.userLastName = $rootScope.user.lastName;
     	}
+
+    	$scope.schoolSelectOptions = {
+    		'val': $scope.userSchool
+    	};
 
     	$scope.open = function (modal) {
 		  	if (modal.toLowerCase() == 'twitter') {
