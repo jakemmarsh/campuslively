@@ -4,5 +4,10 @@
 	padding: $half-space/2 $half-space;
 	border: 1px solid $border-grey;
 	color: $dark-grey;
-	font-weight: 300;
+	font-weight: 400;
+	height: 33px;
+}
+
+.dropdown-toggle:hover i {
+	color: $secondary !important;
 }
