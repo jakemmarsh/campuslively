@@ -2,12 +2,13 @@ define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('settingsCtrl', function ($scope, $rootScope, $modal, userService, schoolService) {
     	schoolService.getAllSchools().then(function (data, status) {
-    		//console.log(data);
+    		$scope.schools = [];
+    		for(var i = 0; i < data.length; i++) {
+    			$scope.schools.push(data[i].name);
+    		}
     	}, function(errorMessage, status) {
 
     	});
-
-		$scope.schools = ['University of Maine', 'Boston University'];
 
     	$scope.userEmail = $rootScope.user.email;
     	$scope.userSchool = $rootScope.user.school;
