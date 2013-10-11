@@ -16,7 +16,7 @@
 						<label for="username" class="caps weight--bold">Username <span class="red">*</span></label>
 					</div>
 					<div class="unit eight-tenths last-unit">
-						<input type="text" id="username" name="username" data-ng-model="username" class="full-width" placeholder="Account username" data-ng-pattern="/^[a-zA-Z0-9.-]*$/" required />
+						<input type="text" id="username" name="username" data-ng-model="username" class="full-width" placeholder="Account username" data-ng-pattern="/^[a-zA-Z0-9.-]*$/" data-ng-blur="checkUsername()" required />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">
@@ -79,7 +79,7 @@
 					<div class="unit eight-tenths last-unit">
 						<select class="full-width" data-ui-select2 ng-model="school" data-placeholder="Select your school">
 						    <option value=""></option>
-						    <option data-ng-repeat="schoolName in schools" value="{{school}}">{{ schoolName }}</option>
+						    <option data-ng-repeat="school in schools" value="{{school._id}}">{{ school.name }}</option>
 						</select>
 					</div>
 				</div>
@@ -91,12 +91,15 @@
 						<span class="red weight--bold block nudge-half--bottom" data-ng-show="registerForm.email.$error.pattern && !registerForm.username.$error.pattern">
 							Email address must end in .edu.
 						</span>
+						<span class="red weight--bold block nudge-half--bottom" data-ng-show="usernameTaken">
+							Username is already taken.
+						</span>
 						<span class="red weight--bold block nudge-half--bottom" data-ng-show="registerError" data-ng-bind="registerError"></span>
 					</div>
 				</div>
 				<div class="line">
 					<div class="unit two-tenths text-right last-unit">
-						<input type="submit" class="btn" value="Register" data-ng-disabled="registerForm.$invalid" />
+						<input type="submit" class="btn" value="Register" data-ng-disabled="registerForm.$invalid || usernameTaken" />
 					</div>
 				</div>
 			</form>

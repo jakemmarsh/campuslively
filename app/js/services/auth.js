@@ -37,6 +37,17 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		checkUsername: function(username) {
+			var deferred = $q.defer();
+
+			$http.get(this.apiPath + 'username/' + username).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		activateUser: function(userId, activateKey) {
 			var deferred = $q.defer();
 

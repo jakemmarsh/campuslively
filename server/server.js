@@ -49,6 +49,7 @@ app.configure(function() {
     app.post('/api/v1/auth/login', routes.auth.login);
     app.post('/api/v1/auth/logout', routes.auth.logout);
     app.post('/api/v1/auth/register', routes.auth.register);
+    app.get('/api/v1/auth/username/:username', routes.auth.checkUsername);
     app.get('/api/v1/auth/user/:username/resend', routes.auth.resendActivation);
     app.post('/api/v1/auth/user/:userId/activate/:activateKey', routes.auth.activate);
     app.post('/api/v1/auth/forgot', routes.auth.forgotPassword);
