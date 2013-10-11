@@ -9,6 +9,10 @@ define(['./index'], function (controllers) {
     		description: 'Famous Miami-based DJ Hardo LIVE at Bijou tonight! Tickets are $20 at the door. Order now and get them for $15! www.bijounightclub.com'
     	};
 
+        $scope.loadMore = function() {
+            console.log('load more feed items')
+        };
+
     	$scope.toggleAttending = function(eventId) {
 			$scope.attending = !$scope.attending;
 		};

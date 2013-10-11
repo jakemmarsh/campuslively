@@ -76,6 +76,10 @@ define(['./index'], function (controllers) {
 			$scope.attending = !$scope.attending;
 		};
 
+		$scope.loadMore = function() {
+			console.log('load more events');
+		};
+
 		$scope.openRSVP = function (eventId) {
 		    var modalInstance = $modal.open({
 		      templateUrl: 'rsvpModal.html',
