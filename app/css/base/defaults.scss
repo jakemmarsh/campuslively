@@ -77,7 +77,6 @@ input[type=file] {
 a {
 	color: darken($secondary, 5);
 	text-decoration: none;
-	@include transition();
 	font-weight: bold;
 }
 
