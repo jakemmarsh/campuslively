@@ -308,6 +308,34 @@ exports.resetPassword = function(req, res) {
 
 };
 
+exports.checkUsername = function(req, res) {
+    var checkIfUsernameTaken = function(username) {
+        var deferred = Q.defer();
+
+        User.find({ username: username }, function(err, retrievedUsers) {
+            if (err) {
+                deferred.reject(err.message)
+            }
+            else {
+                if(retrievedUsers.length > 0) {
+                    deferred.resolve(true);
+                }
+                else {
+                    deferred.resolve(false);
+                }
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    checkIfUsernameTaken(req.params.username).then(function(data) {
+        res.send(200, data);
+    }, function(err) {
+        res.send(500, "Failed to check if username exists already.");
+    });
+};
+
 exports.S3Signing = function(req, res) {
     var bucket = config.aws.bucket,
         awsKey = config.aws.key,

@@ -10,6 +10,18 @@ define(['./index'], function (controllers) {
 
     	});
 
+    	$scope.checkUsername = function() {
+    		authService.checkUsername($scope.username).then(function (isTaken, status) {
+    			if(isTaken == 'true') {
+    				console.log('username taken');
+    				$scope.usernameTaken = true;
+    			}
+    			else {
+    				$scope.usernameTaken = false;
+    			}
+    		});
+    	};
+
     	$scope.register = function() {
     		var newUser = {
     			type: 'student',
@@ -23,11 +35,12 @@ define(['./index'], function (controllers) {
     		};
 
     		authService.register(newUser).then(function (data, status) {
+    			$scope.usernameTaken = false;
     			// TODO: send email
     			$scope.emailSent = true;
 	        },
 	        function (errorMessage, status) {
-	        	$scope.registerError = errorMessage;
+	        	$scope.registerError = "Failed to register new user.";
 	        });
     	};
     });
