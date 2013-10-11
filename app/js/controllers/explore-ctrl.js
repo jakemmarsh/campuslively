@@ -1,12 +1,19 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('exploreCtrl', function ($scope, $modal, locationService) {
+    controllers.controller('exploreCtrl', function ($scope, $rootScope, $modal, locationService, eventService) {
     	locationService.getGeo().then(function (data) {
             $scope.userPosition = data;
         },
         function (errorMessage) {
             console.log(errorMessage);
         });
+
+   		$scope.events = [];
+   		eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
+			$scope.events = data;
+		}, function(error, status) {
+			console.log(err.message);
+		});
 
     	$scope.currentView = 'school';
     	
@@ -22,20 +29,36 @@ define(['./index'], function (controllers) {
 
 		$scope.currentSort = {
 			label: 'by start date',
-			value: 'day'
+			value: 'startDate'
 		};
 
 		$scope.sortOptions = [{
 				label: 'by start date',
-				value: 'day'
+				value: 'startDate'
 			},
 			{
 				label: 'by post date',
-				value: 'posted'
+				value: 'created'
 			}
 		];
 
 		$scope.changeSort = function(option) {
+			$scope.events = [];
+			if(option.value == 'school') {
+				eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
+					$scope.events = data;
+				}, function(error, status) {
+					console.log(err.message);
+				});
+			}
+			else if(option.value == 'nearby' && $scope.userPosition) {
+				eventService.getEventsByLocation($scope.userPosition).then(function (data, status) {
+					$scope.events = data;
+				}, function(error, status) {
+					console.log(err.message);
+				});
+			}
+
 			$scope.currentSort = option;
 		};
 
@@ -50,27 +73,6 @@ define(['./index'], function (controllers) {
 
     		return formattedDate;
     	};
-
-		$scope.events = [{
-    		title: 'DJ Hardo',
-    		location: 'Bijou Nightclub',
-    		day: new Date("June 9, 2013"),
-    		formattedDay: formatDate(new Date("June 9, 2013")),
-    		time: '11:30pm',
-    		description: 'Famous Miami-based DJ Hardo LIVE at Bijou tonight! Tickets are $20 at the door. Order now and get them for $15! www.bijounightclub.com',
-    		tags: ['club', 'live music'],
-    		posted: new Date()
-    	},
-    	{
-    		title: 'DJ Hardo Posted June 8th',
-    		location: 'Bijou Nightclub',
-    		day: new Date("June 10, 2013"),
-    		formattedDay: formatDate(new Date("June 10, 2013")),
-    		time: '11:30pm',
-    		description: 'Famous Miami-based DJ Hardo LIVE at Bijou tonight! Tickets are $20 at the door. Order now and get them for $15! www.bijounightclub.com',
-    		tags: ['club'],
-    		posted: new Date("June 8, 2013")
-    	}];
 
 		$scope.toggleAttending = function(eventId) {
 			$scope.attending = !$scope.attending;

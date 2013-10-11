@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('postCtrl', function ($scope, $rootScope, locationService) {
+    controllers.controller('postCtrl', function ($scope, $rootScope, locationService, eventService, $timeout) {
     	$scope.showAddressInput = true;
     	$scope.eventPosted = false;
     	$scope.venues = [];
@@ -121,8 +121,7 @@ define(['./index'], function (controllers) {
 
 	    // post event and show necessary message(s)
 	    $scope.postEvent = function() {
-	    	var formData = new FormData();
-			formData.append('image', $scope.eventImage.resized, $scope.eventImage.resized.name);
+	    	var event = {};
 
 	    	// create venue and send to foursquare if it is new
 	    	if($scope.showAddressInput && (address != null)) {
@@ -160,7 +159,40 @@ define(['./index'], function (controllers) {
 				// 	console.log(errorMessage);
 		  //       });
 	    	}
-	    	$scope.eventPosted = true;
+	    	// populate event for posting
+	    	event.title = $scope.eventTitle;
+	    	event.creator = $rootScope.user._id;
+	    	event.privacy = $scope.eventPrivacy.value;
+	    	if($scope.eventDescription) {
+	    		event.description = $scope.eventDescription;
+	    	}
+	    	// location name
+	    	// location point
+	    	event.startDate = new Date($scope.eventDate);
+	    	if($scope.startTime) {
+	    		event.startTime = $scope.startTime;
+	    	}
+	    	if($scope.eventTags) {
+	    		event.tags = $scope.eventTags;
+	    	}
+	    	if($scope.eventSchool) {
+	    		event.school = $scope.eventSchool;
+	    	}
+
+	    	eventService.postEvent(event).then(function (data) {
+		    	if($scope.eventImage) {
+		    		var formData = new FormData();
+		    		formData.append('image', $scope.eventImage.resized);
+
+		    		// post image to amazon SES, set URL as event.pictureUrl
+		    	}
+		    	else {
+		    		$scope.eventPosted = true;
+		    	}
+		    },
+		    function (errorMessage, status) {
+		    	$scope.postError = errorMessage.message;
+		    });
 	    };
     });
 });

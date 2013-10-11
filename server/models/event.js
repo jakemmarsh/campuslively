@@ -10,9 +10,7 @@ var eventSchema = new mongoose.Schema({
         required: true
     },
     locationName: {
-        // TODO: should this be a string?
         type: String,
-        required: true
     },
     locationPoint: {
         type: mongoose.Schema.ObjectId,
@@ -24,10 +22,7 @@ var eventSchema = new mongoose.Schema({
         required: true
     },
     startTime: String,
-    school: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'School'
-    },
+    school: String,
     creator: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
@@ -40,7 +35,16 @@ var eventSchema = new mongoose.Schema({
     },
     attending: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
     comments: [{type: mongoose.Schema.ObjectId, ref: 'Comment'}],
-    tags: [String]
+    tags: [String],
+    privacy: {
+        type: String,
+        default: 'public',
+        required: true
+    },
+    pictureUrl: {
+        type: String,
+        default: 'http://s3.amazonaws.com/campuslively/event_imgs/default.png'
+    }
 });
 
 module.exports = mongoose.model('Event', eventSchema);

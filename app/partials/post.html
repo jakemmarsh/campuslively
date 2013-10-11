@@ -14,7 +14,7 @@
 				<label for="name" class="caps weight--bold">Name <span class="red">*</span></label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
-				<input type="text" id="name" data-ng-model="eventName" class="full-width" placeholder="Event name" required />
+				<input type="text" id="name" data-ng-model="eventTitle" class="full-width" placeholder="Event name" required />
 			</div>
 		</div>
 		<div class="line nudge-half--bottom">
@@ -22,7 +22,7 @@
 				<label for="details" class="caps weight--bold">Details</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
-				<textarea id="details" data-ng-model="evenunitetails" class="full-width medium" placeholder="Details about the event"></textarea>
+				<textarea id="details" data-ng-model="eventDescription" class="full-width medium" placeholder="Details about the event"></textarea>
 			</div>
 		</div>
 		<div class="line">
@@ -58,14 +58,14 @@
 		</div>
 		<div class="line nudge-half--bottom">
 			<div class="unit one-twelfth label-container">
-				<label for="evenunitate" class="caps weight--bold">When <span class="red">*</span></label>
+				<label for="eventDate" class="caps weight--bold">When <span class="red">*</span></label>
 			</div>
 			<div class="unit three-twelfths soft--right">
 				<div class="input-prepend full">
 					<div class="icon pointer" data-ng-click="openDatepicker()">
 						<i class="icon-calendar-empty"></i>
 					</div>
-					<input type="text" id="evenunitate" data-ng-model="evenunitate" name="evenunitate" placeholder="9/30/13" data-datepicker-popup="MM/dd/yy" data-is-open="datepickerOpened" data-min="today" data-show-weeks="false" required />
+					<input type="text" id="eventDate" data-datepicker-popup="MM/dd/yy" data-ng-model="eventDate" name="eventDate" placeholder="9/30/13" data-is-open="datepickerOpened" data-min="today" data-show-weeks="false" required />
 				</div>
 			</div>
 			<div class="unit three-twelfths">
@@ -124,6 +124,7 @@
 		<div class="line">
 			<div class="unit full-width last-unit">
 				<span class="red weight--bold nudge-half--bottom" data-ng-show="eventForm.startTime.$error.pattern">Not a valid time. Must be of format HH:MM(am/pm)</span>
+				<span class="red weight--bold nudge-half--bottom" data-ng-show="postError" data-ng-bind="postError"></span>
 			</div>
 		</div>
 		<div class="line">

@@ -27,5 +27,6 @@ define([
     'services/auth',
     'services/user',
     'services/school',
+    'services/event',
     'filters/parse-url'
 ], function () {});

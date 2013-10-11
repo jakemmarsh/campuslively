@@ -68,6 +68,11 @@ app.configure(function() {
     // schools
     app.get('/api/v1/school/all', routes.school.getAllSchools);
 
+    // events
+    app.get('/api/v1/event/:eventId', restrict, routes.event.getEvent);
+    app.get('/api/v1/event/school/:schoolId', restrict, routes.event.getEventsBySchool);
+    app.post('/api/v1/event', restrict, routes.event.postEvent);
+
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {
         res.sendfile("index.html", { root: __dirname + "/../app" });
