@@ -61,6 +61,8 @@ app.configure(function() {
     app.patch('/api/v1/user/:userId', routes.user.updateUser);
     app.post('/api/v1/user/:userId/subscribe/:subscribeId', restrict, routes.user.subscribe);
     app.post('/api/v1/user/:userId/unsubscribe/:subscribeId', restrict, routes.user.unsubscribe);
+    app.get('/api/v1/user/:userId/activities', restrict, routes.user.getActivities);
+    app.get('/api/v1/user/:userId/activities/:oldestId', restrict, routes.user.getActivities);
 
     // schools
     app.get('/api/v1/school/all', routes.school.getAllSchools);
