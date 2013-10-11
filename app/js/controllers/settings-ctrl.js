@@ -74,8 +74,14 @@ define(['./index'], function (controllers) {
 			if($scope.newUserImage) {
 				userService.uploadImage($scope.newUserImage.resized, $rootScope.user._id).then(function (data, status) {
 	                $scope.saveError = null;
-	                // make call to update user
-	                $scope.changesSaved = true;
+	                userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+						$scope.changesSaved = true;
+						$rootScope.user = data;
+					},
+					function (errorMessage, status) {
+						$scope.changesSaved = false;
+						$scope.saveError = "Error occurred while saving changes.";
+					});
 	            },
 	            function (errorMessage, status) {
 	            	$scope.changesSaved = false;
