@@ -4,10 +4,10 @@ define(['./index'], function (controllers) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = [];
     		for(var i = 0; i < data.length; i++) {
-    			$scope.schools.push(data[i].name);
+    			$scope.schools.push(data[i]);
     		}
     	}, function(errorMessage, status) {
-
+    		console.log(errorMessage);
     	});
 
     	$scope.checkUsername = function() {

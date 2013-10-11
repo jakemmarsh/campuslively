@@ -45,7 +45,10 @@ var userSchema = new mongoose.Schema({
     postedEvents: [{type: mongoose.Schema.ObjectId, ref: 'Event'}],
     attending: [{type: mongoose.Schema.ObjectId, ref: 'Event'}],
     invites: [{type: mongoose.Schema.ObjectId, ref: 'Invite'}],
-    school: String,
+    school: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'School'
+    },
     activated: {
         type: Boolean,
         default: false,

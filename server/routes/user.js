@@ -36,7 +36,8 @@ exports.getUser = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' }
+                { path: 'invites' },
+                { path: 'school' }
             ];
 
 		User.findOne({ _id: req.params.userId }).populate(populateObj).exec(function (err, retrievedUser) {
@@ -68,7 +69,8 @@ exports.getUserByName = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' }
+                { path: 'invites' },
+                { path: 'school' }
             ];
 
 		User.findOne({ username: username }).populate(populateObj).exec(function (err, retrievedUser) {
@@ -128,7 +130,8 @@ exports.updateUser = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' }
+                { path: 'invites' },
+                { path: 'school' }
             ];
 
 		User.findOneAndUpdate({ _id: userId }, updateParams).populate(populateObj).exec(function(err, updatedUser) {
@@ -187,7 +190,8 @@ exports.subscribe = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' }
+                { path: 'invites' },
+                { path: 'school' }
             ];
 
 		User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { subscriptions: subscription._id } }).populate(populateObj).exec(function(err, updatedUser) {
@@ -254,7 +258,8 @@ exports.unsubscribe = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' }
+                { path: 'invites' },
+                { path: 'school' }
             ];
 
 		User.findOneAndUpdate({ _id: userId }, { $pull: { 'subscriptions': subscriptionId } }).populate(populateObj).exec(function(err, updatedUser) {

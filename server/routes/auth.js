@@ -43,7 +43,8 @@ function authenticate(name, pass, fn) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' }
+                { path: 'invites' },
+                { path: 'school' }
             ];
         User.findOne({ username: name }).populate(populateObj).exec(function (err, retrievedUser) {
             if (err || !retrievedUser) {
@@ -193,7 +194,7 @@ exports.register = function(req, res) {
                 res.send(200, 'User registered but failed to send activation email.');
             });
         }, function(err) {
-            res.send(500, 'Failed to register new user.');
+            res.send(500, err);
         });
     });
 };
@@ -231,7 +232,7 @@ exports.activate = function(req, res) {
 
         User.findOneAndUpdate({ activationKey: activateKey, _id: userId }, { $set: { activated: true, activationKey: null } }, function (err, updatedUser) {
             if (err) {
-                deferred.reject(err);
+                deferred.reject(err.message);
             }
             else {
                 deferred.resolve(updatedUser);
@@ -260,7 +261,7 @@ exports.forgotPassword = function(req, res) {
         crypto.randomBytes(16, function(ex, buf) {
             User.findOneAndUpdate({ username: username }, { $set: { passwordResetKey: buf.toString('hex') } }, function (err, retrievedUser) {
                 if (err) {
-                    deferred.reject(err);
+                    deferred.reject(err.message);
                 }
                 else {
                     deferred.resolve(retrievedUser);
@@ -289,7 +290,7 @@ exports.resetPassword = function(req, res) {
         hash(req.body.password, function(err, salt, hash){
             User.findOneAndUpdate({ passwordResetKey: resetKey, _id: userId }, { $set: { passwordResetKey: null, hash: hash, salt: salt }}, function (err, retrievedUser) {
                 if (err) {
-                    deferred.reject(err);
+                    deferred.reject(err.message);
                 }
                 else {
                     deferred.resolve(retrievedUser);

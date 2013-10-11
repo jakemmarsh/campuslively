@@ -1,10 +1,11 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('settingsCtrl', function ($scope, $rootScope, $modal, userService, schoolService) {
+    	console.log($rootScope.user);
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = [];
     		for(var i = 0; i < data.length; i++) {
-    			$scope.schools.push(data[i].name);
+    			$scope.schools.push(data[i]);
     		}
     	}, function(errorMessage, status) {
 
@@ -19,7 +20,7 @@ define(['./index'], function (controllers) {
     	}
 
     	$scope.schoolSelectOptions = {
-    		'val': $scope.userSchool
+    		'val': $scope.userSchool.name
     	};
 
     	$scope.open = function (modal) {

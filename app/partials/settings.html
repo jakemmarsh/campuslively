@@ -30,7 +30,7 @@
 					<div class="unit ten-twelfths last-unit">
 						<select class="full-width" data-ui-select2="schoolSelectOptions" ng-model="userSchool" data-placeholder="Select your school">
 						    <option value=""></option>
-						    <option data-ng-repeat="school in schools" value="{{school}}">{{ school }}</option>
+						    <option data-ng-repeat="school in schools" value="{{school._id}}">{{ school.name }}</option>
 						</select>
 					</div>
 				</div>
