@@ -8,6 +8,8 @@ define(['./index'], function (controllers) {
     		};
 
     		authService.login(user).then(function (data, status) {
+    			$scope.showResend = false;
+    			$scope.emailResent = false;
     			$scope.loginError = null;
     			$rootScope.user = data;
 	    		// redirect to original destination if one exists
@@ -22,8 +24,26 @@ define(['./index'], function (controllers) {
 	    		}
 	        },
 	        function (errorMessage, status) {
-	        	$scope.loginError = errorMessage;
+	        	if(errorMessage.toLowerCase().indexOf('activate') !== -1) {
+	        		$scope.showResend = true;
+	        		$scope.emailResent = false;
+	        	}
+	        	else {
+	        		$scope.emailResent = false;
+	        		$scope.showResend = false;
+	        		$scope.loginError = errorMessage;
+	        	}
 	        });
     	};
+
+    	$scope.resendActivation = function(username) {
+    		authService.resendActivation(username).then(function (data, status) {
+    			$scope.emailResent = true;
+    		}, function (errorMessage, status) {
+    			$scope.emailResent = false;
+    			$scope.showResend = false;
+    			$scope.loginError = errorMessage;
+    		});
+    	}
     });
 });
