@@ -19,7 +19,7 @@ define(['./index'], function (services) {
 		getUserByName: function(username) {
 			var deferred = $q.defer();
 			
-			$http.get(this.apiPath + 'name/' + username).success(function(data, status) {
+			$http.get(this.apiPath + 'username/' + username).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
