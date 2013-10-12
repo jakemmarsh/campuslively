@@ -61,7 +61,44 @@ exports.getEventsBySchool = function(req, res) {
 	}, function(err) {
 		res.send(500, "Failed to retrieve events by school.");
 	});
-}
+};
+
+exports.getEventsBySchoolAndDay = function(req, res) {
+
+};
+
+exports.getEventsByUser = function(req, res) {
+	var getEvents = function(userId) {
+		var deferred = Q.defer(),
+		populateObj = [
+			{ path: 'location' },
+            { path: 'creator' }, 
+            { path: 'attending' },
+            { path: 'comments' }
+		];
+
+		Event.find({ creator: userId }).populate(populateObj).exec(function (err, retrievedEvent) {
+	        if (err || !retrievedEvent) {
+	        	deferred.reject(new Error("No events exist for specified user."));
+	        }
+	        else {
+	        	deferred.resolve(retrievedEvent);
+	        }
+	    });
+
+		return deferred.promise;
+	};
+
+	getEvents(req.params.userId).then(function(retrievedEvents) {
+		res.json(retrievedEvents);
+	}, function(err) {
+		res.send(500, "Failed to retrieve events by user.");
+	});
+};
+
+exports.getEventsByLocation = function(req, res) {
+
+};
 
 exports.postEvent = function(req, res) {
 	var postEvent = function(receivedEvent) {
