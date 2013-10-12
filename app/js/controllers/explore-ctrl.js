@@ -8,13 +8,6 @@ define(['./index'], function (controllers) {
             console.log(errorMessage);
         });
 
-   		$scope.events = [];
-   		eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
-			$scope.events = data;
-		}, function(error, status) {
-			console.log(err.message);
-		});
-
     	$scope.currentView = 'school';
     	
     	$scope.viewOptions = [{
@@ -27,10 +20,32 @@ define(['./index'], function (controllers) {
 			}
 		];
 
-		$scope.currentSort = {
-			label: 'by start date',
-			value: 'startDate'
-		};
+		$scope.$watch('currentView', function() {
+			$scope.loading = true;
+			$scope.events = [];
+			if($scope.currentView == 'school') {
+				eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
+					$scope.events = data;
+					$scope.loading = false;
+				}, function(error, status) {
+					console.log(err.message);
+					$scope.loading = false;
+				});
+			}
+			else if($scope.currentView == 'nearby' && $scope.userPosition) {
+				eventService.getEventsByLocation($scope.userPosition).then(function (data, status) {
+					$scope.events = data;
+					$scope.loading = false;
+				}, function(error, status) {
+					console.log(err.message);
+					$scope.loading = false;
+				});
+			}
+			else if($scope.currentView == 'nearby' && !$scope.userPosition) {
+				$scope.loading = false;
+				$scope.showLocationError = true;
+			}
+		});
 
 		$scope.sortOptions = [{
 				label: 'by start date',
@@ -38,31 +53,17 @@ define(['./index'], function (controllers) {
 			},
 			{
 				label: 'by post date',
-				value: 'created'
+				value: '-created'
 			}
 		];
 
 		$scope.changeSort = function(option) {
-			$scope.events = [];
-			if(option.value == 'school') {
-				eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
-					$scope.events = data;
-				}, function(error, status) {
-					console.log(err.message);
-				});
-			}
-			else if(option.value == 'nearby' && $scope.userPosition) {
-				eventService.getEventsByLocation($scope.userPosition).then(function (data, status) {
-					$scope.events = data;
-				}, function(error, status) {
-					console.log(err.message);
-				});
-			}
-			else if(option.value == 'nearby' && !$scope.userPosition) {
-				$scope.showLocationError = true;
-			}
-
 			$scope.currentSort = option;
+		};
+
+		$scope.currentSort = {
+			label: 'by start date',
+			value: 'startDate'
 		};
 
 		var formatDate = function(date) {
@@ -77,11 +78,21 @@ define(['./index'], function (controllers) {
     		return formattedDate;
     	};
 
+    	$scope.isAttending = function(eventId) {
+    		for(var i = 0; i < $rootScope.user.attending.length; i++) {
+    			if($rootScope.user.attending[i]._id == eventId) {
+    				return true;
+    			}
+    		}
+    		return false;
+    	};
+
 		$scope.toggleAttending = function(eventId) {
-			$scope.attending = !$scope.attending;
+			// make call to update both current user and specified event
 		};
 
 		$scope.loadMore = function() {
+			// make call to load twenty more events after last ID of currently loaded events
 			console.log('load more events');
 		};
 
