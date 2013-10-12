@@ -16,7 +16,14 @@
 	</div>
 </div>
 <div class="container soft-half--ends" data-ng-show="currentView == 'school'">
-	<div class="soft-half--ends text-right">
+	<div class="text-center" data-ng-hide="events">
+		<h1 class="flush blue">No events have been posted for your school yet!</h1>
+		<a href="/post" class="btn nudge--top">Be the First</a>
+	</div>
+	<div class="text-center" data-ng-show="showLocationError">
+		<h1 class="flush blue">We were unable to determine your location</h1>
+	</div>
+	<div class="soft-half--ends text-right" data-ng-show="events">
 		<div class="dropdown">
 			<a href class="dropdown-toggle">
 				{{ currentSort.label }} <i class="icon-chevron-down muted weight--normal"></i>
@@ -28,7 +35,71 @@
 			</ul>
 		</div>
 	</div>
-	<hr />
+	<hr data-ng-show="events" />
+	<div class="line nudge-half--ends" data-ng-repeat="event in events track by $index | filter:searchEvents | orderBy:currentSort.value">
+		<div class="unit one-twelfth">
+			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}"}>
+				<a href data-tooltip="{{event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'business'"></a>
+				<a href data-tooltip="{{event.creator.firstName}} {{event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'student'"></a>
+			</div>
+		</div>
+		<div class="unit eleven-twelfths last-unit">
+			<div class="box">
+				<div class="event-header soft-half--sides">
+					<a data-ng-href="/event/{{event._id}}" class="block-link"></a>
+					<h2 class="flush" data-ng-bind="event.title"></h2>
+				</div>
+				<div class="islet">
+					<div class="line">
+						<div class="unit four-fifths">
+							<span class="delta weight--bold"><i class="icon-map-marker muted"></i> <span data-ng-bind="event.locationName"></span> <i class="icon-calendar-empty muted nudge-half--left"></i> <span data-ng-bind="event.startDate"></span> <i class="icon-time muted nudge-half--left"></i> <span data-ng-bind="event.startTime"></span></span>
+						</div>
+						<div class="unit one-fifth last-unit text-right">
+							<ul class="tags">
+								<li data-ng-repeat="tag in event.tags" data-ng-bind="tag"></li>
+							</ul>
+						</div>
+					</div>
+					<p class="pre-wrap" ng-bind-html="event.description | parseUrl"></p>
+					<div class="line nudge-half--top">
+						<div class="unit one-half">
+							<div class="action-buttons">
+								<a class="first" href data-ng-click="toggleAttending(event._id)" data-tooltip="RSVP" data-ng-hide="attending"><i class="icon-thumbs-up"></i></a>
+								<a class="first" href data-ng-click="toggleAttending(event._id)" data-tooltip="Un-RSVP" data-ng-show="attending"><i class="icon-thumbs-up green"></i></a>
+								<a href data-ng-click="openAttending(event._id)" data-tooltip="People Attending"><span class="gamma">357</span></a>
+							</div>
+						</div>
+						<div class="unit one-half last-unit text-right">
+							<div class="action-buttons green">
+								<a href data-ng-href="/event/{{event._id}}">Details <i class="icon-chevron-right epsilon"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- event end -->
+	<hr data-ng-show="events" />
+	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="events">Load More</a>
+</div>
+<div class="container soft-half--ends" data-ng-show="currentView == 'nearby'">
+	<div class="text-center" data-ng-hide="events">
+		<h1 class="flush blue">No events have been posted near you yet!</h1>
+		<a href="/post" class="btn nudge--top">Be the First</a>
+	</div>
+	<div class="soft-half--ends text-right" data-ng-show="events">
+		<div class="dropdown">
+			<a href class="dropdown-toggle sort-toggle">
+				{{ currentSort.label }} <i class="icon-chevron-down muted weight--normal"></i>
+			</a>
+			<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
+				<li data-ng-repeat="option in sortOptions">
+					<a href data-ng-bind="option.label" data-ng-click="changeSort(option)"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<hr data-ng-show="events" />
 	<div class="line nudge-half--ends" data-ng-repeat="event in events track by $index | orderBy:currentSort.value">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}"}>
@@ -71,23 +142,6 @@
 			</div>
 		</div>
 	</div><!-- event end -->
-	<a href data-ng-click="loadMore()" class="btn full-width text-center">Load More</a>
-</div>
-<div class="container soft-half--ends" data-ng-show="currentView == 'nearby'">
-	<div class="soft-half--ends text-right">
-		<div class="dropdown">
-			<a href class="dropdown-toggle sort-toggle">
-				{{ currentSort.label }} <i class="icon-chevron-down muted weight--normal"></i>
-			</a>
-			<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
-				<li data-ng-repeat="option in sortOptions">
-					<a href data-ng-bind="option.label" data-ng-click="changeSort(option)"></a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<hr />
-	All events nearby
 </div>
 
 <script type="text/ng-template" id="attendingModal.html">

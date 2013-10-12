@@ -68,40 +68,42 @@
 	</div>
 	<hr data-ng-show="profile.postedEvents" />
 	<div data-ng-show="profile.postedEvents">
-		<div class="line nudge-half--ends">
+		<div class="line nudge-half--ends" data-ng-repeat="event in profile.postedEvents track by $index | orderBy:currentSort.value">
 			<div class="unit one-twelfth">
-				<div class="user-img-event" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')"></div>
+				<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}"}>
+					<a href data-tooltip="{{event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'business'"></a>
+					<a href data-tooltip="{{event.creator.firstName}} {{event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'student'"></a>
+				</div>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
 				<div class="box">
 					<div class="event-header soft-half--sides">
-						<a href="/event/1" class="block-link"></a>
-						<h2 class="flush">DJ Hardo</h2>
+						<a data-ng-href="/event/{{event._id}}" class="block-link"></a>
+						<h2 class="flush" data-ng-bind="event.title"></h2>
 					</div>
 					<div class="islet">
 						<div class="line">
 							<div class="unit four-fifths">
-								<span class="delta weight--bold"><i class="icon-map-marker muted"></i> Bijou Nightclub <i class="icon-calendar-empty muted nudge-half--left"></i> June 10th <i class="icon-time muted nudge-half--left"></i> 11:30pm - 2am</span>
+								<span class="delta weight--bold"><i class="icon-map-marker muted"></i> <span data-ng-bind="event.locationName"></span> <i class="icon-calendar-empty muted nudge-half--left"></i> <span data-ng-bind="event.startDate"></span> <i class="icon-time muted nudge-half--left"></i> <span data-ng-bind="event.startTime"></span></span>
 							</div>
 							<div class="unit one-fifth last-unit text-right">
 								<ul class="tags">
-									<li>club</li>
-									<li>live music</li>
+									<li data-ng-repeat="tag in event.tags" data-ng-bind="tag"></li>
 								</ul>
 							</div>
 						</div>
-						<p class="pre-wrap">Famous Miami-based DJ Hardo LIVE at Bijou tonight! Tickets are $20 at the door. Order now and get them for $15! www.bijounightclub.com</p>
+						<p class="pre-wrap" ng-bind-html="event.description | parseUrl"></p>
 						<div class="line nudge-half--top">
 							<div class="unit one-half">
 								<div class="action-buttons">
-									<a class="first" href data-ng-click="toggleAttending(1)" data-tooltip="RSVP" data-ng-hide="attending"><i class="icon-thumbs-up"></i></a>
-									<a class="first" href data-ng-click="toggleAttending(1)" data-tooltip="Un-RSVP" data-ng-show="attending"><i class="icon-thumbs-up green"></i></a>
-									<a href data-ng-click="openAttending(1)" data-tooltip="People Attending"><span class="gamma">357</span></a>
+									<a class="first" href data-ng-click="toggleAttending(event._id)" data-tooltip="RSVP" data-ng-hide="attending"><i class="icon-thumbs-up"></i></a>
+									<a class="first" href data-ng-click="toggleAttending(event._id)" data-tooltip="Un-RSVP" data-ng-show="attending"><i class="icon-thumbs-up green"></i></a>
+									<a href data-ng-click="openAttending(event._id)" data-tooltip="People Attending"><span class="gamma">357</span></a>
 								</div>
 							</div>
 							<div class="unit one-half last-unit text-right">
 								<div class="action-buttons green">
-									<a href data-ng-href="/event/1">Details <i class="icon-chevron-right epsilon"></i></a>
+									<a href data-ng-href="/event/{{event._id}}">Details <i class="icon-chevron-right epsilon"></i></a>
 								</div>
 							</div>
 						</div>
