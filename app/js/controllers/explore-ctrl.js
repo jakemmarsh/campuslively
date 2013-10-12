@@ -1,13 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('exploreCtrl', function ($scope, $rootScope, $modal, locationService, eventService) {
-    	locationService.getGeo().then(function (data) {
-            $scope.userPosition = data;
-        },
-        function (errorMessage) {
-            console.log(errorMessage);
-        });
-
     	$scope.currentView = 'school';
     	
     	$scope.viewOptions = [{
@@ -32,18 +25,35 @@ define(['./index'], function (controllers) {
 					$scope.loading = false;
 				});
 			}
-			else if($scope.currentView == 'nearby' && $scope.userPosition) {
-				eventService.getEventsByLocation($scope.userPosition).then(function (data, status) {
-					$scope.events = data;
-					$scope.loading = false;
-				}, function(error, status) {
-					console.log(err.message);
-					$scope.loading = false;
-				});
-			}
-			else if($scope.currentView == 'nearby' && !$scope.userPosition) {
-				$scope.loading = false;
-				$scope.showLocationError = true;
+			else if($scope.currentView == 'nearby') {
+				if(!$scope.userPosition) {
+					$scope.gettingPosition = true;
+					console.log('about to call');
+					locationService.getGeo().then(function (data) {
+			            $scope.userPosition = data;
+			            $scope.gettingPosition = false;
+			            $scope.loading = true;
+			            eventService.getEventsByLocation($scope.userPosition).then(function (data, status) {
+							$scope.events = data;
+							$scope.loading = false;
+						}, function(error, status) {
+							console.log(err.message);
+							$scope.loading = false;
+						});
+			        },
+			        function (errorMessage) {
+			            console.log(errorMessage);
+			        });
+				}
+				else {
+					eventService.getEventsByLocation($scope.userPosition).then(function (data, status) {
+						$scope.events = data;
+						$scope.loading = false;
+					}, function(error, status) {
+						console.log(err.message);
+						$scope.loading = false;
+					});
+				}
 			}
 		});
 

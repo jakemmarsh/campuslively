@@ -18,7 +18,8 @@
 <div class="table full-width full-height__header" data-ng-show="loading">
 	<div class="td full-height full-width vertical-align-middle text-center">
 		<div class="box island inline-block text-center">
-			<h1 class="flush blue">Loading events...</h1>
+			<h1 class="flush blue" data-ng-show="loading && !gettingPosition">Loading events...</h1>
+			<h1 class="flush blue" data-ng-show="gettingPosition">Getting your location...</h1>
 		</div>
 	</div>
 </div>
