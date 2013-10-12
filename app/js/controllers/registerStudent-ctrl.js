@@ -2,10 +2,7 @@ define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('registerStudentCtrl', function ($scope, schoolService, authService) {
     	schoolService.getAllSchools().then(function (data, status) {
-    		$scope.schools = [];
-    		for(var i = 0; i < data.length; i++) {
-    			$scope.schools.push(data[i]);
-    		}
+    		$scope.schools = data;
     	}, function(errorMessage, status) {
     		console.log(errorMessage);
     	});

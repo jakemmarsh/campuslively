@@ -1,6 +1,21 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('postCtrl', function ($scope, $rootScope, locationService, eventService, $timeout) {
+    controllers.controller('postCtrl', function ($scope, $rootScope, schoolService, locationService, eventService, $timeout) {
+    	locationService.getGeo().then(function (data) {
+            $scope.userPosition = data;
+            $scope.locationMap.setCenter(new google.maps.LatLng($scope.userPosition.latitude, $scope.userPosition.longitude));
+            getVenues($scope.userPosition);
+        },
+        function (errorMessage) {
+            console.log(errorMessage);
+        });
+
+    	schoolService.getAllSchools().then(function (data, status) {
+    		$scope.schools = data;
+    	}, function(errorMessage, status) {
+    		console.log(errorMessage);
+    	});
+
     	$scope.showAddressInput = true;
     	$scope.eventPosted = false;
     	$scope.venues = [];
@@ -37,9 +52,7 @@ define(['./index'], function (controllers) {
     	// make call to foursquare to get list of venues near user's location
     	var getVenues = function(position) {
     		locationService.getFoursquareVenues(position).then(function (data) {
-    			for(var i = 0; i < data.response.venues.length; i++) {
-    				$scope.venues.push(data.response.venues[i]);
-    			}
+    			$scope.venues = (data.response.venues);
 		    },
 		    function (errorMessage) {
 		        console.log(errorMessage);
@@ -56,15 +69,6 @@ define(['./index'], function (controllers) {
 			scrollwheel: false,
 			panControl: false
 	    };
-
-	    locationService.getGeo().then(function (data) {
-            $scope.userPosition = data;
-            $scope.locationMap.setCenter(new google.maps.LatLng($scope.userPosition.latitude, $scope.userPosition.longitude));
-            getVenues($scope.userPosition);
-        },
-        function (errorMessage) {
-            console.log(errorMessage);
-        });
 
 	    $scope.$watch('eventLocation', function() {
 	    	$scope.checkLocation();

@@ -1,8 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('registerBusinessCtrl', function ($scope, authService) {
-    	$scope.schools = ['Boston University', 'University of Maine'];
-
     	$scope.register = function() {
     		var newUser = {
     			type: 'business',

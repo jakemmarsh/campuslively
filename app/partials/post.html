@@ -91,7 +91,10 @@
 				<label for="eventSchool" class="caps weight--bold">School</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
-				<input type="text" id="eventSchool" name="eventSchool" class="full-width" data-ng-model="eventSchool" placeholder="Associated school (if any)" />
+				<select class="full-width" data-ui-select2 ng-model="school" data-placeholder="Associated school (if any)">
+				    <option value=""></option>
+				    <option data-ng-repeat="school in schools" value="{{school._id}}">{{ school.name }}</option>
+				</select>
 			</div>
 		</div>
 		<div class="line nudge-half--bottom">
