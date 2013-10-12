@@ -12,7 +12,6 @@ define([
     'use strict';
 
     app.run(function ($rootScope, $location, authService) {
-        $rootScope.user = null;
         // take actions based on user's logged in status and destination page's protection level
         $rootScope.$on('$stateChangeStart', function(event, toState) {
             authService.isLoggedIn().then(function (data, status) {
