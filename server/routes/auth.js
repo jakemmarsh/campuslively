@@ -30,7 +30,7 @@ function hash(pwd, salt, fn) {
             salt = salt.toString('base64');
             crypto.pbkdf2(pwd, salt, iterations, len, function(err, hash){
                 if (err) return fn(err);
-                fn(null, salt, hash);
+                fn(null, salt, hash.toString('hex'));
             });
         });
     }
@@ -65,7 +65,7 @@ function authenticate(name, pass, fn) {
         // found the user
         hash(pass, data.salt, function(err, hash){
             if (err) return fn(err);
-            if (hash == data.hash) return fn(null, data);
+            if (hash.toString('hex') == data.hash) return fn(null, data);
             return fn('Invalid password.');
         });
     }, function() {

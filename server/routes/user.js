@@ -25,7 +25,7 @@ function hashSync(pwd, salt, fn) {
     } else {
         fn = salt;
         salt = crypto.randomBytes(len).toString('base64');
-        fn(null, salt, crypto.pbkdf2Sync(pwd, salt, iterations, len));
+        fn(null, salt, crypto.pbkdf2Sync(pwd, salt, iterations, len).toString('hex'));
     }
 }
 
