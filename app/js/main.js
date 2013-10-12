@@ -22,7 +22,8 @@ require.config({
         'angular-ui-calendar' : './lib/angular/ui-calendar',
         'select2' : './lib/select2.min',
         'angular-ui-select2' : './lib/angular/ui-select2',
-        'image-upload' : './lib/angular/imageupload'
+        'image-upload' : './lib/angular/imageupload',
+        'moment' : './lib/moment.min'
     },
 
     shim: {

@@ -28,5 +28,7 @@ define([
     'services/user',
     'services/school',
     'services/event',
-    'filters/parse-url'
+    'filters/parse-url',
+    'filters/readable-date',
+    'filters/time-past'
 ], function () {});
