@@ -10,7 +10,7 @@ var eventSchema = new mongoose.Schema({
         required: true
     },
     locationName: {
-        type: String,
+        type: String
     },
     locationPoint: {
         type: mongoose.Schema.ObjectId,
@@ -22,7 +22,10 @@ var eventSchema = new mongoose.Schema({
         required: true
     },
     startTime: String,
-    school: String,
+    school: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'School'
+    },
     creator: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
@@ -42,8 +45,7 @@ var eventSchema = new mongoose.Schema({
         required: true
     },
     pictureUrl: {
-        type: String,
-        default: 'http://s3.amazonaws.com/campuslively/event_imgs/default.png'
+        type: String
     }
 });
 

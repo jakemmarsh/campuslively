@@ -119,7 +119,7 @@ exports.postEvent = function(req, res) {
 			event.locationName = receivedEvent.locationName;
 		}
 		if(receivedEvent.startTime) {
-			event.receivedEvent = receivedEvent.startTime;
+			event.startTime = receivedEvent.startTime;
 		}
 		if(receivedEvent.school) {
 			event.school = receivedEvent.school;
