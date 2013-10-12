@@ -26,7 +26,7 @@
 					</div>
 					<input type="password" id="password" data-ng-model="password" placeholder="password" required />
 				</div>
-				<span class="block red weight--bold nudge--bottom" data-ng-show="loginError" data-ng-bind="loginError"></span>
+				<span class="block red weight--bold nudge--bottom" data-ng-show="loginError && !showResend" data-ng-bind="loginError"></span>
 				<span class="block red weight--bold nudge--bottom" data-ng-show="showResend">Account has not been activated. <a href data-ng-click="resendActivation(username)">Resend activation email</a></span>
 				<span class="block green weight--bold nudge--bottom" data-ng-show="emailResent">Your activation email has been resent.</span>
 				<input type="submit" value="Login" class="btn full-width" data-ng-disabled="loginForm.$invalid" />

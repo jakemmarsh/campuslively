@@ -58,6 +58,9 @@ define(['./index'], function (controllers) {
 					console.log(err.message);
 				});
 			}
+			else if(option.value == 'nearby' && !$scope.userPosition) {
+				$scope.showLocationError = true;
+			}
 
 			$scope.currentSort = option;
 		};

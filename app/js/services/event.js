@@ -19,7 +19,7 @@ define(['./index'], function (services) {
 		getEventsBySchool: function(schoolId) {
 			var deferred = $q.defer();
 
-			$http.get(this.apipath + '/school/' + schoolId).success(function(data, status) {
+			$http.get(this.apiPath + 'school/' + schoolId).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
