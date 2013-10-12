@@ -29,7 +29,7 @@ require.config({
     shim: {
         'angular': {
             exports: 'angular',
-            deps: ['jQuery', 'jQuery-ui', 'fullCalendar']
+            deps: ['jQuery']
         },
         'angular-sanitize': {
             deps: ['angular']
