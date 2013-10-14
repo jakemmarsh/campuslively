@@ -12,7 +12,8 @@ exports.getEvent = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
-                { path: 'comments' }
+                { path: 'comments' },
+                { path: 'school' }
 			];
 
 		Event.findOne({ _id: eventId }).populate(populateObj).exec(function (err, retrievedEvent) {
@@ -41,7 +42,8 @@ exports.getEventsBySchool = function(req, res) {
 			{ path: 'location' },
             { path: 'creator' }, 
             { path: 'attending' },
-            { path: 'comments' }
+            { path: 'comments' },
+            { path: 'school' }
 		];
 
 		Event.find({ school: schoolId }).populate(populateObj).exec(function (err, retrievedEvent) {
@@ -74,7 +76,8 @@ exports.getEventsByUser = function(req, res) {
 			{ path: 'location' },
             { path: 'creator' }, 
             { path: 'attending' },
-            { path: 'comments' }
+            { path: 'comments' },
+            { path: 'school' }
 		];
 
 		Event.find({ creator: userId }).populate(populateObj).exec(function (err, retrievedEvent) {

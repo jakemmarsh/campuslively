@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 var comment = new mongoose.Schema();
 comment.add({
-    content: {
+    body: {
         type: String,
         required: true
     },
@@ -16,7 +16,7 @@ comment.add({
         type: Date, 
         default: Date.now
     },
-    subcomments: [{type: mongoose.Schema.ObjectId, ref: 'Comment'}]
+    subComments: [{type: mongoose.Schema.ObjectId, ref: 'Comment'}]
 });
 
 module.exports = mongoose.model('Comment', comment);

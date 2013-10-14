@@ -37,6 +37,7 @@ var eventSchema = new mongoose.Schema({
         required: true
     },
     attending: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
+    invited: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
     comments: [{type: mongoose.Schema.ObjectId, ref: 'Comment'}],
     tags: [String],
     privacy: {
