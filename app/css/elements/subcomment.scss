@@ -2,4 +2,22 @@
 	background: lighten($light-grey, 2);
 	border: 1px solid $border-grey;
 	@include corners();
+	position: relative;
+}
+
+.subcomment-body > .delete-subcomment-button {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	@extend .muted;
+	display: none;
+}
+
+	.subcomment-body > .delete-subcomment-button:hover, .subcomment-body > .delete-subcomment-button:active, .subcomment-body > .delete-subcomment-button:focus {
+		color: $red;
+		cursor: pointer;
+	}
+
+.subcomment-body:hover > .delete-subcomment-button {
+	display: block;
 }

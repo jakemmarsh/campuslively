@@ -3,7 +3,7 @@
 		<div class="line">
 			<div class="unit one-half text-left">
 				<h1 class="flush">
-					{{ event.title }} 
+					<span data-ng-bind="event.title"></span>
 					<i class="muted weight--normal zeta icon-lock" data-ng-show="event.privacy == 'inviteonly'"></i>
 					<i class="muted weight--normal zeta icon-unlock" data-ng-show="event.privacy == 'public'"></i>
 				</h1>
@@ -32,7 +32,7 @@
 					<h4 class="flush--top nudge-half--bottom"><i class="muted icon-calendar-empty"></i></h4>
 				</div>
 				<div class="unit ninety-seven-percent last-unit">
-					<p class="nudge-half--bottom">{{ event.startDate | readableDate }}</p>
+					<p class="nudge-half--bottom" data-ng-bind="event.startDate | readableDate"></p>
 				</div>
 			</div>
 				<div class="line">
@@ -59,7 +59,7 @@
 						<p class="pre-wrap" data-ng-bind-html="event.description | parseUrl"></p>
 					</div>
 				</div>
-				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map nudge-half--top"></div>
+				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map nudge-half--top" data-ng-show="event.location"></div>
 			</div>
 			<form name="commentForm" class="full-width nudge-half--top clearfix" data-ng-submit="postComment()">
 				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" data-ng-model="commentBody" data-expand-comment required></textarea>
@@ -74,14 +74,14 @@
 				</div>
 				<div class="unit nine-tenths last-unit">
 					<div class="box islet comment">
-						<a href data-ng-click="deleteComment(comment)" data-ng-show="comment.creator._id == user._id">
-							<i class="delete-button icon-remove"></i>
+						<a href class="delete-comment-button" data-ng-click="deleteComment(comment)" data-ng-show="comment.creator._id == user._id">
+							<i class="icon-remove"></i>
 						</a>
 						<h4 class="flush">
 							<a href data-ng-href="/profile/{{comment.creator.username}}" data-ng-show="comment.creator.type == 'student'">{{comment.creator.firstName}} {{comment.creator.lastName}}</a>
 							<a href data-ng-href="/profile/{{comment.creator.username}}" data-ng-show="comment.creator.type == 'business'">{{comment.creator.businessName}}</a>
 						</h4>
-						<p class="nudge-half--ends" data-ng-bind="comment.body"></p>
+						<p class="nudge-half--ends" data-ng-bind-html="comment.body | parseUrl"></p>
 						<div class="table full-width">
 								<div class="td one-half">
 									<div class="action-buttons comment nudge-half--top">
@@ -89,7 +89,7 @@
 									</div>
 								</div>
 								<div class="td one-half text-right">
-									<span class="muted epsilon">{{ comment.posted | timePast }}</span>
+									<span class="muted epsilon" data-ng-bind="comment.posted | timePast"></span>
 								</div>
 						</div>
 						<hr class="nudge-half--ends" />
@@ -101,14 +101,17 @@
 								</div>
 							</div>
 							<div class="unit eleven-twelfths last-unit subcomment-body islet">
-								<p class="epsilon" data-ng-bind="subComment.body"></p>
+								<a href class="delete-subcomment-button" data-ng-click="deleteSubComment(subComment)" data-ng-show="subComment.creator == user._id">
+									<i class="icon-remove"></i>
+								</a>
+								<p class="epsilon" data-ng-bind-html="subComment.body | parseUrl"></p>
 								<div class="text-right nudge-half--top">
-									<span class="muted epsilon">{{ subComment.posted | timePast }}</span>
+									<span class="muted epsilon" data-ng-bind="subComment.posted | timePast"></span>
 								</div>
 							</div>
 						</div>
-						<form name="subCommentForm" class="input-append full-width clearfix epsilon" data-ng-submit="postSubComment()">
-							<input type="text" placeholder="Write a comment..." data-ng-model="subCommentBody" class="nine-tenths delta" required />
+						<form name="subCommentForm" class="input-append full-width clearfix epsilon" data-ng-submit="postSubComment(comment)">
+							<input type="text" placeholder="Write a comment..." data-ng-model="comment.newSubComment" class="nine-tenths delta" required />
 							<button type="submit" class="btn one-tenth" data-ng-disabled="subCommentForm.$invalid">Post</button>
 						</form>
 					</div>
@@ -123,7 +126,7 @@
 							<h2 class="flush">Going</h2>
 						</div>
 						<div class="unit one-half last-unit text-right">
-							{{ event.attending.length }}
+							<span data-ng-bind="event.attending.length"></span>
 							<span data-ng-show="event.attending.length == 1">person</span>
 							<span data-ng-hide="event.attending.length == 1">people</span>
 						</div>
@@ -154,7 +157,7 @@
 							<h2 class="flush">Invited</h2>
 						</div>
 						<div class="unit one-half last-unit text-right">
-							{{ event.invited.length }}
+							<span data-ng-bind="event.invited.length"></span>
 							<span data-ng-show="event.attending.length == 1">person</span>
 							<span data-ng-hide="event.attending.length == 1">people</span>
 						</div>
