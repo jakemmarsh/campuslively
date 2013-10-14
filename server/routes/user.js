@@ -136,7 +136,7 @@ exports.updateUser = function(req, res) {
 
 		User.findOneAndUpdate({ _id: userId }, updateParams).populate(populateObj).exec(function(err, updatedUser) {
 			if(err) {
-         		deferred.reject(err);
+         		deferred.reject(err.message);
          	}
          	else {
          		deferred.resolve(updatedUser);
@@ -196,7 +196,7 @@ exports.subscribe = function(req, res) {
 
 		User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { subscriptions: subscription._id } }).populate(populateObj).exec(function(err, updatedUser) {
          	if(err) {
-         		deferred.reject(err);
+         		deferred.reject(err.message);
          	}
          	else {
          		deferred.resolve(updatedUser);
@@ -264,7 +264,7 @@ exports.unsubscribe = function(req, res) {
 
 		User.findOneAndUpdate({ _id: userId }, { $pull: { 'subscriptions': subscriptionId } }).populate(populateObj).exec(function(err, updatedUser) {
          	if(err) {
-         		deferred.reject(err);
+         		deferred.reject(err.message);
          	}
          	else {
          		deferred.resolve(updatedUser);

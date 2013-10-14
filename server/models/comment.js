@@ -3,6 +3,10 @@ var mongoose = require('mongoose'),
 
 var comment = new mongoose.Schema();
 comment.add({
+    eventId: {
+        type: mongoose.Schema.ObjectId,
+        required: true
+    },
     body: {
         type: String,
         required: true
