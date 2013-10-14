@@ -1,10 +1,11 @@
-var Q        = require('q'),
-	crypto   = require('crypto'),
-    User     = require('../models/user'),
-    School   = require('../models/school'),
-    Activity = require('../models/activity'),
-    Event	 = require('../models/event'),
-    Comment  = require('../models/comment');
+var Q          = require('q'),
+	crypto     = require('crypto'),
+    User       = require('../models/user'),
+    School     = require('../models/school'),
+    Activity   = require('../models/activity'),
+    Event	   = require('../models/event'),
+    Comment    = require('../models/comment'),
+    SubComment = require('../models/subcomment');
 
 exports.getEvent = function(req, res) {
 	var getEvent = function(eventId) {
@@ -27,7 +28,21 @@ exports.getEvent = function(req, res) {
          	}
          	else {
 				Comment.populate(updatedEvent.comments, commentPopulateObj, function(err, data){
-					deferred.resolve(updatedEvent);
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						console.log(updatedEvent);
+						SubComment.populate(updatedEvent.comments.subComments, commentPopulateObj, function(err, data) {
+							if(err) {
+								deferred.reject(err.message);
+							}
+							else {
+								console.log(updatedEvent);
+								deferred.resolve(updatedEvent);
+							}
+						});
+					}
 				});
          	}
 	    });
@@ -184,7 +199,6 @@ exports.postEvent = function(req, res) {
 };
 
 exports.postComment = function(req, res) {
-	console.log('function hit');
 	var postComment = function(eventId, comment) {
 		var deferred = Q.defer(),
 		comment = new Comment({
@@ -195,11 +209,9 @@ exports.postComment = function(req, res) {
 
 		comment.save(function (err, savedComment) {
             if (err) {
-            	console.log(err.message);
                 deferred.reject(err.message);
             }
             else {
-            	console.log('comment saved');
                 deferred.resolve(savedComment);
             }
         });
@@ -220,20 +232,27 @@ exports.postComment = function(req, res) {
 				{ path: 'subComments' }
 			];
 
-		Event.findOneAndUpdate(
-			{ _id: req.params.eventId }, 
-			{ $addToSet: { 
-				comments: postedComment._id 
-			  } 
-			}
-		).populate(eventPopulateObj)
+		Event.findOneAndUpdate({ _id: req.params.eventId }, { $addToSet: { comments: postedComment._id } })
+		.populate(eventPopulateObj)
 		.exec(function(err, updatedEvent) {
          	if(err) {
          		deferred.reject(err.message);
          	}
          	else {
 				Comment.populate(updatedEvent.comments, commentPopulateObj, function(err, data){
-					deferred.resolve(updatedEvent);
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						Subcomment.populate(updatedEvent.comments.subComments, commentPopulateObj, function(err, data) {
+							if(err) {
+								deferred.reject(err.message);
+							}
+							else {
+								deferred.resolve(updatedEvent);
+							}
+						});
+					}
 				});
          	}
 	    });
@@ -253,5 +272,168 @@ exports.postComment = function(req, res) {
 };
 
 exports.postSubComment = function(req, res) {
+	var postSubComment = function(eventId, commentId, subComment) {
+		var deferred = Q.defer(),
+			subComment = new SubComment({
+				eventId: eventId,
+				commentId: commentId,
+				body: subComment.body,
+				creator: subComment.creator
+			});
 
+		subComment.save(function (err, savedSubComment) {
+            if (err) {
+                deferred.reject(err.message);
+            }
+            else {
+                deferred.resolve(savedSubComment);
+            }
+        });
+
+        return deferred.promise;
+	},
+	addSubComment = function(commentId, subCommentId) {
+		var deferred = Q.defer();
+
+		Comment.findOneAndUpdate({ _id: commentId }, { $addToSet: { subComments: subCommentId } })
+		.exec(function(err, updatedComment) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(updatedComment);
+         	}
+	    });
+
+		return deferred.promise;
+	},
+	getUpdatedEvent = function(eventId) {
+		var deferred = Q.defer(),
+			eventPopulateObj = [
+				{ path: 'location' },
+	            { path: 'creator' }, 
+	            { path: 'attending' },
+	            { path: 'comments' },
+	            { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments' }
+			];
+
+		Event.findOne({ _id: req.params.eventId })
+		.populate(eventPopulateObj)
+		.exec(function(err, retrievedEvent) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						SubComment.populate(retrievedEvent.comments.subComments, commentPopulateObj, function(err, data) {
+							if(err) {
+								deferred.reject(err.message);
+							}
+							else {
+								deferred.resolve(retrievedEvent);
+							}
+						});
+					}
+				});
+         	}
+	    });
+
+		return deferred.promise;
+	};
+
+	postSubComment(req.params.eventId, req.params.commentId, req.body).then(function(returnedSubComment) {
+		addSubComment(req.params.commentId, returnedSubComment).then(function() {
+			getUpdatedEvent(req.params.eventId).then(function(returnedEvent) {
+				res.json(returnedEvent);
+			}, function(err) {
+				console.log('failed to retrieve event');
+				res.send(200, "Subcomment created but failed to retrieve updated event.");
+			});
+		}, function(err) {
+			console.log('failed to add subcomment');
+			res.send(500, err);
+		});
+	}, function(err) {
+		console.log('failed to post subcomment');
+		res.send(500, err);
+	});
+};
+
+exports.deleteEvent = function(req, res) {
+	var deleteEvent = function(eventId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	},
+	deleteComments = function(eventId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	},
+	deleteSubComments = function(eventId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	},
+	deleteActivity = function(eventId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	},
+	removeInvited = function(eventId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	},
+	emoveAttending = function(eventId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	};
+};
+
+
+exports.deleteComment = function(req, res) {
+	var deleteComment = function(commentId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	},
+	deleteSubComments = function(commentId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	},
+	removeFromEvent = function(commentId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	};
+};
+
+
+exports.deleteSubComment = function(req, res) {
+	var deleteSubComment = function(subCommentId, commentId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	},
+	removeFromComment = function(subCommentId, commentId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	},
+	getUpdatedEvent = function(eventId) {
+		var deferred = Q.defer();
+
+		return deferred.promise;
+	};
 };

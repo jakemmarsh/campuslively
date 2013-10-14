@@ -76,6 +76,10 @@ app.configure(function() {
     app.get('/api/v1/event/near/:location', restrict, routes.event.getEventsByLocation);
     app.post('/api/v1/event', restrict, routes.event.postEvent);
     app.post('/api/v1/event/:eventId/comment', restrict, routes.event.postComment);
+    app.post('/api/v1/event/:eventId/comment/:commentId/subcomment', restrict, routes.event.postSubComment);
+    app.delete('/api/v1/event', restrict, routes.event.deleteEvent);
+    app.delete('/api/v1/event/:eventId/comment/:commentId', restrict, routes.event.deleteComment);
+    app.delete('/api/v1/event/:eventId/comment/:commentId/subComment/:subCommentId', restrict, routes.event.deleteSubComment);
 
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {

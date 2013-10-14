@@ -1,8 +1,9 @@
-var mongoose = require('mongoose'),
-    User     = require('./user'),
-    Comment  = require('./comment'),
-    School   = require('./school'),
-    Location = require('./location');
+var mongoose   = require('mongoose'),
+    User       = require('./user'),
+    Comment    = require('./comment'),
+    SubComment = require('./subcomment'),
+    School     = require('./school'),
+    Location   = require('./location');
 
 var eventSchema = new mongoose.Schema({
     title: {

@@ -3,6 +3,8 @@ define(['./index'], function (controllers) {
     controllers.controller('eventCtrl', function ($scope, $rootScope, $stateParams, $modal, eventService, resolvedEvent) {
     	$scope.event = resolvedEvent;
 
+    	console.log($scope.event);
+
     	$scope.toggleAttending = function() {
     		$scope.attending = !$scope.attending;
     	};
@@ -15,10 +17,11 @@ define(['./index'], function (controllers) {
     		};
 
     		eventService.postComment($scope.event._id, comment).then(function (data) {
+    			$scope.commentBody = null;
 	            $scope.event = data;
 	        },
 	        function (errorMessage) {
-	            console.log(errorMessage);
+	            $scope.commentError = errorMessage;
 	        });
     	};
 
@@ -33,8 +36,19 @@ define(['./index'], function (controllers) {
     		}
     	};
 
-    	$scope.postSubComment = function() {
-    		console.log('post SUBcomment');
+    	$scope.postSubComment = function(comment) {
+    		var commentToPost = {
+    			eventId: $scope.event._id,
+    			body: comment.newSubComment,
+    			creator: $rootScope.user._id
+    		};
+
+    		eventService.postSubComment($scope.event._id, comment._id, commentToPost).then(function (data) {
+	            $scope.event = data;
+	        },
+	        function (errorMessage) {
+	            console.log(errorMessage);
+	        });
     	};
 
     	$scope.mapOptions = {

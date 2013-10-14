@@ -53,6 +53,17 @@ define(['./index'], function (services) {
 			});
 
 			return deferred.promise;
+		},
+		postSubComment: function(eventId, commentId, subComment) {
+			var deferred = $q.defer();
+
+			$http.post(this.apiPath + eventId + '/comment/' + commentId + '/subComment', subComment).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
 		}
     }
   });
