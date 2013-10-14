@@ -1,5 +1,6 @@
-var mongoose = require('mongoose'),
-	User     = require('./user');
+var mongoose   = require('mongoose'),
+	User       = require('./user'),
+    SubComment = require('./subcomment');
 
 var comment = new mongoose.Schema();
 comment.add({
@@ -20,7 +21,7 @@ comment.add({
         type: Date, 
         default: Date.now
     },
-    subComments: [comment]
+    subComments: [{type: mongoose.Schema.ObjectId, ref: 'SubComment'}]
 });
 
 module.exports = mongoose.model('Comment', comment);
