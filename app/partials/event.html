@@ -65,7 +65,7 @@
 				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" data-ng-model="commentBody" data-expand-comment required></textarea>
 				<button type="submit" class="btn nudge-half--ends float-right hidden" data-ng-disabled="commentForm.$invalid">Post</button>
 			</form>
-			<div class="line" data-ng-repeat="comment in event.comments | orderBy: '-posted'">
+			<div class="line nudge-half--bottom" data-ng-repeat="comment in event.comments | orderBy: '-posted'">
 				<div class="unit one-tenth">
 					<div class="user-img-comment" data-ng-style="{'background-image': 'url(' + comment.creator.pictureUrl + ')'}">
 						<a href data-ng-show="comment.creator.type == 'student'" data-tooltip="{{comment.creator.firstName}} {{comment.creator.lastName}}" data-tooltip-placement="left" data-ng-href="profile/{{comment.creator.username}}"></a>

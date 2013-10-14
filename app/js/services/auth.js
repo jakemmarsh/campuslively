@@ -62,7 +62,7 @@ define(['./index'], function (services) {
 		resendActivation: function(username) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + username + '/resend').sucess(function(data, status) {
+			$http.get(this.apiPath + 'user/' + username + '/resend').success(function(data, status) {
 				deferred.resolve(data, status);
 			}).error(function(err, status) {
 				deferred.reject(err, status);

@@ -38,7 +38,7 @@ define(['./index'], function (controllers) {
 			var updateParams = {};
 			// populate updateParams with any changed fields
 			if($rootScope.user.type == 'student') {
-				if($rootScope.user.school !== $scope.userSchool) {
+				if($rootScope.user.school !== $scope.userSchool && $scope.userSchool.length > 0) {
 					updateParams.school = $scope.userSchool;
 				}
 				if($rootScope.user.firstName !== $scope.userFirstName && $scope.userFirstName.length > 0) {

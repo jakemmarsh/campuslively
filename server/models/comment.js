@@ -20,7 +20,7 @@ comment.add({
         type: Date, 
         default: Date.now
     },
-    subComments: [{type: mongoose.Schema.ObjectId, ref: 'Comment'}]
+    subComments: [comment]
 });
 
 module.exports = mongoose.model('Comment', comment);
