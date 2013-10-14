@@ -1,14 +1,41 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('postCtrl', function ($scope, $rootScope, schoolService, locationService, eventService, $timeout) {
-    	locationService.getGeo().then(function (data) {
-            $scope.userPosition = data;
-            $scope.locationMap.setCenter(new google.maps.LatLng($scope.userPosition.latitude, $scope.userPosition.longitude));
-            getVenues($scope.userPosition);
-        },
-        function (errorMessage) {
-            console.log(errorMessage);
-        });
+    	// initialize map options
+    	$scope.mapOptions = {
+			zoom: 15,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			disableDefaultUI: true,
+			disableDoubleClickZoom: true,
+			draggable: false,
+			scrollwheel: false,
+			panControl: false
+	    };
+
+	    // call to foursquare to get list of venues near user's location
+    	var getVenues = function(position) {
+    		locationService.getFoursquareVenues(position).then(function (data) {
+    			$scope.venues = (data.response.venues);
+		    },
+		    function (errorMessage) {
+		        console.log(errorMessage);
+		    });
+    	};
+
+    	if(!$rootScope.userPosition) {
+	    	locationService.getGeo().then(function (data) {
+	            $rootScope.userPosition = data;
+	            $scope.locationMap.setCenter(new google.maps.LatLng($rootScope.userPosition.latitude, $rootScope.userPosition.longitude));
+	            getVenues($rootScope.userPosition);
+	        },
+	        function (errorMessage) {
+	            console.log(errorMessage);
+	        });
+	    }
+	    else {
+	    	$scope.mapOptions.center = new google.maps.LatLng($rootScope.userPosition.latitude, $rootScope.userPosition.longitude);
+	        getVenues($rootScope.userPosition);
+	    }
 
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
@@ -48,27 +75,6 @@ define(['./index'], function (controllers) {
     	// in case a venue needs to be created and sent to Foursquare
     	var venue = {},
     		address = null;
-
-    	// make call to foursquare to get list of venues near user's location
-    	var getVenues = function(position) {
-    		locationService.getFoursquareVenues(position).then(function (data) {
-    			$scope.venues = (data.response.venues);
-		    },
-		    function (errorMessage) {
-		        console.log(errorMessage);
-		    });
-    	};
-
-    	// initialize map options
-    	$scope.mapOptions = {
-			zoom: 15,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			disableDefaultUI: true,
-			disableDoubleClickZoom: true,
-			draggable: false,
-			scrollwheel: false,
-			panControl: false
-	    };
 
 	    $scope.$watch('eventLocation', function() {
 	    	$scope.checkLocation();

@@ -26,14 +26,13 @@ define(['./index'], function (controllers) {
 				});
 			}
 			else if($scope.currentView == 'nearby') {
-				if(!$scope.userPosition) {
+				if(!$rootScope.userPosition) {
 					$scope.gettingPosition = true;
-					console.log('about to call');
 					locationService.getGeo().then(function (data) {
-			            $scope.userPosition = data;
+			            $rootScope.userPosition = data;
 			            $scope.gettingPosition = false;
 			            $scope.loading = true;
-			            eventService.getEventsByLocation($scope.userPosition).then(function (data, status) {
+			            eventService.getEventsByLocation($rootScope.userPosition).then(function (data, status) {
 							$scope.events = data;
 							$scope.loading = false;
 						}, function(error, status) {
@@ -46,7 +45,7 @@ define(['./index'], function (controllers) {
 			        });
 				}
 				else {
-					eventService.getEventsByLocation($scope.userPosition).then(function (data, status) {
+					eventService.getEventsByLocation($rootScope.userPosition).then(function (data, status) {
 						$scope.events = data;
 						$scope.loading = false;
 					}, function(error, status) {
