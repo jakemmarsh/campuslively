@@ -2,8 +2,16 @@
 	<div class="container">
 		<div class="line">
 			<div class="unit one-half text-left">
-				<h1 class="flush">Event Name <i class="muted weight--normal zeta icon-unlock"></i></h1>
-				<h3 class="flush muted weight--normal">hosted by <a href data-ng-href="/profile/jakemmarsh">Jake Marsh</a></h3>
+				<h1 class="flush">
+					{{ event.title }} 
+					<i class="muted weight--normal zeta icon-lock" data-ng-show="event.privacy == 'inviteonly'"></i>
+					<i class="muted weight--normal zeta icon-unlock" data-ng-show="event.privacy == 'public'"></i>
+				</h1>
+				<h3 class="flush muted weight--normal">
+					hosted by
+					<a href data-ng-href="/profile/{{ event.creator.username }}" data-ng-show="event.creator.type == 'student'">{{event.creator.firstName}} {{event.creator.lastName}}</a>
+					<a href data-ng-href="/profile/{{ event.creator.username }}" data-ng-show="event.creator.type == 'business'">{{event.creator.businessName}}</a>
+				</h3>
 			</div>
 			<div class="unit one-half last-unit text-right">
 				<a href class="btn nudge-half--right" data-ng-click="toggleAttending()" data-ng-hide="attending"><i class="icon-thumbs-up"></i> RSVP</a>
@@ -15,16 +23,24 @@
 	</div>
 </div>
 <div class="container soft-half--ends">
-	<div class="event-img nudge-half--bottom" style="background-image: url('http://wallpaperdj.com/wallpapers/dash_berlin-1280x720.jpg')"></div>
+	<div class="event-img nudge-half--bottom" data-ng-show="event.pictureUrl" data-ng-style="{'background-image': 'url(' + event.pictureUrl + ')'}"></div>
 	<div class="line text-left">
 		<div class="unit three-fourths">
 			<div class="box top-highlight islet">
+			<div class="line">
+				<div class="unit three-percent">
+					<h4 class="flush--top nudge-half--bottom"><i class="muted icon-calendar-empty"></i></h4>
+				</div>
+				<div class="unit ninety-seven-percent last-unit">
+					<p class="nudge-half--bottom">{{ event.startDate | readableDate }}</p>
+				</div>
+			</div>
 				<div class="line">
 					<div class="unit three-percent">
 						<h4 class="flush--top nudge-half--bottom"><i class="muted icon-time"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
-						<p class="nudge-half--bottom">Friday at 11:30pm</p>
+						<p class="nudge-half--bottom" data-ng-bind="event.startTime"></p>
 					</div>
 				</div>
 				<div class="line">
@@ -40,7 +56,7 @@
 						<h4 class="flush"><i class="muted icon-align-left"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
-						<p class="pre-wrap">Famous Miami-based DJ Hardo LIVE at Bijou tonight! Tickets are $20 at the door. Order now and get them for $15! www.bijounightclub.com</p>
+						<p class="pre-wrap" data-ng-bind-html="event.description | parseUrl"></p>
 					</div>
 				</div>
 				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map nudge-half--top"></div>
@@ -49,16 +65,20 @@
 				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" data-ng-model="commentBody" data-expand-comment required></textarea>
 				<button type="submit" class="btn nudge-half--ends float-right hidden" data-ng-disabled="commentForm.$invalid">Post</button>
 			</form>
-			<div class="line">
+			<div class="line" data-ng-repeat="comment in event.comments | orderBy: '-posted'">
 				<div class="unit one-tenth">
-					<div class="user-img-comment" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-						<a href data-tooltip="Jake Marsh" data-tooltip-placement="left" data-ng-href="profile/jakemmarsh"></a>
+					<div class="user-img-comment" data-ng-style="{'background-image': 'url(' + comment.creator.pictureUrl + ')'}">
+						<a href data-ng-show="comment.creator.type == 'student'" data-tooltip="{{comment.creator.firstName}} {{comment.creator.lastName}}" data-tooltip-placement="left" data-ng-href="profile/{{comment.creator.username}}"></a>
+						<a href data-ng-show="comment.creator.type == 'business'" data-tooltip="{{comment.creator.businessName}}" data-tooltip-placement="left" data-ng-href="profile/{{comment.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit nine-tenths last-unit">
 					<div class="box islet">
-						<h4 class="flush"><a href data-ng-href="/profile/jakemmarsh">Jake Marsh:</a></h4>
-						<p class="nudge-half--ends">Comment text goes here</p>
+						<h4 class="flush">
+							<a href data-ng-href="/profile/{{comment.creator.username}}" data-ng-show="comment.creator.type == 'student'">{{comment.creator.firstName}} {{comment.creator.lastName}}</a>
+							<a href data-ng-href="/profile/{{comment.creator.username}}" data-ng-show="comment.creator.type == 'business'">{{comment.creator.businessName}}</a>
+						</h4>
+						<p class="nudge-half--ends" data-ng-bind="comment.body"></p>
 						<div class="table full-width">
 								<div class="td one-half">
 									<div class="action-buttons comment nudge-half--top">
@@ -66,33 +86,21 @@
 									</div>
 								</div>
 								<div class="td one-half text-right">
-									<span class="muted epsilon">25 minutes ago</span>
+									<span class="muted epsilon">{{ comment.posted | timePast }}</span>
 								</div>
 						</div>
 						<hr class="nudge-half--ends" />
-						<div class="line nudge-half--bottom">
+						<div class="line nudge-half--bottom" data-ng-repeat="subComment in comment.subComments">
 							<div class="unit one-twelfth">
-								<div class="user-img-subcomment" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-									<a href data-tooltip="Jake Marsh" data-tooltip-placement="left" data-ng-href="profile/jakemmarsh"></a>
+								<div class="user-img-subcomment" data-ng-style="{'background-image': 'url(' + subComment.creator.pictureUrl + ')'}">
+									<a href data-ng-show="subComment.creator.type == 'student'" data-tooltip="{{subComment.creator.firstName}} {{subComment.creator.lastName}}" data-tooltip-placement="left" data-ng-href="profile/{{subComment.creator.username}}"></a>
+									<a href data-ng-show="subComment.creator.type == 'business'" data-tooltip="{{subComment.creator.businessName}}" data-tooltip-placement="left" data-ng-href="profile/{{subComment.creator.username}}"></a>
 								</div>
 							</div>
 							<div class="unit eleven-twelfths last-unit subcomment-body islet">
-								<p class="epsilon">subcomment text</p>
+								<p class="epsilon" data-ng-bind="subComment.body"></p>
 								<div class="text-right nudge-half--top">
-									<span class="muted epsilon">15 minutes ago</span>
-								</div>
-							</div>
-						</div>
-						<div class="line nudge-half--bottom">
-							<div class="unit one-twelfth">
-								<div class="user-img-subcomment" style="background-image: url('https://sphotos-a.xx.fbcdn.net/hphotos-prn1/529791_10151562378398173_554404291_n.jpg')">
-									<a href data-tooltip="Jake Marsh" data-tooltip-placement="left" data-ng-href="profile/jakemmarsh"></a>
-								</div>
-							</div>
-							<div class="unit eleven-twelfths last-unit subcomment-body islet">
-								<p class="epsilon">subcomment text</p>
-								<div class="text-right nudge-half--top">
-									<span class="muted epsilon">15 minutes ago</span>
+									<span class="muted epsilon">{{ subComment.posted | timePast }}</span>
 								</div>
 							</div>
 						</div>
@@ -112,7 +120,9 @@
 							<h2 class="flush">Going</h2>
 						</div>
 						<div class="unit one-half last-unit text-right">
-							357 people
+							{{ event.attending.length }}
+							<span data-ng-show="event.attending.length == 1">person</span>
+							<span data-ng-hide="event.attending.length == 1">people</span>
 						</div>
 					</div>
 				</div>
@@ -141,7 +151,9 @@
 							<h2 class="flush">Invited</h2>
 						</div>
 						<div class="unit one-half last-unit text-right">
-							413 people
+							{{ event.invited.length }}
+							<span data-ng-show="event.attending.length == 1">person</span>
+							<span data-ng-hide="event.attending.length == 1">people</span>
 						</div>
 					</div>
 				</div>

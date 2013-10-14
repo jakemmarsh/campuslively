@@ -1,7 +1,7 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('eventCtrl', function ($scope, $stateParams, $modal) {
-    	$scope.eventId = $stateParams.eventId;
+    controllers.controller('eventCtrl', function ($scope, $stateParams, $modal, resolvedEvent) {
+    	$scope.event = resolvedEvent;
 
     	$scope.toggleAttending = function() {
     		$scope.attending = !$scope.attending;

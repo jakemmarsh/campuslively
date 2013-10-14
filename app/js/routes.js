@@ -117,8 +117,14 @@ define(['./app'], function (app) {
             templateUrl: '/partials/event.html',
             controller: 'eventCtrl',
             resolve: {
-                setTitle: function($stateParams, $rootScope, userService){
-                    $rootScope.pageTitle = $stateParams.eventId; // TODO: DO HTTP CALL TO GET ACTUAL EVENT NAME
+                resolvedEvent: function($stateParams, $rootScope, eventService, $location){
+                    return eventService.getEvent($stateParams.eventId).then(function (data, status) {
+                        $rootScope.pageTitle = data.title;
+                        return data;
+                    },
+                    function (errorMessage, status) {
+                        $location.path('/feed');
+                    });
                 }
             },
             access: 'loggedIn'
