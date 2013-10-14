@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('eventCtrl', function ($scope, $stateParams, $modal, resolvedEvent) {
+    controllers.controller('eventCtrl', function ($scope, $rootScope, $stateParams, $modal, eventService, resolvedEvent) {
     	$scope.event = resolvedEvent;
 
     	$scope.toggleAttending = function() {
@@ -8,7 +8,29 @@ define(['./index'], function (controllers) {
     	};
 
     	$scope.postComment = function() {
-    		console.log('post comment');
+    		var comment = {
+    			eventId: $scope.event._id,
+    			body: $scope.commentBody,
+    			creator: $rootScope.user._id
+    		};
+
+    		eventService.postComment($scope.event._id, comment).then(function (data) {
+	            $scope.event = data;
+	        },
+	        function (errorMessage) {
+	            console.log(errorMessage);
+	        });
+    	};
+
+    	$scope.deleteComment = function(comment) {
+    		if($rootScope.user._id == comment.creator._id) {
+    			eventService.deleteComment(comment._id).then(function (data) {
+		            $scope.event = data;
+		        },
+		        function (errorMessage) {
+		            console.log(errorMessage);
+		        });
+    		}
     	};
 
     	$scope.postSubComment = function() {

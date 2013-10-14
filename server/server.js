@@ -75,6 +75,7 @@ app.configure(function() {
     app.get('/api/v1/event/user/:userId', restrict, routes.event.getEventsByUser);
     app.get('/api/v1/event/near/:location', restrict, routes.event.getEventsByLocation);
     app.post('/api/v1/event', restrict, routes.event.postEvent);
+    app.post('/api/v1/event/:eventId/comment', restrict, routes.event.postComment);
 
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {
