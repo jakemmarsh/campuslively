@@ -64,6 +64,28 @@ define(['./index'], function (services) {
 			});
 
 			return deferred.promise;
+		},
+		likeComment: function(commentId, userId) {
+			var deferred = $q.defer();
+
+			$http.post(this.apiPath + 'comment/' + commentId + '/like/' + userId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
+		unlikeComment: function(commentId, userId) {
+			var deferred = $q.defer();
+
+			$http.post(this.apiPath + 'comment/' + commentId + '/unlike/' + userId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
 		}
     }
   });

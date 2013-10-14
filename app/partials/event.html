@@ -85,7 +85,13 @@
 						<div class="table full-width">
 								<div class="td one-half">
 									<div class="action-buttons comment nudge-half--top">
-										<a href><i class="icon-heart"></i> Like</a>
+										<a class="first" href><span class="gamma">{{ comment.likes.length }}</span></a>
+										<a href data-ng-click="likeComment(comment)" data-ng-hide="likesComment(comment)">
+											<i class="icon-heart"></i> Like
+										</a>
+										<a href data-ng-click="unlikeComment(comment)" data-ng-show="likesComment(comment)">
+											<i class="icon-heart-empty"></i> Unlike
+										</a>
 									</div>
 								</div>
 								<div class="td one-half text-right">

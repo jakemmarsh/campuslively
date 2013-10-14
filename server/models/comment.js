@@ -36,6 +36,7 @@ comment.add({
         type: Date, 
         default: Date.now
     },
+    likes: [{type: mongoose.Schema.ObjectId}],
     subComments: [subCommentSchema]
 });
 

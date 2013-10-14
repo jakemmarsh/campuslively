@@ -285,7 +285,7 @@ exports.postSubComment = function(req, res) {
 			],
 			commentPopulateObj = [
 				{ path: 'creator' },
-				{ path: 'subComments.creator'}
+				{ path: 'subComments.creator' }
 			];
 
 		Event.findOne({ _id: req.params.eventId })
@@ -313,12 +313,68 @@ exports.postSubComment = function(req, res) {
 		getUpdatedEvent(req.params.eventId).then(function(returnedEvent) {
 			res.json(returnedEvent);
 		}, function(err) {
-			console.log('failed to retrieve event');
 			res.send(200, "Subcomment created but failed to retrieve updated event.");
 		});
 	}, function(err) {
-		console.log('failed to add subcomment');
 		res.send(500, err);
+	});
+};
+
+exports.likeComment = function(req, res) {
+	var updateComment = function(commentId, userId) {
+		var deferred = Q.defer(),
+			populateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator' }
+			];
+
+		Comment.findOneAndUpdate({ _id: commentId }, { $addToSet: { likes: userId } })
+		.populate(populateObj)
+		.exec(function(err, updatedComment) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(updatedComment);
+         	}
+	    });
+
+		return deferred.promise;
+	}
+
+	updateComment(req.params.commentId, req.params.userId).then(function(updatedComment) {
+		res.json(updatedComment);
+	}, function(err) {
+		res.send(500, "Failed to like comment.");
+	});
+};
+
+exports.unlikeComment = function(req, res) {
+	var updateComment = function(commentId, userId) {
+		var deferred = Q.defer(),
+			populateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator' }
+			];
+
+		Comment.findOneAndUpdate({ _id: commentId }, { $pull: { likes: userId } })
+		.populate(populateObj)
+		.exec(function(err, updatedComment) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(updatedComment);
+         	}
+	    });
+
+		return deferred.promise;
+	}
+
+	updateComment(req.params.commentId, req.params.userId).then(function(updatedComment) {
+		res.json(updatedComment);
+	}, function(err) {
+		res.send(500, "Failed to unlike comment.");
 	});
 };
 

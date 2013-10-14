@@ -51,6 +51,41 @@ define(['./index'], function (controllers) {
 	        });
     	};
 
+    	$scope.likeComment = function(comment) {
+    		eventService.likeComment(comment._id, $rootScope.user._id).then(function (data) {
+    			for(var i = 0; i < $scope.event.comments.length; i++) {
+    				if($scope.event.comments[i]._id == comment._id) {
+    					$scope.event.comments[i] = data;
+    				}
+    			}
+	        },
+	        function (errorMessage) {
+	            console.log(errorMessage);
+	        });
+    	};
+
+    	$scope.unlikeComment = function(comment) {
+    		eventService.unlikeComment(comment._id, $rootScope.user._id).then(function (data) {
+    			for(var i = 0; i < $scope.event.comments.length; i++) {
+    				if($scope.event.comments[i]._id == comment._id) {
+    					$scope.event.comments[i] = data;
+    				}
+    			}
+	        },
+	        function (errorMessage) {
+	            console.log(errorMessage);
+	        });
+    	};
+
+    	$scope.likesComment = function(comment) {
+    		for(var i = 0; i < comment.likes.length; i++) {
+    			if(comment.likes[i].toString() == $rootScope.user._id.toString()) {
+    				return true;
+    			}
+    		}
+    		return false;
+    	};
+
     	$scope.mapOptions = {
 			center: new google.maps.LatLng(44.883125, -68.671977),
 			zoom: 15,
