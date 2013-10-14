@@ -4,8 +4,7 @@ var Q          = require('q'),
     School     = require('../models/school'),
     Activity   = require('../models/activity'),
     Event	   = require('../models/event'),
-    Comment    = require('../models/comment'),
-    SubComment = require('../models/subcomment');
+    Comment    = require('../models/comment');
 
 exports.getEvent = function(req, res) {
 	var getEvent = function(eventId) {
@@ -19,7 +18,7 @@ exports.getEvent = function(req, res) {
 			],
 			commentPopulateObj = [
 				{ path: 'creator' },
-				{ path: 'subComments' }
+				{ path: 'subComments.creator'}
 			];
 
 		Event.findOne({ _id: eventId }).populate(eventPopulateObj).exec(function(err, updatedEvent) {
@@ -32,16 +31,7 @@ exports.getEvent = function(req, res) {
 						deferred.reject(err.message);
 					}
 					else {
-						console.log(updatedEvent);
-						SubComment.populate(updatedEvent.comments.subComments, commentPopulateObj, function(err, data) {
-							if(err) {
-								deferred.reject(err.message);
-							}
-							else {
-								console.log(updatedEvent);
-								deferred.resolve(updatedEvent);
-							}
-						});
+						deferred.resolve(updatedEvent);
 					}
 				});
          	}
@@ -229,7 +219,7 @@ exports.postComment = function(req, res) {
 			],
 			commentPopulateObj = [
 				{ path: 'creator' },
-				{ path: 'subComments' }
+				{ path: 'subComments.creator'}
 			];
 
 		Event.findOneAndUpdate({ _id: req.params.eventId }, { $addToSet: { comments: postedComment._id } })
@@ -244,14 +234,7 @@ exports.postComment = function(req, res) {
 						deferred.reject(err.message);
 					}
 					else {
-						Subcomment.populate(updatedEvent.comments.subComments, commentPopulateObj, function(err, data) {
-							if(err) {
-								deferred.reject(err.message);
-							}
-							else {
-								deferred.resolve(updatedEvent);
-							}
-						});
+						deferred.resolve(updatedEvent);
 					}
 				});
          	}
@@ -272,30 +255,14 @@ exports.postComment = function(req, res) {
 };
 
 exports.postSubComment = function(req, res) {
-	var postSubComment = function(eventId, commentId, subComment) {
+	var addSubComment = function(commentId, subComment) {
 		var deferred = Q.defer(),
-			subComment = new SubComment({
-				eventId: eventId,
-				commentId: commentId,
+			subComment = {
 				body: subComment.body,
 				creator: subComment.creator
-			});
+			};
 
-		subComment.save(function (err, savedSubComment) {
-            if (err) {
-                deferred.reject(err.message);
-            }
-            else {
-                deferred.resolve(savedSubComment);
-            }
-        });
-
-        return deferred.promise;
-	},
-	addSubComment = function(commentId, subCommentId) {
-		var deferred = Q.defer();
-
-		Comment.findOneAndUpdate({ _id: commentId }, { $addToSet: { subComments: subCommentId } })
+		Comment.findOneAndUpdate({ _id: commentId }, { $addToSet: { subComments: subComment } })
 		.exec(function(err, updatedComment) {
          	if(err) {
          		deferred.reject(err.message);
@@ -318,7 +285,7 @@ exports.postSubComment = function(req, res) {
 			],
 			commentPopulateObj = [
 				{ path: 'creator' },
-				{ path: 'subComments' }
+				{ path: 'subComments.creator'}
 			];
 
 		Event.findOne({ _id: req.params.eventId })
@@ -333,14 +300,7 @@ exports.postSubComment = function(req, res) {
 						deferred.reject(err.message);
 					}
 					else {
-						SubComment.populate(retrievedEvent.comments.subComments, commentPopulateObj, function(err, data) {
-							if(err) {
-								deferred.reject(err.message);
-							}
-							else {
-								deferred.resolve(retrievedEvent);
-							}
-						});
+						deferred.resolve(retrievedEvent);
 					}
 				});
          	}
@@ -349,20 +309,15 @@ exports.postSubComment = function(req, res) {
 		return deferred.promise;
 	};
 
-	postSubComment(req.params.eventId, req.params.commentId, req.body).then(function(returnedSubComment) {
-		addSubComment(req.params.commentId, returnedSubComment).then(function() {
-			getUpdatedEvent(req.params.eventId).then(function(returnedEvent) {
-				res.json(returnedEvent);
-			}, function(err) {
-				console.log('failed to retrieve event');
-				res.send(200, "Subcomment created but failed to retrieve updated event.");
-			});
+	addSubComment(req.params.commentId, req.body).then(function() {
+		getUpdatedEvent(req.params.eventId).then(function(returnedEvent) {
+			res.json(returnedEvent);
 		}, function(err) {
-			console.log('failed to add subcomment');
-			res.send(500, err);
+			console.log('failed to retrieve event');
+			res.send(200, "Subcomment created but failed to retrieve updated event.");
 		});
 	}, function(err) {
-		console.log('failed to post subcomment');
+		console.log('failed to add subcomment');
 		res.send(500, err);
 	});
 };

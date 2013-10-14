@@ -101,7 +101,7 @@
 								</div>
 							</div>
 							<div class="unit eleven-twelfths last-unit subcomment-body islet">
-								<a href class="delete-subcomment-button" data-ng-click="deleteSubComment(subComment)" data-ng-show="subComment.creator == user._id">
+								<a href class="delete-subcomment-button" data-ng-click="deleteSubComment(subComment)" data-ng-show="subComment.creator._id == user._id">
 									<i class="icon-remove"></i>
 								</a>
 								<p class="epsilon" data-ng-bind-html="subComment.body | parseUrl"></p>
