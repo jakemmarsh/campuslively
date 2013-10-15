@@ -80,12 +80,12 @@ app.configure(function() {
     app.delete('/api/v1/event', restrict, routes.event.deleteEvent);
 
     // comments
-    app.post('/api/v1/event/:eventId/comment', restrict, routes.event.postComment);
-    app.post('/api/v1/event/:eventId/comment/:commentId/subcomment', restrict, routes.event.postSubComment);
-    app.post('/api/v1/event/comment/:commentId/like/:userId', restrict, routes.event.likeComment);
-    app.post('/api/v1/event/comment/:commentId/unlike/:userId', restrict, routes.event.unlikeComment);
-    app.delete('/api/v1/event/:eventId/comment/:commentId', restrict, routes.event.deleteComment);
-    app.delete('/api/v1/event/:eventId/comment/:commentId/subComment/:subCommentId', restrict, routes.event.deleteSubComment);
+    app.post('/api/v1/event/:eventId/comment', restrict, routes.comment.postComment);
+    app.post('/api/v1/event/:eventId/comment/:commentId/subcomment', restrict, routes.comment.postSubComment);
+    app.post('/api/v1/event/comment/:commentId/like/:userId', restrict, routes.comment.likeComment);
+    app.post('/api/v1/event/comment/:commentId/unlike/:userId', restrict, routes.comment.unlikeComment);
+    app.delete('/api/v1/event/:eventId/comment/:commentId', restrict, routes.comment.deleteComment);
+    app.delete('/api/v1/event/:eventId/comment/:commentId/subComment/:subCommentId', restrict, routes.comment.deleteSubComment);
 
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {
