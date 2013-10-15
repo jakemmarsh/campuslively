@@ -19,6 +19,7 @@ define(['./index'], function (controllers) {
 			if($scope.currentView == 'school') {
 				eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
 					$scope.events = data;
+					console.log(data);
 					$scope.loading = false;
 				}, function(error, status) {
 					console.log(err.message);
@@ -75,30 +76,40 @@ define(['./index'], function (controllers) {
 			value: 'startDate'
 		};
 
-		var formatDate = function(date) {
-    		var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    		    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-				weekDay = weekdays[date.getDay()],
-    		    dayNumber = date.getDate(),
-    		    month = months[date.getMonth()],
-    		    year = date.getFullYear(),
-				formattedDate = weekDay + ", " + month + " " + dayNumber + ", " + year;
-
-    		return formattedDate;
+		$scope.rsvpToEvent = function(eventId) {
+    		eventService.rsvp(eventId, $rootScope.user._id).then(function (data) {
+    			for (var i = 0; i < $scope.events.length; i++) {
+    				if($scope.events[i]._id == eventId) {
+    					$scope.events[i] = data;
+    				}
+    			}
+	        },
+	        function (errorMessage) {
+	            console.log(errorMessage);
+	        });
     	};
 
-    	$scope.isAttending = function(eventId) {
-    		for(var i = 0; i < $rootScope.user.attending.length; i++) {
-    			if($rootScope.user.attending[i]._id == eventId) {
+    	$scope.unRsvpToEvent = function(eventId) {
+    		eventService.unRsvp(eventId, $rootScope.user._id).then(function (data) {
+    			for (var i = 0; i < $scope.events.length; i++) {
+    				if($scope.events[i]._id == eventId) {
+    					$scope.events[i] = data;
+    				}
+    			}
+	        },
+	        function (errorMessage) {
+	            console.log(errorMessage);
+	        });
+    	};
+
+    	$scope.isAttending = function(event) {
+    		for(var i = 0; i < event.attending.length; i++) {
+    			if(event.attending[i]._id == $rootScope.user._id) {
     				return true;
     			}
     		}
     		return false;
     	};
-
-		$scope.toggleAttending = function(eventId) {
-			// make call to update both current user and specified event
-		};
 
 		$scope.loadMore = function() {
 			// make call to load twenty more events after last ID of currently loaded events

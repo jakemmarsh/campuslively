@@ -79,6 +79,8 @@ app.configure(function() {
     app.post('/api/v1/event/:eventId/comment/:commentId/subcomment', restrict, routes.event.postSubComment);
     app.post('/api/v1/event/comment/:commentId/like/:userId', restrict, routes.event.likeComment);
     app.post('/api/v1/event/comment/:commentId/unlike/:userId', restrict, routes.event.unlikeComment);
+    app.post('/api/v1/event/:eventId/rsvp/:userId', restrict, routes.event.rsvp);
+    app.post('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
     app.delete('/api/v1/event', restrict, routes.event.deleteEvent);
     app.delete('/api/v1/event/:eventId/comment/:commentId', restrict, routes.event.deleteComment);
     app.delete('/api/v1/event/:eventId/comment/:commentId/subComment/:subCommentId', restrict, routes.event.deleteSubComment);

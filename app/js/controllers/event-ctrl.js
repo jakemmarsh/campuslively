@@ -3,8 +3,6 @@ define(['./index'], function (controllers) {
     controllers.controller('eventCtrl', function ($scope, $rootScope, $stateParams, $modal, eventService, resolvedEvent) {
     	$scope.event = resolvedEvent;
 
-    	console.log($scope.event);
-
     	$scope.toggleAttending = function() {
     		$scope.attending = !$scope.attending;
     	};
@@ -80,6 +78,33 @@ define(['./index'], function (controllers) {
     	$scope.likesComment = function(comment) {
     		for(var i = 0; i < comment.likes.length; i++) {
     			if(comment.likes[i].toString() == $rootScope.user._id.toString()) {
+    				return true;
+    			}
+    		}
+    		return false;
+    	};
+
+    	$scope.rsvpToEvent = function() {
+    		eventService.rsvp($scope.event._id, $rootScope.user._id).then(function (data) {
+    			$scope.event = data;
+	        },
+	        function (errorMessage) {
+	            console.log(errorMessage);
+	        });
+    	};
+
+    	$scope.unRsvpToEvent = function() {
+    		eventService.unRsvp($scope.event._id, $rootScope.user._id).then(function (data) {
+    			$scope.event = data;
+	        },
+	        function (errorMessage) {
+	            console.log(errorMessage);
+	        });
+    	};
+
+    	$scope.isAttending = function() {
+    		for(var i = 0; i < $scope.event.attending.length; i++) {
+    			if($scope.event.attending[i]._id == $rootScope.user._id) {
     				return true;
     			}
     		}

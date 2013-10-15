@@ -378,6 +378,130 @@ exports.unlikeComment = function(req, res) {
 	});
 };
 
+exports.rsvp = function(req, res) {
+	var updateUser = function(userId, eventId) {
+		var deferred = Q.defer();
+
+		User.findOneAndUpdate({ _id: userId }, { $addToSet: { attending: eventId } })
+		.exec(function(err, updatedUser) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(updatedUser);
+         	}
+	    });
+
+	    return deferred.promise;
+	},
+	updateEvent = function(eventId, userId) {
+		var deferred = Q.defer(),
+			eventPopulateObj = [
+				{ path: 'location' },
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			];
+
+		Event.findOneAndUpdate({ _id: eventId }, { $addToSet: { attending: userId } })
+		.populate(eventPopulateObj)
+		.exec(function(err, updatedEvent) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(updatedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(updatedEvent);
+					}
+				});
+         	}
+	    });
+
+		return deferred.promise;
+	};
+
+	updateUser(req.params.userId, req.params.eventId).then(function(updatedUser) {
+		updateEvent(req.params.eventId, req.params.userId).then(function(updatedEvent) {
+			res.json(updatedEvent);
+		}, function(err) {
+			res.send(500, err);
+		});
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
+exports.unRsvp = function(req, res) {
+	var updateUser = function(userId, eventId) {
+		var deferred = Q.defer();
+
+		User.findOneAndUpdate({ _id: userId }, { $pull: { attending: eventId } })
+		.exec(function(err, updatedUser) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(updatedUser);
+         	}
+	    });
+
+	    return deferred.promise;
+	},
+	updateEvent = function(eventId, userId) {
+		var deferred = Q.defer(),
+			eventPopulateObj = [
+				{ path: 'location' },
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			];
+
+		Event.findOneAndUpdate({ _id: eventId }, { $pull: { attending: userId } })
+		.populate(eventPopulateObj)
+		.exec(function(err, updatedEvent) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+         		Comment.populate(updatedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(updatedEvent);
+					}
+				});
+         	}
+	    });
+
+		return deferred.promise;
+	};
+
+	updateUser(req.params.userId, req.params.eventId).then(function(updatedUser) {
+		updateEvent(req.params.eventId, req.params.userId).then(function(updatedEvent) {
+			res.json(updatedEvent);
+		}, function(err) {
+			res.send(500, err);
+		});
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
 exports.deleteEvent = function(req, res) {
 	var deleteEvent = function(eventId) {
 		var deferred = Q.defer();

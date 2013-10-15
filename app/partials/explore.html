@@ -81,9 +81,9 @@
 					<div class="line nudge-half--top">
 						<div class="unit one-half">
 							<div class="action-buttons">
-								<a class="first" href data-ng-click="toggleAttending(event._id)" data-tooltip="RSVP" data-ng-hide="isAttending(event._id)"><i class="icon-thumbs-up"></i></a>
-								<a class="first" href data-ng-click="toggleAttending(event._id)" data-tooltip="Un-RSVP" data-ng-show="isAttending(event._id)"><i class="icon-thumbs-up green"></i></a>
-								<a href data-ng-click="openAttending(event._id)" data-tooltip="People Attending"><span class="gamma">{{ event.attending.length }}</span></a>
+								<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
+								<a href data-ng-click="rsvpToEvent(event._id)" data-tooltip="RSVP" data-ng-hide="isAttending(event)"><i class="icon-thumbs-up"></i> RSVP</a>
+								<a href data-ng-click="unRsvpToEvent(event._id)" data-tooltip="Un-RSVP" data-ng-show="isAttending(event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
 							</div>
 						</div>
 						<div class="unit one-half last-unit text-right">
@@ -156,9 +156,9 @@
 					<div class="line nudge-half--top">
 						<div class="unit one-half">
 							<div class="action-buttons">
-								<a class="first" href data-ng-click="toggleAttending(event._id)" data-tooltip="RSVP" data-ng-hide="isAttending(event._id)"><i class="icon-thumbs-up"></i></a>
-								<a class="first" href data-ng-click="toggleAttending(event._id)" data-tooltip="Un-RSVP" data-ng-show="isAttending(event._id)"><i class="icon-thumbs-up green"></i></a>
-								<a href data-ng-click="openAttending(event._id)" data-tooltip="People Attending"><span class="gamma">{{ event.attending.length }}</span></a>
+								<a class="first" href data-ng-click="openAttending(event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
+								<a href data-ng-click="rsvpToEvent(event._id)" data-tooltip="RSVP" data-ng-hide="isAttending(event)"><i class="icon-thumbs-up"></i> RSVP</a>
+								<a href data-ng-click="unRsvpToEvent(event._id)" data-tooltip="Un-RSVP" data-ng-show="isAttending(event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
 							</div>
 						</div>
 						<div class="unit one-half last-unit text-right">

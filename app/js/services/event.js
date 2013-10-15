@@ -65,6 +65,28 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		rsvp: function(eventId, userId) {
+			var deferred = $q.defer();
+
+			$http.post(this.apiPath + eventId + '/rsvp/' + userId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
+		unRsvp: function(eventId, userId) {
+			var deferred = $q.defer();
+
+			$http.post(this.apiPath + eventId + '/unrsvp/' + userId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		likeComment: function(commentId, userId) {
 			var deferred = $q.defer();
 
