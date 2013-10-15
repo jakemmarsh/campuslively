@@ -47,7 +47,7 @@
 	<hr data-ng-show="events.length && filteredEvents.length" />
 	<div class="line nudge-half--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
 		<div class="unit one-twelfth">
-			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}"}>
+			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
 				<a href data-tooltip="{{event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'business'"></a>
 				<a href data-tooltip="{{event.creator.firstName}} {{event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'student'"></a>
 			</div>
@@ -178,7 +178,7 @@
 		</div>
 	</div><!-- event end -->
 	<hr data-ng-show="events.length >= 20 && filteredEvents.length" />
-	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="events.length >= 20 && filteredEvents.length">Load More</a>
+	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="events.length >= 20 && filteredEvents.length && moreToLoad">Load More</a>
 </div>
 
 <script type="text/ng-template" id="attendingModal.html">

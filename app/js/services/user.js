@@ -83,6 +83,27 @@ define(['./index'], function (services) {
 			});
 
 			return deferred.promise;
+		},
+		getActivities: function(userId, oldestId) {
+			var deferred = $q.defer();
+			oldestId = (typeof oldestId === "undefined") ? null : oldestId;
+
+			if(oldestId) {
+				$http.get(this.apiPath + userId + '/activities/' + oldestId).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
+			else {
+				$http.get(this.apiPath + userId + '/activities').success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
+
+			return deferred.promise;
 		}
     }
   });

@@ -2,7 +2,8 @@ var Q        = require('q'),
 	crypto   = require('crypto'),
     User     = require('../models/user'),
     School   = require('../models/school'),
-    Activity = require('../models/activity');
+    Activity = require('../models/activity'),
+    Event    = require('../models/event');
 
 /**
  * Hashes a password with optional `salt`, otherwise
@@ -73,9 +74,11 @@ exports.getUserByName = function(req, res) {
                 { path: 'school' }
             ];
 
-		User.findOne({ username: username }).populate(populateObj).exec(function (err, retrievedUser) {
+		User.findOne({ username: username })
+		.populate(populateObj)
+		.exec(function (err, retrievedUser) {
 	        if (err || !retrievedUser) {
-	        	deferred.reject(new Error("No user exists with specified username."));
+	        	deferred.reject(err.message);
 	        }
 	        else {
 	        	deferred.resolve(retrievedUser);
@@ -134,7 +137,9 @@ exports.updateUser = function(req, res) {
                 { path: 'school' }
             ];
 
-		User.findOneAndUpdate({ _id: userId }, updateParams).populate(populateObj).exec(function(err, updatedUser) {
+		User.findOneAndUpdate({ _id: userId }, updateParams)
+		.populate(populateObj)
+		.exec(function(err, updatedUser) {
 			if(err) {
          		deferred.reject(err.message);
          	}
@@ -194,7 +199,9 @@ exports.subscribe = function(req, res) {
                 { path: 'school' }
             ];
 
-		User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { subscriptions: subscription._id } }).populate(populateObj).exec(function(err, updatedUser) {
+		User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { subscriptions: subscription._id } })
+		.populate(populateObj)
+		.exec(function(err, updatedUser) {
          	if(err) {
          		deferred.reject(err.message);
          	}
@@ -262,7 +269,9 @@ exports.unsubscribe = function(req, res) {
                 { path: 'school' }
             ];
 
-		User.findOneAndUpdate({ _id: userId }, { $pull: { 'subscriptions': subscriptionId } }).populate(populateObj).exec(function(err, updatedUser) {
+		User.findOneAndUpdate({ _id: userId }, { $pull: { 'subscriptions': subscriptionId } })
+		.populate(populateObj)
+		.exec(function(err, updatedUser) {
          	if(err) {
          		deferred.reject(err.message);
          	}
@@ -309,14 +318,16 @@ exports.getActivities = function(req, res) {
 	}
 	getTwentyActivities = function(user) {
 		var deferred = Q.defer(),
-			populateObj = [
+			activityPopulateObj = [
 				{ path: 'event' },
 				{ path: 'actor' },
-				{ path: 'recipient '}
+				{ path: 'recipient' }
 			];
 
 		if(req.params.oldestId) {
-			Activity.find({ _id: {$lt: req.params.oldestId}, $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}] }).populate(populateObj).exec(function(err, retrievedActivities) {
+			Activity.find({ _id: {$lt: req.params.oldestId}, $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}] })
+			.populate(activityPopulateObj)
+			.exec(function(err, retrievedActivities) {
 				if(err || !retrievedActivities) {
 					deferred.reject(new Error("No events found."));
 				}
@@ -326,7 +337,9 @@ exports.getActivities = function(req, res) {
 			});
 		}
 		else {
-			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}] }).populate(populateObj).exec(function(err, retrievedActivities) {
+			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}] })
+			.populate(activityPopulateObj)
+			.exec(function(err, retrievedActivities) {
 				if(err || !retrievedActivities) {
 					deferred.reject(new Error("No events found."));
 				}
@@ -343,9 +356,9 @@ exports.getActivities = function(req, res) {
 		getTwentyActivities(retrievedUser).then(function(activities) {
 			res.json(activities);
 		}, function(err) {
-			res.send(500, "Failed to load more activities.");
+			res.send(500, err);
 		});
 	}, function(err) {
-		res.send(500, "Failed to retrieve user.");
+		res.send(500, err);
 	});
 };
