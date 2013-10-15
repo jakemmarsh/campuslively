@@ -27,7 +27,7 @@
 	<div class="line text-left">
 		<div class="unit three-fourths">
 			<div class="box top-highlight islet">
-			<div class="line">
+			<div class="line" data-ng-show="event.startDate">
 				<div class="unit three-percent">
 					<h4 class="flush--top nudge-half--bottom"><i class="muted icon-calendar-empty"></i></h4>
 				</div>
@@ -35,7 +35,7 @@
 					<p class="nudge-half--bottom" data-ng-bind="event.startDate | readableDate"></p>
 				</div>
 			</div>
-				<div class="line">
+				<div class="line" data-ng-show="event.startTime">
 					<div class="unit three-percent">
 						<h4 class="flush--top nudge-half--bottom"><i class="muted icon-time"></i></h4>
 					</div>
@@ -43,15 +43,15 @@
 						<p class="nudge-half--bottom" data-ng-bind="event.startTime"></p>
 					</div>
 				</div>
-				<div class="line">
+				<div class="line" data-ng-show="event.locationName">
 					<div class="unit three-percent">
 						<h4 class="flush--top nudge-half--bottom"><i class="muted icon-map-marker"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
-						<p class="nudge-half--bottom">Bijou Nightclub</p>
+						<p class="nudge-half--bottom" data-ng-bind="event.locationName"></p>
 					</div>
 				</div>
-				<div class="line">
+				<div class="line" data-ng-show="event.description">
 					<div class="unit three-percent">
 						<h4 class="flush"><i class="muted icon-align-left"></i></h4>
 					</div>

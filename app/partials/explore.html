@@ -66,9 +66,15 @@
 					<div class="line">
 						<div class="unit four-fifths">
 							<span class="delta weight--bold">
-								<i class="icon-map-marker muted"></i> <span data-ng-bind="event.locationName"></span> 
-								<i class="icon-calendar-empty muted nudge-half--left"></i> <span>{{ event.startDate | readableDate }}</span> 
-								<i class="icon-time muted nudge-half--left"></i> <span data-ng-bind="event.startTime"></span>
+								<span data-ng-show="event.locationName" class="nudge-half--right">
+									<i class="icon-map-marker muted"></i> <span data-ng-bind="event.locationName"></span> 
+								</span>
+								<span data-ng-show="event.startDate" class="nudge-half--right">
+									<i class="icon-calendar-empty muted"></i> <span>{{ event.startDate | readableDate }}</span>
+								</span>
+								<span data-ng-show="event.startTime">
+									<i class="icon-time muted"></i> <span data-ng-bind="event.startTime"></span>
+								</span>
 							</span>
 						</div>
 						<div class="unit one-fifth last-unit text-right">
