@@ -1,8 +1,7 @@
 var mongoose   = require('mongoose'),
     User       = require('./user'),
     Comment    = require('./comment'),
-    School     = require('./school'),
-    Location   = require('./location');
+    School     = require('./school');
 
 var eventSchema = new mongoose.Schema({
     title: {
@@ -12,9 +11,9 @@ var eventSchema = new mongoose.Schema({
     locationName: {
         type: String
     },
-    locationPoint: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Location'
+    locationPoint: { 
+        type: [Number], 
+        index: '2d' 
     },
     description: String,
     startDate: {

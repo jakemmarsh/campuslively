@@ -3,6 +3,19 @@ define(['./index'], function (controllers) {
     controllers.controller('eventCtrl', function ($scope, $rootScope, $stateParams, $modal, eventService, resolvedEvent) {
     	$scope.event = resolvedEvent;
 
+    	if($scope.event.locationPoint) {
+	    	$scope.mapOptions = {
+				center: new google.maps.LatLng($scope.event.locationPoint[0], $scope.event.locationPoint[1]),
+				zoom: 15,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				disableDefaultUI: true,
+				disableDoubleClickZoom: true,
+				draggable: false,
+				scrollwheel: false,
+				panControl: false
+		    };
+		}
+
     	$scope.toggleAttending = function() {
     		$scope.attending = !$scope.attending;
     	};
@@ -138,17 +151,6 @@ define(['./index'], function (controllers) {
     		}
     		return false;
     	};
-
-    	$scope.mapOptions = {
-			center: new google.maps.LatLng(44.883125, -68.671977),
-			zoom: 15,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			disableDefaultUI: true,
-			disableDoubleClickZoom: true,
-			draggable: false,
-			scrollwheel: false,
-			panControl: false
-	    };
 
 		$scope.open = function (modal) {
 		  	if (modal.toLowerCase() == 'share') {
