@@ -181,8 +181,9 @@ exports.register = function(req, res) {
         else if(req.body.type.toLowerCase() == 'business') {
             newUser.type = 'business';
             newUser.businessName = req.body.businessName;
-
-            // assign business to a school if one is specified
+            if(req.body.businessDescription) {
+                newUser.businessDescription = req.body.businessDescription;
+            }
             if(req.body.school) {
                 newUser.school = req.body.school;
             }

@@ -36,6 +36,7 @@ var userSchema = new mongoose.Schema({
     lastName: String,
     businessName: String,
     businessDescription: String,
+    businessPictureUrls: [String],
     pictureUrl: {
         type: String,
         default: 'http://s3.amazonaws.com/campuslively/user_imgs/default.png',

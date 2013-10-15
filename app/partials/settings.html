@@ -23,7 +23,7 @@
 						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" data-resize-max-height="200" data-resize-max-width="200" data-resize-quality="0.7" />
 					</div>
 				</div>
-				<div class="line nudge-half--bottom">
+				<div class="line nudge-half--bottom" data-ng-show="user.type == 'student'">
 					<div class="unit label-container two-twelfths">
 						<label for="school" class="caps weight--bold">School</label>
 					</div>
@@ -56,13 +56,21 @@
 						<input type="text" class="full-width" id="userBusinessName" placeholder="business name" data-ng-model="userBusinessName" />
 					</div>
 				</div>
+				<div class="line nudge-half--bottom" data-ng-show="user.type == 'business'" >
+					<div class="unit label-container two-twelfths">
+						<label for="userBusinessDescription" class="caps weight--bold">Description</label>
+					</div>
+					<div class="unit ten-twelfths last-unit">
+						<textarea id="userBusinessDescription" name="userBusinessDescription" data-ng-model="userBusinessDescription" class="full-width medium" placeholder="Description of your club or group"></textarea>
+					</div>
+				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit label-container two-twelfths">
 						<label for="userEmail" class="caps weight--bold">Email</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<input type="text" class="full-width" name="emailBusiness" id="userEmail" placeholder="email address" data-ng-model="userEmail" data-ng-show="user.type == 'business'" />
-						<input type="text" class="full-width" name="emailStudent" id="userEmail" placeholder="email address" data-ng-model="userEmail" data-ng-pattern="/([a-z0-9][-a-z0-9_\+\.]*[a-z0-9])@([a-z0-9][-a-z0-9\.]*[a-z0-9]\.(edu)|([0-9]{1,3}\.{3}[0-9]{1,3}))/" data-ng-show="user.type == 'student'" />
+						<input type="text" class="full-width" name="emailBusiness" id="userEmail" placeholder="email address" data-ng-model="userEmailBusiness" data-ng-show="user.type == 'business'" />
+						<input type="text" class="full-width" name="emailStudent" id="userEmail" placeholder="email address" data-ng-model="userEmailStudent" data-ng-pattern="/([a-z0-9][-a-z0-9_\+\.]*[a-z0-9])@([a-z0-9][-a-z0-9\.]*[a-z0-9]\.(edu)|([0-9]{1,3}\.{3}[0-9]{1,3}))/" data-ng-show="user.type == 'student'" />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">
@@ -70,17 +78,17 @@
 						<label for="userPassword" class="caps weight--bold">Password</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<input type="password" class="full-width" id="userPassword" placeholder="password" data-ng-model="userPassword" />
+						<input type="password" class="full-width" id="userPassword" placeholder="new password" data-ng-model="userPassword" />
 					</div>
 				</div>
 				<div class="line">
 					<div class="unit full-width last-unit text-right">
 						<span class="red weight--bold nudge--right" data-ng-show="saveError" data-ng-bind="saveError"></span>
-						<span class="red weight--bold nudge--right" data-ng-show="settingsForm.emailStudent.$error.pattern">
+						<span class="red weight--bold nudge--right" data-ng-show="settingsForm.emailStudent.$error.pattern && settingsForm.emailStudent.length > 0">
 							Email address must end in .edu.
 						</span>
 						<span class="blue weight--bold nudge--right" data-ng-show="changesSaved">Changes saved!</span>
-						<input type="submit" class="btn" value="Save Changes" />
+						<input type="submit" class="btn" value="Save Changes" data-ng-disabled="settingsForm.$invalid" />
 					</div>
 				</div>
 			</form>

@@ -7,17 +7,24 @@ define(['./index'], function (controllers) {
     		console.log(errorMessage);
     	});
 
-    	$scope.userEmail = $rootScope.user.email;
     	$scope.userSchool = $rootScope.user.school;
 
     	if($rootScope.user.type == 'student') {
     		$scope.userFirstName = $rootScope.user.firstName;
     		$scope.userLastName = $rootScope.user.lastName;
+    		$scope.userEmailStudent = $rootScope.user.email;
+    	}
+    	else if($rootScope.user.type == 'business') {
+    		$scope.userBusinessName = $rootScope.user.businessName;
+    		$scope.userBusinessDescription = $rootScope.user.businessDescription;
+    		$scope.userEmailBusiness = $rootScope.user.email;
     	}
 
-    	$scope.schoolSelectOptions = {
-    		'val': $scope.userSchool.name
-    	};
+    	if($scope.userSchool) {
+	    	$scope.schoolSelectOptions = {
+	    		'val': $scope.userSchool.name
+	    	};
+	    }
 
     	$scope.open = function (modal) {
 		  	if (modal.toLowerCase() == 'twitter') {
@@ -47,19 +54,20 @@ define(['./index'], function (controllers) {
 				if($rootScope.user.lastName !== $scope.userLastName && $scope.userLastName.length > 0) {
 					updateParams.lastName = $scope.userLastName;
 				}
-				if($scope.userPassword) {
-					if($scope.userPassword.length > 0) {
-						updateParams.password = $scope.userPassword;
-					}
+				if($rootScope.user.email !== $scope.userEmailStudent && $scope.userEmailStudent.length > 0) {
+					updateParams.email = $scope.userEmailStudent;
 				}
 			}
 			else if($rootScope.user.type == 'business') {
 				if($rootScope.user.businessName !== $scope.userBusinessName && $scope.userBusinessName.length > 0) {
 					updateParams.businessName = $scope.userBusinessName;
 				}
-			}
-			if($rootScope.user.email !== $scope.userEmail && $scope.userEmail.length > 0) {
-				updateParams.email = $scope.userEmail;
+				if($rootScope.user.businessDescription !== $scope.userBusinessDescription && $scope.userBusinessDescription.length > 0) {
+					updateParams.businessDescription = $scope.userBusinessDescription;
+				}
+				if($rootScope.user.email !== $scope.userEmailBusiness && $scope.userEmailBusiness.length > 0) {
+					updateParams.email = $scope.userEmailBusiness;
+				}
 			}
 			if($scope.userPassword) {
 				if($scope.userPassword.length > 0) {

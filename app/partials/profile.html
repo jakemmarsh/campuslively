@@ -33,17 +33,17 @@
 </div>
 <div class="container soft-half--ends">
 	<div class="box top-highlight islet nudge-half--bottom" data-ng-show="profile.type == 'business' && profile.businessDescription">
-		<div class="line nudge-half--bottom">
+		<div class="line">
 			<div class="unit three-percent">
 				<h4 class="flush"><i class="muted icon-align-left"></i></h4>
 			</div>
 			<div class="unit ninety-seven-percent last-unit">
-				<p class="pre-wrap" data-ng-bind="profile.businessDescription">Bijou Nightclub is the premier club in Boston. Get a table with your close friends and enjoy premium bottle services. The hottest DJ's in Boston!</p>
+				<p class="pre-wrap" data-ng-bind-html="profile.businessDescription | parseUrl"></p>
 			</div>
 		</div>
-		<carousel interval="5000" class="flush">
-			<slide ng-repeat="slide in slides" active="slide.active">
-				<img ng-src="{{slide.image}}" style="margin:auto;">
+		<carousel interval="5000" class="flush nudge-half--top" data-ng-show="profile.businessPictureUrls">
+			<slide ng-repeat="slide in profile.businessPictureUrls" active="slide.active">
+				<img ng-src="{{slide}}" style="margin:auto;">
 			</slide>
 		</carousel>
 	</div>

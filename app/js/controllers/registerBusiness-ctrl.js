@@ -7,6 +7,7 @@ define(['./index'], function (controllers) {
     			username: $scope.username,
     			password: $scope.password,
     			businessName: $scope.businessName,
+    			businessDescription: $scope.businessDescription,
     			email: $scope.email
     		};
 
