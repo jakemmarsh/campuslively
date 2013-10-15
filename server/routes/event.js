@@ -50,21 +50,32 @@ exports.getEvent = function(req, res) {
 exports.getEventsBySchool = function(req, res) {
 	var getEvents = function(schoolId) {
 		var deferred = Q.defer(),
-			populateObj = [
+			eventPopulateObj = [
 				{ path: 'location' },
-	            { path: 'creator' }, 
-	            { path: 'attending' },
-	            { path: 'comments' },
-	            { path: 'school' }
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ school: schoolId }).populate(populateObj).exec(function (err, retrievedEvent) {
-	        if (err || !retrievedEvent) {
-	        	deferred.reject(new Error("No events exist for specified school."));
-	        }
-	        else {
-	        	deferred.resolve(retrievedEvent);
-	        }
+		Event.find({ school: schoolId }).populate(eventPopulateObj).exec(function (err, retrievedEvent) {
+	        if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvent);
+					}
+				});
+         	}
 	    });
 
 		return deferred.promise;
@@ -84,21 +95,32 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 exports.getEventsByUser = function(req, res) {
 	var getEvents = function(userId) {
 		var deferred = Q.defer(),
-			populateObj = [
+			eventPopulateObj = [
 				{ path: 'location' },
-	            { path: 'creator' }, 
-	            { path: 'attending' },
-	            { path: 'comments' },
-	            { path: 'school' }
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ creator: userId }).populate(populateObj).exec(function (err, retrievedEvent) {
-	        if (err || !retrievedEvent) {
-	        	deferred.reject(new Error("No events exist for specified user."));
-	        }
-	        else {
-	        	deferred.resolve(retrievedEvent);
-	        }
+		Event.find({ creator: userId }).populate(eventPopulateObj).exec(function (err, retrievedEvent) {
+	        if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvent);
+					}
+				});
+         	}
 	    });
 
 		return deferred.promise;
@@ -208,44 +230,57 @@ exports.postComment = function(req, res) {
 
 		return deferred.promise;
 	},
-	addToEvent = function(eventId, postedComment) {
+	addToEvent = function(eventId, postedCommentId) {
 		var deferred = Q.defer(),
-			eventPopulateObj = [
+			populateObj = [
 				{ path: 'location' },
 	            { path: 'creator' }, 
 	            { path: 'attending' },
 	            { path: 'comments' },
 	            { path: 'school' }
-			],
-			commentPopulateObj = [
-				{ path: 'creator' },
-				{ path: 'subComments.creator'}
 			];
-
-		Event.findOneAndUpdate({ _id: req.params.eventId }, { $addToSet: { comments: postedComment._id } })
-		.populate(eventPopulateObj)
+			
+		Event.findOneAndUpdate({ _id: req.params.eventId }, { $addToSet: { comments: postedCommentId } })
+		.populate(populateObj)
 		.exec(function(err, updatedEvent) {
          	if(err) {
          		deferred.reject(err.message);
          	}
          	else {
-				Comment.populate(updatedEvent.comments, commentPopulateObj, function(err, data){
-					if(err) {
-						deferred.reject(err.message);
-					}
-					else {
-						deferred.resolve(updatedEvent);
-					}
-				});
+				deferred.resolve(updatedEvent);
          	}
 	    });
 
 		return deferred.promise;
+	},
+	getPostedComment = function(commentId) {
+		var deferred = Q.defer(),
+			populateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator' }
+			];
+
+		Comment.findOne({ _id: commentId })
+		.populate(populateObj)
+		.exec(function(err, retrievedComment) {
+			if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(retrievedComment);
+         	}
+		});
+
+		return deferred.promise;
 	};
 
-	postComment(req.params.eventId, req.body).then(function(returnedComment) {
-		addToEvent(req.params.eventId, returnedComment).then(function(returnedEvent) {
-			res.json(returnedEvent);
+	postComment(req.params.eventId, req.body).then(function(savedComment) {
+		addToEvent(req.params.eventId, savedComment._id).then(function(returnedEvent) {
+			getPostedComment(savedComment._id).then(function(retrievedComment) {
+				res.json(retrievedComment);
+			}, function(err) {
+				res.send(200, "Comment created but failed to retrieve.");
+			});
 		}, function(err) {
 			res.send(200, "Comment created but failed to add to event.");
 		});
@@ -260,9 +295,14 @@ exports.postSubComment = function(req, res) {
 			subComment = {
 				body: subComment.body,
 				creator: subComment.creator
-			};
+			},
+			populateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator' }
+			];
 
 		Comment.findOneAndUpdate({ _id: commentId }, { $addToSet: { subComments: subComment } })
+		.populate(populateObj)
 		.exec(function(err, updatedComment) {
          	if(err) {
          		deferred.reject(err.message);
@@ -273,48 +313,10 @@ exports.postSubComment = function(req, res) {
 	    });
 
 		return deferred.promise;
-	},
-	getUpdatedEvent = function(eventId) {
-		var deferred = Q.defer(),
-			eventPopulateObj = [
-				{ path: 'location' },
-	            { path: 'creator' }, 
-	            { path: 'attending' },
-	            { path: 'comments' },
-	            { path: 'school' }
-			],
-			commentPopulateObj = [
-				{ path: 'creator' },
-				{ path: 'subComments.creator' }
-			];
-
-		Event.findOne({ _id: req.params.eventId })
-		.populate(eventPopulateObj)
-		.exec(function(err, retrievedEvent) {
-         	if(err) {
-         		deferred.reject(err.message);
-         	}
-         	else {
-				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-					if(err) {
-						deferred.reject(err.message);
-					}
-					else {
-						deferred.resolve(retrievedEvent);
-					}
-				});
-         	}
-	    });
-
-		return deferred.promise;
 	};
 
-	addSubComment(req.params.commentId, req.body).then(function() {
-		getUpdatedEvent(req.params.eventId).then(function(returnedEvent) {
-			res.json(returnedEvent);
-		}, function(err) {
-			res.send(200, "Subcomment created but failed to retrieve updated event.");
-		});
+	addSubComment(req.params.commentId, req.body).then(function(returnedComment) {
+		res.json(returnedComment);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -540,35 +542,69 @@ exports.deleteComment = function(req, res) {
 	var deleteComment = function(commentId) {
 		var deferred = Q.defer();
 
-		return deferred.promise;
-	},
-	deleteSubComments = function(commentId) {
-		var deferred = Q.defer();
+		Comment.remove({ _id: commentId }, function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
 
 		return deferred.promise;
 	},
-	removeFromEvent = function(commentId) {
+	removeFromEvent = function(eventId, commentId) {
 		var deferred = Q.defer();
+
+		Event.findOneAndUpdate({ _id: eventId }, { $pull: { comments: commentId } })
+		.exec(function(err, updatedEvent) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(updatedEvent);
+         	}
+	    });
 
 		return deferred.promise;
 	};
+
+	deleteComment(req.params.commentId).then(function() {
+		removeFromEvent(req.params.eventId, req.params.commentId).then(function(updatedEvent) {
+			res.json(updatedEvent);
+		}, function(err) {
+			res.send(200, "Comment deleted but not removed from event.");
+		});
+	}, function(err) {
+		res.send(500, err);
+	});
 };
 
-
 exports.deleteSubComment = function(req, res) {
-	var deleteSubComment = function(subCommentId, commentId) {
-		var deferred = Q.defer();
-
-		return deferred.promise;
-	},
 	removeFromComment = function(subCommentId, commentId) {
-		var deferred = Q.defer();
+		var deferred = Q.defer(),
+			populateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			];
 
-		return deferred.promise;
-	},
-	getUpdatedEvent = function(eventId) {
-		var deferred = Q.defer();
+		Comment.findOneAndUpdate({ _id: commentId }, { $pull: { subComments: { _id: subCommentId } } })
+		.populate(populateObj)
+		.exec(function(err, updatedComment) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(updatedComment);
+         	}
+	    });
 
 		return deferred.promise;
 	};
+
+	removeFromComment(req.params.subCommentId, req.params.commentId).then(function(updatedComment) {
+		res.json(updatedComment);
+	}, function(err) {
+		res.send(500, err);
+	});
 };

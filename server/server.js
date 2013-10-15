@@ -75,13 +75,15 @@ app.configure(function() {
     app.get('/api/v1/event/user/:userId', restrict, routes.event.getEventsByUser);
     app.get('/api/v1/event/near/:location', restrict, routes.event.getEventsByLocation);
     app.post('/api/v1/event', restrict, routes.event.postEvent);
+    app.post('/api/v1/event/:eventId/rsvp/:userId', restrict, routes.event.rsvp);
+    app.post('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
+    app.delete('/api/v1/event', restrict, routes.event.deleteEvent);
+
+    // comments
     app.post('/api/v1/event/:eventId/comment', restrict, routes.event.postComment);
     app.post('/api/v1/event/:eventId/comment/:commentId/subcomment', restrict, routes.event.postSubComment);
     app.post('/api/v1/event/comment/:commentId/like/:userId', restrict, routes.event.likeComment);
     app.post('/api/v1/event/comment/:commentId/unlike/:userId', restrict, routes.event.unlikeComment);
-    app.post('/api/v1/event/:eventId/rsvp/:userId', restrict, routes.event.rsvp);
-    app.post('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
-    app.delete('/api/v1/event', restrict, routes.event.deleteEvent);
     app.delete('/api/v1/event/:eventId/comment/:commentId', restrict, routes.event.deleteComment);
     app.delete('/api/v1/event/:eventId/comment/:commentId/subComment/:subCommentId', restrict, routes.event.deleteSubComment);
 

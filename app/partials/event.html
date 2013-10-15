@@ -85,7 +85,7 @@
 						<div class="table full-width">
 								<div class="td one-half">
 									<div class="action-buttons comment nudge-half--top">
-										<a class="first" href><span class="gamma">{{ comment.likes.length }}</span></a>
+										<a class="first" href><span class="gamma" data-ng-class="{green: likesComment(comment)}">{{ comment.likes.length }}</span></a>
 										<a href data-ng-click="likeComment(comment)" data-ng-hide="likesComment(comment)">
 											<i class="icon-heart"></i> Like
 										</a>
@@ -107,7 +107,7 @@
 								</div>
 							</div>
 							<div class="unit eleven-twelfths last-unit subcomment-body islet">
-								<a href class="delete-subcomment-button" data-ng-click="deleteSubComment(subComment)" data-ng-show="subComment.creator._id == user._id">
+								<a href class="delete-subcomment-button" data-ng-click="deleteSubComment(comment._id, subComment)" data-ng-show="subComment.creator._id == user._id">
 									<i class="icon-remove"></i>
 								</a>
 								<p class="epsilon" data-ng-bind-html="subComment.body | parseUrl"></p>

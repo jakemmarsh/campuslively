@@ -16,22 +16,11 @@ define(['./index'], function (controllers) {
 
     		eventService.postComment($scope.event._id, comment).then(function (data) {
     			$scope.commentBody = null;
-	            $scope.event = data;
+	            $scope.event.comments.push(data);
 	        },
 	        function (errorMessage) {
 	            $scope.commentError = errorMessage;
 	        });
-    	};
-
-    	$scope.deleteComment = function(comment) {
-    		if($rootScope.user._id == comment.creator._id) {
-    			eventService.deleteComment(comment._id).then(function (data) {
-		            $scope.event = data;
-		        },
-		        function (errorMessage) {
-		            console.log(errorMessage);
-		        });
-    		}
     	};
 
     	$scope.postSubComment = function(comment) {
@@ -42,12 +31,51 @@ define(['./index'], function (controllers) {
     		};
 
     		eventService.postSubComment($scope.event._id, comment._id, commentToPost).then(function (data) {
-	            $scope.event = data;
+    			for(var i = 0; i < $scope.event.comments.length; i++) {
+    				if($scope.event.comments[i]._id == comment._id) {
+    					$scope.event.comments[i] = data;
+    				}
+    			}
 	        },
 	        function (errorMessage) {
 	            console.log(errorMessage);
 	        });
     	};
+
+    	$scope.deleteComment = function(comment) {
+    		if($rootScope.user._id == comment.creator._id) {
+    			eventService.deleteComment($scope.event._id, comment._id).then(function (data) {
+    				var index;
+		            for(var i = 0; i < $scope.event.comments.length; i++) {
+		            	if($scope.event.comments[i]._id == comment._id) {
+		            		index = i;
+		            		break;
+		            	}
+		            }
+		            if(index > -1) {
+		            	$scope.event.comments.splice(index, 1);
+		            }
+		        },
+		        function (errorMessage) {
+		            console.log(errorMessage);
+		        });
+    		}
+    	};
+
+    	$scope.deleteSubComment = function(commentId, subComment) {
+    		if($rootScope.user._id == subComment.creator._id) {
+    			eventService.deleteSubComment($scope.event._id, commentId, subComment._id).then(function (data) {
+    				for(var i = 0; i < $scope.event.comments.length; i++) {
+	    				if($scope.event.comments[i]._id == commentId) {
+	    					$scope.event.comments[i] = data;
+	    				}
+	    			}
+		        },
+		        function (errorMessage) {
+		            console.log(errorMessage);
+		        });
+    		}
+    	}
 
     	$scope.likeComment = function(comment) {
     		eventService.likeComment(comment._id, $rootScope.user._id).then(function (data) {

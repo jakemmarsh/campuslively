@@ -65,6 +65,28 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		deleteComment: function(eventId, commentId) {
+			var deferred = $q.defer();
+
+			$http.delete(this.apiPath + eventId + '/comment/' + commentId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
+		deleteSubComment: function(eventId, commentId, subCommentId) {
+			var deferred = $q.defer();
+
+			$http.delete(this.apiPath + eventId + '/comment/' + commentId + '/subComment/' + subCommentId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		rsvp: function(eventId, userId) {
 			var deferred = $q.defer();
 
