@@ -38,7 +38,7 @@ define(['./index'], function (controllers) {
 			var updateParams = {};
 			// populate updateParams with any changed fields
 			if($rootScope.user.type == 'student') {
-				if($rootScope.user.school !== $scope.userSchool && $scope.userSchool.length > 0) {
+				if($rootScope.user.school !== $scope.userSchool && $scope.userSchool) {
 					updateParams.school = $scope.userSchool;
 				}
 				if($rootScope.user.firstName !== $scope.userFirstName && $scope.userFirstName.length > 0) {
@@ -85,14 +85,19 @@ define(['./index'], function (controllers) {
 	            });
 			}
 			else {
-				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
-					$scope.changesSaved = true;
-					$rootScope.user = data;
-				},
-				function (errorMessage, status) {
-					$scope.changesSaved = false;
-					$scope.saveError = "Error occurred while saving changes.";
-				});
+				if($.isEmptyObject(updateParams)) {
+					$scope.saveError = "You haven't made any changes!"
+				}
+				else {
+					userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+						$scope.changesSaved = true;
+						$rootScope.user = data;
+					},
+					function (errorMessage, status) {
+						$scope.changesSaved = false;
+						$scope.saveError = "Error occurred while saving changes.";
+					});
+				}
 			}
 		};
 
