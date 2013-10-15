@@ -81,7 +81,7 @@
 							<a href data-ng-href="/profile/{{comment.creator.username}}" data-ng-show="comment.creator.type == 'student'">{{comment.creator.firstName}} {{comment.creator.lastName}}</a>
 							<a href data-ng-href="/profile/{{comment.creator.username}}" data-ng-show="comment.creator.type == 'business'">{{comment.creator.businessName}}</a>
 						</h4>
-						<p class="nudge-half--ends" data-ng-bind-html="comment.body | parseUrl"></p>
+						<p class="nudge-half--ends pre-wrap" data-ng-bind-html="comment.body | parseUrl"></p>
 						<div class="table full-width">
 								<div class="td one-half">
 									<div class="action-buttons comment nudge-half--top">
