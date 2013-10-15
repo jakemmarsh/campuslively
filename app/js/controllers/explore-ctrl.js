@@ -19,7 +19,6 @@ define(['./index'], function (controllers) {
 			if($scope.currentView == 'school') {
 				eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
 					$scope.events = data;
-					console.log(data);
 					$scope.loading = false;
 				}, function(error, status) {
 					console.log(err.message);

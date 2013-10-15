@@ -28,7 +28,7 @@
 		<h1 class="flush blue">No events have been posted for your school yet!</h1>
 		<a href="/post" class="btn nudge--top">Be the First</a>
 	</div>
-	<div class="text-center" data-ng-show="!loading && !filteredEvents.length">
+	<div class="text-center" data-ng-show="!loading && !filteredEvents.length && events.length">
 		<h2 class="flush blue" data-ng-show="events.length >= 20">No events match your search. Have you tried loading more?</h2>
 		<h2 class="flush blue" data-ng-show="events.length < 20">No events match your search.</h2>
 	</div>
