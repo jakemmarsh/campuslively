@@ -20,7 +20,7 @@ define(['./index'], function (controllers) {
 				eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
 					$scope.events = data;
 					$scope.loading = false;
-				}, function(error, status) {
+				}, function(err, status) {
 					console.log(err.message);
 					$scope.loading = false;
 				});
@@ -32,10 +32,10 @@ define(['./index'], function (controllers) {
 			            $rootScope.userPosition = data;
 			            $scope.gettingPosition = false;
 			            $scope.loading = true;
-			            eventService.getEventsByLocation($rootScope.userPosition.latitude, $rootScope.userPosition.longitude).then(function (data, status) {
+			            eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
 							$scope.events = data;
 							$scope.loading = false;
-						}, function(error, status) {
+						}, function(err, status) {
 							console.log(err.message);
 							$scope.loading = false;
 						});
@@ -45,10 +45,10 @@ define(['./index'], function (controllers) {
 			        });
 				}
 				else {
-					eventService.getEventsByLocation($rootScope.userPosition.latitude, $rootScope.userPosition.longitude).then(function (data, status) {
+					eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
 						$scope.events = data;
 						$scope.loading = false;
-					}, function(error, status) {
+					}, function(err, status) {
 						console.log(err.message);
 						$scope.loading = false;
 					});

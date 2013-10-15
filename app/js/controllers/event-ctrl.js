@@ -5,7 +5,7 @@ define(['./index'], function (controllers) {
 
     	if($scope.event.locationPoint) {
 	    	$scope.mapOptions = {
-				center: new google.maps.LatLng($scope.event.locationPoint[0], $scope.event.locationPoint[1]),
+				center: new google.maps.LatLng($scope.event.locationPoint.loc.coordinates[0], $scope.event.locationPoint.loc.coordinates[1]),
 				zoom: 15,
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				disableDefaultUI: true,

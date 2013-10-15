@@ -90,7 +90,10 @@ define(['./index'], function (controllers) {
 		    			$scope.showAddressInput = false;
 		    			// pan map to venue's location
 		    			$scope.locationMap.panTo(new google.maps.LatLng($scope.venues[i].location.lat, $scope.venues[i].location.lng));
-		    			$scope.locationPoint = [$scope.venues[i].location.lat, $scope.venues[i].location.lng];
+		    			$scope.locationPoint = {
+			    			type: 'Point',
+			    			coordinates: [$scope.venues[i].location.lat.toFixed(2), $scope.venues[i].location.lng.toFixed(2)]
+		    			};
 		    			break;
 		    		}
 		    		else {
@@ -111,7 +114,10 @@ define(['./index'], function (controllers) {
 			    		if(data.results.length > 0) {
 			    			address = data.results[0];
 			    			$scope.locationMap.panTo(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
-			    			$scope.locationPoint = [data.results[0].geometry.location.lat, data.results[0].geometry.location.lng];
+			    			$scope.locationPoint = {
+			    				type: 'Point',
+				    			coordinates: [data.results[0].geometry.location.lat.toFixed(2), data.results[0].geometry.location.lng.toFixed(2)]
+			    			};
 			    		}
 			    	}
 				},

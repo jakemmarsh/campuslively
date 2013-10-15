@@ -147,9 +147,12 @@ exports.getEventsByLocation = function(req, res) {
 				{ path: 'creator' },
 				{ path: 'subComments.creator'}
 			],
-			locationPoint = [lat, lng];
+			locationPoint = {
+					type: 'Point',
+					coordinates: [lat, lng]
+			};
 
-		Event.find({ loc : { $nearSphere : locationPoint }})
+		Event.find({ loc : { $near : locationPoint } })
 		.populate(eventPopulateObj)
 		.exec(function(err, retrievedEvent) {
 			if(err) {
@@ -193,7 +196,10 @@ exports.postEvent = function(req, res) {
 			event.locationName = receivedEvent.locationName;
 		}
 		if(receivedEvent.locationPoint) {
-			event.locationPoint = receivedEvent.locationPoint;
+			event.loc = {
+				type: 'Point',
+				coordinates: [parseFloat(receivedEvent.locationPoint.coordinates[0]), parseFloat(receivedEvent.locationPoint.coordinates[1])]
+			};
 		}
 		if(receivedEvent.startTime) {
 			event.startTime = receivedEvent.startTime;
@@ -246,7 +252,7 @@ exports.postEvent = function(req, res) {
 			res.send(200, "Event posted but unable to create activity.");
 		});
 	}, function(err) {
-		res.send(500, "Could not post event.");
+		res.send(500, err);
 	});
 };
 

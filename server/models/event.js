@@ -11,9 +11,9 @@ var eventSchema = new mongoose.Schema({
     locationName: {
         type: String
     },
-    locationPoint: { 
-        type: [Number], 
-        index: '2d' 
+    loc: {
+      type: { type: String }, 
+      coordinates: [Number]
     },
     description: String,
     startDate: {
