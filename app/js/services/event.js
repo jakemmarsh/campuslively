@@ -27,8 +27,14 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsByLocation: function(location) {
+		getEventsByLocation: function(lat, lng) {
 			var deferred = $q.defer();
+
+			$http.get(this.apiPath + 'near/' + lat + '/' + lng).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
 
 			return deferred.promise;
 		},

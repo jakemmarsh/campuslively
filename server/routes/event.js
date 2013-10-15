@@ -129,12 +129,52 @@ exports.getEventsByUser = function(req, res) {
 	getEvents(req.params.userId).then(function(retrievedEvents) {
 		res.json(retrievedEvents);
 	}, function(err) {
-		res.send(500, "Failed to retrieve events by user.");
+		res.send(500, err);
 	});
 };
 
 exports.getEventsByLocation = function(req, res) {
+	var getEvents = function(lat, lng) {
+		var deferred = Q.defer(),
+			eventPopulateObj = [
+				{ path: 'location' },
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			],
+			locationPoint = [lat, lng];
 
+		Event.find({ loc : { $nearSphere : locationPoint }})
+		.populate(eventPopulateObj)
+		.exec(function(err, retrievedEvent) {
+			if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvent);
+					}
+				});
+         	}
+        });
+
+		return deferred.promise;
+	};
+
+	getEvents(req.params.lat, req.params.lng).then(function(retrievedEvents) {
+		res.json(retrievedEvents);
+	}, function(err) {
+		res.send(500, err);
+	});
 };
 
 exports.postEvent = function(req, res) {

@@ -106,7 +106,7 @@
 	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="events.length >= 20 && filteredEvents.length">Load More</a>
 </div>
 <div class="container soft-half--ends" data-ng-show="currentView == 'nearby'">
-	<div class="text-center" data-ng-show="!loading && !events">
+	<div class="text-center" data-ng-show="!loading && !events.length">
 		<h1 class="flush blue">No events have been posted near you yet!</h1>
 		<a href="/post" class="btn nudge--top">Be the First</a>
 	</div>

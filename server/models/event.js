@@ -49,4 +49,6 @@ var eventSchema = new mongoose.Schema({
     }
 });
 
+eventSchema.index({ loc : '2dsphere' });
+
 module.exports = mongoose.model('Event', eventSchema);

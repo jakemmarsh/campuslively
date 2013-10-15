@@ -32,7 +32,7 @@ define(['./index'], function (controllers) {
 			            $rootScope.userPosition = data;
 			            $scope.gettingPosition = false;
 			            $scope.loading = true;
-			            eventService.getEventsByLocation($rootScope.userPosition).then(function (data, status) {
+			            eventService.getEventsByLocation($rootScope.userPosition.latitude, $rootScope.userPosition.longitude).then(function (data, status) {
 							$scope.events = data;
 							$scope.loading = false;
 						}, function(error, status) {
@@ -45,7 +45,7 @@ define(['./index'], function (controllers) {
 			        });
 				}
 				else {
-					eventService.getEventsByLocation($rootScope.userPosition).then(function (data, status) {
+					eventService.getEventsByLocation($rootScope.userPosition.latitude, $rootScope.userPosition.longitude).then(function (data, status) {
 						$scope.events = data;
 						$scope.loading = false;
 					}, function(error, status) {
