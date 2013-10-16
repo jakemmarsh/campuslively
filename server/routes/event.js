@@ -305,11 +305,34 @@ exports.rsvp = function(req, res) {
 	    });
 
 		return deferred.promise;
+	},
+	createActivity = function(eventId, userId) {
+		var deferred = Q.defer(),
+			activity = new Activity({
+				actor: userId,
+				event: eventId,
+				activity: 'rsvpd'
+			});
+
+		activity.save(function (err, savedActivity) {
+            if (err) {
+                deferred.reject(err.message);
+            }
+            else {
+                deferred.resolve(savedActivity);
+            }
+        });
+
+        return deferred.promise;
 	};
 
 	updateUser(req.params.userId, req.params.eventId).then(function(updatedUser) {
 		updateEvent(req.params.eventId, req.params.userId).then(function(updatedEvent) {
-			res.json(updatedEvent);
+			createActivity(req.params.eventId, req.params.userId).then(function(savedActivity) {
+				res.json(updatedEvent);
+			}, function(err) {
+				res.json(updatedEvent);
+			});
 		}, function(err) {
 			res.send(500, err);
 		});
@@ -367,11 +390,29 @@ exports.unRsvp = function(req, res) {
 	    });
 
 		return deferred.promise;
+	},
+	deleteActivity = function(eventId, userId) {
+		var deferred = Q.defer();
+
+		Activity.remove({ event: eventId, actor: userId, activity: 'rsvpd' }, function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
+
+		return deferred.promise;
 	};
 
 	updateUser(req.params.userId, req.params.eventId).then(function(updatedUser) {
 		updateEvent(req.params.eventId, req.params.userId).then(function(updatedEvent) {
-			res.json(updatedEvent);
+			deleteActivity(req.params.eventId, req.params.userId).then(function() {
+				res.json(updatedEvent);
+			}, function(err) {
+				res.json(updatedEvent);
+			});
 		}, function(err) {
 			res.send(500, err);
 		});

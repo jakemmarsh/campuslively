@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
 	User     = require('./user'),
-    Event    = require('./event');
+    Event    = require('./event'),
+    Comment  = require('./comment');
 
 var activitySchema = new mongoose.Schema({
     actor: {
@@ -24,6 +25,10 @@ var activitySchema = new mongoose.Schema({
     event: {
         type: mongoose.Schema.ObjectId,
         ref: 'Event'
+    },
+    comment: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Comment'
     }
 });
 

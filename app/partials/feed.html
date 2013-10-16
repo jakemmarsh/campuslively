@@ -15,7 +15,7 @@
 	</div>
 </div>
 <div class="container soft-half--ends" data-ng-show="!loading">
-	<div data-ng-repeat="activity in activities">
+	<div data-ng-repeat="activity in activities | orderBy:'-updatedOn'">
 		<div data-ng-show="activity.activity == 'subscribed'" class="soft-half--ends">
 			<div class="table full-width">
 				<div class="tr">
@@ -165,6 +165,77 @@
 					</div>
 				</div>
 			</div><!-- event end -->
+		</div>
+		<div data-ng-show="activity.activity == 'rsvpd'" class="soft-half--ends">
+			<p>
+				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
+				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+				 RSVP'd to an event:
+			</p>
+			<div class="line nudge-half--ends">
+				<div class="unit one-twelfth">
+					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
+						<a href data-tooltip="{{activity.event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'"></a>
+						<a href data-tooltip="{{activity.event.creator.firstName}} {{activity.event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'student'"></a>
+					</div>
+				</div>
+				<div class="unit eleven-twelfths last-unit">
+					<div class="box">
+						<div class="event-header soft-half--sides">
+							<h2 class="flush">
+								<i class="zeta icon-unlock nudge-half--right" data-ng-show="activity.event.privacy == 'public'"></i>
+								<i class="zeta icon-lock nudge-half--right" data-ng-show="activity.event.privacy == 'inviteonly'"></i>
+								{{ activity.event.title }}
+							</h2>
+							<a data-ng-href="/event/{{activity.event._id}}" class="block-link"></a>
+						</div>
+						<div class="islet">
+							<div class="line">
+								<div class="unit four-fifths">
+									<span class="delta weight--bold">
+										<span data-ng-show="activity.event.locationName" class="nudge-half--right">
+											<i class="icon-map-marker muted"></i> <span data-ng-bind="activity.event.locationName"></span> 
+										</span>
+										<span data-ng-show="activity.event.startDate" class="nudge-half--right">
+											<i class="icon-calendar-empty muted"></i> <span>{{ activity.event.startDate | readableDate }}</span>
+										</span>
+										<span data-ng-show="activity.event.startTime">
+											<i class="icon-time muted"></i> <span data-ng-bind="activity.event.startTime"></span>
+										</span>
+									</span>
+								</div>
+								<div class="unit one-fifth last-unit text-right">
+									<ul class="tags">
+										<li data-ng-repeat="tag in activity.event.tags" data-ng-bind="tag"></li>
+									</ul>
+								</div>
+							</div>
+							<p class="pre-wrap" data-ng-bind-html="activity.event.description | parseUrl"></p>
+							<div class="line nudge-half--top">
+								<div class="unit one-half">
+									<div class="action-buttons">
+										<a class="first" data-ng-class="{green: isAttending(activity.event)}" href data-ng-click="openAttending(activity.event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
+										<a href data-ng-click="rsvpToEvent(activity.event._id)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
+										<a href data-ng-click="unRsvpToEvent(activity.event._id)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
+									</div>
+								</div>
+								<div class="unit one-half last-unit text-right">
+									<div class="action-buttons green">
+										<a href data-ng-href="/event/{{activity.event._id}}">Details <i class="icon-chevron-right epsilon"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!-- event end -->
+		</div>
+		<div data-ng-show="activity.activity == 'commented'" class="soft-half--ends">
+			<p>
+				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
+				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+				 commented on the event <a href data-ng-href="/event/{{activity.event._id}}">{{activity.event.title}}</a>:
+			</p>
 		</div>
 		<hr />
 	</div>

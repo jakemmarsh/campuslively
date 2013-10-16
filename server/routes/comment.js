@@ -49,6 +49,29 @@ exports.postComment = function(req, res) {
 
 		return deferred.promise;
 	},
+	createActivity = function(comment) {
+		var deferred = Q.defer(),
+			activity = new Activity({
+				actor: comment.creator,
+				event: comment.eventId,
+				comment: comment._id,
+				activity: 'commented'
+			});
+
+			console.log(comment);
+
+		activity.save(function (err, savedActivity) {
+            if (err) {
+            	console.log(err);
+                deferred.reject(err.message);
+            }
+            else {
+                deferred.resolve(savedActivity);
+            }
+        });
+
+        return deferred.promise;
+	},
 	getPostedComment = function(commentId) {
 		var deferred = Q.defer(),
 			populateObj = [
@@ -72,10 +95,14 @@ exports.postComment = function(req, res) {
 
 	postComment(req.params.eventId, req.body).then(function(savedComment) {
 		addToEvent(req.params.eventId, savedComment._id).then(function(returnedEvent) {
-			getPostedComment(savedComment._id).then(function(retrievedComment) {
-				res.json(retrievedComment);
+			createActivity(savedComment).then(function(savedActivity) {
+				getPostedComment(savedComment._id).then(function(retrievedComment) {
+					res.json(retrievedComment);
+				}, function(err) {
+					res.send(200, "Comment created but failed to retrieve.");
+				});
 			}, function(err) {
-				res.send(200, "Comment created but failed to retrieve.");
+				res.send(200, "Comment created and added to event but failed to create activity.");
 			});
 		}, function(err) {
 			res.send(200, "Comment created but failed to add to event.");
@@ -205,11 +232,29 @@ exports.deleteComment = function(req, res) {
 	    });
 
 		return deferred.promise;
+	},
+	deleteActivity = function(eventId, commentId) {
+		var deferred = Q.defer();
+
+		Activity.remove({ comment: commentId, event: eventId, activity: 'commented' }, function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
+
+		return deferred.promise;
 	};
 
 	deleteComment(req.params.commentId).then(function() {
 		removeFromEvent(req.params.eventId, req.params.commentId).then(function(updatedEvent) {
-			res.json(updatedEvent);
+			deleteActivity(req.params.eventId, req.params.commentId).then(function() {
+				res.json(updatedEvent);
+			}, function(err) {
+				res.json(updatedEvent);
+			});
 		}, function(err) {
 			res.send(200, "Comment deleted but not removed from event.");
 		});
