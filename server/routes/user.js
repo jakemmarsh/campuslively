@@ -281,21 +281,46 @@ exports.unsubscribe = function(req, res) {
 	    });
 
 	    return deferred.promise;
+	},
+	deleteActivity = function(userId, subscriptionId) {
+		var deferred = Q.defer();
+
+		Activity.remove({ actor: userId, recipient: subscriptionId, activity: 'subscribed' }, function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
+
+		return deferred.promise;
 	};
 
 	removeSubscription(req.params.userId, req.params.subscribeId).then(function(updatedUser) {
-		req.session.regenerate(function(){
-            // Store the user's primary key 
-            // in the session store to be retrieved,
-            // or in this case the entire user object
-            req.session.user = updatedUser;
+		deleteActivity(req.params.userId, req.params.subscribeId).then(function() {
+			req.session.regenerate(function(){
+	            // Store the user's primary key 
+	            // in the session store to be retrieved,
+	            // or in this case the entire user object
+	            req.session.user = updatedUser;
 
-            // respond with user object, minus salt and hash properties
-            var returnUser = JSON.parse(JSON.stringify(updatedUser));
-            delete returnUser.salt;
-            delete returnUser.hash;
-            res.json(returnUser);
-        });
+	            // respond with user object, minus salt and hash properties
+	            var returnUser = JSON.parse(JSON.stringify(updatedUser));
+	            delete returnUser.salt;
+	            delete returnUser.hash;
+	            res.json(returnUser);
+	        });
+		}, function(err) {
+			req.session.regenerate(function(){
+	            req.session.user = updatedUser;
+	            
+	            var returnUser = JSON.parse(JSON.stringify(updatedUser));
+	            delete returnUser.salt;
+	            delete returnUser.hash;
+	            res.json(returnUser);
+	        });
+		});
 	}, function(err) {
 		res.send(500, "Failed to remove user subscription.");
 	});
