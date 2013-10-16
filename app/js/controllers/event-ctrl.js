@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('eventCtrl', function ($scope, $rootScope, $stateParams, $modal, eventService, resolvedEvent) {
+    controllers.controller('eventCtrl', function ($scope, $rootScope, $stateParams, $modal, eventService, resolvedEvent, $location) {
     	$scope.event = resolvedEvent;
 
     	if($scope.event.locationPoint) {
@@ -15,10 +15,6 @@ define(['./index'], function (controllers) {
 				panControl: false
 		    };
 		}
-
-    	$scope.toggleAttending = function() {
-    		$scope.attending = !$scope.attending;
-    	};
 
     	$scope.postComment = function() {
     		var comment = {
@@ -150,6 +146,15 @@ define(['./index'], function (controllers) {
     			}
     		}
     		return false;
+    	};
+
+    	$scope.deleteEvent = function() {
+    		eventService.deleteEvent($scope.event._id).then(function (data) {
+    			$location.path('/feed');
+	        },
+	        function (errorMessage) {
+	            console.log(errorMessage);
+	        });
     	};
 
 		$scope.open = function (modal) {

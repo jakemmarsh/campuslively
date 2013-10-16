@@ -4,7 +4,8 @@ var Q          = require('q'),
     School     = require('../models/school'),
     Activity   = require('../models/activity'),
     Event	   = require('../models/event'),
-    Comment    = require('../models/comment');
+    Comment    = require('../models/comment'),
+    Invite     = require('../models/invite');
 
 exports.getEvent = function(req, res) {
 	var getEvent = function(eventId) {
@@ -425,30 +426,104 @@ exports.deleteEvent = function(req, res) {
 	var deleteEvent = function(eventId) {
 		var deferred = Q.defer();
 
+		Event.remove({ _id: eventId }, function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
+
 		return deferred.promise;
 	},
 	deleteComments = function(eventId) {
 		var deferred = Q.defer();
 
-		return deferred.promise;
-	},
-	deleteSubComments = function(eventId) {
-		var deferred = Q.defer();
+		Comment.remove({ eventId: eventId }, function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
 
 		return deferred.promise;
 	},
 	deleteActivity = function(eventId) {
 		var deferred = Q.defer();
 
-		return deferred.promise;
-	},
-	removeInvited = function(eventId) {
-		var deferred = Q.defer();
+		Activity.remove({ event: eventId }, function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
 
 		return deferred.promise;
 	},
-	removeAttending = function(eventId) {
+	findInvites = function(eventId) {
 		var deferred = Q.defer();
+
+		Invite.find({ event: eventId })
+		.exec(function(err, retrievedInvites) {
+			if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(retrievedInvites);
+         	}
+        });
+
+		return deferred.promise;
+	},
+	removeInvitesFromUsers = function(invites) {
+		var deferred = Q.defer(),
+			inviteIds = [];
+
+		for(var i = 0; i < invites.length; i++) {
+			inviteIds.push(invites[i]._id);
+		}
+
+		User.update({}, { $pull: { invites: { $in: inviteIds} } }, function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
+
+		return deferred.promise;
+	},
+	deleteInvites = function(eventId) {
+		var deferred = Q.defer();
+
+		Invite.remove({ event: eventId }, function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
+
+		return deferred.promise;
+	},
+	removeAttendingFromUsers = function(eventId) {
+		var deferred = Q.defer();
+
+		User.update({}, { $pull: { attending: eventId } }, function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
 
 		return deferred.promise;
 	};
