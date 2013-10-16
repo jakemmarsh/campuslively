@@ -325,7 +325,7 @@ exports.getActivities = function(req, res) {
 			];
 
 		if(req.params.oldestId) {
-			Activity.find({ _id: {$lt: req.params.oldestId}, $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}] })
+			Activity.find({ _id: {$lt: req.params.oldestId}, $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}] })
 			.populate(activityPopulateObj)
 			.exec(function(err, retrievedActivities) {
 				if(err || !retrievedActivities) {
