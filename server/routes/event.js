@@ -451,7 +451,7 @@ exports.deleteEvent = function(req, res) {
 
 		return deferred.promise;
 	},
-	deleteActivity = function(eventId) {
+	deleteActivities = function(eventId) {
 		var deferred = Q.defer();
 
 		Activity.remove({ event: eventId }, function(err) {
@@ -527,4 +527,34 @@ exports.deleteEvent = function(req, res) {
 
 		return deferred.promise;
 	};
+
+	deleteEvent(req.params.eventId).then(function() {
+		deleteComments(req.params.eventId).then(function() {
+			deleteActivities(req.params.eventId).then(function() {
+				findInvites(req.params.eventId).then(function(retrievedInvites) {
+					removeInvitesFromUsers(retrievedInvites).then(function() {
+						deleteInvites(req.params.eventId).then(function() {
+							removeAttendingFromUsers(req.params.eventId).then(function() {
+								res.send(200, "Event and all related items deleted successfully.")
+							}, function(err) {
+								res.send(200, "Event deleted but failed to remove users from attending.");
+							});
+						}, function(err) {
+							res.send(200, "Event deleted but failed to delete invitations.");
+						});
+					}, function(err) {
+						res.send(200, "Event deleted but failed to remove invitations from users.");
+					});
+				}, function(err) {
+					res.send(200, "Event deleted but failed to find invitations.");
+				});
+			}, function(err) {
+				res.send(200, "Event deleted but failed to delete activities.");
+			});
+		}, function(err) {
+			res.send(200, "Event deleted but failed to delete comments.");
+		});
+	}, function(err) {
+		res.send(500, err);
+	});
 };
