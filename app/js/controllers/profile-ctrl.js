@@ -4,9 +4,15 @@ define(['./index'], function (controllers) {
         $scope.profile = resolvedUser;
     	$scope.loading = true;
 
-        eventService.getEventsByUser($scope.profile._id).then(function (data, status) {
+        eventService.getEventsByUser($scope.profile._id, 20).then(function (data, status) {
             $scope.events = data;
             $scope.loading = false;
+            if(data.length == 20) {
+                $scope.moreToLoad = true;
+            }
+            else {
+                $scope.moreToLoad = false;
+            }
         }, function(err, status) {
             console.log(err.message);
             $scope.loading = false;
@@ -94,6 +100,23 @@ define(['./index'], function (controllers) {
                 }
             }
             return false;
+        };
+
+        $scope.loadMore = function() {
+            $scope.loadingMore = true;
+            eventService.getEventsByUserOlder($scope.profile._id, $scope.events.length, 20).then(function (data, status) {
+                if(data.length == 0) {
+                    $scope.moreToLoad = false;
+                }
+                else {
+                    for(var i = 0; i < data.length; i++) {
+                        $scope.events.push(data);
+                    }
+                }
+                $scope.loadingMore = false;
+            }, function(err, status) {
+                $scope.loadingMore = false;
+            });
         };
 
         $scope.openAttending = function (eventId) {

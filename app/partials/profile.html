@@ -138,6 +138,8 @@
 			</div>
 		</div>
 	</div><!-- event end -->
+	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="moreToLoad && !loadingMore && !loading">Load More</a>
+	<a href class="btn full-width text-center" data-ng-show="loadingMore && !loading">Loading more...</a>
 	<div class="text-center" data-ng-hide="events.length">
 		<h1 class="flush blue" data-ng-show="profile.type == 'student' && profile._id !== user._id"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span> has not posted any events!</h1>
 		<h1 class="flush blue" data-ng-show="profile.type == 'business' && profile._id !== user._id"><span data-ng-bind="profile.businessName"></span> has not posted any events!</h1>

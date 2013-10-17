@@ -17,11 +17,16 @@ define(['./index'], function (controllers) {
 			$scope.loading = true;
 			$scope.events = [];
 			if($scope.currentView == 'school') {
-				eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
+				eventService.getEventsBySchool($rootScope.user.school._id, 20).then(function (data, status) {
 					$scope.events = data;
 					$scope.loading = false;
+					if(data.length == 20) {
+		                $scope.moreToLoadSchool = true;
+		            }
+		            else {
+		                $scope.moreToLoadSchool = false;
+		            }
 				}, function(err, status) {
-					console.log(err.message);
 					$scope.loading = false;
 				});
 			}
@@ -32,11 +37,16 @@ define(['./index'], function (controllers) {
 			            $rootScope.userPosition = data;
 			            $scope.gettingPosition = false;
 			            $scope.loading = true;
-			            eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
+			            eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
 							$scope.events = data;
 							$scope.loading = false;
+							if(data.length == 20) {
+			                	$scope.moreToLoadNearby = true;
+				            }
+				            else {
+				                $scope.moreToLoadNearby = false;
+				            }
 						}, function(err, status) {
-							console.log(err.message);
 							$scope.loading = false;
 						});
 			        },
@@ -45,11 +55,16 @@ define(['./index'], function (controllers) {
 			        });
 				}
 				else {
-					eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
+					eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
 						$scope.events = data;
 						$scope.loading = false;
+						if(data.length == 20) {
+		                	$scope.moreToLoadNearby = true;
+			            }
+			            else {
+			                $scope.moreToLoadNearby = false;
+			            }
 					}, function(err, status) {
-						console.log(err.message);
 						$scope.loading = false;
 					});
 				}
@@ -84,7 +99,6 @@ define(['./index'], function (controllers) {
     			}
 	        },
 	        function (errorMessage) {
-	            console.log(errorMessage);
 	        });
     	};
 
@@ -111,8 +125,37 @@ define(['./index'], function (controllers) {
     	};
 
 		$scope.loadMore = function() {
-			// make call to load twenty more events after last ID of currently loaded events
-			console.log('load more events');
+			$scope.loadingMore = true;
+			if($scope.currentView == 'school') {
+				eventService.getEventsBySchoolOlder($rootScope.user.school._id, $scope.events.length, 20).then(function (data, status) {
+					if(data.length == 0) {
+	                    $scope.moreToLoadSchool = false;
+	                }
+	                else {
+	                	for(var i = 0; i < data.length; i++) {
+							$scope.events.push(data);
+						}
+	                }
+	                $scope.loadingMore = false;
+				}, function(err, status) {
+					$scope.loadingMore = false;
+				});
+			}
+			else if($scope.currentView == 'nearby') {
+				eventService.getEventsByLocationOlder($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.events.length, 20).then(function (data, status) {
+					if(data.length == 0) {
+	                    $scope.moreToLoadNearby = false;
+	                }
+	                else {
+	                	for(var i = 0; i < data.length; i++) {
+							$scope.events.push(data);
+						}
+	                }
+	                $scope.loadingMore = false;
+				}, function(err, status) {
+					$scope.loadingMore = false;
+				});
+			}
 		};
 
 		$scope.openRSVP = function (eventId) {

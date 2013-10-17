@@ -3,17 +3,36 @@ define(['./index'], function (controllers) {
     controllers.controller('feedCtrl', function ($scope, $rootScope, $modal, userService, eventService) {
     	$scope.loading = true;
 
-        userService.getActivities($rootScope.user._id).then(function (data) {
+        userService.getActivities($rootScope.user._id, 20).then(function (data) {
             $scope.activities = data;
-            console.log(data);
             $scope.loading = false;
+            if(data.length == 20) {
+                $scope.moreToLoad = true;
+            }
+            else {
+                $scope.moreToLoad = false;
+            }
         },
         function (errorMessage) {
             console.log(errorMessage);
-        })
+        });
 
         $scope.loadMore = function() {
-            console.log('load more feed items');
+            $scope.loadingMore = true;
+            userService.getActivities($rootScope.user._id, $scope.activities.length, 20).then(function (data) {
+                if(data.length == 0) {
+                    $scope.moreToLoad = false;
+                }
+                else {
+                    for(var i = 0; i < data.length; i++) {
+                        $scope.activities.push(data);
+                    }
+                }
+                $scope.loadingMore = false;
+            },
+            function (errorMessage) {
+                $scope.loadingMore = false;
+            });
         };
 
     	$scope.rsvpToEvent = function(eventId) {
@@ -25,7 +44,6 @@ define(['./index'], function (controllers) {
                 }
             },
             function (errorMessage) {
-                console.log(errorMessage);
             });
         };
 
@@ -38,7 +56,6 @@ define(['./index'], function (controllers) {
                 }
             },
             function (errorMessage) {
-                console.log(errorMessage);
             });
         };
 

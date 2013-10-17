@@ -242,7 +242,8 @@
 	<div data-ng-show="!activities.length && !loading">
 		<h1 class="flush blue">There hasn't been any activity related to you yet. Try subscribing to other users!</h1>
 	</div>
-	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="activities.length >= 20 && moreToLoad">Load Older</a>
+	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="moreToLoad && !loadingMore && !loading">Load More</a>
+	<a href class="btn full-width text-center" data-ng-show="loadingMore && !loading">Loading more...</a>
 </div>
 
 <script type="text/ng-template" id="attendingModal.html">

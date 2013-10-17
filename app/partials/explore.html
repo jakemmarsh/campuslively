@@ -112,7 +112,8 @@
 		</div>
 	</div><!-- event end -->
 	<hr data-ng-show="events.length >= 20 && filteredEvents.length" />
-	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="events.length >= 20 && filteredEvents.length">Load More</a>
+	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="moreToLoadSchool && !loadingMore && !loading">Load More</a>
+	<a href class="btn full-width text-center" data-ng-show="loadingMore && !loading">Loading more...</a>
 </div>
 <div class="container soft-half--ends" data-ng-show="currentView == 'nearby'">
 	<div class="text-center" data-ng-show="!loading && !events.length">
@@ -202,7 +203,8 @@
 		</div>
 	</div><!-- event end -->
 	<hr data-ng-show="events.length >= 20 && filteredEvents.length" />
-	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="events.length >= 20 && filteredEvents.length && moreToLoad">Load More</a>
+	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="moreToLoadNearby && !loadingMore && !loading">Load More</a>
+	<a href class="btn full-width text-center" data-ng-show="loadingMore && !loading">Loading more...</a>
 </div>
 
 <script type="text/ng-template" id="attendingModal.html">
