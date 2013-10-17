@@ -6,6 +6,33 @@ var Q          = require('q'),
     Event	   = require('../models/event'),
     Comment    = require('../models/comment');
 
+exports.getComment = function(req, res) {
+	var getComment = function(eventId) {
+		var deferred = Q.defer(),
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			];
+
+		Comment.findOne({ _id: eventId }).populate(commentPopulateObj).exec(function(err, retrievedComment) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(retrievedComment);
+         	}
+	    });
+
+		return deferred.promise;
+	};
+
+	getComment(req.params.commentId).then(function(retrievedComment) {
+		res.json(retrievedComment);
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
 exports.postComment = function(req, res) {
 	var postComment = function(eventId, comment) {
 		var deferred = Q.defer(),

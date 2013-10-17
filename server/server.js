@@ -81,6 +81,7 @@ app.configure(function() {
     app.delete('/api/v1/event/:eventId', restrict, routes.event.deleteEvent);
 
     // comments
+    app.get('api/v1/comment/:commentId', restrict, routes.comment.getComment);
     app.post('/api/v1/event/:eventId/comment', restrict, routes.comment.postComment);
     app.post('/api/v1/event/:eventId/comment/:commentId/subcomment', restrict, routes.comment.postSubComment);
     app.post('/api/v1/event/comment/:commentId/like/:userId', restrict, routes.comment.likeComment);
