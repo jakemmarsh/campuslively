@@ -33,10 +33,15 @@
 		height: 20px;
 	}
 
+
+		.box .action-buttons.comment a {
+			background: $light-grey !important;
+		}
+
 	.box .action-buttons a {
 		display: block;
 		height: 100%;
-		background: $light-grey;
+		background: $white;
 		color: $dark-grey;
 		padding: 2px 5px;
 		float: left;

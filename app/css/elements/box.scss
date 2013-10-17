@@ -15,9 +15,28 @@
 		line-height: 2.3em;
 	}
 
-		.box .event-header:hover, .box .event-header:focus {
-			background: lighten($primary, 5);
+		.box .event-header h2 a {
+			color: $white;
 		}
+
+			.box .event-header h2 a:hover, .box .event-header h2 a:focus, .box .event-header h2 a:active {
+				color: $white;
+			}
+
+		.box .event-header a {
+			color: lighten($secondary, 2);
+		}
+
+			.box .event-header a:hover, .box .event-header a:focus, .box .event-header a:active {
+				color: lighten($secondary, 5);
+			}
+
+	.box .event-footer {
+		background: lighten($light-grey, 2);
+		@include corners(0px, 0px, 3px, 3px);
+		border-top: 1px solid $border-grey;
+		color: $dark-grey;
+	}
 
 	.box.top-highlight {
 		border-top: 3px solid $primary;
