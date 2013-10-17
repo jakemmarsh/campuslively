@@ -80,7 +80,7 @@ a {
 	font-weight: bold;
 }
 
-a:hover, a:active {
+a:hover, a:active, a:focus {
 	color: $secondary;
 }
 
