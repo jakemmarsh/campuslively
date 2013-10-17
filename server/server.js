@@ -28,7 +28,8 @@ app.configure(function() {
     app.use(express.cookieParser());
     app.use(express.session({
         store: new MongoStore({
-            mongoose_connection: mongoose.connections[0]
+            mongoose_connection: mongoose.connections[0],
+            clear_interval: 3600
         }),
         secret: config.secret,
         // set cookie's maxAge to only 30 minutes until user logs in
