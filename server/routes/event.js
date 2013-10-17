@@ -63,17 +63,17 @@ exports.getEventsBySchool = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ school: schoolId }).populate(eventPopulateObj).exec(function (err, retrievedEvent) {
+		Event.find({ school: schoolId }).populate(eventPopulateObj).exec(function (err, retrievedEvents) {
 	        if(err) {
          		deferred.reject(err.message);
          	}
          	else {
-				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+				Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
 					if(err) {
 						deferred.reject(err.message);
 					}
 					else {
-						deferred.resolve(retrievedEvent);
+						deferred.resolve(retrievedEvents);
 					}
 				});
          	}

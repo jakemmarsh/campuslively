@@ -32,7 +32,7 @@
 			<div class="unit eleven-twelfths last-unit">
 				<div class="input-prepend full">
 					<div class="icon">
-						<i class="icon-map-marker"></i>
+						<i class="icon-building"></i>
 					</div>
 					<input type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event" data-ng-required="!locationAddress" data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" data-ng-blur="checkLocation()" />
 				</div>
@@ -47,7 +47,12 @@
 		<div class="line nudge-half--bottom" data-ng-show="showAddressInput">
 			<div class="unit one-twelfth label-container"></div>
 			<div class="unit eleven-twelfths last-unit">
-				<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location" data-ng-blur="checkAddress()" data-ng-required="!eventLocation" />
+				<div class="input-prepend full">
+					<div class="icon">
+						<i class="icon-map-marker"></i>
+					</div>
+					<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location" data-ng-blur="checkAddress()" data-ng-required="!eventLocation" />
+				</div>
 			</div>
 		</div>
 		<div class="line nudge-half--bottom">

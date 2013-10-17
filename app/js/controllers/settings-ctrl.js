@@ -78,6 +78,7 @@ define(['./index'], function (controllers) {
 			if($scope.newUserImage) {
 				userService.uploadImage($scope.newUserImage.resized, $rootScope.user._id).then(function (data, status) {
 	                $scope.saveError = null;
+	                updateParams.pictureUrl = data;
 	                userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 						$scope.changesSaved = true;
 						$rootScope.user = data;
