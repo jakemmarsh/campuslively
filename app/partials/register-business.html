@@ -16,7 +16,7 @@
 						<label for="username" class="caps weight--bold">Username <span class="red">*</span></label>
 					</div>
 					<div class="unit eight-tenths last-unit">
-						<input type="text" id="username" name="username" data-ng-model="username" class="full-width" placeholder="Account username" data-ng-pattern="/^[a-zA-Z0-9.-]*$/" required />
+						<input type="text" id="username" name="username" data-ng-model="username" class="full-width" placeholder="Account username" data-ng-pattern="/^[a-zA-Z0-9.-]*$/" data-ng-blur="checkUsername()" required />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">
@@ -45,6 +45,17 @@
 				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit two-tenths label-container">
+						<label for="school" class="caps weight--bold">School <span class="red">*</span></label>
+					</div>
+					<div class="unit eight-tenths last-unit">
+						<select class="full-width" data-ui-select2 data-ng-model="school" data-placeholder="Select your school" required>
+						    <option value=""></option>
+						    <option data-ng-repeat="school in schools" value="{{school._id}}">{{ school.name }}</option>
+						</select>
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit two-tenths label-container">
 						<label for="password" class="caps weight--bold">Password <span class="red">*</span></label>
 					</div>
 					<div class="unit full-width last-unit">
@@ -57,6 +68,9 @@
 							Username can only contain letters, numbers, periods, and dashes.
 						</span>
 						<span class="block red weight--bold nudge-half--bottom" data-ng-show="registerError" data-ng-bind="registerError"></span>
+						<span class="red weight--bold block nudge-half--bottom" data-ng-show="usernameTaken">
+							Username is already taken.
+						</span>
 					</div>
 				</div>
 				<div class="line">

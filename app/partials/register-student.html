@@ -77,7 +77,7 @@
 						<label for="school" class="caps weight--bold">School <span class="red">*</span></label>
 					</div>
 					<div class="unit eight-tenths last-unit">
-						<select class="full-width" data-ui-select2 ng-model="school" data-placeholder="Select your school">
+						<select class="full-width" data-ui-select2 data-ng-model="school" data-placeholder="Select your school" required>
 						    <option value=""></option>
 						    <option data-ng-repeat="school in schools" value="{{school._id}}">{{ school.name }}</option>
 						</select>
