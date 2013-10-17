@@ -44,7 +44,7 @@ exports.getEvent = function(req, res) {
 	getEvent(req.params.eventId).then(function(retrievedEvent) {
 		res.json(retrievedEvent);
 	}, function(err) {
-		res.send(500, "Failed to retrieve event by ID.");
+		res.send(500, err);
 	});
 };
 
@@ -63,7 +63,9 @@ exports.getEventsBySchool = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ school: schoolId }).populate(eventPopulateObj).exec(function (err, retrievedEvents) {
+		Event.find({ school: schoolId })
+		.populate(eventPopulateObj)
+		.exec(function (err, retrievedEvents) {
 	        if(err) {
          		deferred.reject(err.message);
          	}
@@ -85,7 +87,52 @@ exports.getEventsBySchool = function(req, res) {
 	getEvents(req.params.schoolId).then(function(retrievedEvents) {
 		res.json(retrievedEvents);
 	}, function(err) {
-		res.send(500, "Failed to retrieve events by school.");
+		res.send(500, err);
+	});
+};
+
+exports.getEventsBySchoolOlder = function(req, res) {
+	var getEvents = function(schoolId, skip, limit) {
+		var deferred = Q.defer(),
+			eventPopulateObj = [
+				{ path: 'location' },
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			];
+
+		Event.find({ school: schoolId })
+		.skip(skip)
+		.limit(limit)	
+		.populate(eventPopulateObj)
+		.exec(function (err, retrievedEvents) {
+	        if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvents);
+					}
+				});
+         	}
+	    });
+
+		return deferred.promise;
+	};
+
+	getEvents(req.params.schoolId, req.params.skip, req.params.limit).then(function(retrievedEvents) {
+		res.json(retrievedEvents);
+	}, function(err) {
+		res.send(500, err);
 	});
 };
 
@@ -110,7 +157,9 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 		floorDay.setDate(floorDay.getDate() - 1);
 		ceilingDay.setDate(ceilingDay.getDate() + 1);
 
-		Event.find({ school: schoolId, startDate: { $gt: floorDay, $lt: ceilingDay } }).populate(eventPopulateObj).exec(function (err, retrievedEvents) {
+		Event.find({ school: schoolId, startDate: { $gt: floorDay, $lt: ceilingDay } })
+		.populate(eventPopulateObj)
+		.exec(function (err, retrievedEvents) {
 	        if(err) {
          		deferred.reject(err.message);
          	}
@@ -151,7 +200,9 @@ exports.getEventsByUser = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ creator: userId }).populate(eventPopulateObj).exec(function (err, retrievedEvent) {
+		Event.find({ creator: userId })
+		.populate(eventPopulateObj)
+		.exec(function (err, retrievedEvent) {
 	        if(err) {
          		deferred.reject(err.message);
          	}
@@ -171,6 +222,51 @@ exports.getEventsByUser = function(req, res) {
 	};
 
 	getEvents(req.params.userId).then(function(retrievedEvents) {
+		res.json(retrievedEvents);
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
+exports.getEventsByUserOlder = function(req, res) {
+	var getEvents = function(userId, skip, limit) {
+		var deferred = Q.defer(),
+			eventPopulateObj = [
+				{ path: 'location' },
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			];
+
+		Event.find({ creator: userId })
+		.skip(skip)
+		.limit(limit)
+		.populate(eventPopulateObj)
+		.exec(function (err, retrievedEvent) {
+	        if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvent);
+					}
+				});
+         	}
+	    });
+
+		return deferred.promise;
+	};
+
+	getEvents(req.params.userId, req.params.skip, req.params.limit).then(function(retrievedEvents) {
 		res.json(retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -218,6 +314,55 @@ exports.getEventsByLocation = function(req, res) {
 	};
 
 	getEvents(req.params.lat, req.params.lng).then(function(retrievedEvents) {
+		res.json(retrievedEvents);
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
+exports.getEventsByLocationOlder = function(req, res) {
+	var getEvents = function(lat, lng, skip, limit) {
+		var deferred = Q.defer(),
+			eventPopulateObj = [
+				{ path: 'location' },
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			],
+			locationPoint = {
+					type: 'Point',
+					coordinates: [lat, lng]
+			};
+
+		Event.find({ loc : { $near : locationPoint } })
+		.skip(skip)
+		.limit(limit)
+		.populate(eventPopulateObj)
+		.exec(function(err, retrievedEvent) {
+			if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvent);
+					}
+				});
+         	}
+        });
+
+		return deferred.promise;
+	};
+
+	getEvents(req.params.lat, req.params.lng, req.params.skip, req.params.limit).then(function(retrievedEvents) {
 		res.json(retrievedEvents);
 	}, function(err) {
 		res.send(500, err);

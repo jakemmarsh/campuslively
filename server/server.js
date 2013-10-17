@@ -72,9 +72,12 @@ app.configure(function() {
     // events
     app.get('/api/v1/event/:eventId', restrict, routes.event.getEvent);
     app.get('/api/v1/event/school/:schoolId', restrict, routes.event.getEventsBySchool);
+    app.get('/api/v1/event/school/:schoolId/skip/:skip/limit/:limit', restrict, routes.event.getEventsBySchoolOlder);
     app.get('/api/v1/event/school/:schoolId/day/:date', restrict, routes.event.getEventsBySchoolAndDay);
     app.get('/api/v1/event/user/:userId', restrict, routes.event.getEventsByUser);
+    app.get('/api/v1/event/user/:userId/skip/:skip/limit/:limit', restrict, routes.event.getEventsByUserOlder);
     app.get('/api/v1/event/near/:lat/:lng', restrict, routes.event.getEventsByLocation);
+    app.get('/api/v1/event/near/:lat/:lng/skip/:skip/limit/:limit', restrict, routes.event.getEventsByLocationOlder);
     app.post('/api/v1/event', restrict, routes.event.postEvent);
     app.post('/api/v1/event/:eventId/rsvp/:userId', restrict, routes.event.rsvp);
     app.post('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
