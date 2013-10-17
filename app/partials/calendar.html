@@ -14,7 +14,7 @@
 			<h1 class="flush blue">Loading events...</h1>
 		</div>
 	</div>
-	<div data-ng-hide="dayEvents.length || loadingDayEvents" class="text-center soft--ends">
+	<div data-ng-hide="dayEvents.length || loadingDayEvents || !showDay" class="text-center soft--ends">
 		<h1 class="blue nudge--ends">No events have been posted for your school on {{ selectedDay | readableDate}}.</h1>
 	</div>
 	<div data-ng-show="showDay && dayEvents.length && !loadingDayEvents" id="dayEvents">
