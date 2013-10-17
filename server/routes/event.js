@@ -63,23 +63,45 @@ exports.getEventsBySchool = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ school: schoolId })
-		.populate(eventPopulateObj)
-		.exec(function (err, retrievedEvents) {
-	        if(err) {
-         		deferred.reject(err.message);
-         	}
-         	else {
-				Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
-					if(err) {
-						deferred.reject(err.message);
-					}
-					else {
-						deferred.resolve(retrievedEvents);
-					}
-				});
-         	}
-	    });
+		if(req.params.limit) {
+			Event.find({ school: schoolId })
+			.limit(req.params.limit)
+			.populate(eventPopulateObj)
+			.exec(function (err, retrievedEvents) {
+		        if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvents);
+						}
+					});
+	         	}
+		    });
+		}
+		else {
+			Event.find({ school: schoolId })
+			.populate(eventPopulateObj)
+			.exec(function (err, retrievedEvents) {
+		        if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvents);
+						}
+					});
+	         	}
+		    });
+		}
 
 		return deferred.promise;
 	};
@@ -200,23 +222,45 @@ exports.getEventsByUser = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ creator: userId })
-		.populate(eventPopulateObj)
-		.exec(function (err, retrievedEvent) {
-	        if(err) {
-         		deferred.reject(err.message);
-         	}
-         	else {
-				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-					if(err) {
-						deferred.reject(err.message);
-					}
-					else {
-						deferred.resolve(retrievedEvent);
-					}
-				});
-         	}
-	    });
+		if(req.params.limit) {
+			Event.find({ creator: userId })
+			.limit(req.params.limit)
+			.populate(eventPopulateObj)
+			.exec(function (err, retrievedEvent) {
+		        if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvent);
+						}
+					});
+	         	}
+		    });
+		}
+		else {
+			Event.find({ creator: userId })
+			.populate(eventPopulateObj)
+			.exec(function (err, retrievedEvent) {
+		        if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvent);
+						}
+					});
+	         	}
+		    });
+		}
 
 		return deferred.promise;
 	};
@@ -292,23 +336,45 @@ exports.getEventsByLocation = function(req, res) {
 					coordinates: [lat, lng]
 			};
 
-		Event.find({ loc : { $near : locationPoint } })
-		.populate(eventPopulateObj)
-		.exec(function(err, retrievedEvent) {
-			if(err) {
-         		deferred.reject(err.message);
-         	}
-         	else {
-				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-					if(err) {
-						deferred.reject(err.message);
-					}
-					else {
-						deferred.resolve(retrievedEvent);
-					}
-				});
-         	}
-        });
+		if(req.params.limit) {
+			Event.find({ loc : { $near : locationPoint } })
+			.limit(req.params.limit)
+			.populate(eventPopulateObj)
+			.exec(function(err, retrievedEvent) {
+				if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvent);
+						}
+					});
+	         	}
+	        });
+	    }
+	    else {
+			Event.find({ loc : { $near : locationPoint } })
+			.populate(eventPopulateObj)
+			.exec(function(err, retrievedEvent) {
+				if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvent);
+						}
+					});
+	         	}
+	        });
+	    }
 
 		return deferred.promise;
 	};

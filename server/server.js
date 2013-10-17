@@ -63,32 +63,45 @@ app.configure(function() {
     app.patch('/api/v1/user/:userId', routes.user.updateUser);
     app.post('/api/v1/user/:userId/subscribe/:subscribeId', restrict, routes.user.subscribe);
     app.post('/api/v1/user/:userId/unsubscribe/:subscribeId', restrict, routes.user.unsubscribe);
+    
     app.get('/api/v1/user/:userId/activities', restrict, routes.user.getActivities);
-    app.get('/api/v1/user/:userId/activities/:oldestId', restrict, routes.user.getActivities);
+    app.get('/api/v1/user/:userId/activities/limit/:limit', restrict, routes.user.getActivities);
+    app.get('/api/v1/user/:userId/activities/skip/:skip/limit/:limit', restrict, routes.user.getActivitiesOlder);
 
     // schools
     app.get('/api/v1/school/all', routes.school.getAllSchools);
 
     // events
     app.get('/api/v1/event/:eventId', restrict, routes.event.getEvent);
+
+    app.get('/api/v1/event/school/:schoolId/limit/:limit', restrict, routes.event.getEventsBySchool);
     app.get('/api/v1/event/school/:schoolId', restrict, routes.event.getEventsBySchool);
     app.get('/api/v1/event/school/:schoolId/skip/:skip/limit/:limit', restrict, routes.event.getEventsBySchoolOlder);
+
     app.get('/api/v1/event/school/:schoolId/day/:date', restrict, routes.event.getEventsBySchoolAndDay);
+
+    app.get('/api/v1/event/user/:userId/limit/:limit', restrict, routes.event.getEventsByUser);
     app.get('/api/v1/event/user/:userId', restrict, routes.event.getEventsByUser);
     app.get('/api/v1/event/user/:userId/skip/:skip/limit/:limit', restrict, routes.event.getEventsByUserOlder);
+
+    app.get('/api/v1/event/near/:lat/:lng/limit/:limit', restrict, routes.event.getEventsByLocation);
     app.get('/api/v1/event/near/:lat/:lng', restrict, routes.event.getEventsByLocation);
     app.get('/api/v1/event/near/:lat/:lng/skip/:skip/limit/:limit', restrict, routes.event.getEventsByLocationOlder);
+
     app.post('/api/v1/event', restrict, routes.event.postEvent);
     app.post('/api/v1/event/:eventId/rsvp/:userId', restrict, routes.event.rsvp);
     app.post('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
+
     app.delete('/api/v1/event/:eventId', restrict, routes.event.deleteEvent);
 
     // comments
     app.get('api/v1/comment/:commentId', restrict, routes.comment.getComment);
+
     app.post('/api/v1/event/:eventId/comment', restrict, routes.comment.postComment);
     app.post('/api/v1/event/:eventId/comment/:commentId/subcomment', restrict, routes.comment.postSubComment);
     app.post('/api/v1/event/comment/:commentId/like/:userId', restrict, routes.comment.likeComment);
     app.post('/api/v1/event/comment/:commentId/unlike/:userId', restrict, routes.comment.unlikeComment);
+
     app.delete('/api/v1/event/:eventId/comment/:commentId', restrict, routes.comment.deleteComment);
     app.delete('/api/v1/event/:eventId/comment/:commentId/subComment/:subCommentId', restrict, routes.comment.deleteSubComment);
 

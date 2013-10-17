@@ -16,14 +16,24 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsBySchool: function(schoolId) {
-			var deferred = $q.defer();
+		getEventsBySchool: function(schoolId, limit) {
+			var deferred = $q.defer(),
+				limit = (typeof limit === "undefined") ? null : limit;
 
-			$http.get(this.apiPath + 'school/' + schoolId).success(function(data, status) {
-				deferred.resolve(data);
-			}).error(function(err, status) {
-				deferred.reject(err);
-			});
+			if(limit) {
+				$http.get(this.apiPath + 'school/' + schoolId + '/limit/' + limit).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
+			else {
+				$http.get(this.apiPath + 'school/' + schoolId).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
 
 			return deferred.promise;
 		},
@@ -38,14 +48,24 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsByLocation: function(lat, lng) {
-			var deferred = $q.defer();
+		getEventsByLocation: function(lat, lng, limit) {
+			var deferred = $q.defer(),
+				limit = (typeof limit === "undefined") ? null : limit;
 
-			$http.get(this.apiPath + 'near/' + lat + '/' + lng).success(function(data, status) {
-				deferred.resolve(data);
-			}).error(function(err, status) {
-				deferred.reject(err);
-			});
+			if(limit) {
+				$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/limit/' + limit).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
+			else {
+				$http.get(this.apiPath + 'near/' + lat + '/' + lng).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
 
 			return deferred.promise;
 		},
@@ -71,14 +91,24 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsByUser: function(userId) {
-			var deferred = $q.defer();
+		getEventsByUser: function(userId, limit) {
+			var deferred = $q.defer(),
+				limit = (typeof limit === "undefined") ? null : limit;
 
-			$http.get(this.apiPath + 'user/' + userId).success(function(data, status) {
-				deferred.resolve(data);
-			}).error(function(err, status) {
-				deferred.reject(err);
-			});
+			if(limit) {
+				$http.get(this.apiPath + 'user/' + userId + '/limit/' + limit).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
+			else {
+				$http.get(this.apiPath + 'user/' + userId).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
 
 			return deferred.promise;
 		},

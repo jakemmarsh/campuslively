@@ -84,12 +84,12 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getActivities: function(userId, oldestId) {
-			var deferred = $q.defer();
-			oldestId = (typeof oldestId === "undefined") ? null : oldestId;
+		getActivities: function(userId, limit) {
+			var deferred = $q.defer(),
+				limit = (typeof limit === "undefined") ? null : limit;
 
-			if(oldestId) {
-				$http.get(this.apiPath + userId + '/activities/' + oldestId).success(function(data, status) {
+			if(limit) {
+				$http.get(this.apiPath + userId + '/activities/limit/' + limit).success(function(data, status) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
 					deferred.reject(err);
