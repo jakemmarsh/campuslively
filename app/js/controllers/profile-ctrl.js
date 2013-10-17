@@ -1,42 +1,34 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('profileCtrl', function ($scope, $rootScope, $stateParams, $modal, resolvedUser, userService) {
+    controllers.controller('profileCtrl', function ($scope, $rootScope, $stateParams, $modal, resolvedUser, userService, eventService) {
         $scope.profile = resolvedUser;
+    	$scope.loading = true;
+
+        eventService.getEventsByUser($scope.profile._id).then(function (data, status) {
+            $scope.events = data;
+            $scope.loading = false;
+        }, function(err, status) {
+            console.log(err.message);
+            $scope.loading = false;
+        });
     	
-    	if($stateParams.userName == 'jakemmarsh') {
-    		$scope.userName = "Jake Marsh";
-    	}
-    	else {
-    		$scope.userName = $stateParams.userName;
-    	}
-
-        var slides = $scope.slides = [];
-        $scope.addSlide = function() {
-            slides.push({
-                image: 'http://placekitten.com/958/200'
-            });
-        };
-        for (var i=0; i<4; i++) {
-            $scope.addSlide();
-        }
-
-    	$scope.currentSort = {
-            label: 'by start date',
-            value: 'day'
-        };
-
-        $scope.sortOptions = [{
+    	$scope.sortOptions = [{
                 label: 'by start date',
-                value: 'day'
+                value: 'startDate'
             },
             {
                 label: 'by post date',
-                value: 'posted'
+                value: '-created'
             }
         ];
 
         $scope.changeSort = function(option) {
             $scope.currentSort = option;
+        };
+
+        $scope.currentSort = {
+            label: 'by start date',
+            value: 'startDate'
         };
 
         $scope.isSubscribed = function() {
@@ -69,8 +61,39 @@ define(['./index'], function (controllers) {
             $scope.isSubscribed();
         };
 
-        $scope.toggleAttending = function(eventId) {
-            $scope.attending = !$scope.attending;
+        $scope.rsvpToEvent = function(eventId) {
+            eventService.rsvp(eventId, $rootScope.user._id).then(function (data) {
+                for (var i = 0; i < $scope.events.length; i++) {
+                    if($scope.events[i]._id == eventId) {
+                        $scope.events[i] = data;
+                    }
+                }
+            },
+            function (errorMessage) {
+                console.log(errorMessage);
+            });
+        };
+
+        $scope.unRsvpToEvent = function(eventId) {
+            eventService.unRsvp(eventId, $rootScope.user._id).then(function (data) {
+                for (var i = 0; i < $scope.events.length; i++) {
+                    if($scope.events[i]._id == eventId) {
+                        $scope.events[i] = data;
+                    }
+                }
+            },
+            function (errorMessage) {
+                console.log(errorMessage);
+            });
+        };
+
+        $scope.isAttending = function(event) {
+            for(var i = 0; i < event.attending.length; i++) {
+                if(event.attending[i]._id == $rootScope.user._id) {
+                    return true;
+                }
+            }
+            return false;
         };
 
         $scope.openAttending = function (eventId) {

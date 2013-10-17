@@ -31,7 +31,14 @@
 		</div>
 	</div>
 </div>
-<div class="container soft-half--ends">
+<div class="table full-width full-height__header" data-ng-show="loading">
+	<div class="td full-height full-width vertical-align-middle text-center">
+		<div class="box island inline-block text-center">
+			<h1 class="flush blue">Loading events...</h1>
+		</div>
+	</div>
+</div>
+<div class="container soft-half--ends" data-ng-hide="loading">
 	<div class="box top-highlight islet nudge-half--bottom" data-ng-show="profile.type == 'business' && profile.businessDescription">
 		<div class="line">
 			<div class="unit three-percent">
@@ -47,7 +54,7 @@
 			</slide>
 		</carousel>
 	</div>
-	<div class="table full-width" data-ng-show="profile.postedEvents">
+	<div class="table full-width" data-ng-show="events.length">
 		<div class="tr">
 			<div class="td one-half vertical-align-middle">
 				<h2 class="flush">Posted Events</h2>
@@ -66,53 +73,72 @@
 			</div>
 		</div>
 	</div>
-	<hr data-ng-show="profile.postedEvents" />
-	<div data-ng-show="profile.postedEvents">
-		<div class="line nudge-half--ends" data-ng-repeat="event in profile.postedEvents track by $index | orderBy:currentSort.value">
-			<div class="unit one-twelfth">
-				<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}"}>
-					<a href data-tooltip="{{event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'business'"></a>
-					<a href data-tooltip="{{event.creator.firstName}} {{event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'student'"></a>
-				</div>
+	<hr data-ng-show="events.length" />
+	<div class="line nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
+		<div class="unit one-twelfth">
+			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
+				<a href data-tooltip="{{event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'business'"></a>
+				<a href data-tooltip="{{event.creator.firstName}} {{event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'student'"></a>
 			</div>
-			<div class="unit eleven-twelfths last-unit">
-				<div class="box">
-					<div class="event-header soft-half--sides">
-						<a data-ng-href="/event/{{event._id}}" class="block-link"></a>
-						<h2 class="flush" data-ng-bind="event.title"></h2>
-					</div>
-					<div class="islet">
-						<div class="line">
-							<div class="unit four-fifths">
-								<span class="delta weight--bold"><i class="icon-map-marker muted"></i> <span data-ng-bind="event.locationName"></span> <i class="icon-calendar-empty muted nudge-half--left"></i> <span data-ng-bind="event.startDate"></span> <i class="icon-time muted nudge-half--left"></i> <span data-ng-bind="event.startTime"></span></span>
-							</div>
-							<div class="unit one-fifth last-unit text-right">
-								<ul class="tags">
-									<li data-ng-repeat="tag in event.tags" data-ng-bind="tag"></li>
-								</ul>
-							</div>
+		</div>
+		<div class="unit eleven-twelfths last-unit">
+			<div class="box">
+				<div class="event-header soft-half--sides">
+					<div class="line">
+						<div class="unit one-half">
+							<h2 class="flush">
+								<a data-ng-href="/event/{{event._id}}">
+									<i class="zeta icon-unlock nudge-half--right" data-ng-show="event.privacy == 'public'"></i>
+									<i class="zeta icon-lock nudge-half--right" data-ng-show="event.privacy == 'inviteonly'"></i>
+									{{ event.title }}
+								</a>
+							</h2>
 						</div>
-						<p class="pre-wrap" ng-bind-html="event.description | parseUrl"></p>
-						<div class="line nudge-half--top">
-							<div class="unit one-half">
-								<div class="action-buttons">
-									<a class="first" href data-ng-click="toggleAttending(event._id)" data-tooltip="RSVP" data-ng-hide="attending"><i class="icon-thumbs-up"></i></a>
-									<a class="first" href data-ng-click="toggleAttending(event._id)" data-tooltip="Un-RSVP" data-ng-show="attending"><i class="icon-thumbs-up green"></i></a>
-									<a href data-ng-click="openAttending(event._id)" data-tooltip="People Attending"><span class="gamma">357</span></a>
-								</div>
-							</div>
-							<div class="unit one-half last-unit text-right">
-								<div class="action-buttons green">
-									<a href data-ng-href="/event/{{event._id}}">Details <i class="icon-chevron-right epsilon"></i></a>
-								</div>
-							</div>
-						</div>
+						<div class="unit one-half last-unit text-right"></div>
 					</div>
 				</div>
+				<div class="islet">
+					<div class="line">
+						<div class="unit full-width last-unit">
+							<span class="delta weight--bold">
+								<span data-ng-show="event.locationName" class="nudge--right">
+									<i class="icon-map-marker muted"></i> <span data-ng-bind="event.locationName"></span> 
+								</span>
+								<span data-ng-show="event.startDate" class="nudge--right">
+									<i class="icon-calendar-empty muted"></i> <span>{{ event.startDate | readableDate }}</span>
+								</span>
+								<span data-ng-show="event.startTime">
+									<i class="icon-time muted"></i> <span data-ng-bind="event.startTime"></span>
+								</span>
+							</span>
+						</div>
+					</div>
+					<hr />
+					<p class="pre-wrap soft-half--ends" data-ng-bind-html="event.description | parseUrl"></p>
+				</div>
+				<div class="event-footer table full-width soft-quarter--ends">
+					<div class="tr">
+						<div class="td three-fourths">
+							<ul class="tags">
+								<li data-ng-repeat="tag in event.tags" data-ng-bind="tag"></li>
+							</ul>
+						</div>
+						<div class="td one-fourth text-right soft-half--right vertical-align-middle">
+							<div class="action-buttons nudge-half--right">
+								<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
+								<a href data-ng-click="rsvpToEvent(event._id)" data-ng-hide="isAttending(event)"><i class="icon-thumbs-up"></i> RSVP</a>
+								<a href data-ng-click="unRsvpToEvent(event._id)" data-ng-show="isAttending(event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
+							</div>
+							<div class="action-buttons green">
+								<a href data-ng-href="/event/{{event._id}}">Details <i class="icon-chevron-right epsilon"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div><!-- event end -->
-	</div>
-	<div class="text-center" data-ng-hide="profile.posted">
+		</div>
+	</div><!-- event end -->
+	<div class="text-center" data-ng-hide="events.length">
 		<h1 class="flush blue" data-ng-show="profile.type == 'student' && profile._id !== user._id"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span> has not posted any events!</h1>
 		<h1 class="flush blue" data-ng-show="profile.type == 'business' && profile._id !== user._id"><span data-ng-bind="profile.businessName"></span> has not posted any events!</h1>
 		<div data-ng-show="profile._id == user._id">

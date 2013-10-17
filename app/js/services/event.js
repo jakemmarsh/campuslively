@@ -49,6 +49,18 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		getEventsByUser: function(userId, oldestId) {
+			var deferred = $q.defer(),
+				oldestId = (typeof oldestId === "undefined") ? null : oldestId;
+
+			$http.get(this.apiPath + 'user/' + userId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		postEvent: function(event) {
 			var deferred = $q.defer();
 			
