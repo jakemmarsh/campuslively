@@ -90,7 +90,50 @@ exports.getEventsBySchool = function(req, res) {
 };
 
 exports.getEventsBySchoolAndDay = function(req, res) {
+	var getEvents = function(schoolId, day) {
+		var deferred = Q.defer(),
+			eventPopulateObj = [
+				{ path: 'location' },
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			],
+			floorDay = new Date(day),
+			ceilingDay = new Date(day);
 
+		// set floor and ceiling for querying events
+		floorDay.setDate(floorDay.getDate() - 1);
+		ceilingDay.setDate(ceilingDay.getDate() + 1);
+
+		Event.find({ school: schoolId, startDate: { $gt: floorDay, $lt: ceilingDay } }).populate(eventPopulateObj).exec(function (err, retrievedEvents) {
+	        if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvents);
+					}
+				});
+         	}
+	    });
+
+		return deferred.promise;
+	};
+
+	getEvents(req.params.schoolId, req.params.date).then(function(retrievedEvents) {
+		res.json(retrievedEvents);
+	}, function(err) {
+		res.send(500, err);
+	});
 };
 
 exports.getEventsByUser = function(req, res) {

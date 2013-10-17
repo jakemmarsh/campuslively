@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('calendarCtrl', function ($scope, $location, $anchorScroll, $timeout, $modal) {
+    controllers.controller('calendarCtrl', function ($scope, $rootScope, $location, $anchorScroll, $timeout, $modal, eventService) {
     	$scope.showDay = false;
 
       $scope.eventSource = [
@@ -17,20 +17,26 @@ define(['./index'], function (controllers) {
     	$scope.dayClick = function( date, allDay, jsEvent, view ){
     		if(!$scope.$$phase) {         
           		$scope.$apply(function() {
-          			$scope.showDay = true;
         				$scope.selectedDay = date;
+                $scope.loadingDayEvents = true;
+                $scope.dayEvents = [];
+                eventService.getEventsBySchoolAndDay($rootScope.user.school._id, $scope.selectedDay).then(function (data, status) {
+                  $scope.loadingDayEvents = false;
+                  $scope.dayEvents = data;
+                  $scope.showDay = true;
 
-
-        				$scope.$watch('showDay', function(newval){
-        					if(newval === true) {
-        						// scroll to specific day's events
-    		    				var old = $location.hash();
-    		    				$location.hash('dayEvents');
-    		    				$anchorScroll();
-    		    				// reset to old to keep any additional routing logic from kicking in
-    		    				$location.hash(old);
-        					}
-        				});
+                  $scope.$watch('showDay', function(newval){
+                      if(newval === true) {
+                        // scroll to specific day's events
+                        var old = $location.hash();
+                        $location.hash('dayEvents');
+                        $anchorScroll();
+                        $location.hash(old);
+                      }
+                  });
+                }, function(err, status) {
+                  console.log(err.message);
+                });
           		});        
         	}
 	    };
@@ -55,24 +61,24 @@ define(['./index'], function (controllers) {
   		    });
   		};
 
-      $scope.currentSort = {
-          label: 'by start date',
-          value: 'day'
-      };
-
       $scope.sortOptions = [{
-              label: 'by start date',
-              value: 'day'
-          },
-          {
-              label: 'by post date',
-              value: 'posted'
-          }
-      ];
+        label: 'by start date',
+        value: 'startDate'
+      },
+      {
+        label: 'by post date',
+        value: '-created'
+      }
+    ];
 
-      $scope.changeSort = function(option) {
-          $scope.currentSort = option;
-      };
+    $scope.changeSort = function(option) {
+      $scope.currentSort = option;
+    };
+
+    $scope.currentSort = {
+      label: 'by start date',
+      value: 'startDate'
+    };
         
     });
 });

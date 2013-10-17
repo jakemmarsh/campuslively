@@ -38,6 +38,17 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		getEventsBySchoolAndDay: function(schoolId, date) {
+			var deferred = $q.defer();
+
+			$http.get(this.apiPath + 'school/' + schoolId + '/day/' + date).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		postEvent: function(event) {
 			var deferred = $q.defer();
 			
