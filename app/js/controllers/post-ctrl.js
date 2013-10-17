@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('postCtrl', function ($scope, $rootScope, schoolService, locationService, eventService, $timeout) {
+    controllers.controller('postCtrl', function ($scope, $rootScope, locationService, eventService, $timeout) {
     	// initialize map options
     	$scope.mapOptions = {
 			zoom: 15,
@@ -36,12 +36,6 @@ define(['./index'], function (controllers) {
 	    	$scope.mapOptions.center = new google.maps.LatLng($rootScope.userPosition.latitude, $rootScope.userPosition.longitude);
 	        getVenues($rootScope.userPosition);
 	    }
-
-    	schoolService.getAllSchools().then(function (data, status) {
-    		$scope.schools = data;
-    	}, function(errorMessage, status) {
-    		console.log(errorMessage);
-    	});
 
     	$scope.showAddressInput = true;
     	$scope.eventPosted = false;
@@ -181,6 +175,7 @@ define(['./index'], function (controllers) {
 	    	event.title = $scope.eventTitle;
 	    	event.creator = $rootScope.user._id;
 	    	event.privacy = $scope.eventPrivacy.value;
+	    	event.school = $rootScope.user.school;
 	    	if($scope.eventDescription) {
 	    		event.description = $scope.eventDescription;
 	    	}
@@ -192,9 +187,6 @@ define(['./index'], function (controllers) {
 	    	}
 	    	if($scope.eventTags) {
 	    		event.tags = $scope.eventTags;
-	    	}
-	    	if($scope.eventSchool) {
-	    		event.school = $scope.eventSchool;
 	    	}
 	    	if($scope.eventLocation) {
 	    		event.locationName = $scope.eventLocation;
