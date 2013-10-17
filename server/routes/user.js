@@ -74,7 +74,7 @@ exports.getUserByName = function(req, res) {
                 { path: 'school' }
             ];
 
-		User.findOne({ username: username })
+		User.findOne({ username: username.toLowerCase() })
 		.populate(populateObj)
 		.exec(function (err, retrievedUser) {
 	        if (err || !retrievedUser) {

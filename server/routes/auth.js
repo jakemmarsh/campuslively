@@ -46,7 +46,7 @@ function authenticate(name, pass, fn) {
                 { path: 'invites' },
                 { path: 'school' }
             ];
-        User.findOne({ username: name }).populate(populateObj).exec(function (err, retrievedUser) {
+        User.findOne({ username: username.toLowerCase() }).populate(populateObj).exec(function (err, retrievedUser) {
             if (err || !retrievedUser) {
                 console.log(err);
                 deferred.reject('Cannot find user.');
@@ -157,7 +157,7 @@ exports.register = function(req, res) {
 
         // create user object from traits that are shared between student and business accounts
         newUser = new User({
-            username: req.body.username,
+            username: req.body.username.toLowerCase(),
             salt: salt,
             hash: hash,
             email: req.body.email
