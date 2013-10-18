@@ -3,7 +3,8 @@ var Q        = require('q'),
     User     = require('../models/user'),
     School   = require('../models/school'),
     Activity = require('../models/activity'),
-    Event    = require('../models/event');
+    Event    = require('../models/event'),
+    Comment  = require('../models/comment');
 
 /**
  * Hashes a password with optional `salt`, otherwise
@@ -345,6 +346,7 @@ exports.getActivities = function(req, res) {
 		var deferred = Q.defer(),
 			activityPopulateObj = [
 				{ path: 'event' },
+				{ path: 'comment' },
 				{ path: 'actor' },
 				{ path: 'recipient' }
 			];
@@ -408,6 +410,7 @@ exports.getActivitiesOlder = function(req, res) {
 		var deferred = Q.defer(),
 			activityPopulateObj = [
 				{ path: 'event' },
+				{ path: 'comment' },
 				{ path: 'actor' },
 				{ path: 'recipient' }
 			];

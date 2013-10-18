@@ -236,6 +236,35 @@
 				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
 				 commented on the event <a href data-ng-href="/event/{{activity.event._id}}">{{activity.event.title}}</a>:
 			</p>
+			<div class="line nudge-half--ends">
+				<div class="unit one-tenth">
+					<div class="user-img-comment" data-ng-style="{'background-image': 'url(' + activity.comment.creator.pictureUrl + ')'}">
+						<a href data-ng-show="activity.comment.creator.type == 'student'" data-tooltip="{{activity.comment.creator.firstName}} {{activity.comment.creator.lastName}}" data-tooltip-placement="left" data-ng-href="profile/{{activity.comment.creator.username}}"></a>
+						<a href data-ng-show="activity.comment.creator.type == 'business'" data-tooltip="{{activity.comment.creator.businessName}}" data-tooltip-placement="left" data-ng-href="profile/{{activity.comment.creator.username}}"></a>
+					</div>
+				</div>
+				<div class="unit nine-tenths last-unit">
+					<div class="box islet comment">
+						<p class="nudge-half--bottom pre-wrap" data-ng-bind-html="activity.comment.body | parseUrl"></p>
+						<div class="table full-width">
+							<div class="td one-half">
+								<div class="action-buttons comment nudge-half--top">
+									<a class="first" href><span class="gamma" data-ng-class="{green: likesComment(activity.comment)}">{{ comment.likes.length }}</span></a>
+									<a href data-ng-click="likeComment(activity.comment)" data-ng-hide="likesComment(activity.comment)">
+										<i class="icon-heart"></i> Like
+									</a>
+									<a href data-ng-click="unlikeComment(activity.comment)" data-ng-show="likesComment(activity.comment)">
+										<i class="icon-heart-empty"></i> Unlike
+									</a>
+								</div>
+							</div>
+							<div class="td one-half text-right">
+								<span class="muted epsilon" data-ng-bind="activity.comment.posted | timePast"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<hr />
 	</div>
