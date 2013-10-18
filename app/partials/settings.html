@@ -78,7 +78,15 @@
 						<label for="userPassword" class="caps weight--bold">Password</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<input type="password" class="full-width" id="userPassword" placeholder="new password" data-ng-model="userPassword" />
+						<input type="password" class="full-width" id="userPassword" placeholder="New password" data-ng-model="userPassword" />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit two-twelfths label-container">
+						<label for="password" class="caps weight--bold">Confirm</label>
+					</div>
+					<div class="unit ten-twelfths last-unit">
+						<input type="password" id="confirmPassword" data-ng-model="confirmPassword" name="confirmPassword" data-password-verify="userPassword" class="full-width" placeholder="Confirm new password" />
 					</div>
 				</div>
 				<div class="line">
@@ -88,6 +96,9 @@
 							Email address must end in .edu.
 						</span>
 						<span class="blue weight--bold nudge--right" data-ng-show="changesSaved">Changes saved!</span>
+						<span class="red weight--bold nudge--right" data-ng-show="settingsForm.confirmPassword.$error.passwordVerify">
+							Passwords do not match.
+						</span>
 						<input type="submit" class="btn" value="Save Changes" data-ng-disabled="settingsForm.$invalid" />
 					</div>
 				</div>
