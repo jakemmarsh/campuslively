@@ -58,8 +58,16 @@
 					<div class="unit two-tenths label-container">
 						<label for="password" class="caps weight--bold">Password <span class="red">*</span></label>
 					</div>
-					<div class="unit full-width last-unit">
+					<div class="unit eight-tenths last-unit">
 						<input type="password" id="password" data-ng-model="password" class="full-width" placeholder="Your password" required />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit two-tenths label-container">
+						<label for="password" class="caps weight--bold">Confirm <span class="red">*</span></label>
+					</div>
+					<div class="unit eight-tenths last-unit">
+						<input type="password" id="confirmPassword" data-ng-model="confirmPassword" name="confirmPassword" data-password-verify="password" class="full-width" placeholder="Confirm your password" required />
 					</div>
 				</div>
 				<div class="line">
@@ -67,10 +75,13 @@
 						<span class="red weight--bold block nudge-half--bottom" data-ng-show="registerForm.username.$error.pattern">
 							Username can only contain letters, numbers, periods, and dashes.
 						</span>
-						<span class="block red weight--bold nudge-half--bottom" data-ng-show="registerError" data-ng-bind="registerError"></span>
+						<span class="red weight--bold block nudge-half--bottom" data-ng-show="registerForm.confirmPassword.$error.passwordVerify">
+							Passwords do not match.
+						</span>
 						<span class="red weight--bold block nudge-half--bottom" data-ng-show="usernameTaken">
 							Username is already taken.
 						</span>
+						<span class="block red weight--bold nudge-half--bottom" data-ng-show="registerError" data-ng-bind="registerError"></span>
 					</div>
 				</div>
 				<div class="line">

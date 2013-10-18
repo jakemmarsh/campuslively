@@ -23,6 +23,7 @@ define([
     'directives/comment-expand',
     'directives/fixed-sidebar',
     'directives/ng-blur',
+    'directives/confirm-password',
     'services/location',
     'services/auth',
     'services/user',
