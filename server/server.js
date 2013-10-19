@@ -55,12 +55,12 @@ app.configure(function() {
     app.post('/api/v1/auth/user/:userId/activate/:activateKey', routes.auth.activate);
     app.post('/api/v1/auth/forgot', routes.auth.forgotPassword);
     app.post('/api/v1/auth/reset', routes.auth.resetPassword);
-    app.get('/api/v1/auth/signS3/:fileName', restrict, routes.auth.S3Signing);
 
     // users
     app.get('/api/v1/user/:userId', restrict, routes.user.getUser);
     app.get('/api/v1/user/username/:username', restrict, routes.user.getUserByName);
     app.patch('/api/v1/user/:userId', routes.user.updateUser);
+    app.post('/api/v1/user/:userId/image', routes.user.uploadImage);
     app.post('/api/v1/user/:userId/subscribe/:subscribeId', restrict, routes.user.subscribe);
     app.post('/api/v1/user/:userId/unsubscribe/:subscribeId', restrict, routes.user.unsubscribe);
     

@@ -4,7 +4,16 @@ var Q        = require('q'),
     School   = require('../models/school'),
     Activity = require('../models/activity'),
     Event    = require('../models/event'),
-    Comment  = require('../models/comment');
+    Comment  = require('../models/comment'),
+    config   = require('../config'),
+    fs       = require('fs'),
+    AWS      = require('aws-sdk'),
+    s3       = new AWS.S3();
+
+AWS.config.update({
+	accessKeyId: config.aws.key,
+	secretAccessKey: config.aws.secret
+});
 
 /**
  * Hashes a password with optional `salt`, otherwise
@@ -29,7 +38,35 @@ function hashSync(pwd, salt, fn) {
         salt = crypto.randomBytes(len).toString('base64');
         fn(null, salt, crypto.pbkdf2Sync(pwd, salt, iterations, len).toString('hex'));
     }
-}
+};
+
+function S3Signing(userId) {
+    var bucket = config.aws.bucket,
+        awsKey = config.aws.key,
+        secret = config.aws.secret,
+        fileName = userId,
+        expiration = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
+    
+    var policy = { 
+        "expiration": expiration,
+        "conditions": [
+            {"bucket": bucket},
+            {"key": fileName},
+            {"acl": 'public-read'},
+            ["starts-with", "$Content-Type", ""],
+            ["content-length-range", 0, 524288000]
+        ]};
+ 
+    policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
+    signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
+    var returnObject = {
+    	bucket: bucket,
+    	awsKey: awsKey,
+    	policy: policyBase64,
+    	signature: signature
+    };
+    return returnObject;
+};
 
 exports.getUser = function(req, res) {
 	var findUser = function(userId) {
@@ -165,6 +202,44 @@ exports.updateUser = function(req, res) {
             delete returnUser.hash;
             res.json(returnUser);
         });
+	}, function(err) {
+		res.send(500, err);
+	})
+};
+
+exports.uploadImage = function(req, res) {
+	postToS3 = function(image, userId) {
+		var s3bucket = new AWS.S3({params: {Bucket: config.aws.bucket}}),
+			deferred = Q.defer(),
+			getExtension = function(filename) {
+			    var i = filename.lastIndexOf('.');
+    			return (i < 0) ? '' : filename.substr(i);
+			},
+		 	dataToPost = {
+		 		Bucket: config.aws.bucket,
+		 		Key: 'user_imgs/' + userId + getExtension(image.name),
+		 		ACL: 'public-read',
+		 		ContentType: image.type
+		 	};
+
+		fs.readFile(image.path, function(err, readFile) {
+			console.log(readFile);
+	        dataToPost.Body = readFile;
+
+	        s3bucket.putObject(dataToPost, function(err, data) {
+				if (err) {
+				  deferred.reject(err.message);
+				} else {
+				  deferred.resolve(data);
+				}
+			});
+	    });
+
+		return deferred.promise;
+	};
+
+	postToS3(req.files.image, req.params.userId).then(function(data) {
+		res.json(200, data);
 	}, function(err) {
 		res.send(500, err);
 	})

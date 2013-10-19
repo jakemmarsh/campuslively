@@ -12,7 +12,7 @@
 		<div class="unit three-fourths">
 			<form name="settingsForm" data-ng-submit="saveChanges()" class="nudge-half--bottom">
 				<div class="text-center nudge-half--bottom full-width">
-					<div class="user-img-settings center-block" data-ng-show="newUserImage" data-ng-style="{'background-image': 'url(' + newUserImage.resized.dataURL + ')'}"></div>
+					<div class="user-img-settings center-block" data-ng-show="newUserImage" data-ng-style="{'background-image': 'url(' + newUserImage.url + ')'}"></div>
 					<div class="user-img-settings center-block" data-ng-hide="newUserImage" data-ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}"></div>
 				</div>
 				<div class="line nudge-half--bottom">
@@ -20,7 +20,7 @@
 						<label for="userImage" class="caps weight--bold">Picture</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" data-resize-max-height="200" data-resize-max-width="200" data-resize-quality="0.7" />
+						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom" data-ng-show="user.type == 'student'">

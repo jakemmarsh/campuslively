@@ -76,9 +76,13 @@ define(['./index'], function (controllers) {
 			}
 
 			if($scope.newUserImage) {
-				userService.uploadImage($scope.newUserImage.resized, $rootScope.user._id).then(function (data, status) {
+				userService.uploadImage($scope.newUserImage.file, $rootScope.user._id).then(function (data, status) {
+					var getExtension = function(filename) {
+					    var i = filename.lastIndexOf('.');
+		    			return (i < 0) ? '' : filename.substr(i);
+					};
 	                $scope.saveError = null;
-	                updateParams.pictureUrl = data;
+	                updateParams.pictureUrl = 'https://s3.amazonaws.com/campuslively/user_imgs/' + $rootScope.user._id + getExtension($scope.newUserImage.file.name);
 	                userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 						$scope.changesSaved = true;
 						$rootScope.user = data;

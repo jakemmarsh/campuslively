@@ -337,25 +337,3 @@ exports.checkUsername = function(req, res) {
         res.send(500, "Failed to check if username exists already.");
     });
 };
-
-exports.S3Signing = function(req, res) {
-    var bucket = config.aws.bucket,
-        awsKey = config.aws.key,
-        secret = config.aws.secret,
-        fileName = req.params.userId,
-        expiration = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
-    
-    var policy = { 
-        "expiration": expiration,
-        "conditions": [
-            {"bucket": bucket},
-            {"key": fileName},
-            {"acl": 'public-read'},
-            ["starts-with", "$Content-Type", ""],
-            ["content-length-range", 0, 524288000]
-        ]};
- 
-    policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
-    signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
-    res.json({bucket: bucket, awsKey: awsKey, policy: policyBase64, signature: signature});
-};

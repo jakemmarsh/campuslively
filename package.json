@@ -13,7 +13,8 @@
     "express"  :  ">=3.2.x",
     "q"        :  ">=0.9.x",
     "connect-mongo" : ">=0.3.x",
-    "nodemailer" : ">=0.5.x"
+    "nodemailer" : ">=0.5.x",
+    "aws-sdk" : ">=1.9.x"
   },
   "engines": {
     "node": ">=0.10.x",

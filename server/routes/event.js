@@ -5,7 +5,16 @@ var Q          = require('q'),
     Activity   = require('../models/activity'),
     Event	   = require('../models/event'),
     Comment    = require('../models/comment'),
-    Invite     = require('../models/invite');
+    Invite     = require('../models/invite'),
+    config   = require('../config'),
+    fs       = require('fs'),
+    AWS      = require('aws-sdk'),
+    s3       = new AWS.S3();
+
+AWS.config.update({
+	accessKeyId: config.aws.key,
+	secretAccessKey: config.aws.secret
+});
 
 exports.getEvent = function(req, res) {
 	var getEvent = function(eventId) {
