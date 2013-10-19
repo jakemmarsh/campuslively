@@ -35,34 +35,29 @@ define(['./index'], function (controllers) {
             });
         };
 
-    	$scope.rsvpToEvent = function(eventId) {
+    	$scope.rsvpToEvent = function(activityIndex, eventId) {
+            console.log(activityIndex);
             eventService.rsvp(eventId, $rootScope.user._id).then(function (data) {
-                for (var i = 0; i < $scope.events.length; i++) {
-                    if($scope.events[i]._id == eventId) {
-                        $scope.events[i] = data;
-                    }
-                }
+                $scope.activities[activityIndex].event = data;
             },
             function (errorMessage) {
             });
         };
 
-        $scope.unRsvpToEvent = function(eventId) {
+        $scope.unRsvpToEvent = function(activityIndex, eventId) {
             eventService.unRsvp(eventId, $rootScope.user._id).then(function (data) {
-                for (var i = 0; i < $scope.events.length; i++) {
-                    if($scope.events[i]._id == eventId) {
-                        $scope.events[i] = data;
-                    }
-                }
+                $scope.activities[activityIndex].event = data;
             },
             function (errorMessage) {
             });
         };
 
         $scope.isAttending = function(event) {
-            for(var i = 0; i < event.attending.length; i++) {
-                if(event.attending[i]._id == $rootScope.user._id) {
-                    return true;
+            if(event.attending) {
+                for(var i = 0; i < event.attending.length; i++) {
+                    if(event.attending[i] == $rootScope.user._id) {
+                        return true;
+                    }
                 }
             }
             return false;

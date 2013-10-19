@@ -26,24 +26,34 @@
 						</div>
 					</div>
 					<div class="td eleven-twelfths vertical-align-middle">
-						<p>
-							<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
-							<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
-							 subscribed to
-							  <span data-ng-show="activity.recipient._id == user._id" class="weight--bold">you.</span>
-							  <span data-ng-hide="activity.recipient._id == user._id || activity.recipient.type =='business'" class="weight--bold">{{activity.recipient.firstName}} {{activity.recipient.lastName}}</span>
-							  <span data-ng-hide="activity.recipient._id == user._id || activity.recipient.type =='student'" class="weight--bold">{{activity.recipient.businessName}}</span>
-						</p>
+						<div class="line">
+							<div class="unit three-fouths">
+								<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
+								<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+								 subscribed to
+								  <span data-ng-show="activity.recipient._id == user._id" class="weight--bold">you.</span>
+								  <span data-ng-hide="activity.recipient._id == user._id || activity.recipient.type =='business'" class="weight--bold">{{activity.recipient.firstName}} {{activity.recipient.lastName}}</span>
+								  <span data-ng-hide="activity.recipient._id == user._id || activity.recipient.type =='student'" class="weight--bold">{{activity.recipient.businessName}}</span>
+							</div>
+							<div class="unit one-fourth last-unit text-right">
+								<span class="muted">{{ activity.updatedOn | timePast }}</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div data-ng-show="activity.activity == 'invited'" class="soft-half--ends">
-			<p>
-				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
-				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
-				 invited you to:
-			</p>
+			<div class="line">
+				<div class="unit three-fourths">
+					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
+					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+					 invited you to:
+				</div>
+				<div class="unit one-fourth last-unit text-right">
+					<span class="muted">{{ activity.updatedOn | timePast }}</span>
+				</div>
+			</div>
 			<div class="line nudge-half--ends">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
@@ -87,8 +97,8 @@
 								<div class="unit one-half">
 									<div class="action-buttons">
 										<a class="first" data-ng-class="{green: isAttending(activity.event)}" href data-ng-click="openAttending(activity.event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
-										<a href data-ng-click="rsvpToEvent(activity.event._id)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
-										<a href data-ng-click="unRsvpToEvent(activity.event._id)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
+										<a href data-ng-click="rsvpToEvent($index, activity.event._id)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
+										<a href data-ng-click="unRsvpToEvent($index, activity.event._id)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
 									</div>
 								</div>
 								<div class="unit one-half last-unit text-right">
@@ -103,11 +113,16 @@
 			</div><!-- event end -->
 		</div>
 		<div data-ng-show="activity.activity == 'posted'" class="soft-half--ends">
-			<p>
-				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
-				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
-				 posted an event:
-			</p>
+			<div class="line">
+				<div class="unit three-fourths">
+					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
+					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+					 posted an event:
+				</div>
+				<div class="unit one-fourth last-unit text-right">
+					<span class="muted">{{ activity.updatedOn | timePast }}</span>
+				</div>
+			</div>
 			<div class="line nudge-half--ends">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.actor.pictureUrl + ')'}">
@@ -151,8 +166,8 @@
 								<div class="unit one-half">
 									<div class="action-buttons">
 										<a class="first" data-ng-class="{green: isAttending(activity.event)}" href data-ng-click="openAttending(activity.event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
-										<a href data-ng-click="rsvpToEvent(activity.event._id)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
-										<a href data-ng-click="unRsvpToEvent(activity.event._id)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
+										<a href data-ng-click="rsvpToEvent($index, activity.event._id)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
+										<a href data-ng-click="unRsvpToEvent($index, activity.event._id)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
 									</div>
 								</div>
 								<div class="unit one-half last-unit text-right">
@@ -167,11 +182,16 @@
 			</div><!-- event end -->
 		</div>
 		<div data-ng-show="activity.activity == 'rsvpd'" class="soft-half--ends">
-			<p>
-				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
-				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
-				 RSVP'd to an event:
-			</p>
+			<div class="line">
+				<div class="unit three-fourths">
+					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
+					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+					 RSVP'd to an event:
+				</div>
+				<div class="unit one-fourth last-unit text-right">
+					<span class="muted">{{ activity.updatedOn | timePast }}</span>
+				</div>
+			</div>
 			<div class="line nudge-half--ends">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
@@ -215,8 +235,8 @@
 								<div class="unit one-half">
 									<div class="action-buttons">
 										<a class="first" data-ng-class="{green: isAttending(activity.event)}" href data-ng-click="openAttending(activity.event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
-										<a href data-ng-click="rsvpToEvent(activity.event._id)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
-										<a href data-ng-click="unRsvpToEvent(activity.event._id)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
+										<a href data-ng-click="rsvpToEvent($index, activity.event._id)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
+										<a href data-ng-click="unRsvpToEvent($index, activity.event._id)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
 									</div>
 								</div>
 								<div class="unit one-half last-unit text-right">
@@ -231,11 +251,16 @@
 			</div><!-- event end -->
 		</div>
 		<div data-ng-show="activity.activity == 'commented'" class="soft-half--ends">
-			<p>
-				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
-				<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
-				 commented on the event <a href data-ng-href="/event/{{activity.event._id}}">{{activity.event.title}}</a>:
-			</p>
+			<div class="line">
+				<div class="unit three-fourths">
+					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
+					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+					 commented on the event <a href data-ng-href="/event/{{activity.event._id}}">{{activity.event.title}}</a>:
+				</div>
+				<div class="unit one-fourth last-unit text-right">
+					<span class="muted">{{ activity.updatedOn | timePast }}</span>
+				</div>
+			</div>
 			<div class="line nudge-half--ends">
 				<div class="unit one-tenth">
 					<div class="user-img-comment" data-ng-style="{'background-image': 'url(' + activity.comment.creator.pictureUrl + ')'}">

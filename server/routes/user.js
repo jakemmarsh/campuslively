@@ -352,7 +352,7 @@ exports.getActivities = function(req, res) {
 			];
 
 		if(req.params.limit) {
-			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}] })
+			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id} })
 			.populate(activityPopulateObj)
 			.exec(function(err, retrievedActivities) {
 				if(err || !retrievedActivities) {
@@ -364,7 +364,7 @@ exports.getActivities = function(req, res) {
 			});
 		}
 		else {
-			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}] })
+			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id} })
 			.limit(req.params.limit)
 			.populate(activityPopulateObj)
 			.exec(function(err, retrievedActivities) {
@@ -415,7 +415,7 @@ exports.getActivitiesOlder = function(req, res) {
 				{ path: 'recipient' }
 			];
 
-		Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}] })
+		Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id} })
 		.skip(skip)
 		.limit(limit)
 		.populate(activityPopulateObj)
