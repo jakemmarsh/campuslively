@@ -40,34 +40,6 @@ function hashSync(pwd, salt, fn) {
     }
 };
 
-function S3Signing(userId) {
-    var bucket = config.aws.bucket,
-        awsKey = config.aws.key,
-        secret = config.aws.secret,
-        fileName = userId,
-        expiration = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
-    
-    var policy = { 
-        "expiration": expiration,
-        "conditions": [
-            {"bucket": bucket},
-            {"key": fileName},
-            {"acl": 'public-read'},
-            ["starts-with", "$Content-Type", ""],
-            ["content-length-range", 0, 524288000]
-        ]};
- 
-    policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
-    signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
-    var returnObject = {
-    	bucket: bucket,
-    	awsKey: awsKey,
-    	policy: policyBase64,
-    	signature: signature
-    };
-    return returnObject;
-};
-
 exports.getUser = function(req, res) {
 	var findUser = function(userId) {
 		var deferred = Q.defer(),
@@ -223,7 +195,6 @@ exports.uploadImage = function(req, res) {
 		 	};
 
 		fs.readFile(image.path, function(err, readFile) {
-			console.log(readFile);
 	        dataToPost.Body = readFile;
 
 	        s3bucket.putObject(dataToPost, function(err, data) {
