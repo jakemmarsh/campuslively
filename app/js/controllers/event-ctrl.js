@@ -3,9 +3,9 @@ define(['./index'], function (controllers) {
     controllers.controller('eventCtrl', function ($scope, $rootScope, $stateParams, $modal, eventService, resolvedEvent, $location) {
     	$scope.event = resolvedEvent;
 
-    	if($scope.event.locationPoint) {
+    	if($scope.event.loc) {
 	    	$scope.mapOptions = {
-				center: new google.maps.LatLng($scope.event.locationPoint[0], $scope.event.locationPoint[1]),
+				center: new google.maps.LatLng($scope.event.loc.coordinates[0], $scope.event.loc.coordinates[1]),
 				zoom: 15,
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				disableDefaultUI: true,

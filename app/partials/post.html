@@ -14,7 +14,7 @@
 				<label for="name" class="caps weight--bold">Name <span class="red">*</span></label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
-				<input type="text" id="name" data-ng-model="eventTitle" class="full-width" placeholder="Event name" required />
+				<input type="text" id="name" data-ng-model="event.title" class="full-width" placeholder="Event name" required />
 			</div>
 		</div>
 		<div class="line nudge-half--bottom">
@@ -22,7 +22,7 @@
 				<label for="details" class="caps weight--bold">Details</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
-				<textarea id="details" data-ng-model="eventDescription" class="full-width medium" placeholder="Details about the event"></textarea>
+				<textarea id="details" data-ng-model="event.description" class="full-width medium" placeholder="Details about the event"></textarea>
 			</div>
 		</div>
 		<div class="line">
@@ -70,7 +70,7 @@
 					<div class="icon pointer" data-ng-click="openDatepicker()">
 						<i class="icon-calendar-empty"></i>
 					</div>
-					<input type="text" id="eventDate" data-datepicker-popup="MM/dd/yy" data-ng-model="eventDate" name="eventDate" placeholder="9/30/13" data-is-open="datepickerOpened" data-min="today" data-show-weeks="false" required />
+					<input type="text" id="eventDate" data-datepicker-popup="MM/dd/yy" data-ng-model="event.startDate" name="eventDate" placeholder="9/30/13" data-is-open="datepickerOpened" data-min="today" data-show-weeks="false" required />
 				</div>
 			</div>
 			<div class="unit three-twelfths">
@@ -78,7 +78,7 @@
 					<div class="icon">
 						<i class="icon-time"></i>
 					</div>
-					<input type="text" id="startTime" data-ng-model="startTime" name="startTime" placeholder="9:00pm" data-ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
+					<input type="text" id="startTime" data-ng-model="event.startTime" name="startTime" placeholder="9:00pm" data-ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
 				</div>
 			</div>
 			<div class="unit five-twelfths last-unit"></div>
@@ -88,7 +88,7 @@
 				<label for="eventTags" class="caps weight--bold">Tags</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
-				<input type="text" id="eventTags" name="eventTags" class="full-width" data-ui-select2="tagOptions" data-ng-model="eventTags" placeholder="Enter up to 3 tags" />
+				<input type="text" id="eventTags" name="eventTags" class="full-width" data-ui-select2="tagOptions" data-ng-model="event.tags" placeholder="Enter up to 3 tags" />
 			</div>
 		</div>
 		<div class="line nudge-half--bottom">
@@ -96,10 +96,10 @@
 				<label for="eventImage" class="caps weight--bold">Picture</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
-				<input class="full-width" id="eventImage" name="eventImage" type="file" accept="image/*" data-image="eventImage" data-resize-max-height="500" data-resize-max-width="1200" data-resize-quality="0.7" />
+				<input class="full-width" id="eventImage" name="eventImage" type="file" accept="image/*" data-image="eventImage" />
 			</div>
 		</div>
-		<div class="event-img nudge-half--bottom" data-ng-show="eventImage" data-ng-style="{'background-image': 'url(' + eventImage.resized.dataURL + ')'}"></div>
+		<div class="event-img nudge-half--bottom" data-ng-show="eventImage" data-ng-style="{'background-image': 'url(' + eventImage.url + ')'}"></div>
 		<div class="line nudge-half--bottom">
 			<div class="unit one-twelfth label-container">
 				<label for="private" class="caps weight--bold">Privacy</label>

@@ -59,7 +59,7 @@
 						<p class="pre-wrap" data-ng-bind-html="event.description | parseUrl"></p>
 					</div>
 				</div>
-				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map nudge-half--top" data-ng-show="event.locationPoint"></div>
+				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map nudge-half--top" data-ng-show="event.loc"></div>
 			</div>
 			<form name="commentForm" class="full-width nudge-half--top clearfix" data-ng-submit="postComment()">
 				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" data-ng-model="commentBody" data-expand-comment required></textarea>

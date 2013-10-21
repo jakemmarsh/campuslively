@@ -84,7 +84,7 @@ define(['./index'], function (controllers) {
 		    			$scope.showAddressInput = false;
 		    			// pan map to venue's location
 		    			$scope.locationMap.panTo(new google.maps.LatLng($scope.venues[i].location.lat, $scope.venues[i].location.lng));
-		    			$scope.locationPoint = {
+		    			$scope.event.loc = {
 			    			type: 'Point',
 			    			coordinates: [$scope.venues[i].location.lat.toFixed(2), $scope.venues[i].location.lng.toFixed(2)]
 		    			};
@@ -108,7 +108,7 @@ define(['./index'], function (controllers) {
 			    		if(data.results.length > 0) {
 			    			address = data.results[0];
 			    			$scope.locationMap.panTo(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
-			    			$scope.locationPoint = {
+			    			$scope.event.loc = {
 			    				type: 'Point',
 				    			coordinates: [data.results[0].geometry.location.lat.toFixed(2), data.results[0].geometry.location.lng.toFixed(2)]
 			    			};
@@ -133,8 +133,6 @@ define(['./index'], function (controllers) {
 
 	    // post event and show necessary message(s)
 	    $scope.postEvent = function() {
-	    	var event = {};
-
 	    	// create venue and send to foursquare if it is new
 	    	if($scope.showAddressInput && (address != null)) {
 	    		venue.name = $scope.eventLocation;
@@ -171,34 +169,18 @@ define(['./index'], function (controllers) {
 				// 	console.log(errorMessage);
 		  //       });
 	    	}
-	    	// populate event for posting
-	    	event.title = $scope.eventTitle;
-	    	event.creator = $rootScope.user._id;
-	    	event.privacy = $scope.eventPrivacy.value;
-	    	event.school = $rootScope.user.school;
-	    	if($scope.eventDescription) {
-	    		event.description = $scope.eventDescription;
-	    	}
-	    	// location name
-	    	// location point
-	    	event.startDate = new Date($scope.eventDate);
-	    	if($scope.startTime) {
-	    		event.startTime = $scope.startTime;
-	    	}
-	    	if($scope.eventTags) {
-	    		event.tags = $scope.eventTags;
-	    	}
+	    	// populate remaining parts of event for posting
+	    	$scope.event.creator = $rootScope.user._id;
+	    	$scope.event.privacy = $scope.eventPrivacy.value;
+	    	$scope.event.school = $rootScope.user.school._id;
 	    	if($scope.eventLocation) {
-	    		event.locationName = $scope.eventLocation;
+	    		$scope.event.locationName = $scope.eventLocation;
 	    	}
 	    	else {
-	    		event.locationName = $scope.locationAddress;
-	    	}
-	    	if($scope.locationPoint) {
-	    		event.locationPoint = $scope.locationPoint;
+	    		$scope.event.locationName = $scope.locationAddress;
 	    	}
 
-	    	eventService.postEvent(event).then(function (data) {
+	    	eventService.postEvent($scope.event).then(function (data) {
 		    	if($scope.eventImage) {
 		    		var formData = new FormData();
 		    		formData.append('image', $scope.eventImage.resized);

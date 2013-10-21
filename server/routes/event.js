@@ -449,36 +449,7 @@ exports.getEventsByLocationOlder = function(req, res) {
 exports.postEvent = function(req, res) {
 	var postEvent = function(receivedEvent) {
 		var deferred = Q.defer(),
-			event = new Event({
-				title: receivedEvent.title,
-				creator: receivedEvent.creator,
-				startDate: receivedEvent.startDate
-			});
-
-		if(receivedEvent.description) {
-			event.description = receivedEvent.description;
-		}
-		if(receivedEvent.locationName) {
-			event.locationName = receivedEvent.locationName;
-		}
-		if(receivedEvent.locationPoint) {
-			event.loc = {
-				type: 'Point',
-				coordinates: [parseFloat(receivedEvent.locationPoint.coordinates[0]), parseFloat(receivedEvent.locationPoint.coordinates[1])]
-			};
-		}
-		if(receivedEvent.startTime) {
-			event.startTime = receivedEvent.startTime;
-		}
-		if(receivedEvent.school) {
-			event.school = receivedEvent.school;
-		}
-		if(receivedEvent.pictureUrl) {
-			event.pictureUrl = receivedEvent.pictureUrl;
-		}
-		if(receivedEvent.tags) {
-			event.tags = receivedEvent.tags;
-		}
+			event = new Event(receivedEvent);
 
 		event.save(function (err, savedEvent) {
             if (err) {
