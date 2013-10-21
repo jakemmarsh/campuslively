@@ -73,16 +73,16 @@
 				<div class="line">
 					<div class="unit full-width last-unit">
 						<span class="red weight--bold block nudge-half--bottom" data-ng-show="registerForm.username.$error.pattern">
-							Username can only contain letters, numbers, periods, and dashes.
+							Your username can only contain letters, numbers, periods, and dashes.
 						</span>
 						<span class="red weight--bold block nudge-half--bottom" data-ng-show="registerForm.confirmPassword.$error.passwordVerify">
 							Passwords do not match.
 						</span>
 						<span class="red weight--bold block nudge-half--bottom" data-ng-show="usernameTaken">
-							Username is already taken.
+							That username is already taken.
 						</span>
 						<span class="red weight--bold block nudge-half--bottom" data-ng-show="emailTaken">
-							Email address is already in use.
+							That email address is already in use.
 						</span>
 						<span class="block red weight--bold nudge-half--bottom" data-ng-show="registerError" data-ng-bind="registerError"></span>
 					</div>

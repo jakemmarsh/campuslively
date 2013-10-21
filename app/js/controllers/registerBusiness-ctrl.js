@@ -18,14 +18,16 @@ define(['./index'], function (controllers) {
     	};
 
     	$scope.checkEmail = function() {
-    		authService.checkEmail($scope.user.email).then(function (isTaken, status) {
-    			if(isTaken == 'true') {
-    				$scope.emailTaken = true;
-    			}
-    			else {
-    				$scope.emailTaken = false;
-    			}
-    		});
+    		if($scope.user.email.length > 0) {
+	    		authService.checkEmail($scope.user.email).then(function (isTaken, status) {
+	    			if(isTaken == 'true') {
+	    				$scope.emailTaken = true;
+	    			}
+	    			else {
+	    				$scope.emailTaken = false;
+	    			}
+	    		});
+	    	}
     	};
 
     	$scope.register = function() {
