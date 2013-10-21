@@ -74,7 +74,7 @@
 		</div>
 	</div>
 	<hr data-ng-show="events.length" />
-	<div class="line nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
+	<div class="line nudge--ends" data-ng-repeat="event in events | orderBy:currentSort.value">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
 				<a href data-tooltip="{{event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'business'"></a>
@@ -94,7 +94,9 @@
 								</a>
 							</h2>
 						</div>
-						<div class="unit one-half last-unit text-right"></div>
+						<div class="unit one-half last-unit text-right">
+							Posted by <a href>Jake Marsh</a>
+						</div>
 					</div>
 				</div>
 				<div class="islet">

@@ -38,7 +38,7 @@
 			</div>
 		</div>
 		<hr />
-		<div class="line nudge-half--ends" data-ng-repeat="event in dayEvents | orderBy:currentSort.value">
+		<div class="line nudge--ends" data-ng-repeat="event in dayEvents | orderBy:currentSort.value">
 			<div class="unit one-twelfth">
 				<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
 					<a href data-tooltip="{{event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'business'"></a>
@@ -48,21 +48,29 @@
 			<div class="unit eleven-twelfths last-unit">
 				<div class="box">
 					<div class="event-header soft-half--sides">
-						<h2 class="flush">
-							<i class="zeta icon-unlock nudge-half--right" data-ng-show="event.privacy == 'public'"></i>
-							<i class="zeta icon-lock nudge-half--right" data-ng-show="event.privacy == 'inviteonly'"></i>
-							{{ event.title }}
-						</h2>
-						<a data-ng-href="/event/{{event._id}}" class="block-link"></a>
+						<div class="line">
+							<div class="unit one-half">
+								<h2 class="flush">
+									<a data-ng-href="/event/{{event._id}}">
+										<i class="zeta icon-unlock nudge-half--right" data-ng-show="event.privacy == 'public'"></i>
+										<i class="zeta icon-lock nudge-half--right" data-ng-show="event.privacy == 'inviteonly'"></i>
+										{{ event.title }}
+									</a>
+								</h2>
+							</div>
+							<div class="unit one-half last-unit text-right">
+								Posted by <a href>Jake Marsh</a>
+							</div>
+						</div>
 					</div>
 					<div class="islet">
 						<div class="line">
-							<div class="unit four-fifths">
+							<div class="unit full-width last-unit">
 								<span class="delta weight--bold">
-									<span data-ng-show="event.locationName" class="nudge-half--right">
+									<span data-ng-show="event.locationName" class="nudge--right">
 										<i class="icon-map-marker muted"></i> <span data-ng-bind="event.locationName"></span> 
 									</span>
-									<span data-ng-show="event.startDate" class="nudge-half--right">
+									<span data-ng-show="event.startDate" class="nudge--right">
 										<i class="icon-calendar-empty muted"></i> <span>{{ event.startDate | readableDate }}</span>
 									</span>
 									<span data-ng-show="event.startTime">
@@ -70,22 +78,23 @@
 									</span>
 								</span>
 							</div>
-							<div class="unit one-fifth last-unit text-right">
+						</div>
+						<hr />
+						<p class="pre-wrap soft-half--ends" data-ng-bind-html="event.description | parseUrl"></p>
+					</div>
+					<div class="event-footer table full-width soft-quarter--ends">
+						<div class="tr">
+							<div class="td three-fourths">
 								<ul class="tags">
 									<li data-ng-repeat="tag in event.tags" data-ng-bind="tag"></li>
 								</ul>
 							</div>
-						</div>
-						<p class="pre-wrap" data-ng-bind-html="event.description | parseUrl"></p>
-						<div class="line nudge-half--top">
-							<div class="unit one-half">
-								<div class="action-buttons">
+							<div class="td one-fourth text-right soft-half--right vertical-align-middle">
+								<div class="action-buttons nudge-half--right">
 									<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
 									<a href data-ng-click="rsvpToEvent(event._id)" data-ng-hide="isAttending(event)"><i class="icon-thumbs-up"></i> RSVP</a>
 									<a href data-ng-click="unRsvpToEvent(event._id)" data-ng-show="isAttending(event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
 								</div>
-							</div>
-							<div class="unit one-half last-unit text-right">
 								<div class="action-buttons green">
 									<a href data-ng-href="/event/{{event._id}}">Details <i class="icon-chevron-right epsilon"></i></a>
 								</div>
