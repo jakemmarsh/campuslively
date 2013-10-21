@@ -48,6 +48,17 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		checkEmail: function(email) {
+			var deferred = $q.defer();
+
+			$http.get(this.apiPath + 'email/' + email).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		activateUser: function(userId, activateKey) {
 			var deferred = $q.defer();
 

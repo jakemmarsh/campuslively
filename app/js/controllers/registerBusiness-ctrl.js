@@ -4,13 +4,11 @@ define(['./index'], function (controllers) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
-    		console.log(errorMessage);
     	});
 
     	$scope.checkUsername = function() {
-    		authService.checkUsername($scope.username).then(function (isTaken, status) {
+    		authService.checkUsername($scope.user.username).then(function (isTaken, status) {
     			if(isTaken == 'true') {
-    				console.log('username taken');
     				$scope.usernameTaken = true;
     			}
     			else {
@@ -19,19 +17,21 @@ define(['./index'], function (controllers) {
     		});
     	};
 
-    	$scope.register = function() {
-    		var newUser = {
-    			type: 'business',
-    			username: $scope.username,
-    			password: $scope.password,
-    			businessName: $scope.businessName,
-    			businessDescription: $scope.businessDescription,
-    			school: $scope.school,
-    			email: $scope.email
-    		};
+    	$scope.checkEmail = function() {
+    		authService.checkEmail($scope.user.email).then(function (isTaken, status) {
+    			if(isTaken == 'true') {
+    				$scope.emailTaken = true;
+    			}
+    			else {
+    				$scope.emailTaken = false;
+    			}
+    		});
+    	};
 
-    		authService.register(newUser).then(function (data, status) {
-    			// TODO: send email
+    	$scope.register = function() {
+    		$scope.user.type = 'business';
+
+    		authService.register($scope.user).then(function (data, status) {
     			$scope.emailSent = true;
 	        },
 	        function (errorMessage, status) {
