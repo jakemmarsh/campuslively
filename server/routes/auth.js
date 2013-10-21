@@ -339,3 +339,31 @@ exports.checkUsername = function(req, res) {
         res.send(500, "Failed to check if username exists already.");
     });
 };
+
+exports.checkEmail = function(req, res) {
+    var checkIfEmailUsed = function(email) {
+        var deferred = Q.defer();
+
+        User.find({ email: email }, function(err, retrievedUsers) {
+            if (err) {
+                deferred.reject(err.message)
+            }
+            else {
+                if(retrievedUsers.length > 0) {
+                    deferred.resolve(true);
+                }
+                else {
+                    deferred.resolve(false);
+                }
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    checkIfEmailUsed(req.params.email).then(function(data) {
+        res.send(200, data);
+    }, function(err) {
+        res.send(500, "Failed to check if email address is in use already.");
+    });
+};
