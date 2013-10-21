@@ -110,15 +110,18 @@ define(['./index'], function (controllers) {
 	                $scope.saveError = null;
 	                updateParams.pictureUrl = 'https://s3.amazonaws.com/campuslively/user_imgs/' + $rootScope.user._id + getExtension($scope.newUserImage.file.name);
 	                userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+	                	$scope.emailTaken = false;
 						$scope.changesSaved = true;
 						$rootScope.user = data;
 					},
 					function (errorMessage, status) {
+						$scope.emailTaken = false;
 						$scope.changesSaved = false;
 						$scope.saveError = "Error occurred while saving changes.";
 					});
 	            },
 	            function (errorMessage, status) {
+	            	$scope.emailTaken = false;
 	            	$scope.changesSaved = false;
 	                $scope.saveError = "Error occurred while uploading image.";
 	            });
@@ -129,10 +132,12 @@ define(['./index'], function (controllers) {
 				}
 				else {
 					userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+						$scope.emailTaken = false;
 						$scope.changesSaved = true;
 						$rootScope.user = data;
 					},
 					function (errorMessage, status) {
+						$scope.emailTaken = false;
 						$scope.changesSaved = false;
 						$scope.saveError = "Error occurred while saving changes.";
 					});

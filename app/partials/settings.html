@@ -102,7 +102,7 @@
 						<span class="red weight--bold nudge--right" data-ng-show="settingsForm.confirmPassword.$error.passwordVerify">
 							Passwords do not match.
 						</span>
-						<input type="submit" class="btn" value="Save Changes" data-ng-disabled="settingsForm.$invalid" />
+						<input type="submit" class="btn" value="Save Changes" data-ng-disabled="settingsForm.$invalid || emailTaken" />
 					</div>
 				</div>
 			</form>
