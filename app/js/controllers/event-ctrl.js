@@ -16,6 +16,16 @@ define(['./index'], function (controllers) {
 		    };
 		}
 
+		$scope.deleteEvent = function() {
+			if($scope.event.creator._id == $rootScope.user._id) {
+				eventService.deleteEvent($scope.event._id).then(function (data) {
+    				$location.path('/feed');
+		        },
+		        function (errorMessage, status) {
+		        });
+			}
+		};
+
     	$scope.postComment = function() {
     		var comment = {
     			eventId: $scope.event._id,
@@ -146,15 +156,6 @@ define(['./index'], function (controllers) {
     			}
     		}
     		return false;
-    	};
-
-    	$scope.deleteEvent = function() {
-    		eventService.deleteEvent($scope.event._id).then(function (data) {
-    			$location.path('/feed');
-	        },
-	        function (errorMessage) {
-	            console.log(errorMessage);
-	        });
     	};
 
 		$scope.open = function (modal) {
