@@ -180,20 +180,42 @@ define(['./index'], function (controllers) {
 	    		$scope.event.locationName = $scope.locationAddress;
 	    	}
 
-	    	eventService.postEvent($scope.event).then(function (data) {
-		    	if($scope.eventImage) {
-		    		var formData = new FormData();
-		    		formData.append('image', $scope.eventImage.resized);
+	    	if($scope.eventImage) {
+	    		var eventId;
+	    		eventService.postEvent($scope.event).then(function (data) {
+	    			eventId = data._id;
+			    	eventService.uploadImage($scope.eventImage.file, eventId).then(function () {
+			    		var getExtension = function(filename) {
+						    var i = filename.lastIndexOf('.');
+			    			return (i < 0) ? '' : filename.substr(i);
+						},
+			    		updateParams = {
+			    			pictureUrl: 'https://s3.amazonaws.com/campuslively/event_imgs/' + eventId + getExtension($scope.eventImage.file.name)
+			    		};
 
-		    		// post image to amazon SES, set URL as event.pictureUrl
-		    	}
-		    	else {
-		    		$scope.eventPosted = true;
-		    	}
-		    },
-		    function (errorMessage, status) {
-		    	$scope.postError = errorMessage.message;
-		    });
+			    		eventService.updateEvent(eventId, updateParams).then(function() {
+			    			$scope.eventPosted = true;
+			    		},
+			    		function (errorMessage, status) {
+			    			$scope.postError = errorMessage;
+			    		});
+			    	}, 
+			    	function (errorMessage, status) {
+			    		$scope.postError = errorMessage;
+			    	});
+			    },
+			    function (errorMessage, status) {
+			    	$scope.postError = errorMessage.message;
+			    });
+	    	}
+	    	else {
+		    	eventService.postEvent($scope.event).then(function (data) {
+			    	$scope.eventPosted = true;
+			    },
+			    function (errorMessage, status) {
+			    	$scope.postError = errorMessage.message;
+			    });
+			}
 	    };
     });
 });

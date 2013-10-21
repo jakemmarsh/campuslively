@@ -484,7 +484,7 @@ exports.postEvent = function(req, res) {
 
 	postEvent(req.body).then(function(returnedEvent) {
 		createActivity(returnedEvent).then(function(returnedActivity) {
-			res.send(200, "Event posted and activity created successfully.");
+			res.json(200, returnedEvent);
 		}, function(err) {
 			res.send(200, "Event posted but unable to create activity.");
 		});
