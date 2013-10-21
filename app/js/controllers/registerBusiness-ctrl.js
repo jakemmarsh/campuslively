@@ -32,6 +32,8 @@ define(['./index'], function (controllers) {
     		$scope.user.type = 'business';
 
     		authService.register($scope.user).then(function (data, status) {
+    			$scope.usernameTaken = false;
+    			$scope.emailTaken = false;
     			$scope.emailSent = true;
 	        },
 	        function (errorMessage, status) {

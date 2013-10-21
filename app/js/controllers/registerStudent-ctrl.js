@@ -33,6 +33,7 @@ define(['./index'], function (controllers) {
 
     		authService.register($scope.user).then(function (data, status) {
     			$scope.usernameTaken = false;
+    			$scope.emailTaken = false;
     			$scope.emailSent = true;
 	        },
 	        function (errorMessage, status) {

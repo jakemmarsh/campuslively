@@ -212,7 +212,7 @@ exports.uploadImage = function(req, res) {
 		res.json(200, data);
 	}, function(err) {
 		res.send(500, err);
-	})
+	});
 };
 
 exports.subscribe = function(req, res) {
