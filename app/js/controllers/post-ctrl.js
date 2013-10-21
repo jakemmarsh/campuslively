@@ -11,6 +11,7 @@ define(['./index'], function (controllers) {
 			scrollwheel: false,
 			panControl: false
 	    };
+	    var locationMarker;
 
 	    // call to foursquare to get list of venues near user's location
     	var getVenues = function(position) {
@@ -88,6 +89,19 @@ define(['./index'], function (controllers) {
 			    			type: 'Point',
 			    			coordinates: [$scope.venues[i].location.lat.toFixed(2), $scope.venues[i].location.lng.toFixed(2)]
 		    			};
+		    			if(locationMarker) {
+		    				locationMarker.close();
+		    			}
+		    			var contentString = '<h3 class="flush">'+$scope.venues[i].name+'</h3>'+
+		    								'<span class="muted nudge-half--bottom">'+$scope.venues[i].location.city+', '+$scope.venues[i].location.state+' '+$scope.venues[i].location.postalCode+'</span>'+
+		    								'<a href="https://maps.google.com/maps?daddr='+$scope.venues[i].location.lat+','+$scope.venues[i].location.lng+'&hl=en&t=m&mra=mift&mrsp=1&sz=5&z=18"'+
+		    								'target="_blank" class="block">Get Directions</a>';
+		    			locationMarker = new google.maps.InfoWindow({
+							content: contentString,
+							maxWidth: 300,
+							position: new google.maps.LatLng($scope.venues[i].location.lat, $scope.venues[i].location.lng)
+						});
+						locationMarker.open($scope.locationMap);
 		    			break;
 		    		}
 		    		else {
@@ -107,11 +121,24 @@ define(['./index'], function (controllers) {
 					if(data) {
 			    		if(data.results.length > 0) {
 			    			address = data.results[0];
+			    			console.log(data.results);
 			    			$scope.locationMap.panTo(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
 			    			$scope.event.loc = {
 			    				type: 'Point',
 				    			coordinates: [data.results[0].geometry.location.lat.toFixed(2), data.results[0].geometry.location.lng.toFixed(2)]
 			    			};
+			    			if(locationMarker) {
+			    				locationMarker.close();
+			    			}
+			    			var contentString = '<h3 class="flush">'+data.results[0].formatted_address+'</h3>'+
+			    								'<a href="https://maps.google.com/maps?daddr='+data.results[0].geometry.location.lat+','+data.results[0].geometry.location.lng+'&hl=en&t=m&mra=mift&mrsp=1&sz=5&z=18"'+
+			    								'target="_blank" class="block">Get Directions</a>';
+			    			locationMarker = new google.maps.InfoWindow({
+								content: contentString,
+								maxWidth: 300,
+								position: new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng)
+							});
+							locationMarker.open($scope.locationMap);
 			    		}
 			    	}
 				},

@@ -14,3 +14,8 @@
 	right: 10px;
 	z-index: 999;
 }
+
+img[src*="maps.gstatic.com/"], img[src*="maps.googleapis.com/"] {
+	max-width: 0;
+	display: none;
+}
