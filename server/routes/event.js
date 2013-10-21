@@ -493,6 +493,102 @@ exports.postEvent = function(req, res) {
 	});
 };
 
+exports.uploadImage = function(req, res) {
+	postToS3 = function(image, eventId) {
+		var s3bucket = new AWS.S3({params: {Bucket: config.aws.bucket}}),
+			deferred = Q.defer(),
+			getExtension = function(filename) {
+			    var i = filename.lastIndexOf('.');
+    			return (i < 0) ? '' : filename.substr(i);
+			},
+		 	dataToPost = {
+		 		Bucket: config.aws.bucket,
+		 		Key: 'event_imgs/' + eventId + getExtension(image.name),
+		 		ACL: 'public-read',
+		 		ContentType: image.type
+		 	};
+
+		fs.readFile(image.path, function(err, readFile) {
+	        dataToPost.Body = readFile;
+
+	        s3bucket.putObject(dataToPost, function(err, data) {
+				if (err) {
+				  deferred.reject(err.message);
+				} else {
+				  deferred.resolve(data);
+				}
+			});
+	    });
+
+		return deferred.promise;
+	};
+
+	postToS3(req.files.image, req.params.eventId).then(function(data) {
+		res.json(200, data);
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
+exports.updateEvent = function(req, res) {
+	var getUpdateParams = function() {
+		var updateParams = {};
+
+		// loop through posted properties
+		for (var key in req.body) {
+			// make sure it isn't inherited
+			if (req.body.hasOwnProperty(key)) {
+				// make sure not changing user ID
+				if(key !== '_id') {
+					updateParams[key] = req.body[key];
+				}
+			}
+		}
+
+		return updateParams;
+	},
+	updateEvent = function(eventId, updateParams) {
+		var deferred = Q.defer(),
+			eventPopulateObj = [
+				{ path: 'location' },
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			];
+
+		Event.findOneAndUpdate({ _id: eventId }, updateParams)
+		.populate(eventPopulateObj)
+		.exec(function(err, updatedEvent) {
+			if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+         		Comment.populate(updatedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(updatedEvent);
+					}
+				});
+         	}
+		});
+
+		return deferred.promise;
+	};
+
+	updateEvent(req.params.eventId, getUpdateParams()).then(function(data) {
+		res.json(200, data);
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
 exports.rsvp = function(req, res) {
 	var updateUser = function(userId, eventId) {
 		var deferred = Q.defer();

@@ -90,6 +90,8 @@ app.configure(function() {
     app.get('/api/v1/event/near/:lat/:lng/skip/:skip/limit/:limit', restrict, routes.event.getEventsByLocationOlder);
 
     app.post('/api/v1/event', restrict, routes.event.postEvent);
+    app.post('/api/v1/event/:eventId/image', restrict, routes.event.uploadImage);
+    app.patch('/api/v1/event/:eventId', restrict, routes.event.updateEvent);
     app.post('/api/v1/event/:eventId/rsvp/:userId', restrict, routes.event.rsvp);
     app.post('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
 

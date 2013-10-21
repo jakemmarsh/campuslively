@@ -134,6 +134,34 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		updateEvent: function(eventId, updatedParams) {
+			var deferred = $q.defer();
+
+			$http({method: 'PATCH', url: this.apiPath + eventId, data: updatedParams}).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
+		uploadImage: function(image, eventId) {
+			var deferred = $q.defer(),
+				formData = new FormData();
+			
+			formData.append('image', image, image.name);
+
+			$http.post(this.apiPath + eventId + '/image', formData, {
+				transformRequest: angular.identity,
+				headers: { 'Content-Type': undefined }
+			}).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		postComment: function(eventId, comment) {
 			var deferred = $q.defer();
 
