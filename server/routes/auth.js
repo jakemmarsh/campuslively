@@ -46,7 +46,9 @@ function authenticate(name, pass, fn) {
                 { path: 'invites' },
                 { path: 'school' }
             ];
-        User.findOne({ username: username.toLowerCase() }).populate(populateObj).exec(function (err, retrievedUser) {
+        User.findOne({ username: username.toLowerCase() })
+        .populate(populateObj)
+        .exec(function (err, retrievedUser) {
             if (err || !retrievedUser) {
                 console.log(err);
                 deferred.reject('Cannot find user.');
@@ -84,7 +86,7 @@ exports.check = function(req, res) {
                 user: returnUser
             };
 
-            res.json(data);
+            res.json(200, data);
         }
         else {
             res.send(401, "No session exists for user.");
@@ -118,7 +120,7 @@ exports.login = function(req, res) {
                     var returnUser = JSON.parse(JSON.stringify(user));
                     delete returnUser.salt;
                     delete returnUser.hash;
-                    res.json(returnUser);
+                    res.json(200, returnUser);
                 });
             }
         } 

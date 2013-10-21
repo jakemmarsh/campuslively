@@ -14,7 +14,9 @@ exports.getComment = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Comment.findOne({ _id: eventId }).populate(commentPopulateObj).exec(function(err, retrievedComment) {
+		Comment.findOne({ _id: eventId })
+		.populate(commentPopulateObj)
+		.exec(function(err, retrievedComment) {
          	if(err) {
          		deferred.reject(err.message);
          	}
@@ -27,7 +29,7 @@ exports.getComment = function(req, res) {
 	};
 
 	getComment(req.params.commentId).then(function(retrievedComment) {
-		res.json(retrievedComment);
+		res.json(200, retrievedComment);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -124,7 +126,7 @@ exports.postComment = function(req, res) {
 		addToEvent(req.params.eventId, savedComment._id).then(function(returnedEvent) {
 			createActivity(savedComment).then(function(savedActivity) {
 				getPostedComment(savedComment._id).then(function(retrievedComment) {
-					res.json(retrievedComment);
+					res.json(200, retrievedComment);
 				}, function(err) {
 					res.send(200, "Comment created but failed to retrieve.");
 				});
@@ -166,7 +168,7 @@ exports.postSubComment = function(req, res) {
 	};
 
 	addSubComment(req.params.commentId, req.body).then(function(returnedComment) {
-		res.json(returnedComment);
+		res.json(200, returnedComment);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -195,7 +197,7 @@ exports.likeComment = function(req, res) {
 	}
 
 	updateComment(req.params.commentId, req.params.userId).then(function(updatedComment) {
-		res.json(updatedComment);
+		res.json(200, updatedComment);
 	}, function(err) {
 		res.send(500, "Failed to like comment.");
 	});
@@ -278,9 +280,9 @@ exports.deleteComment = function(req, res) {
 	deleteComment(req.params.commentId).then(function() {
 		removeFromEvent(req.params.eventId, req.params.commentId).then(function(updatedEvent) {
 			deleteActivity(req.params.eventId, req.params.commentId).then(function() {
-				res.json(updatedEvent);
+				res.json(200, updatedEvent);
 			}, function(err) {
-				res.json(updatedEvent);
+				res.json(200, updatedEvent);
 			});
 		}, function(err) {
 			res.send(200, "Comment deleted but not removed from event.");
@@ -313,7 +315,7 @@ exports.deleteSubComment = function(req, res) {
 	};
 
 	removeFromComment(req.params.subCommentId, req.params.commentId).then(function(updatedComment) {
-		res.json(updatedComment);
+		res.json(200, updatedComment);
 	}, function(err) {
 		res.send(500, err);
 	});

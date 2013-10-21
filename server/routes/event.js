@@ -31,7 +31,9 @@ exports.getEvent = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.findOne({ _id: eventId }).populate(eventPopulateObj).exec(function(err, updatedEvent) {
+		Event.findOne({ _id: eventId })
+		.populate(eventPopulateObj)
+		.exec(function(err, updatedEvent) {
          	if(err) {
          		deferred.reject(err.message);
          	}
@@ -51,7 +53,7 @@ exports.getEvent = function(req, res) {
 	};
 
 	getEvent(req.params.eventId).then(function(retrievedEvent) {
-		res.json(retrievedEvent);
+		res.json(200, retrievedEvent);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -116,7 +118,7 @@ exports.getEventsBySchool = function(req, res) {
 	};
 
 	getEvents(req.params.schoolId).then(function(retrievedEvents) {
-		res.json(retrievedEvents);
+		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -161,7 +163,7 @@ exports.getEventsBySchoolOlder = function(req, res) {
 	};
 
 	getEvents(req.params.schoolId, req.params.skip, req.params.limit).then(function(retrievedEvents) {
-		res.json(retrievedEvents);
+		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -210,7 +212,7 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 	};
 
 	getEvents(req.params.schoolId, req.params.date).then(function(retrievedEvents) {
-		res.json(retrievedEvents);
+		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -275,7 +277,7 @@ exports.getEventsByUser = function(req, res) {
 	};
 
 	getEvents(req.params.userId).then(function(retrievedEvents) {
-		res.json(retrievedEvents);
+		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -320,7 +322,7 @@ exports.getEventsByUserOlder = function(req, res) {
 	};
 
 	getEvents(req.params.userId, req.params.skip, req.params.limit).then(function(retrievedEvents) {
-		res.json(retrievedEvents);
+		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -389,7 +391,7 @@ exports.getEventsByLocation = function(req, res) {
 	};
 
 	getEvents(req.params.lat, req.params.lng).then(function(retrievedEvents) {
-		res.json(retrievedEvents);
+		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -438,7 +440,7 @@ exports.getEventsByLocationOlder = function(req, res) {
 	};
 
 	getEvents(req.params.lat, req.params.lng, req.params.skip, req.params.limit).then(function(retrievedEvents) {
-		res.json(retrievedEvents);
+		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -593,9 +595,9 @@ exports.rsvp = function(req, res) {
 	updateUser(req.params.userId, req.params.eventId).then(function(updatedUser) {
 		updateEvent(req.params.eventId, req.params.userId).then(function(updatedEvent) {
 			createActivity(req.params.eventId, req.params.userId).then(function(savedActivity) {
-				res.json(updatedEvent);
+				res.json(200, updatedEvent);
 			}, function(err) {
-				res.json(updatedEvent);
+				res.json(200, updatedEvent);
 			});
 		}, function(err) {
 			res.send(500, err);
@@ -673,9 +675,9 @@ exports.unRsvp = function(req, res) {
 	updateUser(req.params.userId, req.params.eventId).then(function(updatedUser) {
 		updateEvent(req.params.eventId, req.params.userId).then(function(updatedEvent) {
 			deleteActivity(req.params.eventId, req.params.userId).then(function() {
-				res.json(updatedEvent);
+				res.json(200, updatedEvent);
 			}, function(err) {
-				res.json(updatedEvent);
+				res.json(200, updatedEvent);
 			});
 		}, function(err) {
 			res.send(500, err);

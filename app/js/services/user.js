@@ -66,7 +66,7 @@ define(['./index'], function (services) {
 			
 			formData.append('image', image, image.name);
 
-			$http.post('/api/v1/user/' + userId + '/image', formData, {
+			$http.post(this.apiPath + userId + '/image', formData, {
 				transformRequest: angular.identity,
 				headers: { 'Content-Type': undefined }
 			}).success(function(data, status) {

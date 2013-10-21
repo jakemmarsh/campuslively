@@ -102,7 +102,7 @@ exports.getUserByName = function(req, res) {
 		var returnUser = JSON.parse(JSON.stringify(data));
         delete returnUser.salt;
         delete returnUser.hash;
-        res.json(returnUser);
+        res.json(200, returnUser);
 	}, function(err) {
 		res.send(500, err);
 	});
@@ -110,8 +110,7 @@ exports.getUserByName = function(req, res) {
 
 exports.updateUser = function(req, res) {
 	var getUpdateParams = function() {
-		var updateParams = {},
-			hasSchool;
+		var updateParams = {};
 
 		// loop through posted properties
 		for (var key in req.body) {
@@ -172,7 +171,7 @@ exports.updateUser = function(req, res) {
             var returnUser = JSON.parse(JSON.stringify(data));
             delete returnUser.salt;
             delete returnUser.hash;
-            res.json(returnUser);
+            res.json(200, returnUser);
         });
 	}, function(err) {
 		res.send(500, err);
@@ -292,7 +291,7 @@ exports.subscribe = function(req, res) {
 	                var returnUser = JSON.parse(JSON.stringify(updatedUser));
 	                delete returnUser.salt;
 	                delete returnUser.hash;
-	                res.json(returnUser);
+	                res.json(200, returnUser);
 	            });
 			}, function(err) {
 				res.send(200, "Subscription added but activity could not be created.");
@@ -356,7 +355,7 @@ exports.unsubscribe = function(req, res) {
 	            var returnUser = JSON.parse(JSON.stringify(updatedUser));
 	            delete returnUser.salt;
 	            delete returnUser.hash;
-	            res.json(returnUser);
+	            res.json(200, returnUser);
 	        });
 		}, function(err) {
 			req.session.regenerate(function(){
@@ -365,7 +364,7 @@ exports.unsubscribe = function(req, res) {
 	            var returnUser = JSON.parse(JSON.stringify(updatedUser));
 	            delete returnUser.salt;
 	            delete returnUser.hash;
-	            res.json(returnUser);
+	            res.json(200, returnUser);
 	        });
 		});
 	}, function(err) {
@@ -428,7 +427,7 @@ exports.getActivities = function(req, res) {
 
 	getUser(req.params.userId).then(function(retrievedUser) {
 		getActivities(retrievedUser).then(function(activities) {
-			res.json(activities);
+			res.json(200, activities);
 		}, function(err) {
 			res.send(500, err);
 		});
@@ -479,7 +478,7 @@ exports.getActivitiesOlder = function(req, res) {
 
 	getUser(req.params.userId).then(function(retrievedUser) {
 		getActivities(retrievedUser, req.params.skip, req.params.limit).then(function(activities) {
-			res.json(activities);
+			res.json(200, activities);
 		}, function(err) {
 			res.send(500, err);
 		});
