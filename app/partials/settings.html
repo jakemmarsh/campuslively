@@ -69,8 +69,8 @@
 						<label for="userEmail" class="caps weight--bold">Email</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<input type="text" class="full-width" name="emailBusiness" id="userEmail" placeholder="email address" data-ng-model="userEmailBusiness" data-ng-show="user.type == 'business'" />
-						<input type="text" class="full-width" name="emailStudent" id="userEmail" placeholder="email address" data-ng-model="userEmailStudent" data-ng-pattern="/([a-z0-9][-a-z0-9_\+\.]*[a-z0-9])@([a-z0-9][-a-z0-9\.]*[a-z0-9]\.(edu)|([0-9]{1,3}\.{3}[0-9]{1,3}))/" data-ng-show="user.type == 'student'" />
+						<input type="text" class="full-width" name="emailBusiness" id="userEmail" placeholder="email address" data-ng-model="userEmailBusiness" data-ng-show="user.type == 'business'" data-ng-blur="checkEmail()" />
+						<input type="text" class="full-width" name="emailStudent" id="userEmail" placeholder="email address" data-ng-model="userEmailStudent" data-ng-pattern="/([a-z0-9][-a-z0-9_\+\.]*[a-z0-9])@([a-z0-9][-a-z0-9\.]*[a-z0-9]\.(edu)|([0-9]{1,3}\.{3}[0-9]{1,3}))/" data-ng-show="user.type == 'student'" data-ng-blur="checkEmail()" />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">
@@ -94,6 +94,9 @@
 						<span class="red weight--bold nudge--right" data-ng-show="saveError" data-ng-bind="saveError"></span>
 						<span class="red weight--bold nudge--right" data-ng-show="settingsForm.emailStudent.$error.pattern && settingsForm.emailStudent.length > 0">
 							Email address must end in .edu.
+						</span>
+						<span class="red weight--bold nudge--right" data-ng-show="emailTaken">
+							That email address is already in use.
 						</span>
 						<span class="blue weight--bold nudge--right" data-ng-show="changesSaved">Changes saved!</span>
 						<span class="red weight--bold nudge--right" data-ng-show="settingsForm.confirmPassword.$error.passwordVerify">

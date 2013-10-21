@@ -1,10 +1,9 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('settingsCtrl', function ($scope, $rootScope, $modal, userService, schoolService) {
+    controllers.controller('settingsCtrl', function ($scope, $rootScope, $modal, userService, schoolService, authService) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
-    		console.log(errorMessage);
     	});
 
     	$scope.userSchool = $rootScope.user.school;
@@ -25,6 +24,33 @@ define(['./index'], function (controllers) {
 	    		'val': $scope.userSchool.name
 	    	};
 	    }
+
+	    $scope.checkEmail = function() {
+	    	if($scope.userEmailStudent) {
+		    	if($scope.userEmailStudent.length > 0 && $scope.userEmailStudent !== $rootScope.user.email) {
+		    		authService.checkEmail($scope.userEmailStudent).then(function (isTaken, status) {
+		    			if(isTaken == 'true') {
+		    				$scope.emailTaken = true;
+		    			}
+		    			else {
+		    				$scope.emailTaken = false;
+		    			}
+		    		});
+		    	}
+		    }
+	    	else if($scope.userEmailBusiness) {
+	    		if($scope.userEmailBusiness.length > 0 && $scope.userEmailBusiness !== $rootScope.user.email) {
+		    		authService.checkEmail($scope.userEmailBusiness).then(function (isTaken, status) {
+		    			if(isTaken == 'true') {
+		    				$scope.emailTaken = true;
+		    			}
+		    			else {
+		    				$scope.emailTaken = false;
+		    			}
+		    		});
+	    		}
+	    	}
+	    };
 
     	$scope.open = function (modal) {
 		  	if (modal.toLowerCase() == 'twitter') {
