@@ -72,6 +72,7 @@ define(['./index'], function (controllers) {
                 for (var i = 0; i < $scope.events.length; i++) {
                     if($scope.events[i]._id == eventId) {
                         $scope.events[i] = data;
+                        break;
                     }
                 }
             },
@@ -85,6 +86,7 @@ define(['./index'], function (controllers) {
                 for (var i = 0; i < $scope.events.length; i++) {
                     if($scope.events[i]._id == eventId) {
                         $scope.events[i] = data;
+                        break;
                     }
                 }
             },
