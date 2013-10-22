@@ -4,7 +4,8 @@ var path       = require('path'),
     app        = express(),
     mongoose   = require('mongoose'),
     routes     = require(path.join(__dirname, 'routes')),
-    config     = require('./config');
+    config     = require('./config'),
+    mailer     = require('./mailer');
 
 mongoose.connect(config.db.dbString);
 
@@ -56,6 +57,9 @@ app.configure(function() {
     app.post('/api/v1/auth/user/:userId/activate/:activateKey', routes.auth.activate);
     app.post('/api/v1/auth/forgot', routes.auth.forgotPassword);
     app.post('/api/v1/auth/reset', routes.auth.resetPassword);
+
+    // contact form
+    app.post('/api/v1/contact', mailer.sendContactEmail);
 
     // users
     app.get('/api/v1/user/:userId', restrict, routes.user.getUser);

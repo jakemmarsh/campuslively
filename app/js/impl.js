@@ -30,6 +30,7 @@ define([
     'services/user',
     'services/school',
     'services/event',
+    'services/contact',
     'filters/parse-url',
     'filters/readable-date',
     'filters/time-past'

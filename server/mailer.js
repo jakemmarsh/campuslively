@@ -51,3 +51,39 @@ exports.sendResetEmail = function(user) {
 
     return deferred.promise;
 };
+
+exports.sendContactEmail = function(req, res) {
+    var sendEmail = function(message) {
+        var deferred = Q.defer(),
+            mailOptions = {
+                from: "Campuslively <noreply@campuslively.com>",
+                to: "jake@campuslively.com",
+                html: message.body
+            };
+
+        if(message.subject) {
+            mailOptions.subject = "Message from Campuslively: " + message.subject;
+        }
+        else {
+            mailOptions.subject = "Message from Campuslively";
+        }
+
+        transport.sendMail(mailOptions, function(error, response){
+            if(error){
+                deferred.reject(error);
+            } else {
+                deferred.resolve(response.message);
+            }
+
+            transport.close();
+        });
+
+        return deferred.promise;
+    }
+
+    sendEmail(req.body).then(function(data) {
+        res.send(200, "Message successfully sent.");
+    }, function(err) {
+        res.send(500, "Failed to send email.");
+    });
+};

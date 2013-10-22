@@ -9,28 +9,28 @@
 </div>
 <div class="container soft-half--ends">
 	<form name="contactForm" data-ng-submit="sendMessage()" data-ng-hide="messageSent">
-		<div class="table full-width">
-			<div class="tr">
-				<div class="td one-twelfth soft--right soft-half--bottom">
-					<label for="subject" class="caps weight--bold">Subject</label>
-				</div>
-				<div class="td eleven-twelfths soft-half--bottom">
-					<input type="text" id="subject" data-ng-model="messageSubject" class="full-width" placeholder="Message subject..." />
-				</div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-tenth label-container">
+				<label for="subject" class="caps weight--bold">Subject</label>
 			</div>
-			<div class="tr">
-				<div class="td one-twelfth soft-half--bottom">
-					<label for="message" class="caps weight--bold">Message <span class="red">*</span></label>
-				</div>
-				<div class="td eleven-twelfths soft-half--bottom">
-					<textarea id="message" data-ng-model="messageBody" class="full-width big" placeholder="Your message..." required></textarea>
-				</div>
+			<div class="unit last-unit nine-tenths">
+				<input type="text" id="subject" data-ng-model="message.subject" class="full-width" placeholder="Message subject" />
 			</div>
-			<div class="tr">
-				<div class="td one-twelfth"></div>
-				<div class="td eleven-twelfths text-right">
-					<input type="submit" class="btn" value="Send Message" data-ng-disabled="contactForm.$invalid" />
-				</div>
+		</div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-tenth label-container">
+				<label for="message" class="caps weight--bold">Message <span class="red">*</span></label>
+			</div>
+			<div class="unit last-unit nine-tenths">
+				<textarea id="message" data-ng-model="message.body" class="full-width big" placeholder="Your message" required></textarea>
+			</div>
+		</div>
+		<div class="line">
+			<div class="unit nine-tenths">
+				<span class="red weight--bold" data-ng-show="sendError" data-ng-bind="sendError"></span>
+			</div>
+			<div class="unit last-unit one-tenth text-right">
+				<input type="submit" class="btn" value="Send Message" data-ng-disabled="contactForm.$invalid" />
 			</div>
 		</div>
 	</form>
