@@ -28,36 +28,69 @@
 <section class="light_section">
 	<div class="inside_container">
 		<div class="section group">
-			<div class="col span_4_of_12 index_item">
-				<h3><i class="icon-lock"></i> Only for college students</h3>
-				<p>In order to register and log in to Campuslively, you must provide a valid .edu email address.
-					This allows you to safely post your parties and events, knowing only other students will see.</p>
-			</div>
-			<div class="col span_4_of_12 index_item">
-				<h3><i class="icon-list-ul"></i> Organized by school</h3>
-				<p>Once registered and logged in, you can choose your school from a list of over 7,000.
-					Once selected, you can view events and parties specific to your school.</p>
-			</div>
-			<div class="col span_4_of_12 index_item">
-				<h3><i class="icon-refresh"></i> See everything around you</h3>
-				<p>Not only can you see what is happening on your campus, but you're also able to see all events near your school.</p>
+			<div class="col span_12_of_12 text-center">
+				<h2 class="flush blue">You are a:</h2>
+				<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions" style="display: inline-block !important;"></ng-switch-toggle-group>
 			</div>
 		</div>
-		<div class="section group">
-			<div class="col span_4_of_12 index_item soft--bottom">
-				<h3><i class="icon-time"></i> View events as a live feed</h3>
-				<p>When viewing events and parties, you have two choices. The first is to view them as a live feed.
-					This allows you to see new events and parties as they’re being posted, to see what other students are doing on those busier days and nights.</p>
+		<div data-ng-show="currentView == 'student'">
+			<div class="section group">
+				<div class="col span_4_of_12 index_item">
+					<h3><i class="icon-lock"></i> Only for college students</h3>
+					<p>In order to register and log in to Campuslively, you must be either a club or group, or provide a valid .edu email address.
+						This allows you to safely post your parties and events, knowing only other students will see.</p>
+				</div>
+				<div class="col span_4_of_12 index_item">
+					<h3><i class="icon-list-ul"></i> Organized by school</h3>
+					<p>Once registered and logged in, you can choose from a list of available schools.
+						Once selected, you can view events and parties specific to your school.</p>
+				</div>
+				<div class="col span_4_of_12 index_item">
+					<h3><i class="icon-map-marker"></i> See everything around you</h3>
+					<p>Not only can you see what is happening around your campus, but you're also able to see all events near you based on your location.</p>
+				</div>
 			</div>
-			<div class="col span_4_of_12 index_item soft--bottom">
-				<h3><i class="icon-calendar"></i> Or, view events as a calendar</h3>
-				<p>The second choice to view events and parties is in calendar form.
-					This is for when you want to see posts further into the future, allowing you to plan ahead and know what’s coming up.</p>
+			<div class="section group">
+				<div class="col span_4_of_12 index_item soft--bottom">
+					<h3><i class="icon-time"></i> View events as a live feed</h3>
+					<p>When viewing events and parties, you have two choices. The first is to view them as a live feed.
+						This allows you to see new events and parties as they’re being posted, to see what other students are doing on those busier days and nights.</p>
+				</div>
+				<div class="col span_4_of_12 index_item soft--bottom">
+					<h3><i class="icon-calendar"></i> Or view events as a calendar</h3>
+					<p>The second choice to view events and parties is in calendar form.
+						This is for when you want to see posts further into the future, allowing you to plan ahead and know what’s coming up.</p>
+				</div>
+				<div class="col span_4_of_12 index_item soft--bottom">
+					<h3><i class="icon-plus"></i> Easily post your own events</h3>
+					<p>As a student, you are immediately able to post your own events. On any page, you will see the clear “Post Event” button. Want to get the word out about a party or event you’re organizing? Post it to Campuslively!</p>
+				</div>
 			</div>
-			<div class="col span_4_of_12 index_item soft--bottom">
-				<h3><i class="icon-plus"></i> Easily post your own events</h3>
-				<p>As a student, you are immediately able to post your own events. When viewing events for your school, you will see the clear “Post Event” button.
-					Want to get the word out about a party or event you’re organizing? Post it to Campuslively!</p>
+		</div>
+		<div data-ng-show="currentView == 'business'">
+			<div class="section group">
+				<div class="col span_4_of_12 index_item">
+					<h3><i class="icon-plus"></i> Easily post your events</h3>
+					<p>Immediately after registering as a club/group, you will have the ability to post events. It's as simple as filling out one form and instantly reaching your target audience!</p>
+				</div>
+				<div class="col span_4_of_12 index_item">
+					<h3><i class="icon-book"></i> Connect to the students at your school</h3>
+					<p>When you post an event, it becomes associated with the school you specified when registering. This allows student users to view your events when they're looking for something to do around campus.</p>
+				</div>
+				<div class="col span_4_of_12 index_item">
+					<h3><i class="icon-map-marker"></i> Share with other users nearby</h3>
+					<p>Your events can also be found by any user, regardless of school, if they are nearby the location you specified. This allows you to reach an even bigger audience!</p>
+				</div>
+			</div>
+			<div class="section group">
+				<div class="col span_4_of_12 index_item">
+					<h3><i class="icon-thumbs-up"></i> Automatically reach your social media followers</h3>
+					<p>In addition to the new users you'll reach, we also offer the ability to instantly connect with your followers from other social media sites. This means you can maintain your current fanbase while continuing to grow with Campuslively!</p>
+				</div>
+				<div class="col span_4_of_12 index_item soft--bottom">
+					<h3><i class="icon-bullhorn"></i> Interact directly with your target audience</h3>
+					<p>Once you have registered as a Campuslively user, other users will be able to "subscribe" to you, allowing them to instantly get updates about your events. In addition, you can interact directly with your audience with quick comments and "like"s on the event details page!</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -71,10 +104,10 @@
 				<img src="img/phones.png" alt="mobile devices" class="phones" />
 			</div>
 			<div class="col span_6_of_12" id="get_mobile">
-				<h1 id="white_header">Get Campuslively on your mobile device</h1>
-				<h2 id="grey_header">Available on iOS and Android</h2>
-				<a href="http://www.itunes.com" target="_blank"><img src="img/app_store.png" alt="Available on the App Store" class="app_store" /></a>
-				<a href="https://play.google.com/store" target="_blank"><img src="img/google_play.png" alt="Available on Google Play" class="google_play" /></a>
+				<h1 id="white_header">Coming soon to your mobile device!</h1>
+				<h2 id="grey_header" style="display:none;">Available on iOS and Android</h2>
+				<a href="http://www.itunes.com" target="_blank"><img src="img/app_store.png" alt="Available on the App Store" class="app_store" style="display:none;" /></a>
+				<a href="https://play.google.com/store" target="_blank"><img src="img/google_play.png" alt="Available on Google Play" class="google_play" style="display:none;" /></a>
 			</div>
 			<div class="col span_1_of_12">
 			</div>
