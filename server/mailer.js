@@ -11,7 +11,7 @@ var transport = nodemailer.createTransport("SES", {
 exports.sendActivationEmail = function(user) {
 	var deferred = Q.defer(),
 		mailOptions = {
-	        from: "Campuslively <noreply@campuslively.com>",
+	        from: "Campuslively <jake@campuslively.com>",
 	        to: user.email,
 	        subject: "Activate your Account",
 	        html: '<a href="localhost:3000/activate/' + user._id + '/' + user.activationKey + '">Click Here to Activate Your Account</a>'
@@ -33,7 +33,7 @@ exports.sendActivationEmail = function(user) {
 exports.sendResetEmail = function(user) {
 	var deferred = Q.defer(),
 		mailOptions = {
-	        from: "Campuslively <noreply@campuslively.com>",
+	        from: "Campuslively <jake@campuslively.com>",
 	        to: user.email,
 	        subject: "Reset your Password",
 	        html: '<a href="localhost:3000/reset/' + user._id + '/' + user.passwordResetKey + '">Click Here to Set a New Password</a>'
@@ -56,7 +56,7 @@ exports.sendContactEmail = function(req, res) {
     var sendEmail = function(message) {
         var deferred = Q.defer(),
             mailOptions = {
-                from: "Campuslively <noreply@campuslively.com>",
+                from: "Campuslively <jake@campuslively.com>",
                 to: "jake@campuslively.com",
                 html: message.body
             };
