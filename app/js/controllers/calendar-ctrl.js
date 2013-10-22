@@ -3,6 +3,20 @@ define(['./index'], function (controllers) {
     controllers.controller('calendarCtrl', function ($scope, $rootScope, $location, $anchorScroll, $timeout, $modal, eventService) {
     	$scope.showDay = false;
 
+      $scope.events = [];
+      eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
+        for(var i = 0; i < data.length; i++) {
+          var event = {
+            title: data[i].title,
+            start: data[i].startDate,
+            editable: false
+          };
+          $scope.events.push(event);
+        }
+      }, function(err, status) {
+      
+      });
+
       $scope.eventSource = [
 	        {
 	            title: 'Event1',
@@ -47,6 +61,7 @@ define(['./index'], function (controllers) {
           header:{
             right: 'today prev,next'
           },
+          events: $scope.events,
           dayClick: $scope.dayClick
       };
 
