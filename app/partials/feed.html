@@ -54,7 +54,7 @@
 					<span class="muted">{{ activity.updatedOn | timePast }}</span>
 				</div>
 			</div>
-			<div class="line nudge-half--ends">
+			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
 						<a href data-tooltip="{{activity.event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'"></a>
@@ -66,16 +66,18 @@
 						<div class="event-header soft-half--sides">
 							<div class="line">
 								<div class="unit one-half">
+									<i class="beta icon-circle nudge-half--right float-left" data-ng-show="activity.event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
+									<i class="beta icon-circle-blank nudge-half--right float-left" data-ng-show="activity.event.privacy == 'inviteonly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
 									<h2 class="flush">
 										<a data-ng-href="/event/{{activity.event._id}}">
-											<i class="zeta icon-unlock nudge-half--right" data-ng-show="activity.event.privacy == 'public'"></i>
-											<i class="zeta icon-lock nudge-half--right" data-ng-show="activity.event.privacy == 'inviteonly'"></i>
 											{{ activity.event.title }}
 										</a>
 									</h2>
 								</div>
 								<div class="unit one-half last-unit text-right">
-									Posted by <a href>Jake Marsh</a>
+									Posted by
+									 <a data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'student'">{{activity.event.creator.firstName}} {{activity.event.creator.lastName}}</a>
+									 <a data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'">{{activity.event.creator.businessName}}</a>
 								</div>
 							</div>
 						</div>
@@ -132,7 +134,7 @@
 					<span class="muted">{{ activity.updatedOn | timePast }}</span>
 				</div>
 			</div>
-			<div class="line nudge-half--ends">
+			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.actor.pictureUrl + ')'}">
 						<a href data-tooltip="{{activity.actor.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type == 'business'"></a>
@@ -144,16 +146,15 @@
 						<div class="event-header soft-half--sides">
 							<div class="line">
 								<div class="unit one-half">
+									<i class="beta icon-circle nudge-half--right float-left" data-ng-show="activity.event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
+									<i class="beta icon-circle-blank nudge-half--right float-left" data-ng-show="activity.event.privacy == 'inviteonly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
 									<h2 class="flush">
 										<a data-ng-href="/event/{{activity.event._id}}">
-											<i class="zeta icon-unlock nudge-half--right" data-ng-show="activity.event.privacy == 'public'"></i>
-											<i class="zeta icon-lock nudge-half--right" data-ng-show="activity.event.privacy == 'inviteonly'"></i>
 											{{ activity.event.title }}
 										</a>
 									</h2>
 								</div>
 								<div class="unit one-half last-unit text-right">
-									Posted by <a href>Jake Marsh</a>
 								</div>
 							</div>
 						</div>
@@ -210,7 +211,7 @@
 					<span class="muted">{{ activity.updatedOn | timePast }}</span>
 				</div>
 			</div>
-			<div class="line nudge-half--ends">
+			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
 						<a href data-tooltip="{{activity.event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'"></a>
@@ -222,16 +223,18 @@
 						<div class="event-header soft-half--sides">
 							<div class="line">
 								<div class="unit one-half">
+									<i class="beta icon-circle nudge-half--right float-left" data-ng-show="activity.event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
+									<i class="beta icon-circle-blank nudge-half--right float-left" data-ng-show="activity.event.privacy == 'inviteonly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
 									<h2 class="flush">
 										<a data-ng-href="/event/{{activity.event._id}}">
-											<i class="zeta icon-unlock nudge-half--right" data-ng-show="activity.event.privacy == 'public'"></i>
-											<i class="zeta icon-lock nudge-half--right" data-ng-show="activity.event.privacy == 'inviteonly'"></i>
 											{{ activity.event.title }}
 										</a>
 									</h2>
 								</div>
 								<div class="unit one-half last-unit text-right">
-									Posted by <a href>Jake Marsh</a>
+									Posted by
+									 <a data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'student'">{{activity.event.creator.firstName}} {{activity.event.creator.lastName}}</a>
+									 <a data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'">{{activity.event.creator.businessName}}</a>
 								</div>
 							</div>
 						</div>
@@ -288,7 +291,7 @@
 					<span class="muted">{{ activity.updatedOn | timePast }}</span>
 				</div>
 			</div>
-			<div class="line nudge-half--ends">
+			<div class="line nudge-half--top">
 				<div class="unit one-tenth">
 					<div class="user-img-comment" data-ng-style="{'background-image': 'url(' + activity.comment.creator.pictureUrl + ')'}">
 						<a href data-ng-show="activity.comment.creator.type == 'student'" data-tooltip="{{activity.comment.creator.firstName}} {{activity.comment.creator.lastName}}" data-tooltip-placement="left" data-ng-href="profile/{{activity.comment.creator.username}}"></a>

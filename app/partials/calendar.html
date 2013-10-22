@@ -50,16 +50,18 @@
 					<div class="event-header soft-half--sides">
 						<div class="line">
 							<div class="unit one-half">
+								<i class="beta icon-circle nudge-half--right float-left" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
+								<i class="beta icon-circle-blank nudge-half--right float-left" data-ng-show="event.privacy == 'inviteonly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
 								<h2 class="flush">
 									<a data-ng-href="/event/{{event._id}}">
-										<i class="zeta icon-unlock nudge-half--right" data-ng-show="event.privacy == 'public'"></i>
-										<i class="zeta icon-lock nudge-half--right" data-ng-show="event.privacy == 'inviteonly'"></i>
 										{{ event.title }}
 									</a>
 								</h2>
 							</div>
 							<div class="unit one-half last-unit text-right">
-								Posted by <a href>Jake Marsh</a>
+								Posted by
+								 <a data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'student'">{{event.creator.firstName}} {{event.creator.lastName}}</a>
+								 <a data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'business'">{{event.creator.businessName}}</a>
 							</div>
 						</div>
 					</div>

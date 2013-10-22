@@ -4,8 +4,8 @@
 			<div class="unit one-half text-left">
 				<h1 class="flush">
 					<span data-ng-bind="event.title"></span>
-					<i class="muted weight--normal zeta icon-lock" data-ng-show="event.privacy == 'inviteonly'"></i>
-					<i class="muted weight--normal zeta icon-unlock" data-ng-show="event.privacy == 'public'"></i>
+					<i class="muted weight--normal zeta icon-circle-blank" data-ng-show="event.privacy == 'inviteonly'" data-tooltip="Invite Only"></i>
+					<i class="muted weight--normal zeta icon-circle" data-ng-show="event.privacy == 'public'" data-tooltip="Public"></i>
 				</h1>
 				<h3 class="flush muted weight--normal">
 					hosted by
