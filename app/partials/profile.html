@@ -11,7 +11,7 @@
 					<a href data-ng-click="openLocation(profile)" data-tooltip="Location" data-ng-show="profile.type == 'business' && profile.loc">
 						<i class="beta icon-map-marker nudge-half--right"></i>
 					</a>
-					<a href="http://www.google.com/" target="_blank" data-tooltip="Website" data-ng-show="profile.type == 'business'">
+					<a data-ng-href="{{profile.website}}" target="_blank" data-tooltip="Website" data-ng-show="profile.type == 'business' && profile.website">
 						<i class="beta icon-paper-clip nudge-half--right"></i>
 					</a>
 					<a href="http://www.twitter.com/" target="_blank" data-tooltip="Twitter">

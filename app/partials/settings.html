@@ -23,7 +23,7 @@
 						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" />
 					</div>
 				</div>
-				<div class="line nudge-half--bottom" data-ng-show="user.type == 'student'">
+				<div class="line nudge-half--bottom">
 					<div class="unit label-container two-twelfths">
 						<label for="school" class="caps weight--bold">School</label>
 					</div>
@@ -66,10 +66,18 @@
 				</div>
 				<div class="line nudge-half--bottom" data-ng-show="user.type == 'business'" >
 					<div class="unit label-container two-twelfths">
-						<label for="userBusinessDescription" class="caps weight--bold">Address</label>
+						<label for="locationAddress" class="caps weight--bold">Address</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location" data-ng-blur="checkAddress()" data-ng-required="!eventLocation" />
+						<input type="text" class="full-width" id="locationAddress" name="locationAddress" data-ng-model="locationAddress" placeholder="Address of your location" data-ng-blur="checkAddress()" />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom" data-ng-show="user.type == 'business'" >
+					<div class="unit label-container two-twelfths">
+						<label for="websiteAddress" class="caps weight--bold">Website</label>
+					</div>
+					<div class="unit ten-twelfths last-unit">
+						<input type="text" class="full-width" id="websiteAddress" name="websiteAddress" data-ng-model="websiteAddress" placeholder="Your website address" />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">

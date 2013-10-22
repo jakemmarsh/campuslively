@@ -18,6 +18,7 @@ define(['./index'], function (controllers) {
     		$scope.userBusinessDescription = $rootScope.user.businessDescription;
     		$scope.userEmailBusiness = $rootScope.user.email;
     		$scope.locationAddress = $rootScope.user.address;
+    		$scope.websiteAddress = $rootScope.user.website;
     	}
 
     	if($scope.userSchool) {
@@ -59,7 +60,6 @@ define(['./index'], function (controllers) {
 		    	locationService.checkAddress($scope.locationAddress.split(' ').join('+')).then(function (data) {
 					if(data) {
 			    		if(data.results.length > 0) {
-			    			// $scope.locationMap.panTo(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
 			    			$scope.loc = {
 			    				type: 'Point',
 				    			coordinates: [data.results[0].geometry.location.lat.toFixed(2), data.results[0].geometry.location.lng.toFixed(2)]
@@ -96,9 +96,6 @@ define(['./index'], function (controllers) {
 
 			// populate updateParams with any changed fields
 			if($rootScope.user.type == 'student') {
-				if($rootScope.user.school !== $scope.userSchool && $scope.userSchool) {
-					updateParams.school = $scope.userSchool;
-				}
 				if($rootScope.user.firstName !== $scope.userFirstName && $scope.userFirstName.length > 0) {
 					updateParams.firstName = $scope.userFirstName;
 				}
@@ -125,11 +122,23 @@ define(['./index'], function (controllers) {
 				if($scope.locationAddress !== $rootScope.user.address && $scope.locationAddress.length > 0) {
 					updateParams.address = toTitleCase($scope.locationAddress);
 				}
+				if($scope.websiteAddress.length > 0) {
+					if($scope.websiteAddress.indexOf('http://') == -1 || $scope.websiteAddress.indexOf('https://') == -1) {
+						$scope.websiteAddress = 'http://' + $scope.websiteAddress;
+					}
+					updateParams.website = $scope.websiteAddress;
+				}
+				else {
+					updateParams.website = null;
+				}
 			}
 			if($scope.userPassword) {
 				if($scope.userPassword.length > 0) {
 					updateParams.password = $scope.userPassword;
 				}
+			}
+			if($rootScope.user.school !== $scope.userSchool && $scope.userSchool) {
+				updateParams.school = $scope.userSchool;
 			}
 
 			if($scope.newUserImage) {

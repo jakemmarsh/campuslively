@@ -42,6 +42,7 @@ var userSchema = new mongoose.Schema({
       type: { type: String }, 
       coordinates: [Number]
     },
+    website: String,
     pictureUrl: {
         type: String,
         default: 'http://s3.amazonaws.com/campuslively/user_imgs/default.png',
