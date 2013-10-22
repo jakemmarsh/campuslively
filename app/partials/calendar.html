@@ -1,14 +1,17 @@
 <div class="white-top">
 	<div class="container full-height">
-		<div class="table full-height">
-			<div class="td vertical-align-middle">
+		<div class="table full-height full-width">
+			<div class="td vertical-align-middle one-half">
 				<h1 class="flush blue">Events Calendar</h1>
+			</div>
+			<div class="td vertical-align-middle one-half text-right">
+				<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions" class="float-right"></ng-switch-toggle-group>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="container soft-half--ends">
-	<div data-ui-calendar="calendarOptions" data-ng-model="eventSource" class="nudge-half--bottom"></div>
+	<div data-ui-calendar="calendarOptions" data-ng-model="events" data-calendar="eventCalendar" class="nudge-half--bottom"></div>
 	<div data-ng-show="loadingDayEvents" class="text-center soft--ends">
 		<div class="box island inline-block">
 			<h1 class="flush blue">Loading events...</h1>

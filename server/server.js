@@ -84,6 +84,7 @@ app.configure(function() {
     app.get('/api/v1/event/school/:schoolId/skip/:skip/limit/:limit', restrict, routes.event.getEventsBySchoolOlder);
 
     app.get('/api/v1/event/school/:schoolId/day/:date', restrict, routes.event.getEventsBySchoolAndDay);
+    app.get('/api/v1/event/lat/:lat/lng/:lng/day/:date', restrict, routes.event.getEventsByLocationAndDay);
 
     app.get('/api/v1/event/user/:userId/limit/:limit', restrict, routes.event.getEventsByUser);
     app.get('/api/v1/event/user/:userId', restrict, routes.event.getEventsByUser);

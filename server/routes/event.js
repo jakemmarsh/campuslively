@@ -218,6 +218,59 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 	});
 };
 
+exports.getEventsByLocationAndDay = function(req, res) {
+	var getEvents = function(lat, lng, day) {
+		var deferred = Q.defer(),
+			eventPopulateObj = [
+				{ path: 'location' },
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'comments' },
+                { path: 'school' }
+			],
+			commentPopulateObj = [
+				{ path: 'creator' },
+				{ path: 'subComments.creator'}
+			],
+			locationPoint = {
+					type: 'Point',
+					coordinates: [lat, lng]
+			},
+			floorDay = new Date(day),
+			ceilingDay = new Date(day);
+
+		// set floor and ceiling for querying events
+		floorDay.setDate(floorDay.getDate() - 1);
+		ceilingDay.setDate(ceilingDay.getDate() + 1);
+
+		Event.find({ loc : { $near : locationPoint }, startDate: { $gt: floorDay, $lt: ceilingDay } })
+		.populate(eventPopulateObj)
+		.exec(function (err, retrievedEvents) {
+	        if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvents);
+					}
+				});
+         	}
+	    });
+
+		return deferred.promise;
+	};
+
+	getEvents(req.params.lat, req.params.lng, req.params.date).then(function(retrievedEvents) {
+		res.json(200, retrievedEvents);
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
 exports.getEventsByUser = function(req, res) {
 	var getEvents = function(userId) {
 		var deferred = Q.defer(),

@@ -91,6 +91,17 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		getEventsByLocationAndDay: function(lat, lng, date) {
+			var deferred = $q.defer();
+
+			$http.get(this.apiPath + 'lat/' + lat + '/lng/' + lng + '/day/' + date).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		getEventsByUser: function(userId, limit) {
 			var deferred = $q.defer(),
 				limit = (typeof limit === "undefined") ? null : limit;

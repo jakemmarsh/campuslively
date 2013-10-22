@@ -1,56 +1,152 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('calendarCtrl', function ($scope, $rootScope, $location, $anchorScroll, $timeout, $modal, eventService) {
+    controllers.controller('calendarCtrl', function ($scope, $rootScope, $location, $anchorScroll, $timeout, $modal, eventService, locationService) {
     	$scope.showDay = false;
 
-      $scope.events = [];
-      eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
-        for(var i = 0; i < data.length; i++) {
-          var event = {
-            title: data[i].title,
-            start: data[i].startDate,
-            editable: false
-          };
-          $scope.events.push(event);
-        }
-      }, function(err, status) {
+      $scope.currentView = 'school';
       
+      $scope.viewOptions = [{
+          label: 'My School',
+          value: 'school'
+        },
+        {
+          label: 'Nearby',
+          value: 'nearby'
+        }
+      ];
+
+      $scope.events = [];
+      $scope.$watch('currentView', function() {
+        // remove any previous events before adding to avoid duplicates
+        $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+        $scope.events = [];
+
+        $scope.showDay = false;
+        if($scope.currentView == 'school') {
+          eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
+            for(var i = 0; i < data.length; i++) {
+              var event = {
+                title: data[i].title,
+                start: data[i].startDate,
+                editable: false,
+                id: data[i]._id
+              };
+              // highlight events that user has RSVP'd to
+              for(var j = 0; j < data[i].attending.length; j++) {
+                if(data[i].attending[j]._id == $rootScope.user._id) {
+                  event.backgroundColor = '#4fbda2';
+                  break;
+                }
+              }
+              $scope.events.push(event);
+            }
+            $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+          }, function(err, status) {
+          
+          });
+        }
+        else if($scope.currentView == 'nearby') {
+          if(!$rootScope.userPosition) {
+            locationService.getGeo().then(function (data) {
+              $rootScope.userPosition = data;
+              eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
+                for(var i = 0; i < data.length; i++) {
+                  var event = {
+                    title: data[i].title,
+                    start: data[i].startDate,
+                    editable: false,
+                    id: data[i]._id
+                  };
+                  // highlight events that user has RSVP'd to
+                  for(var j = 0; j < data[i].attending.length; j++) {
+                    if(data[i].attending[j]._id == $rootScope.user._id) {
+                      event.backgroundColor = '#4fbda2';
+                      break;
+                    }
+                  }
+                  $scope.events.push(event);
+                }
+                $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+              }, function(err, status) {
+              });
+            },
+            function (errorMessage) {
+                console.log(errorMessage);
+            });
+          }
+          else {
+            eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
+              for(var i = 0; i < data.length; i++) {
+                var event = {
+                  title: data[i].title,
+                  start: data[i].startDate,
+                  editable: false,
+                  id: data[i]._id
+                };
+                // highlight events that user has RSVP'd to
+                for(var j = 0; j < data[i].attending.length; j++) {
+                  if(data[i].attending[j]._id == $rootScope.user._id) {
+                    event.backgroundColor = '#4fbda2';
+                    break;
+                  }
+                }
+                $scope.events.push(event);
+              }
+              // remove any previous events before adding to avoid duplicates
+              $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+              $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+            }, function(err, status) {
+            });
+          }
+        }
       });
 
-      $scope.eventSource = [
-	        {
-	            title: 'Event1',
-	            start: '2013-09-18'
-	        },
-	        {
-	            title: 'Event2',
-	            start: '2011-05-05'
-	        }
-    	];
-
     	$scope.dayClick = function( date, allDay, jsEvent, view ){
-    		if(!$scope.$$phase) {         
+    		if(!$scope.$$phase) {        
           		$scope.$apply(function() {
         				$scope.selectedDay = date;
                 $scope.loadingDayEvents = true;
                 $scope.dayEvents = [];
-                eventService.getEventsBySchoolAndDay($rootScope.user.school._id, $scope.selectedDay).then(function (data, status) {
-                  $scope.loadingDayEvents = false;
-                  $scope.dayEvents = data;
-                  $scope.showDay = true;
+                if($scope.currentView == 'school') {
+                  eventService.getEventsBySchoolAndDay($rootScope.user.school._id, $scope.selectedDay).then(function (data, status) {
+                    $scope.loadingDayEvents = false;
+                    $scope.dayEvents = data;
+                    $scope.showDay = true;
 
-                  $scope.$watch('showDay', function(newval){
-                      if(newval === true) {
-                        // scroll to specific day's events
-                        var old = $location.hash();
-                        $location.hash('dayEvents');
-                        $anchorScroll();
-                        $location.hash(old);
-                      }
+                    $scope.$watch('showDay', function(newval){
+                        if(newval === true) {
+                          // scroll to specific day's events
+                          var old = $location.hash();
+                          $location.hash('dayEvents');
+                          $anchorScroll();
+                          $location.hash(old);
+                        }
+                    });
+                  }, function(err, status) {
+                    console.log(err.message);
                   });
-                }, function(err, status) {
-                  console.log(err.message);
-                });
+                }
+                else if($scope.currentView == 'nearby') {
+                  console.log('nearby');
+                  eventService.getEventsByLocationAndDay($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.selectedDay).then(function (data, status) {
+                    console.log(data);
+                    $scope.loadingDayEvents = false;
+                    $scope.dayEvents = data;
+                    $scope.showDay = true;
+
+                    $scope.$watch('showDay', function(newval){
+                        if(newval === true) {
+                          // scroll to specific day's events
+                          var old = $location.hash();
+                          $location.hash('dayEvents');
+                          $anchorScroll();
+                          $location.hash(old);
+                        }
+                    });
+                  }, function(err, status) {
+                    console.log(err.message);
+                  });
+                }
           		});        
         	}
 	    };
@@ -73,6 +169,15 @@ define(['./index'], function (controllers) {
                       break;
                   }
               }
+              for (var i = 0; i < $scope.events.length; i++) {
+                if($scope.events[i].id == eventId) {
+                  // highlight event on calendar
+                  $scope.events[i].backgroundColor = '#4fbda2';
+                  $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+                  $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+                  break;
+                }
+              }
           },
           function (errorMessage) {
               console.log(errorMessage);
@@ -86,6 +191,15 @@ define(['./index'], function (controllers) {
                       $scope.dayEvents[i] = data;
                       break;
                   }
+              }
+              for (var i = 0; i < $scope.events.length; i++) {
+                if($scope.events[i].id == eventId) {
+                  // un-highlight event on calendar
+                  $scope.events[i].backgroundColor = '#315273';
+                  $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+                  $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+                  break;
+                }
               }
           },
           function (errorMessage) {
