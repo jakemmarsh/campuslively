@@ -65,9 +65,42 @@ define(['./index'], function (controllers) {
           dayClick: $scope.dayClick
       };
 
-    	$scope.toggleAttending = function(eventId) {
-    		$scope.attending = !$scope.attending;
-    	};
+    	$scope.rsvpToEvent = function(eventId) {
+          eventService.rsvp(eventId, $rootScope.user._id).then(function (data) {
+              for (var i = 0; i < $scope.dayEvents.length; i++) {
+                  if($scope.dayEvents[i]._id == eventId) {
+                      $scope.dayEvents[i] = data;
+                      break;
+                  }
+              }
+          },
+          function (errorMessage) {
+              console.log(errorMessage);
+          });
+      };
+
+      $scope.unRsvpToEvent = function(eventId) {
+          eventService.unRsvp(eventId, $rootScope.user._id).then(function (data) {
+              for (var i = 0; i < $scope.dayEvents.length; i++) {
+                  if($scope.dayEvents[i]._id == eventId) {
+                      $scope.dayEvents[i] = data;
+                      break;
+                  }
+              }
+          },
+          function (errorMessage) {
+              console.log(errorMessage);
+          });
+      };
+
+      $scope.isAttending = function(event) {
+          for(var i = 0; i < event.attending.length; i++) {
+              if(event.attending[i]._id == $rootScope.user._id) {
+                  return true;
+              }
+          }
+          return false;
+      };
 
   		$scope.openAttending = function (event) {
           var modalInstance = $modal.open({
