@@ -19,7 +19,6 @@ define(['./index'], function (controllers) {
     			$scope.venues = (data.response.venues);
 		    },
 		    function (errorMessage) {
-		        console.log(errorMessage);
 		    });
     	};
 
@@ -30,7 +29,6 @@ define(['./index'], function (controllers) {
 	            getVenues($rootScope.userPosition);
 	        },
 	        function (errorMessage) {
-	            console.log(errorMessage);
 	        });
 	    }
 	    else {
@@ -121,7 +119,6 @@ define(['./index'], function (controllers) {
 					if(data) {
 			    		if(data.results.length > 0) {
 			    			address = data.results[0];
-			    			console.log(data.results);
 			    			$scope.locationMap.panTo(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
 			    			$scope.event.loc = {
 			    				type: 'Point',
