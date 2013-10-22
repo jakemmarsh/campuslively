@@ -128,15 +128,23 @@ define(['./index'], function (controllers) {
               resolve: {
                 items: function() {
                     return event.attending;
-                }
+                },
+                location: null
               }
             });
         };
 
-        $scope.openLocation = function () {
+        $scope.openLocation = function (profile) {
             var modalInstance = $modal.open({
               templateUrl: 'locationModal.html',
-              controller: 'modalInstanceCtrl'
+              controller: 'modalInstanceCtrl',
+              resolve: {
+                location: function() {
+                    profile.loc.address = profile.address;
+                    return profile.loc;
+                },
+                items: null
+              }
             });
         };
     });

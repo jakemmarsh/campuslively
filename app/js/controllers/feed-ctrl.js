@@ -71,7 +71,8 @@ define(['./index'], function (controllers) {
               resolve: {
                 items: function() {
                     return event.attending;
-                }
+                },
+                location: null
               }
             });
         };

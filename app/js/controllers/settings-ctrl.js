@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('settingsCtrl', function ($scope, $rootScope, $modal, userService, schoolService, authService) {
+    controllers.controller('settingsCtrl', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
@@ -17,6 +17,7 @@ define(['./index'], function (controllers) {
     		$scope.userBusinessName = $rootScope.user.businessName;
     		$scope.userBusinessDescription = $rootScope.user.businessDescription;
     		$scope.userEmailBusiness = $rootScope.user.email;
+    		$scope.locationAddress = $rootScope.user.address;
     	}
 
     	if($scope.userSchool) {
@@ -52,6 +53,26 @@ define(['./index'], function (controllers) {
 	    	}
 	    };
 
+	    // attempt to get latitude and longitude as address is entered
+	    $scope.checkAddress = function() {
+	    	if($scope.locationAddress) {
+		    	locationService.checkAddress($scope.locationAddress.split(' ').join('+')).then(function (data) {
+					if(data) {
+			    		if(data.results.length > 0) {
+			    			// $scope.locationMap.panTo(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
+			    			$scope.loc = {
+			    				type: 'Point',
+				    			coordinates: [data.results[0].geometry.location.lat.toFixed(2), data.results[0].geometry.location.lng.toFixed(2)]
+			    			};
+			    		}
+			    	}
+				},
+				function (errorMessage) {
+					console.log(errorMessage);
+		        });
+		    }
+	    };
+
     	$scope.open = function (modal) {
 		  	if (modal.toLowerCase() == 'twitter') {
 			    var modalInstance = $modal.open({
@@ -68,7 +89,11 @@ define(['./index'], function (controllers) {
 		};
 
 		$scope.saveChanges = function() {
-			var updateParams = {};
+			var updateParams = {},
+				toTitleCase = function(str) {
+    				return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+				};
+
 			// populate updateParams with any changed fields
 			if($rootScope.user.type == 'student') {
 				if($rootScope.user.school !== $scope.userSchool && $scope.userSchool) {
@@ -93,6 +118,12 @@ define(['./index'], function (controllers) {
 				}
 				if($rootScope.user.email !== $scope.userEmailBusiness && $scope.userEmailBusiness.length > 0) {
 					updateParams.email = $scope.userEmailBusiness;
+				}
+				if($scope.loc) {
+					updateParams.loc = $scope.loc;
+				}
+				if($scope.locationAddress !== $rootScope.user.address && $scope.locationAddress.length > 0) {
+					updateParams.address = toTitleCase($scope.locationAddress);
 				}
 			}
 			if($scope.userPassword) {

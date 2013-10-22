@@ -37,6 +37,11 @@ var userSchema = new mongoose.Schema({
     businessName: String,
     businessDescription: String,
     businessPictureUrls: [String],
+    address: String,
+    loc: {
+      type: { type: String }, 
+      coordinates: [Number]
+    },
     pictureUrl: {
         type: String,
         default: 'http://s3.amazonaws.com/campuslively/user_imgs/default.png',
@@ -58,5 +63,7 @@ var userSchema = new mongoose.Schema({
     activationKey: String,
     passwordResetKey: String
 });
+
+userSchema.index({ loc : '2dsphere' });
 
 module.exports = mongoose.model('User', userSchema);

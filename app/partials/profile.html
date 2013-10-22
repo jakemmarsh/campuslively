@@ -8,7 +8,7 @@
 				<h1 class="flush" data-ng-show="profile.type == 'student'"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span></h1>
 				<h1 class="flush" data-ng-show="profile.type == 'business'" data-ng-bind="profile.businessName"></h1>
 				<div class="normal-lh">
-					<a href data-ng-click="openLocation()" data-tooltip="Location" data-ng-show="profile.type == 'business'">
+					<a href data-ng-click="openLocation(profile)" data-tooltip="Location" data-ng-show="profile.type == 'business' && profile.loc">
 						<i class="beta icon-map-marker nudge-half--right"></i>
 					</a>
 					<a href="http://www.google.com/" target="_blank" data-tooltip="Website" data-ng-show="profile.type == 'business'">
@@ -177,12 +177,7 @@
         <h2 class="flush">Location</h2>
     </div>
     <div class="modal-body">
-        <ul>
-            <li ng-repeat="item in items">
-                <a ng-click="selected.item = item">{{ item }}</a>
-            </li>
-        </ul>
-        Selected: <b>{{ selected.item }}</b>
+        <div data-ui-map="locationMap" data-ui-options="mapOptions" data-ui-event="{'map-tilesloaded': 'placeMarker(locationMap)'}" class="map nudge--ends"></div>
     </div>
     <div class="modal-footer">
         <button class="btn" data-ng-click="ok()">Close</button>

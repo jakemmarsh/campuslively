@@ -64,6 +64,14 @@
 						<textarea id="userBusinessDescription" name="userBusinessDescription" data-ng-model="userBusinessDescription" class="full-width medium" placeholder="Description of your club or group"></textarea>
 					</div>
 				</div>
+				<div class="line nudge-half--bottom" data-ng-show="user.type == 'business'" >
+					<div class="unit label-container two-twelfths">
+						<label for="userBusinessDescription" class="caps weight--bold">Address</label>
+					</div>
+					<div class="unit ten-twelfths last-unit">
+						<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location" data-ng-blur="checkAddress()" data-ng-required="!eventLocation" />
+					</div>
+				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit label-container two-twelfths">
 						<label for="userEmail" class="caps weight--bold">Email</label>
