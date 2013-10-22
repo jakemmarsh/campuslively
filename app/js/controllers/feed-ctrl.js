@@ -35,23 +35,6 @@ define(['./index'], function (controllers) {
             });
         };
 
-    	$scope.rsvpToEvent = function(activityIndex, eventId) {
-            console.log(activityIndex);
-            eventService.rsvp(eventId, $rootScope.user._id).then(function (data) {
-                $scope.activities[activityIndex].event = data;
-            },
-            function (errorMessage) {
-            });
-        };
-
-        $scope.unRsvpToEvent = function(activityIndex, eventId) {
-            eventService.unRsvp(eventId, $rootScope.user._id).then(function (data) {
-                $scope.activities[activityIndex].event = data;
-            },
-            function (errorMessage) {
-            });
-        };
-
         $scope.isAttending = function(event) {
             if(event) {
                 if(event.attending) {
@@ -65,12 +48,6 @@ define(['./index'], function (controllers) {
             return false;
         };
 
-		$scope.openAttending = function (eventId) {
-		    var modalInstance = $modal.open({
-		      templateUrl: 'attendingModal.html',
-		      controller: 'modalInstanceCtrl'
-		    });
-		};
     	$scope.rsvpToEvent = function(activity) {
             eventService.rsvp(activity.event._id, $rootScope.user._id).then(function (data) {
                 activity.event = data;
@@ -87,5 +64,16 @@ define(['./index'], function (controllers) {
             });
         };
 
+		$scope.openAttending = function (event) {
+            var modalInstance = $modal.open({
+              templateUrl: 'attendingModal.html',
+              controller: 'modalInstanceCtrl',
+              resolve: {
+                items: function() {
+                    return event.attending;
+                }
+              }
+            });
+        };
     });
 });

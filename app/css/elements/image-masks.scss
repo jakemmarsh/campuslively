@@ -9,8 +9,9 @@
 	position: relative;
 }
 
-.user-img-sidebar {
+.user-img-modal {
 	@include user-img(45px);
+	display: inline-block;
 }
 
 .user-img-comment {
@@ -19,11 +20,8 @@
 
 .user-img-going {
 	@include user-img(35px);
+	display: inline-block;
 }
-
-	.user-img-going {
-		display: inline-block;
-	}
 
 .user-img-subcomment {
 	@include user-img(40px);
@@ -57,7 +55,7 @@
 		display: block;
 	}
 
-	.user-img-comment a, .user-img-event a, .user-img-subcomment a, .user-img-going a, .user-img-subscriptions a {
+	.user-img-comment a, .user-img-event a, .user-img-subcomment a, .user-img-going a, .user-img-subscriptions a, .user-img-modal a {
 		display: block;
 		height: 100%;
 		width: 100%;

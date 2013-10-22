@@ -69,12 +69,17 @@ define(['./index'], function (controllers) {
     		$scope.attending = !$scope.attending;
     	};
 
-  		$scope.openAttending = function (eventId) {
-  		    var modalInstance = $modal.open({
-  		      templateUrl: 'attendingModal.html',
-  		      controller: 'modalInstanceCtrl'
-  		    });
-  		};
+  		$scope.openAttending = function (event) {
+          var modalInstance = $modal.open({
+            templateUrl: 'attendingModal.html',
+            controller: 'modalInstanceCtrl',
+            resolve: {
+              items: function() {
+                return event.attending;
+              }
+            }
+          });
+      };
 
       $scope.sortOptions = [{
         label: 'by start date',

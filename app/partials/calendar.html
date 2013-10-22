@@ -93,7 +93,7 @@
 							</div>
 							<div class="td one-fourth text-right soft-half--right vertical-align-middle">
 								<div class="action-buttons nudge-half--right">
-									<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
+									<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(event)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
 									<a href data-ng-click="rsvpToEvent(event._id)" data-ng-hide="isAttending(event)"><i class="icon-thumbs-up"></i> RSVP</a>
 									<a href data-ng-click="unRsvpToEvent(event._id)" data-ng-show="isAttending(event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
 								</div>
@@ -114,12 +114,13 @@
         <h2 class="flush">Attending</h2>
     </div>
     <div class="modal-body">
-        <ul>
-            <li ng-repeat="item in items">
-                <a ng-click="selected.item = item">{{ item }}</a>
-            </li>
-        </ul>
-        Selected: <b>{{ selected.item }}</b>
+        <div data-ng-repeat="attendingUser in items" class="user-img-modal nudge-half--right" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
+			<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-ng-show="attendingUser.type == 'student'" data-tooltip="{{attendingUser.firstName}} {{attendingUser.lastName}}" data-tooltip-placement="right"></a>
+			<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-ng-show="attendingUser.type == 'business'" data-tooltip="{{attendingUser.businessName}}" data-tooltip-placement="right"></a>
+		</div>
+		<div data-ng-hide="items.length">
+			<h2 class="flush text-center">No one has RSVPd to this event yet!</h2>
+		</div>
     </div>
     <div class="modal-footer">
         <button class="btn" data-ng-click="ok()">Close</button>

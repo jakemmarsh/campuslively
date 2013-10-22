@@ -160,17 +160,15 @@ define(['./index'], function (controllers) {
 			}
 		};
 
-		$scope.openRSVP = function (eventId) {
-		    var modalInstance = $modal.open({
-		      templateUrl: 'rsvpModal.html',
-		      controller: 'modalInstanceCtrl'
-		    });
-		};
-
-		$scope.openAttending = function (eventId) {
+		$scope.openAttending = function (event) {
 		    var modalInstance = $modal.open({
 		      templateUrl: 'attendingModal.html',
-		      controller: 'modalInstanceCtrl'
+		      controller: 'modalInstanceCtrl',
+		      resolve: {
+		      	items: function() {
+		      		return event.attending;
+		      	}
+		      }
 		    });
 		};
     	
