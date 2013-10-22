@@ -53,10 +53,12 @@ define(['./index'], function (controllers) {
         };
 
         $scope.isAttending = function(event) {
-            if(event.attending) {
-                for(var i = 0; i < event.attending.length; i++) {
-                    if(event.attending[i] == $rootScope.user._id) {
-                        return true;
+            if(event) {
+                if(event.attending) {
+                    for(var i = 0; i < event.attending.length; i++) {
+                        if(event.attending[i] == $rootScope.user._id) {
+                            return true;
+                        }
                     }
                 }
             }

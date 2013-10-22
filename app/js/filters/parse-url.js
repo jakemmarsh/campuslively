@@ -21,8 +21,10 @@ define(['./index'], function (filters) {
     ];
  
     return function (text) {
-        for (var i = 0; replacements.length > i; i++) {
-            text = text.replace(replacements[i].search, replacements[i].replace);
+        if(text) {
+            for (var i = 0; replacements.length > i; i++) {
+                text = text.replace(replacements[i].search, replacements[i].replace);
+            }
         }
  
         return text;
