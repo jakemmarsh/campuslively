@@ -7,12 +7,8 @@
 	@include corners();
 }
 
-.map:after {
-	content: url('../img/foursquare.png');
-	position: absolute;
-	top: 0;
-	right: 10px;
-	z-index: 999;
+.gm-style-iw a {
+	font-weight: bold !important;
 }
 
 img[src*="maps.gstatic.com/"], img[src*="maps.googleapis.com/"] {

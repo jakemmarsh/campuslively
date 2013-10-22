@@ -48,3 +48,11 @@
 		width: -moz-calc(100% - 33px);
 		width: calc(100% - 33px);
 	}
+
+input.foursquare {
+	background: #fff url('../img/foursquare.png') no-repeat 98% 5px; 
+}
+
+	input.foursquare:focus, input.foursquare:active {
+		background: #fff;
+	}
