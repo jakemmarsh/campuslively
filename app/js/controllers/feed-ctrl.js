@@ -56,7 +56,7 @@ define(['./index'], function (controllers) {
             if(event) {
                 if(event.attending) {
                     for(var i = 0; i < event.attending.length; i++) {
-                        if(event.attending[i] == $rootScope.user._id) {
+                        if(event.attending[i]._id == $rootScope.user._id || event.attending[i] == $rootScope.user._id) {
                             return true;
                         }
                     }
@@ -71,5 +71,21 @@ define(['./index'], function (controllers) {
 		      controller: 'modalInstanceCtrl'
 		    });
 		};
+    	$scope.rsvpToEvent = function(activity) {
+            eventService.rsvp(activity.event._id, $rootScope.user._id).then(function (data) {
+                activity.event = data;
+            },
+            function (errorMessage) {
+            });
+        };
+
+        $scope.unRsvpToEvent = function(activity) {
+            eventService.unRsvp(activity.event._id, $rootScope.user._id).then(function (data) {
+                activity.event = data;
+            },
+            function (errorMessage) {
+            });
+        };
+
     });
 });

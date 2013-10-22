@@ -109,9 +109,9 @@
 								</div>
 								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
 									<div class="action-buttons nudge-half--right">
-										<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(activity.event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
-										<a href data-ng-click="rsvpToEvent(activity.event._id)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
-										<a href data-ng-click="unRsvpToEvent(activity.event._id)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
+										<a class="first" data-ng-class="{green: isAttending(activity.event)}" href data-ng-click="openAttending(activity.event)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
+										<a href data-ng-click="rsvpToEvent(activity)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
+										<a href data-ng-click="unRsvpToEvent(activity)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
 									</div>
 									<div class="action-buttons green">
 										<a href data-ng-href="/event/{{activity.event._id}}">Details <i class="icon-chevron-right epsilon"></i></a>
@@ -186,9 +186,9 @@
 								</div>
 								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
 									<div class="action-buttons nudge-half--right">
-										<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(activity.event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
-										<a href data-ng-click="rsvpToEvent(activity.event._id)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
-										<a href data-ng-click="unRsvpToEvent(activity.event._id)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
+										<a class="first" data-ng-class="{green: isAttending(activity.event)}" href data-ng-click="openAttending(activity.event)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
+										<a href data-ng-click="rsvpToEvent(activity)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
+										<a href data-ng-click="unRsvpToEvent(activity)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
 									</div>
 									<div class="action-buttons green">
 										<a href data-ng-href="/event/{{activity.event._id}}">Details <i class="icon-chevron-right epsilon"></i></a>
@@ -266,9 +266,9 @@
 								</div>
 								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
 									<div class="action-buttons nudge-half--right">
-										<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(activity.event._id)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
-										<a href data-ng-click="rsvpToEvent(activity.event._id)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
-										<a href data-ng-click="unRsvpToEvent(activity.event._id)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
+										<a class="first" data-ng-class="{green: isAttending(activity.event)}" href data-ng-click="openAttending(activity.event)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
+										<a href data-ng-click="rsvpToEvent(activity)" data-ng-hide="isAttending(activity.event)"><i class="icon-thumbs-up"></i> RSVP</a>
+										<a href data-ng-click="unRsvpToEvent(activity)" data-ng-show="isAttending(activity.event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
 									</div>
 									<div class="action-buttons green">
 										<a href data-ng-href="/event/{{activity.event._id}}">Details <i class="icon-chevron-right epsilon"></i></a>
