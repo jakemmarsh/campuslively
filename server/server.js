@@ -77,6 +77,8 @@ app.configure(function() {
     app.get('/api/v1/school/all', routes.school.getAllSchools);
 
     // events
+    app.get('/api/v1/event/count', routes.event.getCount);
+
     app.get('/api/v1/event/:eventId', restrict, routes.event.getEvent);
 
     app.get('/api/v1/event/school/:schoolId/limit/:limit', restrict, routes.event.getEventsBySchool);

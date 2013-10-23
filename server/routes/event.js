@@ -16,6 +16,33 @@ AWS.config.update({
 	secretAccessKey: config.aws.secret
 });
 
+exports.getCount = function(req, res) {
+	var getCount = function() {
+		var deferred = Q.defer();
+
+		Event.count({}, function(err, count){
+		    if(err) {
+				deferred.reject(err);
+			}
+			else {
+				deferred.resolve(count);
+			}
+		});
+
+		return deferred.promise;
+	};
+
+	getCount().then(function(count) {
+		var dataToSend = {
+			count: count
+		};
+
+		res.send(200, dataToSend);
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
 exports.getEvent = function(req, res) {
 	var getEvent = function(eventId) {
 		var deferred = Q.defer(),
