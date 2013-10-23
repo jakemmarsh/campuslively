@@ -136,9 +136,9 @@
 			</div>
 			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
-					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.actor.pictureUrl + ')'}">
-						<a href data-tooltip="{{activity.actor.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type == 'business'"></a>
-						<a href data-tooltip="{{activity.actor.firstName}} {{activity.actor.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type == 'student'"></a>
+					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
+						<a href data-tooltip="{{activity.event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'"></a>
+						<a href data-tooltip="{{activity.event.creator.firstName}} {{activity.event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'student'"></a>
 					</div>
 				</div>
 				<div class="unit eleven-twelfths last-unit">

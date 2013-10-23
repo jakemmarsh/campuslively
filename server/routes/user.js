@@ -391,10 +391,16 @@ exports.getActivities = function(req, res) {
 		var deferred = Q.defer(),
 			activityPopulateObj = [
 				{ path: 'event' },
+				{ path: 'event.creator' },
 				{ path: 'comment' },
 				{ path: 'actor' },
-				{ path: 'recipient' }
-			];
+				{ path: 'recipient' },
+				{ path: 'event.creator' }
+			],
+			eventPopulateObj = {
+				path: 'event.creator',
+				model: User
+			};
 
 		if(req.params.limit) {
 			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id} })
@@ -404,7 +410,14 @@ exports.getActivities = function(req, res) {
 					deferred.reject(new Error("No events found."));
 				}
 				else {
-					deferred.resolve(retrievedActivities);
+					User.populate(retrievedActivities, eventPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedActivities);
+						}
+					});
 				}
 			});
 		}
@@ -417,7 +430,14 @@ exports.getActivities = function(req, res) {
 					deferred.reject(new Error("No events found."));
 				}
 				else {
-					deferred.resolve(retrievedActivities);
+					User.populate(retrievedActivities, eventPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedActivities);
+						}
+					});
 				}
 			});
 		}
@@ -458,7 +478,11 @@ exports.getActivitiesOlder = function(req, res) {
 				{ path: 'comment' },
 				{ path: 'actor' },
 				{ path: 'recipient' }
-			];
+			],
+			eventPopulateObj = {
+				path: 'event.creator',
+				model: User
+			};
 
 		Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id} })
 		.skip(skip)
@@ -469,7 +493,14 @@ exports.getActivitiesOlder = function(req, res) {
 				deferred.reject(new Error("No events found."));
 			}
 			else {
-				deferred.resolve(retrievedActivities);
+				User.populate(retrievedActivities, eventPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedActivities);
+					}
+				});
 			}
 		});
 
