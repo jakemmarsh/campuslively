@@ -1,4 +1,4 @@
-@mixin user-img($size) {
+@mixin circle-img($size) {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;
@@ -10,25 +10,25 @@
 }
 
 .user-img-modal {
-	@include user-img(45px);
+	@include circle-img(45px);
 	display: inline-block;
 }
 
 .user-img-comment {
-	@include user-img(60px);
+	@include circle-img(60px);
 }
 
 .user-img-going {
-	@include user-img(35px);
+	@include circle-img(35px);
 	display: inline-block;
 }
 
 .user-img-subcomment {
-	@include user-img(40px);
+	@include circle-img(40px);
 }
 
 .user-img-event, .user-img-subscriptions {
-	@include user-img(70px);
+	@include circle-img(70px);
 }
 
 	.user-img-subscriptions {
@@ -62,11 +62,11 @@
 	}
 
 .user-img-profile {
-	@include user-img(90px);
+	@include circle-img(90px);
 }
 
 .user-img-settings {
-	@include user-img(120px);
+	@include circle-img(120px);
 }
 
 .event-img {
@@ -78,4 +78,9 @@
 	width: 100%;
 	height: 200px;
 	overflow: hidden;
+}
+
+.school-img {
+	@include circle-img(100px);
+	border: 2px solid $border-grey;
 }
