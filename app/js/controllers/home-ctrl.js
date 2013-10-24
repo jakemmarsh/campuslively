@@ -12,5 +12,7 @@ define(['./index'], function (controllers) {
 				value: 'business'
 			}
 		];
+
+		$scope.currentYear = new Date().getFullYear();
     }]);
 });
