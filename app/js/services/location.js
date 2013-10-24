@@ -37,10 +37,9 @@ define(['./index'], function (services) {
       },
       createFoursquareVenue: function(venue) {
         var deferred = $q.defer(),
-            clientSecret = 'R4IVY3OSER10BUFMKODGCWFHXITCTRGXS5UJED1HRCEGQZSS',
-            clientID = 'GA3OVFMEIKL1UC3ZXAUPS5ZOIJ3FIQPEWSTGRXOOYHFPC554';
+            accessToken = 'RCGY2CMZV3HREDP45ZDSJVOBVBYNNVWDTJQ1LDH0MSUCEQMA';
 
-        $http.post('https://api.foursquare.com/v2/venues/add?client_id=' + clientID + '&client_secret=' + clientSecret, venue).success(function(data) {
+        $http.post('https://api.foursquare.com/v2/venues/add?oauth_token=' + accessToken, venue).success(function(data) {
           deferred.resolve(data);
         }).error(function() {
           deferred.reject("An error occurred while sending venue to Foursquare.");

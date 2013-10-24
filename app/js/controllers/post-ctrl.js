@@ -186,12 +186,12 @@ define(['./index'], function (controllers) {
 	    		venue.ll = address.geometry.location.lat.toFixed(2) + ',' + address.geometry.location.lng.toFixed(2);
 
 	    		// post new venue to foursquare
-	   //  		locationService.createFoursquareVenue(venue).then(function (data) {
-				// 	console.log(data);
-				// },
-				// function (errorMessage) {
-				// 	console.log(errorMessage);
-		  //       });
+	    		locationService.createFoursquareVenue(venue).then(function (data) {
+					console.log(data);
+				},
+				function (errorMessage) {
+					console.log(errorMessage);
+		        });
 	    	}
 	    	// populate remaining parts of event for posting
 	    	$scope.event.creator = $rootScope.user._id;
