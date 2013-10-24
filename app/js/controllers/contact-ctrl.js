@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('contactCtrl', function ($scope, $rootScope, contactService) {
+    controllers.controller('contactCtrl', ['$scope', '$rootScope', 'contactService', function ($scope, $rootScope, contactService) {
     	$scope.sendMessage = function() {
     		contactService.sendMessage($scope.message).then(function (data, status) {
 				$scope.sendError = null;
@@ -9,5 +9,5 @@ define(['./index'], function (controllers) {
 				$scope.sendError = "Failed to send email. Please try again";
 			});
     	};
-    });
+    }]);
 });

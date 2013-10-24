@@ -11,7 +11,7 @@ define([
 ], function (require, ng, app) {
     'use strict';
 
-    app.run(function ($rootScope, $location, authService) {
+    app.run(['$rootScope', '$location', 'authService', function ($rootScope, $location, authService) {
         // take actions based on user's logged in status and destination page's protection level
         $rootScope.$on('$stateChangeStart', function(event, toState) {
             authService.isLoggedIn().then(function (data, status) {
@@ -69,7 +69,7 @@ define([
                 console.log(errorMessage);
             });
         }
-    });
+    }]);
 
     require(['domReady!'], function (document) {
         return ng.bootstrap(document, ['app']);

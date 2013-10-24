@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('settingsCtrl', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService) {
+    controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
@@ -206,5 +206,5 @@ define(['./index'], function (controllers) {
                 $scope.unsubscribeError = "Error occurred while unsubscribing from user.";
             });
 		}
-    });
+    }]);
 });

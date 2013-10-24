@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('exploreCtrl', function ($scope, $rootScope, $modal, locationService, eventService, $timeout) {
+    controllers.controller('exploreCtrl', ['$scope', '$rootScope', '$modal', 'locationService', 'eventService', '$timeout', function ($scope, $rootScope, $modal, locationService, eventService, $timeout) {
     	var oldestId, newestId;
     	$scope.currentView = 'school';
     	
@@ -226,5 +226,5 @@ define(['./index'], function (controllers) {
 		    });
 		};
     	
-    });
+    }]);
 });

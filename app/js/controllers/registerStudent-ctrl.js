@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('registerStudentCtrl', function ($scope, schoolService, authService) {
+    controllers.controller('registerStudentCtrl', ['$scope', 'schoolService', 'authService', function ($scope, schoolService, authService) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
@@ -42,5 +42,5 @@ define(['./index'], function (controllers) {
 	        	$scope.registerError = "Failed to register new user.";
 	        });
     	};
-    });
+    }]);
 });

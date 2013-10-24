@@ -1,7 +1,7 @@
 define(['./index'], function (services) {
   'use strict';
   // expand input and show post button on focus
-  services.service('authService', function($q, $http) {
+  services.service('authService', ['$q', '$http', function($q, $http) {
     return {
     	apiPath: '/api/v1/auth/',
 		isLoggedIn: function() {
@@ -115,5 +115,5 @@ define(['./index'], function (services) {
 			return deferred.promise;
 		}
     }
-  });
+  }]);
 });

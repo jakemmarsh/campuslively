@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('forgotCtrl', function ($scope, authService) {
+    controllers.controller('forgotCtrl', ['$scope', 'authService', function ($scope, authService) {
     	$scope.sendEmail = function() {
     		var dataToSend = {
     			username: $scope.username
@@ -14,5 +14,5 @@ define(['./index'], function (controllers) {
 	        	$scope.forgotError = errorMessage;
 	        });
     	};
-    });
+    }]);
 });

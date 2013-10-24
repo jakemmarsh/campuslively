@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('postCtrl', function ($scope, $rootScope, locationService, eventService, $timeout) {
+    controllers.controller('postCtrl', ['$scope', '$rootScope', 'locationService', 'eventService', '$timeout', function ($scope, $rootScope, locationService, eventService, $timeout) {
     	// initialize map options
     	$scope.mapOptions = {
 			zoom: 15,
@@ -241,5 +241,5 @@ define(['./index'], function (controllers) {
 			    });
 			}
 	    };
-    });
+    }]);
 });

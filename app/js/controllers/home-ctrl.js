@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('homeCtrl', function ($scope) {
+    controllers.controller('homeCtrl', ['$scope', function ($scope) {
     	$scope.currentView = 'student';
     	
 		$scope.viewOptions = [{
@@ -12,5 +12,5 @@ define(['./index'], function (controllers) {
 				value: 'business'
 			}
 		];
-    });
+    }]);
 });

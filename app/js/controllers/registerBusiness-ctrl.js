@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('registerBusinessCtrl', function ($scope, authService, schoolService) {
+    controllers.controller('registerBusinessCtrl', ['$scope', 'authService', 'schoolService', function ($scope, authService, schoolService) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
@@ -42,5 +42,5 @@ define(['./index'], function (controllers) {
 	        	$scope.registerError = errorMessage;
 	        });
     	};
-    });
+    }]);
 });

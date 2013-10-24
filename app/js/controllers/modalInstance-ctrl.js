@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('modalInstanceCtrl', function ($scope, $modalInstance, items, location) {
+    controllers.controller('modalInstanceCtrl', ['$scope', '$modalInstance', 'items', 'location', function ($scope, $modalInstance, items, location) {
     	$scope.items = items;
 
         if(location) {
@@ -41,5 +41,5 @@ define(['./index'], function (controllers) {
 		$scope.cancel = function() {
 			$modalInstance.dismiss('cancel');
 		};
-    });
+    }]);
 });

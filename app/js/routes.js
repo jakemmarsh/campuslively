@@ -3,7 +3,7 @@
  */
 define(['./app'], function (app) {
     'use strict';
-    app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
+    app.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', function ($stateProvider, $locationProvider, $urlRouterProvider) {
         $locationProvider.html5Mode(true);          
 
         $stateProvider
@@ -179,5 +179,5 @@ define(['./app'], function (app) {
         });
 
         $urlRouterProvider.otherwise("/");
-    });
+    }]);
 });

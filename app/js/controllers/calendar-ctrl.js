@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('calendarCtrl', function ($scope, $rootScope, $location, $anchorScroll, $timeout, $modal, eventService, locationService) {
+    controllers.controller('calendarCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$modal', 'eventService', 'locationService', function ($scope, $rootScope, $location, $anchorScroll, $modal, eventService, locationService) {
     	$scope.showDay = false;
 
       $scope.currentView = 'school';
@@ -248,5 +248,5 @@ define(['./index'], function (controllers) {
       value: 'startDate'
     };
         
-    });
+    }]);
 });

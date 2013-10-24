@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('loginCtrl', function ($scope, $rootScope, $location, authService) {
+    controllers.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'authService', function ($scope, $rootScope, $location, authService) {
     	$scope.login = function() {
     		var user = {
     			username: $scope.username,
@@ -45,5 +45,5 @@ define(['./index'], function (controllers) {
     			$scope.loginError = errorMessage;
     		});
     	}
-    });
+    }]);
 });

@@ -1,7 +1,7 @@
 define(['./index'], function (services) {
   'use strict';
   // expand input and show post button on focus
-  services.service('locationService', function($q, $http, $rootScope) {
+  services.service('locationService', ['$q', '$http', '$rootScope', function($q, $http, $rootScope) {
     return {
       getGeo: function() {
         var deferred = $q.defer();
@@ -59,5 +59,5 @@ define(['./index'], function (services) {
         return deferred.promise;
       }
     }
-  });
+  }]);
 });

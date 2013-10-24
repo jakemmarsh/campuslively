@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('eventCtrl', function ($scope, $rootScope, $stateParams, $modal, eventService, resolvedEvent, $location) {
+    controllers.controller('eventCtrl', ['$scope', '$rootScope', '$modal', 'eventService', 'resolvedEvent', '$location',  function ($scope, $rootScope, $modal, eventService, resolvedEvent, $location) {
     	$scope.event = resolvedEvent;
 
     	if($scope.event.loc) {
@@ -186,5 +186,5 @@ define(['./index'], function (controllers) {
 			    });
 			}
 		};
-    });
+    }]);
 });

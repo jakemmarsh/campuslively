@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('profileCtrl', function ($scope, $rootScope, $stateParams, $modal, resolvedUser, userService, eventService) {
+    controllers.controller('profileCtrl', ['$scope', '$rootScope', '$modal', 'resolvedUser', 'userService', 'eventService', function ($scope, $rootScope, $modal, resolvedUser, userService, eventService) {
         var oldestId;
         $scope.profile = resolvedUser;
     	$scope.loading = true;
@@ -150,5 +150,5 @@ define(['./index'], function (controllers) {
               }
             });
         };
-    });
+    }]);
 });

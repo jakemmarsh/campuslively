@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('resetCtrl', function ($scope, $stateParams, $location, authService) {
+    controllers.controller('resetCtrl', ['$scope', '$stateParams', '$location', 'authService', function ($scope, $stateParams, $location, authService) {
         // redirect if given reset key isn't legitimate
         if(!$stateParams.resetKey) {
             $location.path('/login');
@@ -21,5 +21,5 @@ define(['./index'], function (controllers) {
                 $scope.resetError = errorMessage;
             });
         };
-    });
+    }]);
 });

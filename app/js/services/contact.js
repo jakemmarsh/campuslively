@@ -1,7 +1,7 @@
 define(['./index'], function (services) {
   'use strict';
   // expand input and show post button on focus
-  services.service('contactService', function($q, $http) {
+  services.service('contactService', ['$q', '$http', function($q, $http) {
     return {
     	apiPath: '/api/v1/contact',
 		sendMessage: function(message) {
@@ -16,5 +16,5 @@ define(['./index'], function (services) {
 			return deferred.promise;
 		}
     }
-  });
+  }]);
 });

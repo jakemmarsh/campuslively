@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('feedCtrl', function ($scope, $rootScope, $modal, userService, eventService, $timeout) {
+    controllers.controller('feedCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'eventService', '$timeout', function ($scope, $rootScope, $modal, userService, eventService, $timeout) {
         var oldestId, newestId;
     	$scope.loading = true;
 
@@ -104,5 +104,5 @@ define(['./index'], function (controllers) {
               }
             });
         };
-    });
+    }]);
 });

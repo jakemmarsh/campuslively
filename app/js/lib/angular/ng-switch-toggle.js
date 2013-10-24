@@ -1,5 +1,5 @@
 angular.module('ngSwitchToggle', [])
-.directive('ngSwitchToggleGroup', 
+.directive('ngSwitchToggleGroup', ['$compile', 
 function ($compile) {
   'use strict';
   return {
@@ -61,4 +61,4 @@ function ($compile) {
             });
         }
       };
-});
+}]);
