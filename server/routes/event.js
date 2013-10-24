@@ -87,7 +87,7 @@ exports.getEvent = function(req, res) {
 };
 
 exports.getEventsBySchool = function(req, res) {
-	var getEvents = function(schoolId) {
+	var getEvents = function(userId, schoolId) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -102,7 +102,7 @@ exports.getEventsBySchool = function(req, res) {
 			];
 
 		if(req.params.limit) {
-			Event.find({ school: schoolId })
+			Event.find({ school: schoolId, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(eventPopulateObj)
@@ -123,7 +123,7 @@ exports.getEventsBySchool = function(req, res) {
 		    });
 		}
 		else {
-			Event.find({ school: schoolId })
+			Event.find({ school: schoolId, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
 			.exec(function (err, retrievedEvents) {
@@ -146,7 +146,7 @@ exports.getEventsBySchool = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.schoolId).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.schoolId).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -154,7 +154,7 @@ exports.getEventsBySchool = function(req, res) {
 };
 
 exports.getEventsBySchoolNewer = function(req, res) {
-	var getEvents = function(schoolId, newestId) {
+	var getEvents = function(userId, schoolId, newestId) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -168,7 +168,7 @@ exports.getEventsBySchoolNewer = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ school: schoolId, _id: { $gt: newestId } })
+		Event.find({ school: schoolId, _id: { $gt: newestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 		.sort({ _id: -1 })
 		.populate(eventPopulateObj)
 		.exec(function (err, retrievedEvents) {
@@ -190,7 +190,7 @@ exports.getEventsBySchoolNewer = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.schoolId, req.params.newestId).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.schoolId, req.params.newestId).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -198,7 +198,7 @@ exports.getEventsBySchoolNewer = function(req, res) {
 };
 
 exports.getEventsBySchoolOlder = function(req, res) {
-	var getEvents = function(schoolId, oldestId, limit) {
+	var getEvents = function(userId, schoolId, oldestId, limit) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -212,7 +212,7 @@ exports.getEventsBySchoolOlder = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ school: schoolId, _id: { $lt: oldestId } })
+		Event.find({ school: schoolId, _id: { $lt: oldestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 		.sort({ _id: -1 })
 		.limit(limit)	
 		.populate(eventPopulateObj)
@@ -235,7 +235,7 @@ exports.getEventsBySchoolOlder = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.schoolId, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.schoolId, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -243,7 +243,7 @@ exports.getEventsBySchoolOlder = function(req, res) {
 };
 
 exports.getEventsBySchoolAndDay = function(req, res) {
-	var getEvents = function(schoolId, day) {
+	var getEvents = function(userId, schoolId, day) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -263,7 +263,7 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 		floorDay.setDate(floorDay.getDate() - 1);
 		ceilingDay.setDate(ceilingDay.getDate() + 1);
 
-		Event.find({ school: schoolId, startDate: { $gt: floorDay, $lt: ceilingDay } })
+		Event.find({ school: schoolId, startDate: { $gt: floorDay, $lt: ceilingDay }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 		.populate(eventPopulateObj)
 		.exec(function (err, retrievedEvents) {
 	        if(err) {
@@ -284,7 +284,7 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.schoolId, req.params.date).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.schoolId, req.params.date).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -292,7 +292,7 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 };
 
 exports.getEventsByLocationAndDay = function(req, res) {
-	var getEvents = function(lat, lng, day) {
+	var getEvents = function(userId, lat, lng, day) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -316,7 +316,7 @@ exports.getEventsByLocationAndDay = function(req, res) {
 		floorDay.setDate(floorDay.getDate() - 1);
 		ceilingDay.setDate(ceilingDay.getDate() + 1);
 
-		Event.find({ loc : { $near : locationPoint }, startDate: { $gt: floorDay, $lt: ceilingDay } })
+		Event.find({ loc : { $near : locationPoint }, startDate: { $gt: floorDay, $lt: ceilingDay }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 		.populate(eventPopulateObj)
 		.exec(function (err, retrievedEvents) {
 	        if(err) {
@@ -337,7 +337,7 @@ exports.getEventsByLocationAndDay = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.lat, req.params.lng, req.params.date).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.lat, req.params.lng, req.params.date).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -345,7 +345,7 @@ exports.getEventsByLocationAndDay = function(req, res) {
 };
 
 exports.getEventsByUser = function(req, res) {
-	var getEvents = function(userId) {
+	var getEvents = function(userId, profileId) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -360,7 +360,7 @@ exports.getEventsByUser = function(req, res) {
 			];
 
 		if(req.params.limit) {
-			Event.find({ creator: userId })
+			Event.find({ creator: profileId, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(eventPopulateObj)
@@ -381,7 +381,7 @@ exports.getEventsByUser = function(req, res) {
 		    });
 		}
 		else {
-			Event.find({ creator: userId })
+			Event.find({ creator: profileId, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
 			.exec(function (err, retrievedEvent) {
@@ -404,7 +404,7 @@ exports.getEventsByUser = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.profileId).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -412,7 +412,7 @@ exports.getEventsByUser = function(req, res) {
 };
 
 exports.getEventsByUserNewer = function(req, res) {
-	var getEvents = function(userId, newestId) {
+	var getEvents = function(userId, profileId, newestId) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -426,7 +426,7 @@ exports.getEventsByUserNewer = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ creator: userId, _id: { $gt: newestId } })
+		Event.find({ creator: profileId, _id: { $gt: newestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 		.sort({ _id: -1 })
 		.populate(eventPopulateObj)
 		.exec(function (err, retrievedEvent) {
@@ -448,7 +448,7 @@ exports.getEventsByUserNewer = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.newestId).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.profileId, req.params.newestId).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -456,7 +456,7 @@ exports.getEventsByUserNewer = function(req, res) {
 };
 
 exports.getEventsByUserOlder = function(req, res) {
-	var getEvents = function(userId, oldestId, limit) {
+	var getEvents = function(userId, profileId, oldestId, limit) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -470,7 +470,7 @@ exports.getEventsByUserOlder = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ creator: userId, _id: { $lt: oldestId } })
+		Event.find({ creator: profileId, _id: { $lt: oldestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 		.sort({ _id: -1 })
 		.limit(limit)
 		.populate(eventPopulateObj)
@@ -493,7 +493,7 @@ exports.getEventsByUserOlder = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.profileId, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -501,7 +501,7 @@ exports.getEventsByUserOlder = function(req, res) {
 };
 
 exports.getEventsByLocation = function(req, res) {
-	var getEvents = function(lat, lng) {
+	var getEvents = function(userId, lat, lng) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -520,7 +520,7 @@ exports.getEventsByLocation = function(req, res) {
 			};
 
 		if(req.params.limit) {
-			Event.find({ loc : { $near : locationPoint } })
+			Event.find({ loc : { $near : locationPoint }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(eventPopulateObj)
@@ -541,7 +541,7 @@ exports.getEventsByLocation = function(req, res) {
 	        });
 	    }
 	    else {
-			Event.find({ loc : { $near : locationPoint } })
+			Event.find({ loc : { $near : locationPoint }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
 			.exec(function(err, retrievedEvent) {
@@ -564,7 +564,7 @@ exports.getEventsByLocation = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.lat, req.params.lng).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.lat, req.params.lng).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -572,7 +572,7 @@ exports.getEventsByLocation = function(req, res) {
 };
 
 exports.getEventsByLocationNewer = function(req, res) {
-	var getEvents = function(lat, lng, newestId) {
+	var getEvents = function(userId, lat, lng, newestId) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -590,7 +590,7 @@ exports.getEventsByLocationNewer = function(req, res) {
 					coordinates: [lat, lng]
 			};
 
-		Event.find({ loc: { $near : locationPoint }, _id: { $gt: newestId } })
+		Event.find({ loc: { $near : locationPoint }, _id: { $gt: newestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 		.sort({ _id: -1 })
 		.populate(eventPopulateObj)
 		.exec(function(err, retrievedEvent) {
@@ -612,7 +612,7 @@ exports.getEventsByLocationNewer = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.lat, req.params.lng, req.params.newestId).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.lat, req.params.lng, req.params.newestId).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -620,7 +620,7 @@ exports.getEventsByLocationNewer = function(req, res) {
 }
 
 exports.getEventsByLocationOlder = function(req, res) {
-	var getEvents = function(lat, lng, oldestId, limit) {
+	var getEvents = function(userId, lat, lng, oldestId, limit) {
 		var deferred = Q.defer(),
 			eventPopulateObj = [
 				{ path: 'location' },
@@ -638,7 +638,7 @@ exports.getEventsByLocationOlder = function(req, res) {
 					coordinates: [lat, lng]
 			};
 
-		Event.find({ loc: { $near : locationPoint }, _id: { $lt: oldestId } })
+		Event.find({ loc: { $near : locationPoint }, _id: { $lt: oldestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
 		.sort({ _id: -1 })
 		.limit(limit)
 		.populate(eventPopulateObj)
@@ -661,7 +661,7 @@ exports.getEventsByLocationOlder = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.lat, req.params.lng, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
+	getEvents(req.params.userId, req.params.lat, req.params.lng, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);

@@ -5,7 +5,7 @@ define(['./index'], function (controllers) {
         $scope.profile = resolvedUser;
     	$scope.loading = true;
 
-        eventService.getEventsByUser($scope.profile._id, 20).then(function (data, status) {
+        eventService.getEventsByUser($rootScope.user._id, $scope.profile._id, 20).then(function (data, status) {
             $scope.events = data;
             $scope.loading = false;
             if(data.length == 20) {
@@ -108,7 +108,7 @@ define(['./index'], function (controllers) {
 
         $scope.loadMore = function() {
             $scope.loadingMore = true;
-            eventService.getEventsByUserOlder($scope.profile._id, oldestId, 20).then(function (data, status) {
+            eventService.getEventsByUserOlder($rootScope.user._id, $scope.profile._id, oldestId, 20).then(function (data, status) {
                 if(data.length < 20) {
                     $scope.moreToLoad = false;
                 }
