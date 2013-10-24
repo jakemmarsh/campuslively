@@ -13,10 +13,9 @@ var activitySchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'User'
     },
-    updatedOn: {
+    timestamp: {
         type: Date, 
-        default: Date.now,
-        required: true
+        default: Date.now
     },
     activity: {
         type: String,

@@ -96,7 +96,7 @@
 									</div>
 								</div>
 								<div class="td one-half text-right">
-									<span class="muted epsilon" data-ng-bind="comment.posted | timePast"></span>
+									<span class="muted epsilon" data-ng-bind="comment.timestamp | timePast"></span>
 								</div>
 						</div>
 						<hr class="nudge-half--ends" />
@@ -113,7 +113,7 @@
 								</a>
 								<p class="epsilon" data-ng-bind-html="subComment.body | parseUrl"></p>
 								<div class="text-right nudge-half--top">
-									<span class="muted epsilon" data-ng-bind="subComment.posted | timePast"></span>
+									<span class="muted epsilon" data-ng-bind="subComment.timestamp | timePast"></span>
 								</div>
 							</div>
 						</div>

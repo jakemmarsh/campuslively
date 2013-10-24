@@ -235,7 +235,7 @@ define(['./index'], function (controllers) {
       },
       {
         label: 'by post date',
-        value: '-created'
+        value: '-timestamp'
       }
     ];
 

@@ -30,10 +30,9 @@ var eventSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    created: {
+    timestamp: {
         type: Date, 
-        default: Date.now,
-        required: true
+        default: Date.now
     },
     attending: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
     invited: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
@@ -41,8 +40,7 @@ var eventSchema = new mongoose.Schema({
     tags: [String],
     privacy: {
         type: String,
-        default: 'public',
-        required: true
+        default: 'public'
     },
     pictureUrl: {
         type: String

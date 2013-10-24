@@ -36,7 +36,7 @@
 								  <span data-ng-hide="activity.recipient._id == user._id || activity.recipient.type =='student'" class="weight--bold">{{activity.recipient.businessName}}</span>
 							</div>
 							<div class="unit one-fourth last-unit text-right">
-								<span class="muted">{{ activity.updatedOn | timePast }}</span>
+								<span class="muted">{{ activity.timestamp | timePast }}</span>
 							</div>
 						</div>
 					</div>

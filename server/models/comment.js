@@ -11,7 +11,7 @@ var subCommentSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    posted: {
+    timestamp: {
         type: Date, 
         default: Date.now
     }
@@ -32,7 +32,7 @@ comment.add({
         ref: 'User',
         required: true
     },
-    posted: {
+    timestamp: {
         type: Date, 
         default: Date.now
     },

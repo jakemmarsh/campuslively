@@ -6,11 +6,13 @@ var schoolSchema = new mongoose.Schema({
     	required: true,
     	unique: true
     },
-    // TODO: should this exist?
     subscribers: {
     	type: Number,
-    	required: true,
     	default: 0
+    },
+    events: {
+        type: Number,
+        default: 0
     }
 });
 

@@ -18,15 +18,13 @@ var inviteSchema = new mongoose.Schema({
         ref: 'Event',
         required: true
     },
-    sent: {
+    timestamp: {
     	type: Date, 
-    	default: Date.now,
-    	required: true
+    	default: Date.now
     },
     read: {
     	type: Boolean,
-    	default: false,
-    	required: true
+    	default: false
     }
 });
 
