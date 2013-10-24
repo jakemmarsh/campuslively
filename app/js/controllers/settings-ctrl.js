@@ -98,11 +98,21 @@ define(['./index'], function (controllers) {
 			if($rootScope.user.type == 'student') {
 				if($rootScope.user.firstName !== $scope.userFirstName && $scope.userFirstName.length > 0) {
 					updateParams.firstName = $scope.userFirstName;
-					updateParams.displayName = $scope.userFirstName + ' ' + $scope.userLastName;
+					if($scope.userLastName) {
+						updateParams.displayName = $scope.userFirstName + ' ' + $scope.userLastName;
+					}
+					else {
+						updateParams.displayName = $scope.userFirstName + ' ' + $rootScope.user.lastName;
+					}
 				}
 				if($rootScope.user.lastName !== $scope.userLastName && $scope.userLastName.length > 0) {
 					updateParams.lastName = $scope.userLastName;
-					updateParams.displayName = $scope.userFirstName + ' ' + $scope.userLastName;
+					if($scope.userFirstName) {
+						updateParams.displayName = $scope.userFirstName + ' ' + $scope.userLastName;
+					}
+					else {
+						updateParams.displayName = $rootScope.user.firstName + ' ' + $rootScope.userLastName;
+					}
 				}
 				if($rootScope.user.email !== $scope.userEmailStudent && $scope.userEmailStudent.length > 0) {
 					updateParams.email = $scope.userEmailStudent;

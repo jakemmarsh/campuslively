@@ -15,7 +15,7 @@
 	</div>
 </div>
 <div class="container soft-half--ends" data-ng-show="!loading">
-	<div data-ng-repeat="activity in activities | orderBy:'-updatedOn'">
+	<div data-ng-repeat="activity in activities | orderBy:'-timestamp'">
 		<div data-ng-show="activity.activity == 'subscribed'" class="soft-half--ends">
 			<div class="table full-width">
 				<div class="tr">
@@ -47,7 +47,7 @@
 					 invited you to:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
-					<span class="muted">{{ activity.updatedOn | timePast }}</span>
+					<span class="muted">{{ activity.timestamp | timePast }}</span>
 				</div>
 			</div>
 			<div class="line nudge-half--top">
@@ -124,7 +124,7 @@
 					 posted an event:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
-					<span class="muted">{{ activity.updatedOn | timePast }}</span>
+					<span class="muted">{{ activity.timestamp | timePast }}</span>
 				</div>
 			</div>
 			<div class="line nudge-half--top">
@@ -199,7 +199,7 @@
 					 RSVP'd to an event:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
-					<span class="muted">{{ activity.updatedOn | timePast }}</span>
+					<span class="muted">{{ activity.timestamp | timePast }}</span>
 				</div>
 			</div>
 			<div class="line nudge-half--top">
@@ -276,7 +276,7 @@
 					 commented on the event <a href data-ng-href="/event/{{activity.event._id}}">{{activity.event.title}}</a>:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
-					<span class="muted">{{ activity.updatedOn | timePast }}</span>
+					<span class="muted">{{ activity.timestamp | timePast }}</span>
 				</div>
 			</div>
 			<div class="line nudge-half--top">
