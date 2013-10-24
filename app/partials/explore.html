@@ -1,16 +1,11 @@
 <div class="white-top">
 	<div class="container full-height">
 		<div class="table full-height full-width">
-			<div class="td one-half text-left vertical-align-middle">
-				<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions"></ng-switch-toggle-group>
+			<div class="td vertical-align-middle one-half">
+				<h1 class="flush blue">Explore</h1>
 			</div>
-			<div class="td one-half vertical-align-middle clearfix">
-				<div class="input-prepend float-right">
-					<div class="icon">
-						<i class="icon-search"></i>
-					</div>
-					<input type="text" class="search" data-ng-model="searchEvents" placeholder="Search events..." />
-				</div>
+			<div class="td vertical-align-middle one-half text-right">
+				<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions" class="float-right"></ng-switch-toggle-group>
 			</div>
 		</div>
 	</div>
@@ -28,23 +23,33 @@
 		<h1 class="flush blue">No events have been posted for your school yet!</h1>
 		<a href="/post" class="btn nudge--top">Be the First</a>
 	</div>
+	<div class="table soft-half--ends full-width" data-ng-show="events.length">
+		<div class="td one-half vertical-align-middle">
+			<div class="input-prepend">
+				<div class="icon">
+					<i class="icon-search"></i>
+				</div>
+				<input type="text" class="search" data-ng-model="searchEvents" placeholder="Search events..." />
+			</div>
+		</div>
+		<div class="td one-half vertical-align-middle text-right">
+			<div class="dropdown">
+				<a href class="dropdown-toggle">
+					{{ currentSort.label }} <i class="icon-chevron-down muted weight--normal"></i>
+				</a>
+				<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
+					<li data-ng-repeat="option in sortOptions">
+						<a href data-ng-bind="option.label" data-ng-click="changeSort(option)"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<hr data-ng-show="events.length" />
 	<div class="text-center" data-ng-show="!loading && !filteredEvents.length && events.length">
 		<h2 class="flush blue" data-ng-show="events.length >= 20">No events match your search. Have you tried loading more?</h2>
 		<h2 class="flush blue" data-ng-show="events.length < 20">No events match your search.</h2>
 	</div>
-	<div class="soft-half--ends text-right" data-ng-show="events.length && filteredEvents.length">
-		<div class="dropdown">
-			<a href class="dropdown-toggle">
-				{{ currentSort.label }} <i class="icon-chevron-down muted weight--normal"></i>
-			</a>
-			<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
-				<li data-ng-repeat="option in sortOptions">
-					<a href data-ng-bind="option.label" data-ng-click="changeSort(option)"></a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<hr data-ng-show="events.length && filteredEvents.length" />
 	<div class="line nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">

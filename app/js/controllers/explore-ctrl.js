@@ -101,7 +101,7 @@ define(['./index'], function (controllers) {
 	            });
         	}
         	else if($scope.currentView == 'nearby') {
-        		eventService.getEventsByLocationNewer($rootScope.user.school._id, newestId).then(function (data) {
+        		eventService.getEventsByLocationNewer($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), newestId).then(function (data) {
 	                if(data.length > 0) {
 	                    for(var i = 0; i < data.length; i++) {
 	                        $scope.events.unshift(data[i]);
