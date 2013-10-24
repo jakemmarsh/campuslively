@@ -1,6 +1,7 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('exploreCtrl', function ($scope, $rootScope, $modal, locationService, eventService) {
+    	var oldestId;
     	$scope.currentView = 'school';
     	
     	$scope.viewOptions = [{
@@ -46,6 +47,7 @@ define(['./index'], function (controllers) {
 				            else {
 				                $scope.moreToLoadNearby = false;
 				            }
+				            oldestId = data[data.length-1]._id;
 						}, function(err, status) {
 							$scope.loading = false;
 						});
@@ -64,6 +66,7 @@ define(['./index'], function (controllers) {
 			            else {
 			                $scope.moreToLoadNearby = false;
 			            }
+			            oldestId = data[data.length-1]._id;
 					}, function(err, status) {
 						$scope.loading = false;
 					});
@@ -129,7 +132,7 @@ define(['./index'], function (controllers) {
 		$scope.loadMore = function() {
 			$scope.loadingMore = true;
 			if($scope.currentView == 'school') {
-				eventService.getEventsBySchoolOlder($rootScope.user.school._id, $scope.events.length, 20).then(function (data, status) {
+				eventService.getEventsBySchoolOlder($rootScope.user.school._id, oldestId, 20).then(function (data, status) {
 					if(data.length == 0) {
 	                    $scope.moreToLoadSchool = false;
 	                }
@@ -138,13 +141,14 @@ define(['./index'], function (controllers) {
 							$scope.events.push(data);
 						}
 	                }
+	                oldestId = data[data.length-1]._id;
 	                $scope.loadingMore = false;
 				}, function(err, status) {
 					$scope.loadingMore = false;
 				});
 			}
 			else if($scope.currentView == 'nearby') {
-				eventService.getEventsByLocationOlder($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.events.length, 20).then(function (data, status) {
+				eventService.getEventsByLocationOlder($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), oldestId, 20).then(function (data, status) {
 					if(data.length == 0) {
 	                    $scope.moreToLoadNearby = false;
 	                }
@@ -153,6 +157,7 @@ define(['./index'], function (controllers) {
 							$scope.events.push(data);
 						}
 	                }
+	                oldestId = data[data.length-1]._id;
 	                $scope.loadingMore = false;
 				}, function(err, status) {
 					$scope.loadingMore = false;

@@ -1,6 +1,7 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('feedCtrl', function ($scope, $rootScope, $modal, userService, eventService) {
+        var oldestId;
     	$scope.loading = true;
 
         userService.getActivities($rootScope.user._id, 20).then(function (data) {
@@ -12,6 +13,7 @@ define(['./index'], function (controllers) {
             else {
                 $scope.moreToLoad = false;
             }
+            oldestId = data[data.length-1]._id;
         },
         function (errorMessage) {
             console.log(errorMessage);
@@ -19,7 +21,7 @@ define(['./index'], function (controllers) {
 
         $scope.loadMore = function() {
             $scope.loadingMore = true;
-            userService.getActivities($rootScope.user._id, $scope.activities.length, 20).then(function (data) {
+            userService.getActivities($rootScope.user._id, oldestId, 20).then(function (data) {
                 if(data.length == 0) {
                     $scope.moreToLoad = false;
                 }
@@ -28,6 +30,7 @@ define(['./index'], function (controllers) {
                         $scope.activities.push(data);
                     }
                 }
+                oldestId = data[data.length-1]._id;
                 $scope.loadingMore = false;
             },
             function (errorMessage) {

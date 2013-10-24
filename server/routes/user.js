@@ -404,6 +404,7 @@ exports.getActivities = function(req, res) {
 
 		if(req.params.limit) {
 			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id} })
+			.sort({ _id: -1 })
 			.populate(activityPopulateObj)
 			.exec(function(err, retrievedActivities) {
 				if(err || !retrievedActivities) {
@@ -423,6 +424,7 @@ exports.getActivities = function(req, res) {
 		}
 		else {
 			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id} })
+			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(activityPopulateObj)
 			.exec(function(err, retrievedActivities) {
@@ -456,6 +458,67 @@ exports.getActivities = function(req, res) {
 	});
 };
 
+exports.getActivitiesNewer = function(req, res) {
+	var getUser = function(userId) {
+		var deferred = Q.defer();
+
+		User.findOne({ _id: userId }, function (err, retrievedUser) {
+	        if (err || !retrievedUser) {
+	        	deferred.reject(new Error("No user exists with specified ID."));
+	        }
+	        else {
+	        	deferred.resolve(retrievedUser);
+	        }
+	    });
+
+		return deferred.promise;
+	}
+	getActivities = function(user, newestId) {
+		var deferred = Q.defer(),
+			activityPopulateObj = [
+				{ path: 'event' },
+				{ path: 'comment' },
+				{ path: 'actor' },
+				{ path: 'recipient' }
+			],
+			eventPopulateObj = {
+				path: 'event.creator',
+				model: User
+			};
+
+		Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id}, _id: { $gt: newestId } })
+		.sort({ _id: -1 })
+		.populate(activityPopulateObj)
+		.exec(function(err, retrievedActivities) {
+			if(err || !retrievedActivities) {
+				deferred.reject(new Error("No events found."));
+			}
+			else {
+				User.populate(retrievedActivities, eventPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedActivities);
+					}
+				});
+			}
+		});
+
+		return deferred.promise;
+	};
+
+	getUser(req.params.userId).then(function(retrievedUser) {
+		getActivities(retrievedUser, req.params.newestId).then(function(activities) {
+			res.json(200, activities);
+		}, function(err) {
+			res.send(500, err);
+		});
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
 exports.getActivitiesOlder = function(req, res) {
 	var getUser = function(userId) {
 		var deferred = Q.defer();
@@ -471,7 +534,7 @@ exports.getActivitiesOlder = function(req, res) {
 
 		return deferred.promise;
 	}
-	getActivities = function(user, skip, limit) {
+	getActivities = function(user, oldestId, limit) {
 		var deferred = Q.defer(),
 			activityPopulateObj = [
 				{ path: 'event' },
@@ -484,8 +547,8 @@ exports.getActivitiesOlder = function(req, res) {
 				model: User
 			};
 
-		Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id} })
-		.skip(skip)
+		Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id}, _id: { $lt: oldestId } })
+		.sort({ _id: -1 })
 		.limit(limit)
 		.populate(activityPopulateObj)
 		.exec(function(err, retrievedActivities) {
@@ -508,7 +571,7 @@ exports.getActivitiesOlder = function(req, res) {
 	};
 
 	getUser(req.params.userId).then(function(retrievedUser) {
-		getActivities(retrievedUser, req.params.skip, req.params.limit).then(function(activities) {
+		getActivities(retrievedUser, req.params.oldestId, req.params.limit).then(function(activities) {
 			res.json(200, activities);
 		}, function(err) {
 			res.send(500, err);

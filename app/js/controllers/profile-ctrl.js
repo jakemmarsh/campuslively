@@ -1,6 +1,7 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('profileCtrl', function ($scope, $rootScope, $stateParams, $modal, resolvedUser, userService, eventService) {
+        var oldestId;
         $scope.profile = resolvedUser;
     	$scope.loading = true;
 
@@ -13,6 +14,7 @@ define(['./index'], function (controllers) {
             else {
                 $scope.moreToLoad = false;
             }
+            oldestId = data[data.length-1]._id;
         }, function(err, status) {
             console.log(err.message);
             $scope.loading = false;
@@ -106,7 +108,7 @@ define(['./index'], function (controllers) {
 
         $scope.loadMore = function() {
             $scope.loadingMore = true;
-            eventService.getEventsByUserOlder($scope.profile._id, $scope.events.length, 20).then(function (data, status) {
+            eventService.getEventsByUserOlder($scope.profile._id, oldestId, 20).then(function (data, status) {
                 if(data.length == 0) {
                     $scope.moreToLoad = false;
                 }
@@ -115,6 +117,7 @@ define(['./index'], function (controllers) {
                         $scope.events.push(data);
                     }
                 }
+                oldestId = data[data.length-1]._id;
                 $scope.loadingMore = false;
             }, function(err, status) {
                 $scope.loadingMore = false;

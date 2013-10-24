@@ -71,7 +71,7 @@ app.configure(function() {
     
     app.get('/api/v1/user/:userId/activities', restrict, routes.user.getActivities);
     app.get('/api/v1/user/:userId/activities/limit/:limit', restrict, routes.user.getActivities);
-    app.get('/api/v1/user/:userId/activities/skip/:skip/limit/:limit', restrict, routes.user.getActivitiesOlder);
+    app.get('/api/v1/user/:userId/activities/olderThan/:oldestId/limit/:limit', restrict, routes.user.getActivitiesOlder);
 
     // schools
     app.get('/api/v1/school/all', routes.school.getAllSchools);
@@ -83,18 +83,21 @@ app.configure(function() {
 
     app.get('/api/v1/event/school/:schoolId/limit/:limit', restrict, routes.event.getEventsBySchool);
     app.get('/api/v1/event/school/:schoolId', restrict, routes.event.getEventsBySchool);
-    app.get('/api/v1/event/school/:schoolId/skip/:skip/limit/:limit', restrict, routes.event.getEventsBySchoolOlder);
+    app.get('/api/v1/event/school/:schoolId/newerThan/:newestId', restrict, routes.event.getEventsBySchoolNewer);
+    app.get('/api/v1/event/school/:schoolId/olderThan/:oldestId/limit/:limit', restrict, routes.event.getEventsBySchoolOlder);
 
     app.get('/api/v1/event/school/:schoolId/day/:date', restrict, routes.event.getEventsBySchoolAndDay);
     app.get('/api/v1/event/lat/:lat/lng/:lng/day/:date', restrict, routes.event.getEventsByLocationAndDay);
 
     app.get('/api/v1/event/user/:userId/limit/:limit', restrict, routes.event.getEventsByUser);
     app.get('/api/v1/event/user/:userId', restrict, routes.event.getEventsByUser);
-    app.get('/api/v1/event/user/:userId/skip/:skip/limit/:limit', restrict, routes.event.getEventsByUserOlder);
+    app.get('/api/v1/event/user/:userId/newerThan/:newestId', restrict, routes.event.getEventsByUserNewer);
+    app.get('/api/v1/event/user/:userId/olderThan/:oldestId/limit/:limit', restrict, routes.event.getEventsByUserOlder);
 
     app.get('/api/v1/event/near/:lat/:lng/limit/:limit', restrict, routes.event.getEventsByLocation);
     app.get('/api/v1/event/near/:lat/:lng', restrict, routes.event.getEventsByLocation);
-    app.get('/api/v1/event/near/:lat/:lng/skip/:skip/limit/:limit', restrict, routes.event.getEventsByLocationOlder);
+    app.get('/api/v1/event/near/:lat/:lng/newerThan/:newestId', restrict, routes.event.getEventsByLocationNewer);
+    app.get('/api/v1/event/near/:lat/:lng/olderThan/:oldestId/limit/:limit', restrict, routes.event.getEventsByLocationOlder);
 
     app.post('/api/v1/event', restrict, routes.event.postEvent);
     app.post('/api/v1/event/:eventId/image', restrict, routes.event.uploadImage);
