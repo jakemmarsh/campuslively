@@ -12,8 +12,12 @@
 		<div class="unit three-fourths">
 			<form name="settingsForm" data-ng-submit="saveChanges()" class="nudge-half--bottom">
 				<div class="text-center nudge-half--bottom full-width">
-					<div class="user-img-settings center-block" data-ng-show="newUserImage" data-ng-style="{'background-image': 'url(' + newUserImage.url + ')'}"></div>
-					<div class="user-img-settings center-block" data-ng-hide="newUserImage" data-ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}"></div>
+					<div class="user-img-settings center-block" data-ng-show="newUserImage" data-ng-style="{'background-image': 'url(' + newUserImage.url + ')'}">
+						<a data-ng-href="/profile/{{user.username}}"></a>
+					</div>
+					<div class="user-img-settings center-block" data-ng-hide="newUserImage" data-ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}">
+						<a data-ng-href="/profile/{{user.username}}"></a>
+					</div>
 				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit label-container two-twelfths">
