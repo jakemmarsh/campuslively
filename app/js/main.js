@@ -16,8 +16,8 @@ require.config({
         'angular-switch-toggle' : './lib/angular/ng-switch-toggle',
         'angular-ui-map' : './lib/angular/ui-map',
         'angular-ui-event' : './lib/angular/event',
-        'jQuery' : '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
-        'jQuery-ui' : '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min',
+        'jquery' : './lib/jquery-2.0.3.min',
+        'jquery-ui' : './lib/jquery-ui',
         'fullCalendar' : './lib/fullcalendar.min',
         'angular-ui-calendar' : './lib/angular/ui-calendar',
         'select2' : './lib/select2.min',
@@ -29,7 +29,7 @@ require.config({
     shim: {
         'angular': {
             exports: 'angular',
-            deps: ['jQuery']
+            deps: ['jquery']
         },
         'angular-sanitize': {
             deps: ['angular']
@@ -41,7 +41,7 @@ require.config({
             deps: ['angular']
         },
         'angular-switch-toggle': {
-            deps: ['angular', 'jQuery']
+            deps: ['angular', 'jquery']
         },
         'angular-ui-map': {
             deps: ['angular', 'angular-ui-event', 'async!http://maps.google.com/maps/api/js?sensor=false']
@@ -49,17 +49,17 @@ require.config({
         'angular-ui-event': {
             deps: ['angular']
         },
-        'jQuery-ui': {
-            deps: ['jQuery']
+        'jquery-ui': {
+            deps: ['jquery']
         },
         'fullCalendar': {
-            deps: ['jQuery-ui']
+            deps: ['jquery-ui']
         },
         'angular-ui-calendar': {
             deps: ['angular', 'fullCalendar']
         },
         'select2': {
-            deps: ['jQuery']
+            deps: ['jquery']
         },
         'angular-ui-select2': {
             deps: ['angular', 'select2']
