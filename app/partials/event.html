@@ -9,8 +9,7 @@
 				</h1>
 				<h3 class="flush muted weight--normal">
 					hosted by
-					<a href data-ng-href="/profile/{{ event.creator.username }}" data-ng-show="event.creator.type == 'student'">{{event.creator.firstName}} {{event.creator.lastName}}</a>
-					<a href data-ng-href="/profile/{{ event.creator.username }}" data-ng-show="event.creator.type == 'business'">{{event.creator.businessName}}</a>
+					<a href data-ng-href="/profile/{{ event.creator.username }}">{{event.creator.displayName}}</a>
 				</h3>
 			</div>
 			<div class="unit one-half last-unit text-right">
@@ -69,8 +68,7 @@
 			<div class="line nudge-half--bottom" data-ng-repeat="comment in event.comments | orderBy: '-posted'">
 				<div class="unit one-tenth">
 					<div class="user-img-comment" data-ng-style="{'background-image': 'url(' + comment.creator.pictureUrl + ')'}">
-						<a href data-ng-show="comment.creator.type == 'student'" data-tooltip="{{comment.creator.firstName}} {{comment.creator.lastName}}" data-tooltip-placement="left" data-ng-href="profile/{{comment.creator.username}}"></a>
-						<a href data-ng-show="comment.creator.type == 'business'" data-tooltip="{{comment.creator.businessName}}" data-tooltip-placement="left" data-ng-href="profile/{{comment.creator.username}}"></a>
+						<a href data-tooltip="{{comment.creator.displayName}}" data-tooltip-placement="left" data-ng-href="profile/{{comment.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit nine-tenths last-unit">
@@ -79,8 +77,7 @@
 							<i class="icon-remove"></i>
 						</a>
 						<h4 class="flush">
-							<a href data-ng-href="/profile/{{comment.creator.username}}" data-ng-show="comment.creator.type == 'student'">{{comment.creator.firstName}} {{comment.creator.lastName}}</a>
-							<a href data-ng-href="/profile/{{comment.creator.username}}" data-ng-show="comment.creator.type == 'business'">{{comment.creator.businessName}}</a>
+							<a href data-ng-href="/profile/{{comment.creator.username}}">{{comment.creator.displayName}}</a>
 						</h4>
 						<p class="nudge-half--ends pre-wrap" data-ng-bind-html="comment.body | parseUrl"></p>
 						<div class="table full-width">
@@ -103,8 +100,7 @@
 						<div class="line nudge-half--bottom" data-ng-repeat="subComment in comment.subComments">
 							<div class="unit one-twelfth">
 								<div class="user-img-subcomment" data-ng-style="{'background-image': 'url(' + subComment.creator.pictureUrl + ')'}">
-									<a href data-ng-show="subComment.creator.type == 'student'" data-tooltip="{{subComment.creator.firstName}} {{subComment.creator.lastName}}" data-tooltip-placement="left" data-ng-href="profile/{{subComment.creator.username}}"></a>
-									<a href data-ng-show="subComment.creator.type == 'business'" data-tooltip="{{subComment.creator.businessName}}" data-tooltip-placement="left" data-ng-href="profile/{{subComment.creator.username}}"></a>
+									<a href data-tooltip="{{subComment.creator.displayName}}" data-tooltip-placement="left" data-ng-href="profile/{{subComment.creator.username}}"></a>
 								</div>
 							</div>
 							<div class="unit eleven-twelfths last-unit subcomment-body islet">
@@ -141,8 +137,7 @@
 				</div>
 				<div class="islet text-center" data-ng-show="event.attending.length > 0">
 					<div data-ng-repeat="attendingUser in event.attending" class="user-img-going nudge-half--right" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-						<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-show="attendingUser.type == 'student'" data-tooltip="{{attendingUser.firstName}} {{attendingUser.lastName}}"></a>
-						<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-show="attendingUser.type == 'business'" data-tooltip="{{attendingUser.businessName}}"></a>
+						<a href data-ng-href="profile/{{attendingUser.username}}" data-tooltip="{{attendingUser.displayName}}"></a>
 					</div>
 				</div>
 			</div>
@@ -161,8 +156,7 @@
 				</div>
 				<div class="islet text-center" data-ng-show="event.invited.length > 0">
 					<div data-ng-repeat="attendingUser in event.invited" class="user-img-going nudge-half--right" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-						<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-show="attendingUser.type == 'student'" data-tooltip="{{attendingUser.firstName}} {{attendingUser.lastName}}"></a>
-						<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-show="attendingUser.type == 'business'" data-tooltip="{{attendingUser.businessName}}"></a>
+						<a href data-ng-href="profile/{{attendingUser.username}}" data-tooltip="{{attendingUser.displayName}}"></a>
 					</div>
 				</div>
 			</div>

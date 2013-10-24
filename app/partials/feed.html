@@ -21,19 +21,16 @@
 				<div class="tr">
 					<div class="td one-twelfth">
 						<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.actor.pictureUrl + ')'}">
-							<a href data-tooltip="{{activity.actor.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type == 'business'"></a>
-							<a href data-tooltip="{{activity.actor.firstName}} {{activity.actor.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type == 'student'"></a>
+							<a href data-tooltip="{{activity.actor.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.actor.username}}"></a>
 						</div>
 					</div>
 					<div class="td eleven-twelfths vertical-align-middle">
 						<div class="line">
-							<div class="unit three-fouths">
-								<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
-								<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+							<div class="unit three-fourths">
+								<a href data-ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
 								 subscribed to
 								  <span data-ng-show="activity.recipient._id == user._id" class="weight--bold">you.</span>
-								  <span data-ng-hide="activity.recipient._id == user._id || activity.recipient.type =='business'" class="weight--bold">{{activity.recipient.firstName}} {{activity.recipient.lastName}}</span>
-								  <span data-ng-hide="activity.recipient._id == user._id || activity.recipient.type =='student'" class="weight--bold">{{activity.recipient.businessName}}</span>
+								  <span data-ng-hide="activity.recipient._id == user._id" class="weight--bold">{{activity.recipient.displayName}}</span>
 							</div>
 							<div class="unit one-fourth last-unit text-right">
 								<span class="muted">{{ activity.timestamp | timePast }}</span>
@@ -46,8 +43,7 @@
 		<div data-ng-show="activity.activity == 'invited'" class="soft-half--ends">
 			<div class="line">
 				<div class="unit three-fourths">
-					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
-					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+					<a href data-ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
 					 invited you to:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
@@ -57,8 +53,7 @@
 			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
-						<a href data-tooltip="{{activity.event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'"></a>
-						<a href data-tooltip="{{activity.event.creator.firstName}} {{activity.event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'student'"></a>
+						<a href data-tooltip="{{activity.event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit eleven-twelfths last-unit">
@@ -76,8 +71,7 @@
 								</div>
 								<div class="unit one-half last-unit text-right">
 									Posted by
-									 <a data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'student'">{{activity.event.creator.firstName}} {{activity.event.creator.lastName}}</a>
-									 <a data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'">{{activity.event.creator.businessName}}</a>
+									 <a data-ng-href="/profile/{{activity.event.creator.username}}">{{activity.event.creator.displayName}}</a>
 								</div>
 							</div>
 						</div>
@@ -126,8 +120,7 @@
 		<div data-ng-show="activity.activity == 'posted'" class="soft-half--ends">
 			<div class="line">
 				<div class="unit three-fourths">
-					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
-					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+					<a href data-ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
 					 posted an event:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
@@ -137,8 +130,7 @@
 			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
-						<a href data-tooltip="{{activity.event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'"></a>
-						<a href data-tooltip="{{activity.event.creator.firstName}} {{activity.event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'student'"></a>
+						<a href data-tooltip="{{activity.event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit eleven-twelfths last-unit">
@@ -203,8 +195,7 @@
 		<div data-ng-show="activity.activity == 'rsvpd'" class="soft-half--ends">
 			<div class="line">
 				<div class="unit three-fourths">
-					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
-					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+					<a href data-ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
 					 RSVP'd to an event:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
@@ -214,8 +205,7 @@
 			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
-						<a href data-tooltip="{{activity.event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'"></a>
-						<a href data-tooltip="{{activity.event.creator.firstName}} {{activity.event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'student'"></a>
+						<a href data-tooltip="{{activity.event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit eleven-twelfths last-unit">
@@ -233,8 +223,7 @@
 								</div>
 								<div class="unit one-half last-unit text-right">
 									Posted by
-									 <a data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'student'">{{activity.event.creator.firstName}} {{activity.event.creator.lastName}}</a>
-									 <a data-ng-href="/profile/{{activity.event.creator.username}}" data-ng-show="activity.event.creator.type == 'business'">{{activity.event.creator.businessName}}</a>
+									 <a data-ng-href="/profile/{{activity.event.creator.username}}">{{activity.event.creator.displayName}}</a>
 								</div>
 							</div>
 						</div>
@@ -283,8 +272,7 @@
 		<div data-ng-show="activity.activity == 'commented'" class="soft-half--ends">
 			<div class="line">
 				<div class="unit three-fourths">
-					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='student'">{{activity.actor.firstName}} {{activity.actor.lastName}}</a>
-					<a href data-ng-href="/profile/{{activity.actor.username}}" data-ng-show="activity.actor.type =='business'">{{activity.actor.businessName}}</a>
+					<a href data-ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
 					 commented on the event <a href data-ng-href="/event/{{activity.event._id}}">{{activity.event.title}}</a>:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
@@ -294,8 +282,7 @@
 			<div class="line nudge-half--top">
 				<div class="unit one-tenth">
 					<div class="user-img-comment" data-ng-style="{'background-image': 'url(' + activity.comment.creator.pictureUrl + ')'}">
-						<a href data-ng-show="activity.comment.creator.type == 'student'" data-tooltip="{{activity.comment.creator.firstName}} {{activity.comment.creator.lastName}}" data-tooltip-placement="left" data-ng-href="profile/{{activity.comment.creator.username}}"></a>
-						<a href data-ng-show="activity.comment.creator.type == 'business'" data-tooltip="{{activity.comment.creator.businessName}}" data-tooltip-placement="left" data-ng-href="profile/{{activity.comment.creator.username}}"></a>
+						<a href data-tooltip="{{activity.comment.creator.displayName}}" data-tooltip-placement="left" data-ng-href="profile/{{activity.comment.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit nine-tenths last-unit">
@@ -336,8 +323,7 @@
     </div>
     <div class="modal-body">
         <div data-ng-repeat="attendingUser in items" class="user-img-modal nudge-half--right" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-			<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-ng-show="attendingUser.type == 'student'" data-tooltip="{{attendingUser.firstName}} {{attendingUser.lastName}}" data-tooltip-placement="right"></a>
-			<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-ng-show="attendingUser.type == 'business'" data-tooltip="{{attendingUser.businessName}}" data-tooltip-placement="right"></a>
+			<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-tooltip="{{attendingUser.displayName}}" data-tooltip-placement="right"></a>
 		</div>
 		<div data-ng-hide="items.length">
 			<h2 class="flush text-center">No one has RSVPd to this event yet!</h2>

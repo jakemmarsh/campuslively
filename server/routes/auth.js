@@ -177,12 +177,14 @@ exports.register = function(req, res) {
             newUser.type = 'student';
             newUser.firstName = req.body.firstName;
             newUser.lastName = req.body.lastName;
+            newUser.displayName = req.body.firstName + ' ' + req.body.lastName;
             newUser.gender = req.body.gender;
             newUser.school = req.body.school;
         }
         else if(req.body.type.toLowerCase() == 'business') {
             newUser.type = 'business';
             newUser.businessName = req.body.businessName;
+            newUser.displayName = req.body.businessName;
             if(req.body.businessDescription) {
                 newUser.businessDescription = req.body.businessDescription;
             }

@@ -125,8 +125,7 @@
 			<h2 class="flush soft-half--bottom" data-ng-show="user.subscriptions">Manage Subscriptions</h2>
 			<div class="inline-block" data-ng-repeat="subscription in user.subscriptions">
 				<div class="user-img-subscriptions" data-ng-style="{'background-image': 'url(' + subscription.pictureUrl + ')'}">
-					<a data-ng-show="subscription.type == 'business'" data-ng-href="/profile/{{subscription.username}}" data-tooltip="{{subscription.businessName}}" data-tooltip-placement="bottom"></a>
-					<a data-ng-show="subscription.type == 'student'" data-ng-href="/profile/{{subscription.username}}" data-tooltip="{{subscription.firstName}} {{subscription.lastName}}" data-tooltip-placement="bottom"></a>
+					<a data-ng-href="/profile/{{subscription.username}}" data-tooltip="{{subscription.displayName}}" data-tooltip-placement="bottom"></a>
 					<a href class="remove" data-tooltip="Unsubscribe" data-tooltip-placement="top" data-ng-click="removeSubscription(subscription._id)"><i class="icon-remove"></i></a>
 				</div>
 			</div>

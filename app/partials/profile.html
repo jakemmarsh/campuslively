@@ -5,8 +5,7 @@
 				<div class="user-img-profile" data-ng-style="{'background-image': 'url(' + profile.pictureUrl + ')'}"></div>
 			</div>
 			<div class="td three-tenths full-height">
-				<h1 class="flush" data-ng-show="profile.type == 'student'"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span></h1>
-				<h1 class="flush" data-ng-show="profile.type == 'business'" data-ng-bind="profile.businessName"></h1>
+				<h1 class="flush" data-ng-bind="profile.displayName"></h1>
 				<div class="normal-lh">
 					<a href data-ng-click="openLocation(profile)" data-tooltip="Location" data-ng-show="profile.type == 'business' && profile.loc">
 						<i class="beta icon-map-marker nudge-half--right"></i>
@@ -77,8 +76,7 @@
 	<div class="line nudge--ends" data-ng-repeat="event in events | orderBy:currentSort.value">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
-				<a href data-tooltip="{{event.creator.businessName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'business'"></a>
-				<a href data-tooltip="{{event.creator.firstName}} {{event.creator.lastName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'student'"></a>
+				<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>
 			</div>
 		</div>
 		<div class="unit eleven-twelfths last-unit">
@@ -96,8 +94,7 @@
 						</div>
 						<div class="unit one-half last-unit text-right">
 							Posted by
-							 <a data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'student'">{{event.creator.firstName}} {{event.creator.lastName}}</a>
-							 <a data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator.type == 'business'">{{event.creator.businessName}}</a>
+							 <a data-ng-href="/profile/{{event.creator.username}}">{{event.creator.displayName}}</a>
 						</div>
 					</div>
 				</div>
@@ -145,8 +142,7 @@
 	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="moreToLoad && !loadingMore && !loading">Load More</a>
 	<a href class="btn full-width text-center" data-ng-show="loadingMore && !loading">Loading more...</a>
 	<div class="text-center" data-ng-hide="events.length">
-		<h1 class="flush blue" data-ng-show="profile.type == 'student' && profile._id !== user._id"><span data-ng-bind="profile.firstName"></span> <span data-ng-bind="profile.lastName"></span> has not posted any events!</h1>
-		<h1 class="flush blue" data-ng-show="profile.type == 'business' && profile._id !== user._id"><span data-ng-bind="profile.businessName"></span> has not posted any events!</h1>
+		<h1 class="flush blue" data-ng-show="profile._id !== user._id"><span data-ng-bind="profile.displayName"></span> has not posted any events!</h1>
 		<div data-ng-show="profile._id == user._id">
 			<h1 class="flush blue">You haven't posted any events!</h1>
 			<a href="/post" class="btn nudge--top">Create Event</a>
@@ -160,8 +156,7 @@
     </div>
     <div class="modal-body">
         <div data-ng-repeat="attendingUser in items" class="user-img-modal nudge-half--right" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-			<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-ng-show="attendingUser.type == 'student'" data-tooltip="{{attendingUser.firstName}} {{attendingUser.lastName}}" data-tooltip-placement="right"></a>
-			<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-ng-show="attendingUser.type == 'business'" data-tooltip="{{attendingUser.businessName}}" data-tooltip-placement="right"></a>
+			<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-tooltip="{{attendingUser.displayName}}" data-tooltip-placement="right"></a>
 		</div>
 		<div data-ng-hide="items.length">
 			<h2 class="flush text-center">No one has RSVPd to this event yet!</h2>
