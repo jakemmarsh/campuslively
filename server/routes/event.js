@@ -103,6 +103,7 @@ exports.getEventsBySchool = function(req, res) {
 
 		if(req.params.limit) {
 			Event.find({ school: schoolId })
+			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(eventPopulateObj)
 			.exec(function (err, retrievedEvents) {
@@ -123,6 +124,7 @@ exports.getEventsBySchool = function(req, res) {
 		}
 		else {
 			Event.find({ school: schoolId })
+			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
 			.exec(function (err, retrievedEvents) {
 		        if(err) {
@@ -359,6 +361,7 @@ exports.getEventsByUser = function(req, res) {
 
 		if(req.params.limit) {
 			Event.find({ creator: userId })
+			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(eventPopulateObj)
 			.exec(function (err, retrievedEvent) {
@@ -379,6 +382,7 @@ exports.getEventsByUser = function(req, res) {
 		}
 		else {
 			Event.find({ creator: userId })
+			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
 			.exec(function (err, retrievedEvent) {
 		        if(err) {
@@ -517,6 +521,7 @@ exports.getEventsByLocation = function(req, res) {
 
 		if(req.params.limit) {
 			Event.find({ loc : { $near : locationPoint } })
+			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(eventPopulateObj)
 			.exec(function(err, retrievedEvent) {
@@ -537,6 +542,7 @@ exports.getEventsByLocation = function(req, res) {
 	    }
 	    else {
 			Event.find({ loc : { $near : locationPoint } })
+			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
 			.exec(function(err, retrievedEvent) {
 				if(err) {
