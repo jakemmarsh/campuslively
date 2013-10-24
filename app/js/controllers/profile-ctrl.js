@@ -109,15 +109,15 @@ define(['./index'], function (controllers) {
         $scope.loadMore = function() {
             $scope.loadingMore = true;
             eventService.getEventsByUserOlder($scope.profile._id, oldestId, 20).then(function (data, status) {
-                if(data.length == 0) {
+                if(data.length < 20) {
                     $scope.moreToLoad = false;
                 }
-                else {
+                if(data.length > 0) {
                     for(var i = 0; i < data.length; i++) {
                         $scope.events.push(data);
                     }
+                    oldestId = data[data.length-1]._id;
                 }
-                oldestId = data[data.length-1]._id;
                 $scope.loadingMore = false;
             }, function(err, status) {
                 $scope.loadingMore = false;

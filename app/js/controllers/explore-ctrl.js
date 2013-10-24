@@ -1,7 +1,7 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('exploreCtrl', function ($scope, $rootScope, $modal, locationService, eventService) {
-    	var oldestId;
+    controllers.controller('exploreCtrl', function ($scope, $rootScope, $modal, locationService, eventService, $timeout) {
+    	var oldestId, newestId;
     	$scope.currentView = 'school';
     	
     	$scope.viewOptions = [{
@@ -27,6 +27,11 @@ define(['./index'], function (controllers) {
 		            else {
 		                $scope.moreToLoadSchool = false;
 		            }
+		            if(data.length > 0) {
+			            oldestId = data[data.length-1]._id;
+			            newestId = data[0]._id;
+			        }
+			        $scope.checkForEvents();
 				}, function(err, status) {
 					$scope.loading = false;
 				});
@@ -47,7 +52,11 @@ define(['./index'], function (controllers) {
 				            else {
 				                $scope.moreToLoadNearby = false;
 				            }
-				            oldestId = data[data.length-1]._id;
+				            if(data.length > 0) {
+					            oldestId = data[data.length-1]._id;
+					            newestId = data[0]._id;
+					        }
+					        $scope.checkForEvents();
 						}, function(err, status) {
 							$scope.loading = false;
 						});
@@ -66,13 +75,52 @@ define(['./index'], function (controllers) {
 			            else {
 			                $scope.moreToLoadNearby = false;
 			            }
-			            oldestId = data[data.length-1]._id;
+			            if(data.length > 0) {
+				            oldestId = data[data.length-1]._id;
+				            newestId = data[0]._id;
+				        }
+				        $scope.checkForEvents();
 					}, function(err, status) {
 						$scope.loading = false;
 					});
 				}
 			}
 		});
+
+		$scope.loadNew = function() {
+			if($scope.currentView == 'school') {
+	            eventService.getEventsBySchoolNewer($rootScope.user.school._id, newestId).then(function (data) {
+	                if(data.length > 0) {
+	                    for(var i = 0; i < data.length; i++) {
+	                        $scope.events.unshift(data[i]);
+	                    }
+	                    newestId = data[0]._id;
+	                }
+	            },
+	            function (errorMessage) {
+	            });
+        	}
+        	else if($scope.currentView == 'nearby') {
+        		eventService.getEventsByLocationNewer($rootScope.user.school._id, newestId).then(function (data) {
+	                if(data.length > 0) {
+	                    for(var i = 0; i < data.length; i++) {
+	                        $scope.events.unshift(data[i]);
+	                    }
+	                    newestId = data[0]._id;
+	                }
+	            },
+	            function (errorMessage) {
+	            });
+        	}
+        };
+
+        // refresh feed every 30 seconds
+        $scope.checkForEvents = function() {
+            var timeout = $timeout(function() {
+                    $scope.loadNew();
+                    $scope.checkForEvents();
+            }, 30000);
+        };
 
 		$scope.sortOptions = [{
 				label: 'by start date',
@@ -133,15 +181,15 @@ define(['./index'], function (controllers) {
 			$scope.loadingMore = true;
 			if($scope.currentView == 'school') {
 				eventService.getEventsBySchoolOlder($rootScope.user.school._id, oldestId, 20).then(function (data, status) {
-					if(data.length == 0) {
+					if(data.length < 20) {
 	                    $scope.moreToLoadSchool = false;
 	                }
-	                else {
+	                if(data.length > 0) {
 	                	for(var i = 0; i < data.length; i++) {
 							$scope.events.push(data);
 						}
+						oldestId = data[data.length-1]._id;
 	                }
-	                oldestId = data[data.length-1]._id;
 	                $scope.loadingMore = false;
 				}, function(err, status) {
 					$scope.loadingMore = false;
@@ -149,15 +197,15 @@ define(['./index'], function (controllers) {
 			}
 			else if($scope.currentView == 'nearby') {
 				eventService.getEventsByLocationOlder($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), oldestId, 20).then(function (data, status) {
-					if(data.length == 0) {
+					if(data.length < 20) {
 	                    $scope.moreToLoadNearby = false;
 	                }
-	                else {
+	                if(data.length > 0) {
 	                	for(var i = 0; i < data.length; i++) {
 							$scope.events.push(data);
 						}
+						oldestId = data[data.length-1]._id;
 	                }
-	                oldestId = data[data.length-1]._id;
 	                $scope.loadingMore = false;
 				}, function(err, status) {
 					$scope.loadingMore = false;

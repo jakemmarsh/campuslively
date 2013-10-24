@@ -98,6 +98,17 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		getActivitiesNewer: function(userId, newestId) {
+			var deferred = $q.defer();
+
+			$http.get(this.apiPath + userId + '/activities/newerThan/' + newestId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		getActivitiesOlder: function(userId, oldestId, limit) {
 			var deferred = $q.defer();
 

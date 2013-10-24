@@ -1,7 +1,7 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('feedCtrl', function ($scope, $rootScope, $modal, userService, eventService) {
-        var oldestId;
+    controllers.controller('feedCtrl', function ($scope, $rootScope, $modal, userService, eventService, $timeout) {
+        var oldestId, newestId;
     	$scope.loading = true;
 
         userService.getActivities($rootScope.user._id, 20).then(function (data) {
@@ -13,24 +13,49 @@ define(['./index'], function (controllers) {
             else {
                 $scope.moreToLoad = false;
             }
-            oldestId = data[data.length-1]._id;
+            if(data.length > 0) {
+                oldestId = data[data.length-1]._id;
+                newestId = data[0]._id;
+            }
+            $scope.checkForActivities();
         },
         function (errorMessage) {
-            console.log(errorMessage);
         });
+
+        $scope.loadNew = function() {
+            userService.getActivitiesNewer($rootScope.user._id, newestId).then(function (data) {
+                console.log(data);
+                if(data.length > 0) {
+                    for(var i = 0; i < data.length; i++) {
+                        $scope.activities.unshift(data[i]);
+                    }
+                    newestId = data[0]._id;
+                }
+            },
+            function (errorMessage) {
+            });
+        };
+
+        // refresh feed every 30 seconds
+        $scope.checkForActivities = function() {
+            var timeout = $timeout(function() {
+                    $scope.loadNew();
+                    $scope.checkForActivities();
+            }, 30000);
+        };
 
         $scope.loadMore = function() {
             $scope.loadingMore = true;
-            userService.getActivities($rootScope.user._id, oldestId, 20).then(function (data) {
-                if(data.length == 0) {
+            userService.getActivitiesOlder($rootScope.user._id, oldestId, 20).then(function (data) {
+                if(data.length < 20) {
                     $scope.moreToLoad = false;
                 }
-                else {
+                if(data.length > 0) {
                     for(var i = 0; i < data.length; i++) {
                         $scope.activities.push(data);
                     }
+                    oldestId = data[data.length-1]._id;
                 }
-                oldestId = data[data.length-1]._id;
                 $scope.loadingMore = false;
             },
             function (errorMessage) {

@@ -71,6 +71,7 @@ app.configure(function() {
     
     app.get('/api/v1/user/:userId/activities', restrict, routes.user.getActivities);
     app.get('/api/v1/user/:userId/activities/limit/:limit', restrict, routes.user.getActivities);
+    app.get('/api/v1/user/:userId/activities/newerThan/:newestId', restrict, routes.user.getActivitiesNewer);
     app.get('/api/v1/user/:userId/activities/olderThan/:oldestId/limit/:limit', restrict, routes.user.getActivitiesOlder);
 
     // schools

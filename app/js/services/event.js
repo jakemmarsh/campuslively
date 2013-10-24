@@ -37,6 +37,17 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		getEventsBySchoolNewer: function(schoolId, newestId) {
+			var deferred = $q.defer();
+
+			$http.get(this.apiPath + 'school/' + schoolId + '/newerThan/' + newestId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		getEventsBySchoolOlder: function(schoolId, oldestId, limit) {
 			var deferred = $q.defer();
 
@@ -66,6 +77,17 @@ define(['./index'], function (services) {
 					deferred.reject(err);
 				});
 			}
+
+			return deferred.promise;
+		},
+		getEventsByLocationNewer: function(lat, lng, newestId) {
+			var deferred = $q.defer();
+
+			$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/newerThan/' + newestId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
 
 			return deferred.promise;
 		},
