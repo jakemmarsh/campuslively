@@ -1,7 +1,9 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('modalInstanceCtrl', ['$scope', '$modalInstance', 'items', 'location', function ($scope, $modalInstance, items, location) {
-    	$scope.items = items;
+    	if(items) {
+            $scope.items = items;
+        }
 
         if(location) {
             $scope.mapOptions = {
