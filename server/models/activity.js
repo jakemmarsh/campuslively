@@ -25,6 +25,8 @@ var activitySchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'Event'
     },
+    eventPrivacy: String,
+    eventCreator: mongoose.Schema.ObjectId,
     comment: {
         type: mongoose.Schema.ObjectId,
         ref: 'Comment'

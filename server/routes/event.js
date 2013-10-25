@@ -689,7 +689,9 @@ exports.postEvent = function(req, res) {
 			activity = new Activity({
 				actor: createdEvent.creator,
 				activity: 'posted',
-				event: createdEvent._id
+				event: createdEvent._id,
+				eventPrivacy: createdEvent.privacy,
+				eventCreator: req.body.creator
 			});
 
 		activity.save(function (err, savedActivity) {
@@ -861,11 +863,13 @@ exports.rsvp = function(req, res) {
 
 		return deferred.promise;
 	},
-	createActivity = function(eventId, userId) {
+	createActivity = function(event, userId) {
 		var deferred = Q.defer(),
 			activity = new Activity({
 				actor: userId,
-				event: eventId,
+				event: event._id,
+				eventPrivacy: event.privacy,
+				eventCreator: event.creator,
 				activity: 'rsvpd'
 			});
 
@@ -883,7 +887,7 @@ exports.rsvp = function(req, res) {
 
 	updateUser(req.params.userId, req.params.eventId).then(function(updatedUser) {
 		updateEvent(req.params.eventId, req.params.userId).then(function(updatedEvent) {
-			createActivity(req.params.eventId, req.params.userId).then(function(savedActivity) {
+			createActivity(updatedEvent, req.params.userId).then(function(savedActivity) {
 				res.json(200, updatedEvent);
 			}, function(err) {
 				res.json(200, updatedEvent);

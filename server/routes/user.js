@@ -397,13 +397,13 @@ exports.getActivities = function(req, res) {
 				{ path: 'recipient' },
 				{ path: 'event.creator' }
 			],
-			eventPopulateObj = {
-				path: 'event.creator',
-				model: User
-			};
+			userPopulateObj = [
+				{ path: 'event.creator', model: User },
+				{ path: 'comment.creator', model: User }
+			];
 
 		if(req.params.limit) {
-			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id} })
+			Activity.find({ $or: [{recipient: user._id}, {eventCreator: user._id}, {actor: {$in: user.subscriptions}, $or: [{eventPrivacy: 'public'}, {event: {$in: user.attending}}, {event: {$in: user.invites}}]}, {event: {$in: user.attending}}], actor: { $ne: user._id } })
 			.sort({ _id: -1 })
 			.populate(activityPopulateObj)
 			.exec(function(err, retrievedActivities) {
@@ -411,7 +411,7 @@ exports.getActivities = function(req, res) {
 					deferred.reject(new Error("No events found."));
 				}
 				else {
-					User.populate(retrievedActivities, eventPopulateObj, function(err, data){
+					User.populate(retrievedActivities, userPopulateObj, function(err, data){
 						if(err) {
 							deferred.reject(err.message);
 						}
@@ -423,7 +423,7 @@ exports.getActivities = function(req, res) {
 			});
 		}
 		else {
-			Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id} })
+			Activity.find({ $or: [{recipient: user._id}, {eventCreator: user._id}, {actor: {$in: user.subscriptions}, $or: [{eventPrivacy: 'public'}, {event: {$in: user.attending}}, {event: {$in: user.invites}}]}, {event: {$in: user.attending}}], actor: { $ne: user._id } })
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(activityPopulateObj)
@@ -481,12 +481,12 @@ exports.getActivitiesNewer = function(req, res) {
 				{ path: 'actor' },
 				{ path: 'recipient' }
 			],
-			eventPopulateObj = {
-				path: 'event.creator',
-				model: User
-			};
+			userPopulateObj = [
+				{ path: 'event.creator', model: User },
+				{ path: 'comment.creator', model: User }
+			];
 
-		Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id}, _id: { $gt: newestId } })
+		Activity.find({ $or: [{recipient: user._id}, {eventCreator: user._id}, {actor: {$in: user.subscriptions}, $or: [{eventPrivacy: 'public'}, {event: {$in: user.attending}}, {event: {$in: user.invites}}]}, {event: {$in: user.attending}}], actor: { $ne: user._id }, _id: { $gt: newestId } })
 		.sort({ _id: -1 })
 		.populate(activityPopulateObj)
 		.exec(function(err, retrievedActivities) {
@@ -494,7 +494,7 @@ exports.getActivitiesNewer = function(req, res) {
 				deferred.reject(new Error("No events found."));
 			}
 			else {
-				User.populate(retrievedActivities, eventPopulateObj, function(err, data){
+				User.populate(retrievedActivities, userPopulateObj, function(err, data){
 					if(err) {
 						deferred.reject(err.message);
 					}
@@ -542,12 +542,12 @@ exports.getActivitiesOlder = function(req, res) {
 				{ path: 'actor' },
 				{ path: 'recipient' }
 			],
-			eventPopulateObj = {
-				path: 'event.creator',
-				model: User
-			};
+			userPopulateObj = [
+				{ path: 'event.creator', model: User },
+				{ path: 'comment.creator', model: User }
+			];
 
-		Activity.find({ $or: [{recipient: user._id}, {actor: {$in: user.subscriptions}}, {event: {$in: user.attending}}], actor: { $ne: user._id}, _id: { $lt: oldestId } })
+		Activity.find({ $or: [{recipient: user._id}, {eventCreator: user._id}, {actor: {$in: user.subscriptions}, $or: [{eventPrivacy: 'public'}, {event: {$in: user.attending}}, {event: {$in: user.invites}}]}, {event: {$in: user.attending}}], actor: { $ne: user._id }, _id: { $lt: oldestId } })
 		.sort({ _id: -1 })
 		.limit(limit)
 		.populate(activityPopulateObj)
@@ -556,7 +556,7 @@ exports.getActivitiesOlder = function(req, res) {
 				deferred.reject(new Error("No events found."));
 			}
 			else {
-				User.populate(retrievedActivities, eventPopulateObj, function(err, data){
+				User.populate(retrievedActivities, userPopulateObj, function(err, data){
 					if(err) {
 						deferred.reject(err.message);
 					}

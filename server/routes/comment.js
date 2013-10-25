@@ -78,16 +78,16 @@ exports.postComment = function(req, res) {
 
 		return deferred.promise;
 	},
-	createActivity = function(comment) {
+	createActivity = function(comment, event) {
 		var deferred = Q.defer(),
 			activity = new Activity({
 				actor: comment.creator,
-				event: comment.eventId,
+				event: event._id,
+				eventPrivacy: event.privacy,
+				eventCreator: event.creator,
 				comment: comment._id,
 				activity: 'commented'
 			});
-
-			console.log(comment);
 
 		activity.save(function (err, savedActivity) {
             if (err) {
@@ -124,7 +124,7 @@ exports.postComment = function(req, res) {
 
 	postComment(req.params.eventId, req.body).then(function(savedComment) {
 		addToEvent(req.params.eventId, savedComment._id).then(function(returnedEvent) {
-			createActivity(savedComment).then(function(savedActivity) {
+			createActivity(savedComment, returnedEvent).then(function(savedActivity) {
 				getPostedComment(savedComment._id).then(function(retrievedComment) {
 					res.json(200, retrievedComment);
 				}, function(err) {

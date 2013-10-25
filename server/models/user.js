@@ -49,6 +49,7 @@ var userSchema = new mongoose.Schema({
     },
     subscriptions: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
     attending: [{type: mongoose.Schema.ObjectId, ref: 'Event'}],
+    invites: [{type: mongoose.Schema.ObjectId, ref: 'Event'}],
     school: {
         type: mongoose.Schema.ObjectId,
         ref: 'School'
