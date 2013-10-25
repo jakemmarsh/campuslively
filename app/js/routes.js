@@ -51,14 +51,14 @@ define(['./app'], function (app) {
             title: 'Activate Account',
             access: 'notLoggedIn',
             resolve: {
-                resolvedActivation: function($stateParams, $rootScope, $location, authService){
+                resolvedActivation: ['$stateParams', '$rootScope', '$location', 'authService', function($stateParams, $rootScope, $location, authService){
                     return authService.activateUser($stateParams.userId, $stateParams.activateKey).then(function (data, status) {
                         return true;
                     },
                     function (errorMessage, status) {
                         $location.path('/');
                     });
-                }
+                }]
             }
         })
         .state('inner.resend', {
@@ -68,14 +68,14 @@ define(['./app'], function (app) {
             title: 'Activation Link Resent',
             access: 'notLoggedIn',
             resolve: {
-                resolvedEmailSent: function($stateParams, $rootScope, $location, authService){
+                resolvedEmailSent: ['$stateParams', '$rootScope', '$location', 'authService', function($stateParams, $rootScope, $location, authService){
                     return authService.resendActivation($stateParams.username).then(function (data, status) {
                         return true;
                     },
                     function (errorMessage, status) {
                         $location.path('/');
                     });
-                }
+                }]
             }
         })
         .state('inner.forgot', {
@@ -118,7 +118,7 @@ define(['./app'], function (app) {
             templateUrl: '/partials/event.html',
             controller: 'eventCtrl',
             resolve: {
-                resolvedEvent: function($stateParams, $rootScope, eventService, $location){
+                resolvedEvent: ['$stateParams', '$rootScope', 'eventService', '$location', function($stateParams, $rootScope, eventService, $location){
                     return eventService.getEvent($stateParams.eventId).then(function (data, status) {
                         $rootScope.pageTitle = data.title;
                         return data;
@@ -126,7 +126,7 @@ define(['./app'], function (app) {
                     function (errorMessage, status) {
                         $location.path('/feed');
                     });
-                }
+                }]
             },
             access: 'loggedIn'
         })
@@ -149,7 +149,7 @@ define(['./app'], function (app) {
             templateUrl: '/partials/profile.html',
             controller: 'profileCtrl',
             resolve: {
-                resolvedUser: function($stateParams, $rootScope, userService, $location){
+                resolvedUser: ['$stateParams', '$rootScope', 'userService', '$location', function($stateParams, $rootScope, userService, $location){
                     return userService.getUserByName($stateParams.username).then(function (data, status) {
                         if(data.type == 'student') {
                             $rootScope.pageTitle = data.firstName + ' ' + data.lastName;
@@ -162,7 +162,7 @@ define(['./app'], function (app) {
                     function (errorMessage, status) {
                         $location.path('/feed');
                     });
-                }
+                }]
             },
             access: 'loggedIn'
         })
