@@ -123,13 +123,10 @@ define(['./index'], function (controllers) {
                         }
                     });
                   }, function(err, status) {
-                    console.log(err.message);
                   });
                 }
                 else if($scope.currentView == 'nearby') {
-                  console.log('nearby');
                   eventService.getEventsByLocationAndDay($rootScope.user._id, $rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.selectedDay).then(function (data, status) {
-                    console.log(data);
                     $scope.loadingDayEvents = false;
                     $scope.dayEvents = data;
                     $scope.showDay = true;
@@ -144,7 +141,6 @@ define(['./index'], function (controllers) {
                         }
                     });
                   }, function(err, status) {
-                    console.log(err.message);
                   });
                 }
           		});        
@@ -180,7 +176,6 @@ define(['./index'], function (controllers) {
               }
           },
           function (errorMessage) {
-              console.log(errorMessage);
           });
       };
 
@@ -203,7 +198,6 @@ define(['./index'], function (controllers) {
               }
           },
           function (errorMessage) {
-              console.log(errorMessage);
           });
       };
 
