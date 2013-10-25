@@ -72,6 +72,7 @@
 								<div class="unit one-half last-unit text-right">
 									Posted by
 									 <a data-ng-href="/profile/{{activity.event.creator.username}}">{{activity.event.creator.displayName}}</a>
+									 {{ activity.event.timestamp | timePast }}
 								</div>
 							</div>
 						</div>
@@ -224,6 +225,7 @@
 								<div class="unit one-half last-unit text-right">
 									Posted by
 									 <a data-ng-href="/profile/{{activity.event.creator.username}}">{{activity.event.creator.displayName}}</a>
+									 {{ activity.event.timestamp | timePast }}
 								</div>
 							</div>
 						</div>

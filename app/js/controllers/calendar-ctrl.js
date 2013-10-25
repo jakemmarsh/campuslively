@@ -229,7 +229,7 @@ define(['./index'], function (controllers) {
       },
       {
         label: 'by post date',
-        value: 'timestamp'
+        value: '-timestamp'
       }
     ];
 
