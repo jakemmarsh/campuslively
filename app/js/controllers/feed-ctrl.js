@@ -24,7 +24,6 @@ define(['./index'], function (controllers) {
 
         $scope.loadNew = function() {
             userService.getActivitiesNewer($rootScope.user._id, newestId).then(function (data) {
-                console.log(data);
                 if(data.length > 0) {
                     for(var i = 0; i < data.length; i++) {
                         $scope.activities.unshift(data[i]);
