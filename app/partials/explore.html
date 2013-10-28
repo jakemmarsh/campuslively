@@ -1,3 +1,7 @@
+<div class="loading" data-ng-show="loading">
+	<h2 class="flush" data-ng-show="loading && !gettingPosition">Loading...</h2>
+	<h2 class="flush" data-ng-show="gettingPosition">Getting your location...</h2>
+</div>
 <div class="white-top">
 	<div class="container full-height">
 		<div class="table full-height full-width">
@@ -10,20 +14,12 @@
 		</div>
 	</div>
 </div>
-<div class="table full-width full-height__header" data-ng-show="loading">
-	<div class="td full-height full-width vertical-align-middle text-center">
-		<div class="box island inline-block text-center">
-			<h1 class="flush blue" data-ng-show="loading && !gettingPosition">Loading events...</h1>
-			<h1 class="flush blue" data-ng-show="gettingPosition">Getting your location...</h1>
-		</div>
-	</div>
-</div>
 <div class="container soft-half--ends" data-ng-show="currentView == 'school'">
 	<div class="text-center" data-ng-show="!loading && !events.length">
 		<h1 class="flush blue">No events have been posted for your school yet!</h1>
 		<a href="/post" class="btn nudge--top">Be the First</a>
 	</div>
-	<div class="table soft-half--ends full-width" data-ng-show="events.length">
+	<div class="table soft-half--ends full-width">
 		<div class="td one-half vertical-align-middle">
 			<div class="input-prepend">
 				<div class="icon">
@@ -45,12 +41,12 @@
 			</div>
 		</div>
 	</div>
-	<hr data-ng-show="events.length" />
+	<hr />
 	<div class="text-center" data-ng-show="!loading && !filteredEvents.length && events.length">
 		<h2 class="flush blue" data-ng-show="events.length >= 20">No events match your search. Have you tried loading more?</h2>
 		<h2 class="flush blue" data-ng-show="events.length < 20">No events match your search.</h2>
 	</div>
-	<div class="line nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
+	<div class="line fade nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
 				<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>
@@ -129,7 +125,7 @@
 	<div class="text-center" data-ng-show="showLocationError">
 		<h1 class="flush blue">We were unable to determine your location</h1>
 	</div>
-	<div class="table soft-half--ends full-width" data-ng-show="events.length">
+	<div class="table soft-half--ends full-width">
 		<div class="td one-half vertical-align-middle">
 			<div class="input-prepend">
 				<div class="icon">
@@ -151,8 +147,8 @@
 			</div>
 		</div>
 	</div>
-	<hr data-ng-show="events.length" />
-	<div class="line nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
+	<hr />
+	<div class="line fade nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
 				<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>

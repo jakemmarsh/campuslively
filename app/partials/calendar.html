@@ -1,3 +1,6 @@
+<div class="loading" data-ng-show="loading">
+	<h2 class="flush">Loading...</h2>
+</div>
 <div class="white-top">
 	<div class="container full-height">
 		<div class="table full-height full-width">
@@ -41,7 +44,7 @@
 			</div>
 		</div>
 		<hr />
-		<div class="line nudge--ends" data-ng-repeat="event in dayEvents | orderBy:currentSort.value">
+		<div class="line fade nudge--ends" data-ng-repeat="event in dayEvents | orderBy:currentSort.value">
 			<div class="unit one-twelfth">
 				<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
 					<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>

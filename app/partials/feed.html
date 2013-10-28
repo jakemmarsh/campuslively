@@ -1,3 +1,6 @@
+<div class="loading" data-ng-show="loading">
+	<h2 class="flush">Loading...</h2>
+</div>
 <div class="white-top">
 	<div class="container full-height">
 		<div class="table full-height">
@@ -7,15 +10,8 @@
 		</div>
 	</div>
 </div>
-<div class="table full-width full-height__header" data-ng-show="loading">
-	<div class="td full-height full-width vertical-align-middle text-center">
-		<div class="box island inline-block text-center">
-			<h1 class="flush blue">Loading feed...</h1>
-		</div>
-	</div>
-</div>
 <div class="container soft-half--ends" data-ng-show="!loading">
-	<div data-ng-repeat="activity in activities | orderBy:'-timestamp'">
+	<div class="fade" data-ng-repeat="activity in activities | orderBy:'-timestamp'">
 		<div data-ng-show="activity.activity == 'subscribed'" class="soft-half--ends">
 			<div class="table full-width">
 				<div class="tr">

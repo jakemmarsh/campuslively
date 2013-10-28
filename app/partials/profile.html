@@ -1,3 +1,6 @@
+<div class="loading" data-ng-show="loading">
+	<h2 class="flush">Loading events...</h2>
+</div>
 <div class="white-top">
 	<div class="container full-height">
 		<div class="table full-height">
@@ -27,13 +30,6 @@
 				<a href class="btn nudge-half--right" data-ng-click="toggleSubscribe()" data-ng-show="isSubscribed() && profile._id != user._id"><i class="icon-star-empty"></i> Unsubscribe</a>
 			</div>
 
-		</div>
-	</div>
-</div>
-<div class="table full-width full-height__header" data-ng-show="loading">
-	<div class="td full-height full-width vertical-align-middle text-center">
-		<div class="box island inline-block text-center">
-			<h1 class="flush blue">Loading events...</h1>
 		</div>
 	</div>
 </div>
@@ -73,7 +69,7 @@
 		</div>
 	</div>
 	<hr data-ng-show="events.length" />
-	<div class="line nudge--ends" data-ng-repeat="event in events | orderBy:currentSort.value">
+	<div class="line fade nudge--ends" data-ng-repeat="event in events | orderBy:currentSort.value">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
 				<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>

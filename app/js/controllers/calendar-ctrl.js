@@ -17,6 +17,7 @@ define(['./index'], function (controllers) {
 
       $scope.events = [];
       $scope.$watch('currentView', function() {
+        $scope.loading = true;
         // remove any previous events before adding to avoid duplicates
         $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
         $scope.events = [];
@@ -40,7 +41,10 @@ define(['./index'], function (controllers) {
               }
               $scope.events.push(event);
             }
+            // remove any previous events before adding to avoid duplicates
+            $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
             $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+            $scope.loading = false;
           }, function(err, status) {
           
           });
@@ -66,7 +70,10 @@ define(['./index'], function (controllers) {
                   }
                   $scope.events.push(event);
                 }
+                // remove any previous events before adding to avoid duplicates
+                $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
                 $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+                $scope.loading = false;
               }, function(err, status) {
               });
             },
@@ -95,6 +102,7 @@ define(['./index'], function (controllers) {
               // remove any previous events before adding to avoid duplicates
               $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
               $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+              $scope.loading = false;
             }, function(err, status) {
             });
           }
