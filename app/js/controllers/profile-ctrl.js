@@ -16,7 +16,6 @@ define(['./index'], function (controllers) {
             }
             oldestId = data[data.length-1]._id;
         }, function(err, status) {
-            console.log(err.message);
             $scope.loading = false;
         });
     	
