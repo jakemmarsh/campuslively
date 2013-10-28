@@ -1,6 +1,7 @@
 define([
     'angular',
     'angular-sanitize',
+    'angular-animate',
     'angular-ui-bootstrap',
     'angular-ui-router',
     'angular-switch-toggle',
@@ -21,6 +22,7 @@ define([
         'app.filters',
         'app.directives',
         'ngSanitize',
+        'ngAnimate',
         'ui.bootstrap', 
         'ui.state',
         'ngSwitchToggle',

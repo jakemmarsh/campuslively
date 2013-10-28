@@ -11,6 +11,7 @@ require.config({
         'domReady': './lib/requirejs/domReady',
         'angular': './lib/angular/angular.min',
         'angular-sanitize' : './lib/angular/angular-sanitize.min',
+        'angular-animate' : './lib/angular/angular-animate.min',
         'angular-ui-bootstrap' : './lib/angular/ui-bootstrap-0.6.0.min',
         'angular-ui-router' : './lib/angular/angular-ui-router.min',
         'angular-switch-toggle' : './lib/angular/ng-switch-toggle',
@@ -32,6 +33,9 @@ require.config({
             deps: ['jquery']
         },
         'angular-sanitize': {
+            deps: ['angular']
+        },
+        'angular-animate': {
             deps: ['angular']
         },
         'angular-ui-bootstrap': {
