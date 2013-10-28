@@ -19,12 +19,13 @@
 /**
  * Base Styles
  */
- @import "base/normalize";
+@import "base/normalize";
 @import "base/defaults";
 @import "base/responsive-grid";
 @import "base/static-grid";
 @import "base/layout";
 @import "base/text";
+@import "base/animations";
 
 
 /**
@@ -44,6 +45,7 @@
 @import "elements/calendar";
 @import "elements/dropdown-menu";
 @import "elements/select2";
+@import "elements/loading";
 
 /**
  * Page-Specific Styles

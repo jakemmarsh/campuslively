@@ -1,0 +1,17 @@
+.loading {
+	@include corners(0, 0, 3px, 3px);
+	background: $primary;
+	border-width: 0px 1px 1px 1px;
+	color: $white;
+	position: fixed;
+	left: 50%;
+	margin-left: -175px;
+	width: 350px;
+	@extend .caps;
+	@extend .weight--bold;
+	@extend .text-center;
+	-webkit-transition-duration: 2s;
+	-moz-transition-duration: 2s;
+	-o-transition-duration: 2s;
+	transition-duration: 2s;
+}
