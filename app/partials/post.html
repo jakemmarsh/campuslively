@@ -34,7 +34,7 @@
 					<div class="icon">
 						<i class="icon-building"></i>
 					</div>
-					<input class="foursquare" type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event" data-ng-required="!locationAddress" data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" data-ng-blur="checkLocation()" />
+					<input class="foursquare" type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event" data-ng-required="!locationAddress" data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" data-ng-blur="checkLocation()" autocomplete="off" />
 				</div>
 			</div>
 		</div>
