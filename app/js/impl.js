@@ -33,5 +33,6 @@ define([
     'services/contact',
     'filters/parse-url',
     'filters/readable-date',
-    'filters/time-past'
+    'filters/time-past',
+    'animations/loading'
 ], function () {});

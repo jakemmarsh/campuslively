@@ -22,28 +22,3 @@
 .fade.ng-leave.ng-leave-active {
 	opacity: 0;
 }
-
-// SLIDE IN/OUT LOADING INDICATOR
-.loading.ng-hide-add,
-.loading.ng-hide-remove {
-	-webkit-transition-duration: 2s;
-	-moz-transition-duration: 2s;
-	-o-transition-duration: 2s;
-	transition-duration: 2s;
-}
-
-.loading.ng-hide-remove {
-	top: 20px;
-}
-
-.loading.ng-hide-remove.ng-hide-remove-active {
-	top: 0;
-}
-
-.loading.ng-hide-add {
-	top: 0;
-}
-
-.loading.ng-hide-add.ng-hide-add-active {
-	top: 20px;
-}

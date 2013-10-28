@@ -12,7 +12,8 @@ define([
     './controllers/index',
     './directives/index',
     './filters/index',
-    './services/index'
+    './services/index',
+    './animations/index'
 ], function (ng) {
     'use strict';
 
@@ -21,6 +22,7 @@ define([
         'app.controllers',
         'app.filters',
         'app.directives',
+        'app.animations',
         'ngSanitize',
         'ngAnimate',
         'ui.bootstrap', 
