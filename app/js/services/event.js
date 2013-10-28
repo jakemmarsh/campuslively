@@ -83,7 +83,7 @@ define(['./index'], function (services) {
 		getEventsByLocationNewer: function(userId, lat, lng, newestId) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + userId + 'near/' + lat + '/' + lng + '/newerThan/' + newestId).success(function(data, status) {
+			$http.get(this.apiPath + 'user/' + userId + '/near/' + lat + '/' + lng + '/newerThan/' + newestId).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -148,7 +148,7 @@ define(['./index'], function (services) {
 		getEventsByUserOlder: function(userId, profileId, oldestId, limit) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + userId + '/profile' + profileId + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
+			$http.get(this.apiPath + 'user/' + userId + '/profile/' + profileId + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
