@@ -1,10 +1,10 @@
 // FADE IN/OUT NG-REPEAT ITEMS
 .fade.ng-enter,
 .fade.ng-leave{
-	-webkit-transition: 1s;
-	-moz-transition: 1s;
-	-o-transition: 1s;
-	transition: 1s;
+	-webkit-transition: 0.8s;
+	-moz-transition: 0.8s;
+	-o-transition: 0.8s;
+	transition: 0.8s;
 }
 
 .fade.ng-enter {
