@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'authService', 'localStorageService', function ($scope, $rootScope, $location, authService, localStorageService) {
+    controllers.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'authService', 'localStorageService', 'interceptorService', function ($scope, $rootScope, $location, authService, localStorageService, interceptorService) {
     	$scope.login = function() {
     		var user = {
     			username: $scope.username,
@@ -13,16 +13,7 @@ define(['./index'], function (controllers) {
     			$scope.loginError = null;
     			$rootScope.user = data;
                 localStorageService.add('user', data);
-	    		// redirect to original destination if one exists
-	    		if($rootScope.originalDestination) {
-	    			var originalDestination = $rootScope.originalDestination;
-	    			$rootScope.originalDestination = null;
-
-	    			$location.path(originalDestination);
-	    		}
-	    		else {
-	    			$location.path('/feed');
-	    		}
+                interceptorService.loginConfirmed();
 	        },
 	        function (errorMessage, status) {
 	        	if(errorMessage.toLowerCase().indexOf('activate') !== -1) {

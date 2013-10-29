@@ -16,6 +16,23 @@ define([
             $rootScope.user = localStorageService.get('user');
         }
 
+        $rootScope.$on('event:auth-loginConfirmed', function() {
+            if($rootScope.originalDestination) {
+                var originalDestination = $rootScope.originalDestination;
+                $rootScope.originalDestination = null;
+                $location.path(originalDestination);
+            }
+            else {
+                $location.path('/feed');
+            }
+        });
+
+        $rootScope.$on('event:auth-loginRequired', function() {
+            localStorageService.clearAll();
+            $rootScope.user = null;
+            $location.path('/login');
+        });
+
         // take actions based on user's logged in status and destination page's protection level
         $rootScope.$on('$stateChangeStart', function(event, toState) {
             // if user is not logged in and state requires user to be logged in

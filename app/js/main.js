@@ -10,6 +10,7 @@ require.config({
         'async': './lib/async',
         'domReady': './lib/requirejs/domReady',
         'angular': './lib/angular/angular.min',
+        'http-auth-interceptor': './lib/angular/http-auth-interceptor',
         'angular-local-storage': './lib/angular/angular-local-storage',
         'angular-sanitize' : './lib/angular/angular-sanitize.min',
         'angular-animate' : './lib/angular/angular-animate.min',
@@ -32,6 +33,9 @@ require.config({
         'angular': {
             exports: 'angular',
             deps: ['jquery']
+        },
+        'http-auth-interceptor': {
+            deps: ['angular']
         },
         'angular-local-storage': {
             deps: ['angular']

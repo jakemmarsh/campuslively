@@ -1,5 +1,6 @@
 define([
     'angular',
+    'http-auth-interceptor',
     'angular-local-storage',
     'angular-sanitize',
     'angular-animate',
@@ -19,6 +20,7 @@ define([
     'use strict';
 
     return ng.module('app', [
+        'http-auth-interceptor',
         'app.services',
         'app.controllers',
         'app.filters',
