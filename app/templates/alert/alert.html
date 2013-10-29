@@ -1,4 +1,4 @@
-<div class='alert' ng-class='type && "alert-" + type'>
-    <button ng-show='closeable' type='button' class='close' ng-click='close()'>&times;</button>
-    <div ng-transclude></div>
+<div class='alert'>
+	<button data-ng-show='closeable' type='button' class='close' data-ng-click='close()'>&times;</button>
+	<div data-ng-transclude class="islet"></div>
 </div>

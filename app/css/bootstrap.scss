@@ -699,3 +699,33 @@
 .carousel-caption p {
   margin-bottom: 0;
 }
+
+.alert {
+  position: relative;
+  max-width: 350px;
+  @include corners();
+  padding: 5px;
+  background: $white;
+  color: $dark-grey;
+  border: 1px solid $border-grey;
+  -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+  .alert .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background: none;
+    color: $dark-grey;
+  }
+
+    .alert .close:hover, .alert .close:active, .alert .close:focus {
+      color: $secondary;
+    }
+
+  .alert:not(:last-child) {
+    @extend .nudge-half--bottom;
+  }
