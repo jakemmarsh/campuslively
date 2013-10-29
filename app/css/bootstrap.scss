@@ -26,11 +26,14 @@
   position: absolute;
   z-index: 1030;
   display: block;
-  font-size: 0.9em;
+  font-size: 14px;
+  font-weight: normal;
   line-height: 1.4;
   opacity: 0;
   filter: alpha(opacity=0);
   visibility: visible;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .tooltip.in {
@@ -56,7 +59,7 @@
 .tooltip.left {
   padding: 0 5px;
   margin-left: -12px;
-  margin-top: 8px;
+  margin-top: 2px;
 }
 
 .tooltip-inner {
