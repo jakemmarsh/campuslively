@@ -11,30 +11,22 @@ define([
 ], function (require, ng, app) {
     'use strict';
 
-    app.run(['$rootScope', '$location', 'authService', function ($rootScope, $location, authService) {
+    app.run(['$rootScope', '$location', 'authService', 'localStorageService', function ($rootScope, $location, authService, localStorageService) {
+        if(localStorageService.get('user')) {
+            $rootScope.user = localStorageService.get('user');
+        }
+
         // take actions based on user's logged in status and destination page's protection level
         $rootScope.$on('$stateChangeStart', function(event, toState) {
-            authService.isLoggedIn().then(function (data, status) {
-                // if user is not logged in
-                if(!data.loggedIn) {
-                    $rootScope.user = null;
-                    // if page requires user to be logged in
-                    if(toState.access == 'loggedIn') {
-                        $rootScope.originalDestination = $location.path();
-                        $location.path('/login');
-                    }
-                }
-                // if user is already logged in
-                else if(data.loggedIn) {
-                    $rootScope.user = data.user;
-                    // if page requires user to NOT be logged in
-                    if(toState.access == 'notLoggedIn') {
-                        $location.path('/feed');
-                    }
-                }
-            }, function (errorMessage, status) {
-                    console.log(errorMessage);
-            });
+            // if user is not logged in and state requires user to be logged in
+            if(!$rootScope.user && toState.access == 'loggedIn') {
+                $rootScope.originalDestination = $location.path();
+                $location.path('/login');
+            }
+            // if user is already logged in and state requires user to not be logged in
+            else if($rootScope.user && toState.access == 'notLoggedIn') {
+                $location.path('/feed');
+            }
         });
 
         // change page title based on state
@@ -63,6 +55,7 @@ define([
         $rootScope.logout = function() {
             authService.logout($rootScope.user).then(function (data, status) {
                 $rootScope.user = null;
+                localStorageService.clearAll();
                 $location.path('/');
             },
             function (errorMessage, status) {

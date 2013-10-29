@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'authService', function ($scope, $rootScope, $location, authService) {
+    controllers.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'authService', 'localStorageService', function ($scope, $rootScope, $location, authService, localStorageService) {
     	$scope.login = function() {
     		var user = {
     			username: $scope.username,
@@ -12,6 +12,7 @@ define(['./index'], function (controllers) {
     			$scope.emailResent = false;
     			$scope.loginError = null;
     			$rootScope.user = data;
+                localStorageService.add('user', data);
 	    		// redirect to original destination if one exists
 	    		if($rootScope.originalDestination) {
 	    			var originalDestination = $rootScope.originalDestination;
