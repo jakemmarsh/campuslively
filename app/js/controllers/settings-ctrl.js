@@ -77,13 +77,21 @@ define(['./index'], function (controllers) {
 		  	if (modal.toLowerCase() == 'twitter') {
 			    var modalInstance = $modal.open({
 			      templateUrl: 'twitterModal.html',
-			      controller: 'modalInstanceCtrl'
+			      controller: 'modalInstanceCtrl',
+			      resolve: {
+			      	location: null,
+			      	items: null
+			      }
 			    });
 			}
 			else if (modal.toLowerCase() == 'facebook') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'facebookModal.html',
-			      controller: 'modalInstanceCtrl'
+			      controller: 'modalInstanceCtrl',
+			      resolve: {
+			      	location: null,
+			      	items: null
+			      }
 			    });
 			}
 		};
