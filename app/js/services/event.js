@@ -253,7 +253,7 @@ define(['./index'], function (services) {
 		unRsvp: function(eventId, userId) {
 			var deferred = $q.defer();
 
-			$http.post(this.apiPath + eventId + '/unrsvp/' + userId).success(function(data, status) {
+			$http.delete(this.apiPath + eventId + '/unrsvp/' + userId).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -275,7 +275,7 @@ define(['./index'], function (services) {
 		unlikeComment: function(commentId, userId) {
 			var deferred = $q.defer();
 
-			$http.post(this.apiPath + 'comment/' + commentId + '/unlike/' + userId).success(function(data, status) {
+			$http.delete(this.apiPath + 'comment/' + commentId + '/unlike/' + userId).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);

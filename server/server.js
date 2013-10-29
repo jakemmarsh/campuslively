@@ -104,7 +104,7 @@ app.configure(function() {
     app.post('/api/v1/event/:eventId/image', restrict, routes.event.uploadImage);
     app.patch('/api/v1/event/:eventId', restrict, routes.event.updateEvent);
     app.post('/api/v1/event/:eventId/rsvp/:userId', restrict, routes.event.rsvp);
-    app.post('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
+    app.delete('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
 
     app.delete('/api/v1/event/:eventId', restrict, routes.event.deleteEvent);
 
@@ -114,7 +114,7 @@ app.configure(function() {
     app.post('/api/v1/event/:eventId/comment', restrict, routes.comment.postComment);
     app.post('/api/v1/event/:eventId/comment/:commentId/subcomment', restrict, routes.comment.postSubComment);
     app.post('/api/v1/event/comment/:commentId/like/:userId', restrict, routes.comment.likeComment);
-    app.post('/api/v1/event/comment/:commentId/unlike/:userId', restrict, routes.comment.unlikeComment);
+    app.delete('/api/v1/event/comment/:commentId/unlike/:userId', restrict, routes.comment.unlikeComment);
 
     app.delete('/api/v1/event/:eventId/comment/:commentId', restrict, routes.comment.deleteComment);
     app.delete('/api/v1/event/:eventId/comment/:commentId/subComment/:subCommentId', restrict, routes.comment.deleteSubComment);
