@@ -10,6 +10,7 @@ require.config({
         'async': './lib/async',
         'domReady': './lib/requirejs/domReady',
         'angular': './lib/angular/angular.min',
+        'angular-local-storage': './lib/angular/angular-local-storage',
         'angular-sanitize' : './lib/angular/angular-sanitize.min',
         'angular-animate' : './lib/angular/angular-animate.min',
         'angular-ui-bootstrap' : './lib/angular/ui-bootstrap-0.6.0.min',
@@ -31,6 +32,9 @@ require.config({
         'angular': {
             exports: 'angular',
             deps: ['jquery']
+        },
+        'angular-local-storage': {
+            deps: ['angular']
         },
         'angular-sanitize': {
             deps: ['angular']

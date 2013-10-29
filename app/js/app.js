@@ -1,5 +1,6 @@
 define([
     'angular',
+    'angular-local-storage',
     'angular-sanitize',
     'angular-animate',
     'angular-ui-bootstrap',
@@ -23,6 +24,7 @@ define([
         'app.filters',
         'app.directives',
         'app.animations',
+        'LocalStorageModule',
         'ngSanitize',
         'ngAnimate',
         'ui.bootstrap', 
