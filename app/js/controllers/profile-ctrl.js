@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('profileCtrl', ['$scope', '$rootScope', '$modal', 'resolvedUser', 'userService', 'eventService', function ($scope, $rootScope, $modal, resolvedUser, userService, eventService) {
+    controllers.controller('profileCtrl', ['$scope', '$rootScope', '$modal', 'resolvedUser', 'userService', 'eventService', 'localStorageService', function ($scope, $rootScope, $modal, resolvedUser, userService, eventService, localStorageService) {
         var oldestId;
         $scope.profile = resolvedUser;
     	$scope.loading = true;
@@ -52,6 +52,7 @@ define(['./index'], function (controllers) {
             if($scope.isSubscribed()) {
                 userService.unsubscribe($rootScope.user._id, $scope.profile._id).then(function (data, status) {
                     $rootScope.user = data;
+                    localStorageService.add('user', data);
                 },
                 function (errorMessage, status) {
                     $scope.subscribeError = "Error occurred while subscribing to user.";
@@ -60,6 +61,7 @@ define(['./index'], function (controllers) {
             else {
                 userService.subscribe($rootScope.user._id, $scope.profile._id).then(function (data, status) {
                     $rootScope.user = data;
+                    localStorageService.add('user', data);
                 },
                 function (errorMessage, status) {
                     $scope.subscribeError = "Error occurred while subscribing to user.";

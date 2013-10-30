@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', '$FB', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService, $FB) {
+    controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', '$FB', 'localStorageService', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService, $FB, localStorageService) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
@@ -197,6 +197,7 @@ define(['./index'], function (controllers) {
 	                	$scope.emailTaken = false;
 						$scope.changesSaved = true;
 						$rootScope.user = data;
+						localStorageService.add('user', data);
 					},
 					function (errorMessage, status) {
 						$scope.emailTaken = false;
@@ -219,6 +220,7 @@ define(['./index'], function (controllers) {
 						$scope.emailTaken = false;
 						$scope.changesSaved = true;
 						$rootScope.user = data;
+						localStorageService.add('user', data);
 					},
 					function (errorMessage, status) {
 						$scope.emailTaken = false;
@@ -232,6 +234,7 @@ define(['./index'], function (controllers) {
 		$scope.removeSubscription = function(subscriptionId) {
 			userService.unsubscribe($rootScope.user._id, subscriptionId).then(function (data, status) {
                 $rootScope.user = data;
+                localStorageService.add('user', data);
             },
             function (errorMessage, status) {
                 $scope.unsubscribeError = "Error occurred while unsubscribing from user.";
