@@ -34,7 +34,7 @@ define(['./index'], function (controllers) {
 
         if(event) {
             $scope.event = event;
-            $scope.eventUrl = 'http://www.eventlively.com/event/'+ $scope.event._id;
+            $scope.eventUrl = 'http://www.campuslively.com/event/'+ $scope.event._id;
         }
 
         $scope.shareEvent = function() {
@@ -42,6 +42,7 @@ define(['./index'], function (controllers) {
                 $FB.ui(
                     {
                         method: 'feed',
+                        display: 'popup',
                         name: $scope.event.title,
                         picture: $scope.event.pictureUrl,
                         link: $scope.eventUrl,
@@ -54,9 +55,10 @@ define(['./index'], function (controllers) {
                 $FB.ui(
                     {
                         method: 'feed',
+                        display: 'popup',
                         name: $scope.event.title,
-                        picture: 'http://www.eventlively.com/img/home_logo.png',
-                        link: 'http://www.eventlively.com/event/'+ $scope.event._id,
+                        picture: 'http://www.campuslively.com/img/home_logo.png',
+                        link: $scope.eventUrl,
                         description: $scope.event.description
                     },
                     null
@@ -69,6 +71,7 @@ define(['./index'], function (controllers) {
                 $FB.ui(
                     {
                         method: 'send',
+                        display: 'popup',
                         name: $scope.event.title,
                         picture: $scope.event.pictureUrl,
                         link: $scope.eventUrl,
@@ -81,9 +84,10 @@ define(['./index'], function (controllers) {
                 $FB.ui(
                     {
                         method: 'send',
+                        display: 'popup',
                         name: $scope.event.title,
-                        picture: 'http://www.eventlively.com/img/home_logo.png',
-                        link: 'http://www.eventlively.com/event/'+ $scope.event._id,
+                        picture: 'http://www.campuslively.com/img/home_logo.png',
+                        link: $scope.eventUrl,
                         description: $scope.event.description
                     },
                     null

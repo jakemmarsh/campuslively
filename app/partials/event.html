@@ -191,7 +191,7 @@
     	<input type="text" class="full-width" data-ng-model="eventUrl" data-input-select />
     	<div class="line nudge--top">
 	    	<div class="unit one-third soft-half--right">
-	        	<a href data-ng-click="tweetEvent()" class="btn twitter full-width"><i class="icon-twitter"></i> Tweet</a>
+	        	<a data-ng-href="https://twitter.com/share?url=http://www.campuslively.com/event/{{event._id}}&text={{event.title}}&hashtags=campuslively" onclick="window.open(this.href,'targetWindow','toolbar=no,location=yes,status=no,menubar=no,scrollbars=yes,resizable=yes,width=570,height=300');return false;" class="btn twitter full-width"><i class="icon-twitter"></i> Tweet</a>
 			</div>
 			<div class="unit one-third soft-half--sides">
 				<a href data-ng-click="shareEvent()" class="btn fb full-width"><i class="icon-facebook"></i> Share</a>
