@@ -16,6 +16,7 @@ define(['./app'], function (app) {
         })
         .state('inner', {
             templateUrl: '/partials/inner.html',
+            controller: 'innerCtrl'
         })
         .state('inner.login', {
             url: '/login',
