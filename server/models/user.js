@@ -59,7 +59,9 @@ var userSchema = new mongoose.Schema({
         default: false
     },
     activationKey: String,
-    passwordResetKey: String
+    passwordResetKey: String,
+    fbId: String,
+    fbSubscriptions: [String]
 });
 
 userSchema.index({ loc : '2dsphere' });
