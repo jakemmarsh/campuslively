@@ -10,6 +10,7 @@ define([
     'angular-ui-map',
     'angular-ui-calendar',
     'angular-ui-select2',
+    'angular-easyfb',
     'image-upload',
     './controllers/index',
     './directives/index',
@@ -35,6 +36,7 @@ define([
         'ui.map',
         'ui.calendar',
         'ui.select2',
+        'ezfb',
         'imageupload'
     ]);
 });

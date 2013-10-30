@@ -19,6 +19,7 @@ require.config({
         'angular-switch-toggle' : './lib/angular/ng-switch-toggle',
         'angular-ui-map' : './lib/angular/ui-map',
         'angular-ui-event' : './lib/angular/event',
+        'angular-easyfb' : './lib/angular/angular-easyfb.min',
         'jquery' : './lib/jquery-2.0.3.min',
         'jquery-ui' : './lib/jquery-ui',
         'fullCalendar' : './lib/fullcalendar.min',
@@ -59,6 +60,9 @@ require.config({
             deps: ['angular', 'angular-ui-event', 'async!http://maps.google.com/maps/api/js?sensor=false']
         },
         'angular-ui-event': {
+            deps: ['angular']
+        },
+        'angular-easyfb': {
             deps: ['angular']
         },
         'jquery-ui': {

@@ -136,7 +136,8 @@
 		</div>
 		<div class="unit one-fourth soft--left last-unit">
 			<a href data-ng-click="open('twitter')" class="btn twitter nudge--bottom full-width"><i class="icon-twitter"></i> Add Twitter</a>
-			<a href data-ng-click="open('facebook')" class="btn fb full-width"><i class="icon-facebook"></i> Add Facebook</a>
+			<a href data-ng-click="fbLogin()" data-ng-hide="fbStatus.status == 'connected'" class="btn fb full-width"><i class="icon-facebook"></i> Add Facebook</a>
+			<a href data-ng-click="fbLogout()" data-ng-show="fbStatus.status == 'connected'" class="btn fb full-width"><i class="icon-facebook"></i> Remove Facebook</a>
 		</div>
 	</div>
 </div>

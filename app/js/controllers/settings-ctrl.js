@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService) {
+    controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', '$FB', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService, $FB) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
@@ -94,6 +94,29 @@ define(['./index'], function (controllers) {
 			      }
 			    });
 			}
+		};
+
+		$scope.fbLogin = function() {
+			if($rootScope.user.type == 'student') {
+				$FB.login(function (res) {
+					if (res.authResponse) {
+						$rootScope.updateFbStatus($rootScope.updateApiMe);
+					}
+				}, {scope: 'user_subscriptions,user_likes,publish_stream,publish_actions'});
+			}
+			else if ($rootScope.user.type == 'business') {
+				$FB.login(function (res) {
+					if (res.authResponse) {
+						$rootScope.updateFbStatus($rootScope.updateApiMe);
+					}
+				}, {scope: 'user_subscriptions,user_likes,publish_stream,publish_actions,manage_pages'});
+			}
+		};
+
+		$scope.fbLogout = function () {
+			$FB.logout(function () {
+				$rootScope.updateFbStatus($rootScope.updateApiMe);
+			});
 		};
 
 		$scope.saveChanges = function() {

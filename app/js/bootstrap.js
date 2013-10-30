@@ -11,7 +11,14 @@ define([
 ], function (require, ng, app) {
     'use strict';
 
-    app.run(['$rootScope', '$location', 'authService', 'localStorageService', function ($rootScope, $location, authService, localStorageService) {
+    // initialize FB app access
+    app.config(['$FBProvider', function ($FBProvider) {
+        $FBProvider.setInitParams({
+            appId: '458852510898409'
+        }); 
+    }]);
+
+    app.run(['$rootScope', '$location', 'authService', 'localStorageService', '$FB', function ($rootScope, $location, authService, localStorageService, $FB) {
         if(localStorageService.get('user')) {
             $rootScope.user = localStorageService.get('user');
         }
@@ -61,12 +68,31 @@ define([
             else {
               return false;
             }
-        }
+        };
 
         // global function to get user's logged in status
         $rootScope.isLoggedIn = function() {
             return ($rootScope.user !== null);
-        }
+        };
+
+        // update facebook login status
+        $rootScope.updateFbStatus = function(more) {
+            $FB.getLoginStatus(function (res) {
+                $rootScope.fbStatus = res;
+
+                (more || angular.noop)();
+            });
+        };
+
+        // check FB status on app load
+        $rootScope.updateFbStatus();
+
+        // get latest FB details
+        $rootScope.updateApiMe = function() {
+            $FB.api('/me', function (res) {
+                $rootScope.fbMe = res;
+            });
+        };
 
         // global function to log user out
         $rootScope.logout = function() {
@@ -78,7 +104,7 @@ define([
             function (errorMessage, status) {
                 console.log(errorMessage);
             });
-        }
+        };
     }]);
 
     require(['domReady!'], function (document) {
