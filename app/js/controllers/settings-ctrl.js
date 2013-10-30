@@ -97,10 +97,16 @@ define(['./index'], function (controllers) {
 		};
 
 		$scope.fbLogin = function() {
+			var updateParams = {};
 			if($rootScope.user.type == 'student') {
 				$FB.login(function (res) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
+						updateParams.fbId = res.authResponse.userID;
+						userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+						},
+						function (errorMessage, status) {
+						});
 					}
 				}, {scope: 'user_subscriptions,user_likes,publish_stream,publish_actions'});
 			}
@@ -108,14 +114,29 @@ define(['./index'], function (controllers) {
 				$FB.login(function (res) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
+						updateParams.fbId = res.authResponse.userID;
+						userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+							$rootScope.user = data;
+							localStorageService.add('user', data);
+						},
+						function (errorMessage, status) {
+						});
 					}
 				}, {scope: 'user_subscriptions,user_likes,publish_stream,publish_actions,manage_pages'});
 			}
 		};
 
 		$scope.fbLogout = function () {
+			var updateParams = {};
 			$FB.logout(function () {
 				$rootScope.updateFbStatus($rootScope.updateApiMe);
+				updateParams.fbId = null;
+				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+					$rootScope.user = data;
+					localStorageService.add('user', data);
+				},
+				function (errorMessage, status) {
+				});
 			});
 		};
 
