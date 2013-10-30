@@ -80,7 +80,8 @@ define(['./index'], function (controllers) {
 			      controller: 'modalInstanceCtrl',
 			      resolve: {
 			      	location: null,
-			      	items: null
+			      	items: null,
+			      	event: null
 			      }
 			    });
 			}
@@ -90,7 +91,8 @@ define(['./index'], function (controllers) {
 			      controller: 'modalInstanceCtrl',
 			      resolve: {
 			      	location: null,
-			      	items: null
+			      	items: null,
+			      	event: null
 			      }
 			    });
 			}

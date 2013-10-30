@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('modalInstanceCtrl', ['$scope', '$modalInstance', 'items', 'location', function ($scope, $modalInstance, items, location) {
+    controllers.controller('modalInstanceCtrl', ['$scope', '$modalInstance', '$FB', 'items', 'location', 'event', function ($scope, $modalInstance, $FB, items, location, event) {
     	if(items) {
             $scope.items = items;
         }
@@ -30,6 +30,69 @@ define(['./index'], function (controllers) {
             });
 
             locationMarker.open(map);
+        };
+
+        if(event) {
+            $scope.event = event;
+            $scope.eventUrl = 'http://www.eventlively.com/event/'+ $scope.event._id;
+        }
+
+        $scope.shareEvent = function() {
+            if($scope.event.pictureUrl) {
+                $FB.ui(
+                    {
+                        method: 'feed',
+                        name: $scope.event.title,
+                        picture: $scope.event.pictureUrl,
+                        link: $scope.eventUrl,
+                        description: $scope.event.description
+                    },
+                    null
+                );
+            }
+            else {
+                $FB.ui(
+                    {
+                        method: 'feed',
+                        name: $scope.event.title,
+                        picture: 'http://www.eventlively.com/img/home_logo.png',
+                        link: 'http://www.eventlively.com/event/'+ $scope.event._id,
+                        description: $scope.event.description
+                    },
+                    null
+                );
+            }
+        };
+
+        $scope.sendEvent = function() {
+            if($scope.event.pictureUrl) {
+                $FB.ui(
+                    {
+                        method: 'send',
+                        name: $scope.event.title,
+                        picture: $scope.event.pictureUrl,
+                        link: $scope.eventUrl,
+                        description: $scope.event.description
+                    },
+                    null
+                );
+            }
+            else {
+                $FB.ui(
+                    {
+                        method: 'send',
+                        name: $scope.event.title,
+                        picture: 'http://www.eventlively.com/img/home_logo.png',
+                        link: 'http://www.eventlively.com/event/'+ $scope.event._id,
+                        description: $scope.event.description
+                    },
+                    null
+                );
+            }
+        };
+
+        $scope.tweetEvent = function() {
+
         };
 
     	$scope.clickLink = function() {

@@ -25,6 +25,7 @@ define([
     'directives/fixed-sidebar',
     'directives/ng-blur',
     'directives/confirm-password',
+    'directives/input-select',
     'services/location',
     'services/auth',
     'services/user',

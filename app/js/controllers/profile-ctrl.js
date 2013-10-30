@@ -133,7 +133,8 @@ define(['./index'], function (controllers) {
                 items: function() {
                     return event.attending;
                 },
-                location: null
+                location: null,
+                event: null
               }
             });
         };
@@ -147,7 +148,8 @@ define(['./index'], function (controllers) {
                     profile.loc.address = profile.address;
                     return profile.loc;
                 },
-                items: null
+                items: null,
+                event: null
               }
             });
         };

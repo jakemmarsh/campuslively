@@ -176,13 +176,27 @@ define(['./index'], function (controllers) {
 		  	if (modal.toLowerCase() == 'share') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'shareModal.html',
-			      controller: 'modalInstanceCtrl'
+			      controller: 'modalInstanceCtrl',
+			      resolve: {
+			      	event: function() {
+	                    return $scope.event;
+	                },
+	                location: null,
+			      	items: null
+			      }
 			    });
 			}
 			else if (modal.toLowerCase() == 'invite') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'inviteModal.html',
-			      controller: 'modalInstanceCtrl'
+			      controller: 'modalInstanceCtrl',
+			      resolve: {
+			      	event: function() {
+	                    return $scope.event;
+	                },
+	                location: null,
+			      	items: null
+			      }
 			    });
 			}
 		};

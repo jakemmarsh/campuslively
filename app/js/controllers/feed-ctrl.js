@@ -99,7 +99,8 @@ define(['./index'], function (controllers) {
                 items: function() {
                     return event.attending;
                 },
-                location: null
+                location: null,
+                event: null
               }
             });
         };
