@@ -115,12 +115,18 @@ define(['./index'], function (controllers) {
         };
 
         // refresh feed every 30 seconds
+        var exploreTimeout;
         $scope.checkForEvents = function() {
-            var timeout = $timeout(function() {
+            exploreTimeout = $timeout(function() {
                     $scope.loadNew();
                     $scope.checkForEvents();
             }, 30000);
         };
+
+        // stop refreshing list upon page leave
+        $scope.$on('$destroy', function(){
+            $timeout.cancel(exploreTimeout);
+        });
 
 		$scope.sortOptions = [{
 				label: 'by start date',

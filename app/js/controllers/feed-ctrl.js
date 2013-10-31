@@ -36,12 +36,18 @@ define(['./index'], function (controllers) {
         };
 
         // refresh feed every 30 seconds
+        var feedTimeout;
         $scope.checkForActivities = function() {
-            var timeout = $timeout(function() {
+            feedTimeout = $timeout(function() {
                     $scope.loadNew();
                     $scope.checkForActivities();
             }, 30000);
         };
+
+        // stop refreshing feed upon leaving page
+        $scope.$on('$destroy', function(){
+            $timeout.cancel(feedTimeout);
+        });
 
         $scope.loadMore = function() {
             $scope.loadingMore = true;
