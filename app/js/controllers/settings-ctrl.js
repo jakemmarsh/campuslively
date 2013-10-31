@@ -90,31 +90,6 @@ define(['./index'], function (controllers) {
 		    }
 	    };
 
-    	$scope.open = function (modal) {
-		  	if (modal.toLowerCase() == 'twitter') {
-			    var modalInstance = $modal.open({
-			      templateUrl: 'twitterModal.html',
-			      controller: 'modalInstanceCtrl',
-			      resolve: {
-			      	location: null,
-			      	items: null,
-			      	event: null
-			      }
-			    });
-			}
-			else if (modal.toLowerCase() == 'facebook') {
-				var modalInstance = $modal.open({
-			      templateUrl: 'facebookModal.html',
-			      controller: 'modalInstanceCtrl',
-			      resolve: {
-			      	location: null,
-			      	items: null,
-			      	event: null
-			      }
-			    });
-			}
-		};
-
 		$scope.fbLogin = function() {
 			var updateParams = {};
 			if($rootScope.user.type == 'student') {

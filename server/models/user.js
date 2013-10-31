@@ -63,10 +63,6 @@ var userSchema = new mongoose.Schema({
     facebook: {
         id: String,
         subscriptions: [String]
-    },
-    twitter: {
-        id: String,
-        following: [String]
     }
 });
 
