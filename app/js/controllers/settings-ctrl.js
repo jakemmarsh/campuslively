@@ -104,7 +104,9 @@ define(['./index'], function (controllers) {
 				$FB.login(function (res) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
-						updateParams.fbId = res.authResponse.userID;
+						updateParams.facebook = {
+							id: res.authResponse.userID
+						};
 						userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 						},
 						function (errorMessage, status) {
@@ -116,7 +118,9 @@ define(['./index'], function (controllers) {
 				$FB.login(function (res) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
-						updateParams.fbId = res.authResponse.userID;
+						updateParams.facebook = {
+							id: res.authResponse.userID
+						};
 						userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 							$rootScope.user = data;
 							localStorageService.add('user', data);
@@ -132,7 +136,9 @@ define(['./index'], function (controllers) {
 			var updateParams = {};
 			$FB.logout(function () {
 				$rootScope.updateFbStatus($rootScope.updateApiMe);
-				updateParams.fbId = null;
+				updateParams.facebook = {
+					id: null
+				};
 				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 					$rootScope.user = data;
 					localStorageService.add('user', data);
