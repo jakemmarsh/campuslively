@@ -169,12 +169,7 @@
         <h2 class="flush">Invite Friends</h2>
     </div>
     <div class="modal-body">
-        <ul>
-            <li ng-repeat="item in items">
-                <a ng-click="selected.item = item">{{ item }}</a>
-            </li>
-        </ul>
-        Selected: <b>{{ selected.item }}</b>
+        <a data-ng-click="inviteFriends()" class="btn fb full-width text-center"><i class="icon-facebook"></i> Invite Friends</a>
     </div>
     <div class="modal-footer">
         <button class="btn" data-ng-click="ok()">OK</button>

@@ -39,59 +39,47 @@ define(['./index'], function (controllers) {
 
         $scope.shareEvent = function() {
             if($scope.event.pictureUrl) {
-                $FB.ui(
-                    {
-                        method: 'feed',
-                        display: 'popup',
-                        name: $scope.event.title,
-                        picture: $scope.event.pictureUrl,
-                        link: $scope.eventUrl,
-                        description: $scope.event.description
-                    },
-                    null
-                );
+                $FB.ui({
+                    method: 'feed',
+                    display: 'popup',
+                    name: $scope.event.title,
+                    picture: $scope.event.pictureUrl,
+                    link: $scope.eventUrl,
+                    description: $scope.event.description
+                }, null);
             }
             else {
-                $FB.ui(
-                    {
-                        method: 'feed',
-                        display: 'popup',
-                        name: $scope.event.title,
-                        picture: 'http://www.campuslively.com/img/home_logo.png',
-                        link: $scope.eventUrl,
-                        description: $scope.event.description
-                    },
-                    null
-                );
+                $FB.ui({
+                    method: 'feed',
+                    display: 'popup',
+                    name: $scope.event.title,
+                    picture: 'http://www.campuslively.com/img/home_logo.png',
+                    link: $scope.eventUrl,
+                    description: $scope.event.description
+                }, null);
             }
         };
 
         $scope.sendEvent = function() {
             if($scope.event.pictureUrl) {
-                $FB.ui(
-                    {
-                        method: 'send',
-                        display: 'popup',
-                        name: $scope.event.title,
-                        picture: $scope.event.pictureUrl,
-                        link: $scope.eventUrl,
-                        description: $scope.event.description
-                    },
-                    null
-                );
+                $FB.ui({
+                    method: 'send',
+                    display: 'popup',
+                    name: $scope.event.title,
+                    picture: $scope.event.pictureUrl,
+                    link: $scope.eventUrl,
+                    description: $scope.event.description
+                }, null);
             }
             else {
-                $FB.ui(
-                    {
-                        method: 'send',
-                        display: 'popup',
-                        name: $scope.event.title,
-                        picture: 'http://www.campuslively.com/img/home_logo.png',
-                        link: $scope.eventUrl,
-                        description: $scope.event.description
-                    },
-                    null
-                );
+                $FB.ui({
+                    method: 'send',
+                    display: 'popup',
+                    name: $scope.event.title,
+                    picture: 'http://www.campuslively.com/img/home_logo.png',
+                    link: $scope.eventUrl,
+                    description: $scope.event.description
+                }, null);
             }
         };
 
@@ -103,6 +91,17 @@ define(['./index'], function (controllers) {
                 url = 'https://twitter.com/share?url=http://www.campuslively.com/event/' + $scope.event._id + '&text=' + $scope.event.title + ' - &hashtags=campuslively';
             
             window.open(url, 'Tweet Event', 'toolbar=no, location=yes, status=no, menubar=no, scrollbars=yes, resizable=yes, width='+width+', height='+height+', top='+top+', left='+left);
+        };
+
+        $scope.inviteFriends = function() {
+            $FB.ui({
+                method: 'apprequests',
+                display: 'popup',
+                title: 'Invite Friends',
+                picture: 'http://www.campuslively.com/img/home_logo.png',
+                link: $scope.eventUrl,
+                message: 'I\'m inviting you to ' + $scope.event.title + '.'
+                }, null);
         };
 
     	$scope.clickLink = function() {
