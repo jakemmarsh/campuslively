@@ -95,8 +95,14 @@ define(['./index'], function (controllers) {
             }
         };
 
-        $scope.tweetEvent = function() {
-
+        $scope.openTweet = function() {
+            var width = 570,
+                height = 255,
+                left = (screen.width/2)-(width/2),
+                top = (screen.height/2)-(height/2),
+                url = 'https://twitter.com/share?url=http://www.campuslively.com/event/' + $scope.event._id + '&text=' + $scope.event.title + ' - &hashtags=campuslively';
+            
+            window.open(url, 'Tweet Event', 'toolbar=no, location=yes, status=no, menubar=no, scrollbars=yes, resizable=yes, width='+width+', height='+height+', top='+top+', left='+left);
         };
 
     	$scope.clickLink = function() {
