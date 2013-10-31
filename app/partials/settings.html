@@ -23,8 +23,11 @@
 					<div class="unit label-container two-twelfths">
 						<label for="userImage" class="caps weight--bold">Picture</label>
 					</div>
-					<div class="unit ten-twelfths last-unit">
+					<div class="unit seven-twelfths">
 						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" />
+					</div>
+					<div class="unit three-twelfths last-unit soft-half--left">
+						<a href data-ng-click="useFacebookImage()" data-ng-show="fbStatus.status == 'connected' && !usingFacebookImage()" class="btn fb full-width"><i class="icon-facebook"></i> Use Facebook</a>
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">

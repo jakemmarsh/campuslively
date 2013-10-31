@@ -1,6 +1,8 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', '$FB', 'localStorageService', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService, $FB, localStorageService) {
+    	var updateParams = {};
+
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
@@ -26,6 +28,21 @@ define(['./index'], function (controllers) {
 	    		'val': $scope.userSchool.name
 	    	};
 	    }
+
+	    $scope.usingFacebookImage = function() {
+	    	if($rootScope.user.pictureUrl.indexOf('facebook') > -1) {
+	    		return true;
+	    	}
+	    	else {
+	    		return false;
+	    	}
+	    }
+
+	    $scope.useFacebookImage = function() {
+	    	$scope.newUserImage = {};
+	    	$scope.newUserImage.url = 'http://graph.facebook.com/' + $rootScope.fbMe.id + '/picture?type=large';
+	    	updateParams.pictureUrl = 'http://graph.facebook.com/' + $rootScope.fbMe.id + '/picture?type=large';
+	    };
 
 	    $scope.checkEmail = function() {
 	    	if($scope.userEmailStudent) {
@@ -104,9 +121,11 @@ define(['./index'], function (controllers) {
 				$FB.login(function (res) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
+						$rootScope.updateApiMe();
 						updateParams.facebook = {
 							id: res.authResponse.userID
 						};
+						updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?type=large';
 						userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 						},
 						function (errorMessage, status) {
@@ -118,9 +137,11 @@ define(['./index'], function (controllers) {
 				$FB.login(function (res) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
+						$rootScope.updateApiMe();
 						updateParams.facebook = {
 							id: res.authResponse.userID
 						};
+						updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?type=large';
 						userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 							$rootScope.user = data;
 							localStorageService.add('user', data);
@@ -139,6 +160,7 @@ define(['./index'], function (controllers) {
 				updateParams.facebook = {
 					id: null
 				};
+				updateParams.pictureUrl = 'http://s3.amazonaws.com/campuslively/user_imgs/default.png';
 				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 					$rootScope.user = data;
 					localStorageService.add('user', data);
@@ -149,8 +171,7 @@ define(['./index'], function (controllers) {
 		};
 
 		$scope.saveChanges = function() {
-			var updateParams = {},
-				toTitleCase = function(str) {
+			var toTitleCase = function(str) {
     				return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 				};
 
@@ -214,7 +235,7 @@ define(['./index'], function (controllers) {
 				updateParams.school = $scope.userSchool;
 			}
 
-			if($scope.newUserImage) {
+			if($scope.newUserImage.file) {
 				userService.uploadImage($scope.newUserImage.file, $rootScope.user._id).then(function (data, status) {
 					var getExtension = function(filename) {
 					    var i = filename.lastIndexOf('.');

@@ -98,9 +98,8 @@ define(['./index'], function (controllers) {
                 method: 'apprequests',
                 display: 'popup',
                 title: 'Invite Friends',
-                picture: 'http://www.campuslively.com/img/home_logo.png',
                 link: $scope.eventUrl,
-                message: 'I\'m inviting you to ' + $scope.event.title + '.'
+                message: 'I\'m inviting you to ' + $scope.event.title
                 }, null);
         };
 
