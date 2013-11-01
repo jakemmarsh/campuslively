@@ -36,7 +36,15 @@ define(['./index'], function (controllers) {
 	    	else {
 	    		return false;
 	    	}
-	    }
+	    };
+
+	    $scope.usePageForImage = function() {
+	    	if($scope.picturePage) {
+	    		$scope.newUserImage = {};
+	    		$scope.newUserImage.url = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?type=large';
+	    		updateParams.pictureUrl = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?type=large';
+	    	}
+	    };
 
 	    $scope.useFacebookImage = function() {
 	    	$scope.newUserImage = {};
@@ -92,7 +100,8 @@ define(['./index'], function (controllers) {
 
 		$scope.fbLogin = function() {
 			var updateParams = {},
-				fbSubscriptions = [];
+				fbSubscriptions = [],
+				managedPages = [];
 			if($rootScope.user.type == 'student') {
 				$FB.login(function (res) {
 					if (res.authResponse) {
@@ -137,20 +146,25 @@ define(['./index'], function (controllers) {
 						updateParams.facebook.linked = true;
 						$q.all([
                             $FB.api('/me/likes', {limit: 9999, fields: 'id'}),
-                            $FB.api('/me/subscribedto', {limit: 9999, fields: 'id'})
+                            $FB.api('/me/subscribedto', {limit: 9999, fields: 'id'}),
+                            $FB.api('/me/accounts', {limit: 9999, fields: 'name,id'})
                         ])
                         .then(function (rsvList) {
                             // result of api('/me/likes')
                             for(var i = 0; i < rsvList[0].data.length; i++) {
                                 fbSubscriptions.push(rsvList[0].data[i].id);
                             }
-
                             // result of api('/me/subscribedto')
                             for(var j = 0; j < rsvList[1].data.length; j++) {
                                 fbSubscriptions.push(rsvList[1].data[j].id);
                             }
                             updateParams.facebook.subscriptions = fbSubscriptions;
-                            updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?type=large';
+
+                            // result of api('/me/accounts')
+                            for(var k = 0; k < rsvList[2].data.length; k++) {
+                            	managedPages.push(rsvList[2].data[k]);
+                            }
+                            updateParams.facebook.managedPages = managedPages;
 							userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 								$rootScope.user = data;
 								localStorageService.add('user', data);
@@ -169,7 +183,8 @@ define(['./index'], function (controllers) {
 				$rootScope.updateFbStatus($rootScope.updateApiMe);
 				updateParams.facebook = {
 					id: null,
-					subscriptions: null
+					subscriptions: null,
+					managedPages: null
 				};
 				updateParams.pictureUrl = 'http://s3.amazonaws.com/campuslively/user_imgs/default.png';
 				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
@@ -227,8 +242,11 @@ define(['./index'], function (controllers) {
 				if($scope.locationAddress !== $rootScope.user.address && $scope.locationAddress.length > 0) {
 					updateParams.address = toTitleCase($scope.locationAddress);
 				}
+				if($scope.picturePage) {
+					updateParams.pictureUrl = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?type=large';
+				}
 				if($scope.websiteAddress.length > 0) {
-					if($scope.websiteAddress.indexOf('http://') == -1 || $scope.websiteAddress.indexOf('https://') == -1) {
+					if($scope.websiteAddress.indexOf('http://') == -1 && $scope.websiteAddress.indexOf('https://') == -1) {
 						$scope.websiteAddress = 'http://' + $scope.websiteAddress;
 					}
 					updateParams.website = $scope.websiteAddress;
@@ -246,7 +264,7 @@ define(['./index'], function (controllers) {
 				updateParams.school = $scope.userSchool;
 			}
 
-			if($scope.newUserImage.file) {
+			if($scope.newUserImage && $scope.newUserImage.file) {
 				userService.uploadImage($scope.newUserImage.file, $rootScope.user._id).then(function (data, status) {
 					var getExtension = function(filename) {
 					    var i = filename.lastIndexOf('.');

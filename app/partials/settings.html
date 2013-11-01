@@ -26,8 +26,12 @@
 					<div class="unit seven-twelfths">
 						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" />
 					</div>
-					<div class="unit three-twelfths last-unit soft-half--left">
-						<a href data-ng-click="useFacebookImage()" data-ng-show="fbStatus.status == 'connected' && !usingFacebookImage()" class="btn fb full-width"><i class="icon-facebook"></i> Use Facebook</a>
+					<div class="unit three-twelfths last-unit soft-half--left label-container">
+						<a href data-ng-click="useFacebookImage()" data-ng-show="user.facebook.id && !usingFacebookImage() && user.type == 'student'" class="btn fb full-width"><i class="icon-facebook"></i> Use Facebook</a>
+						<select class="full-width" data-ng-model="picturePage" data-ng-show="user.facebook.managedPages.length && user.type =='business'" data-ng-change="usePageForImage()">
+						    <option value="">Use a Facebook page</option>
+						    <option data-ng-repeat="page in user.facebook.managedPages" value="{{page.id}}">{{ page.name }}</option>
+						</select>
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">
@@ -35,7 +39,7 @@
 						<label for="school" class="caps weight--bold">School</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<select class="full-width" data-ui-select2="schoolSelectOptions" ng-model="userSchool" data-placeholder="Select your school">
+						<select class="full-width" data-ui-select2="schoolSelectOptions" data-ng-model="userSchool" data-placeholder="Select your school">
 						    <option value=""></option>
 						    <option data-ng-repeat="school in schools" value="{{school._id}}">{{ school.name }}</option>
 						</select>
@@ -138,8 +142,8 @@
 			</div>
 		</div>
 		<div class="unit one-fourth soft--left last-unit">
-			<a href data-ng-click="fbLogin()" data-ng-hide="fbStatus.status == 'connected'" class="btn fb full-width"><i class="icon-facebook"></i> Add Facebook</a>
-			<a href data-ng-click="fbLogout()" data-ng-show="fbStatus.status == 'connected'" class="btn fb full-width"><i class="icon-facebook"></i> Remove Facebook</a>
+			<a href data-ng-click="fbLogin()" data-ng-hide="user.facebook.id" class="btn fb full-width"><i class="icon-facebook"></i> Add Facebook</a>
+			<a href data-ng-click="fbLogout()" data-ng-show="user.facebook.id" class="btn fb full-width"><i class="icon-facebook"></i> Remove Facebook</a>
 		</div>
 	</div>
 </div>

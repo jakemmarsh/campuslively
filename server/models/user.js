@@ -62,7 +62,10 @@ var userSchema = new mongoose.Schema({
     passwordResetKey: String,
     facebook: {
         id: String,
-        pageIds: [String],
+        managedPages: {
+            name: String,
+            id: String
+        },
         subscriptions: [String],
         linked: {
             type: Boolean,
