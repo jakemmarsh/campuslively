@@ -62,8 +62,13 @@ var userSchema = new mongoose.Schema({
     passwordResetKey: String,
     facebook: {
         id: String,
-        subscriptions: [String]
-    }
+        pageIds: [String],
+        subscriptions: [String],
+        linked: {
+            type: Boolean,
+            default: false
+        }
+    },
 });
 
 userSchema.index({ loc : '2dsphere' });

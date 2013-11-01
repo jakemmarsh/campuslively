@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', '$FB', 'localStorageService', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService, $FB, localStorageService) {
+    controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', '$FB', 'localStorageService', '$q', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService, $FB, localStorageService, $q) {
     	var updateParams = {};
 
     	schoolService.getAllSchools().then(function (data, status) {
@@ -91,20 +91,39 @@ define(['./index'], function (controllers) {
 	    };
 
 		$scope.fbLogin = function() {
-			var updateParams = {};
+			var updateParams = {},
+				fbSubscriptions = [];
 			if($rootScope.user.type == 'student') {
 				$FB.login(function (res) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
 						$rootScope.updateApiMe();
-						updateParams.facebook = {
-							id: res.authResponse.userID
-						};
-						updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?type=large';
-						userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
-						},
-						function (errorMessage, status) {
-						});
+						updateParams.facebook = {};
+						updateParams.facebook.id = res.authResponse.userID;
+						updateParams.facebook.linked = true;
+						$q.all([
+                            $FB.api('/me/likes', {limit: 9999, fields: 'id'}),
+                            $FB.api('/me/subscribedto', {limit: 9999, fields: 'id'})
+                        ])
+                        .then(function (rsvList) {
+                            // result of api('/me/likes')
+                            for(var i = 0; i < rsvList[0].data.length; i++) {
+                                fbSubscriptions.push(rsvList[0].data[i].id);
+                            }
+
+                            // result of api('/me/subscribedto')
+                            for(var j = 0; j < rsvList[1].data.length; j++) {
+                                fbSubscriptions.push(rsvList[1].data[j].id);
+                            }
+                            updateParams.facebook.subscriptions = fbSubscriptions;
+                            updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?type=large';
+							userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+								$rootScope.user = data;
+								localStorageService.add('user', data);
+							},
+							function (errorMessage, status) {
+							});
+                        });
 					}
 				}, {scope: 'user_subscriptions,user_likes,publish_stream,publish_actions'});
 			}
@@ -113,16 +132,32 @@ define(['./index'], function (controllers) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
 						$rootScope.updateApiMe();
-						updateParams.facebook = {
-							id: res.authResponse.userID
-						};
-						updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?type=large';
-						userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
-							$rootScope.user = data;
-							localStorageService.add('user', data);
-						},
-						function (errorMessage, status) {
-						});
+						updateParams.facebook = {};
+						updateParams.facebook.id = res.authResponse.userID;
+						updateParams.facebook.linked = true;
+						$q.all([
+                            $FB.api('/me/likes', {limit: 9999, fields: 'id'}),
+                            $FB.api('/me/subscribedto', {limit: 9999, fields: 'id'})
+                        ])
+                        .then(function (rsvList) {
+                            // result of api('/me/likes')
+                            for(var i = 0; i < rsvList[0].data.length; i++) {
+                                fbSubscriptions.push(rsvList[0].data[i].id);
+                            }
+
+                            // result of api('/me/subscribedto')
+                            for(var j = 0; j < rsvList[1].data.length; j++) {
+                                fbSubscriptions.push(rsvList[1].data[j].id);
+                            }
+                            updateParams.facebook.subscriptions = fbSubscriptions;
+                            updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?type=large';
+							userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+								$rootScope.user = data;
+								localStorageService.add('user', data);
+							},
+							function (errorMessage, status) {
+							});
+                        });
 					}
 				}, {scope: 'user_subscriptions,user_likes,publish_stream,publish_actions,manage_pages'});
 			}
@@ -133,7 +168,8 @@ define(['./index'], function (controllers) {
 			$FB.logout(function () {
 				$rootScope.updateFbStatus($rootScope.updateApiMe);
 				updateParams.facebook = {
-					id: null
+					id: null,
+					subscriptions: null
 				};
 				updateParams.pictureUrl = 'http://s3.amazonaws.com/campuslively/user_imgs/default.png';
 				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
