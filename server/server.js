@@ -68,6 +68,8 @@ app.configure(function() {
     app.post('/api/v1/user/:userId/image', routes.user.uploadImage);
     app.post('/api/v1/user/:userId/subscribe/:subscribeId', restrict, routes.user.subscribe);
     app.post('/api/v1/user/:userId/unsubscribe/:subscribeId', restrict, routes.user.unsubscribe);
+
+    app.post('/api/v1/user/:userId/addFacebookSubscriptions', restrict, routes.user.addFacebookSubscriptions);
     
     app.get('/api/v1/user/:userId/activities', restrict, routes.user.getActivities);
     app.get('/api/v1/user/:userId/activities/limit/:limit', restrict, routes.user.getActivities);

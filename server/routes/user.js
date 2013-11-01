@@ -580,3 +580,75 @@ exports.getActivitiesOlder = function(req, res) {
 		res.send(500, err);
 	});
 };
+
+exports.addFacebookSubscriptions = function(req, res) {
+	var findUser = function(userId) {
+		var deferred = Q.defer();
+
+		User.findOne({ _id: userId })
+		.select('facebook.subscriptions')
+		.exec(function (err, retrievedUser) {
+	        if (err || !retrievedUser) {
+	        	deferred.reject(new Error("No user exists with specified ID."));
+	        }
+	        else {
+	        	deferred.resolve(retrievedUser);
+	        }
+	    });
+
+		return deferred.promise;
+	},
+	findSubscriptions = function(fbIds) {
+		var deferred = Q.defer();
+
+		User.find({ $or: [{ 'facebook.id': fbIds }, { 'facebook.managedPages.id': fbIds }]})
+		.select('_id')
+		.exec(function (err, retrievedUsers) {
+	        if (err || !retrievedUsers) {
+	        	deferred.reject(new Error("No users exist associated with any of the Facebook IDs."));
+	        }
+	        else {
+	        	deferred.resolve(retrievedUsers);
+	        }
+	    });
+
+		return deferred.promise;
+	},
+	updateUser = function(userId, newSubscriptions) {
+		var deferred = Q.defer(),
+			populateObj = [
+                { path: 'subscriptions' },
+                { path: 'postedEvents' }, 
+                { path: 'attending' },
+                { path: 'invites' },
+                { path: 'school' }
+            ];
+
+		User.findOneAndUpdate({ _id: userId }, { $addToSet: { subscriptions: { $each: newSubscriptions } } })
+		.populate(populateObj)
+		.exec(function(err, updatedUser) {
+			if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+         		deferred.resolve(updatedUser);
+         	}
+		});
+
+		return deferred.promise;
+	};
+
+	findUser(req.params.userId).then(function(retrievedUser) {
+		findSubscriptions(retrievedUser.facebook.subscriptions).then(function(retrievedUsers) {
+			updateUser(req.params.userId, retrievedUsers).then(function(updatedUser) {
+				res.json(200, updatedUser);
+			}, function(err) {
+				res.send(500, err);
+			});
+		}, function(err) {
+			res.send(500, err);
+		});
+	}, function(err) {
+		res.send(500, err);
+	});
+};

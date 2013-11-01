@@ -127,8 +127,12 @@ define(['./index'], function (controllers) {
                             updateParams.facebook.subscriptions = fbSubscriptions;
                             updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?type=large';
 							userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
-								$rootScope.user = data;
-								localStorageService.add('user', data);
+								userService.addFacebookSubscriptions($rootScope.user._id).then(function (data, status) {
+									$rootScope.user = data;
+									localStorageService.add('user', data);
+								},
+								function (errorMessage, status) {
+								});
 							},
 							function (errorMessage, status) {
 							});
