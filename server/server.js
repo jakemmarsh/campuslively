@@ -105,6 +105,7 @@ app.configure(function() {
     app.post('/api/v1/event', restrict, routes.event.postEvent);
     app.post('/api/v1/event/:eventId/image', restrict, routes.event.uploadImage);
     app.patch('/api/v1/event/:eventId', restrict, routes.event.updateEvent);
+    app.post('/api/v1/event/:eventId/sender/:senderId', restrict, routes.event.inviteUsers);
     app.post('/api/v1/event/:eventId/rsvp/:userId', restrict, routes.event.rsvp);
     app.delete('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
 

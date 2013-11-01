@@ -1116,3 +1116,77 @@ exports.deleteEvent = function(req, res) {
 		res.send(500, err);
 	});
 };
+
+exports.inviteUsers = function(req, res) {
+	var createInvites = function(eventId, senderId, recipientIds) {
+		var deferred = Q.defer(),
+			invites = [],
+			createdInvites = [];
+
+		for(var i = 0; i < recipientIds.length; i++) {
+			var invite = {
+				sender: senderId,
+				recipient: recipientIds[i],
+				event: eventId
+			};
+
+			invites.push(invite);
+		}
+
+		Invite.create(invites, function (err) {
+		    if (err) {
+		    	deferred.reject(err.message);
+		    }
+		    else {
+			    for (var i = 0; i < arguments.length; i++) {
+			    	createdInvites.push(arguments[i]);
+			    }
+			    deferred.resolve(createdInvites);
+			}
+		});
+
+		return deferred.promise;
+	},
+	createActivities = function(createdInvites) {
+		var deferred = Q.defer(),
+			activities = [],
+			createdActivities = [];
+
+		for(var i = 0; i < createdInvites.length; i++) {
+			var activity = {
+				actor: createdInvites[i].sender,
+				recipient: createdInvites[i].recipient,
+				activity: 'invited',
+				event: createdInvites[i].event,
+				eventPrivacy: null,
+				eventCreator: null
+			};
+
+			activities.push(activity);
+		}
+
+		Activity.create(activities, function (err) {
+			if (err) {
+		    	deferred.reject(err.message);
+		    }
+		    else {
+			    for (var i = 0; i < arguments.length; i++) {
+			    	createdActivities.push(arguments[i]);
+			    }
+			    deferred.resolve(createdActivities);
+			}
+		});
+
+		return deferred.promise;
+	};
+
+	createInvites(req.params.eventId, req.params.senderId, req.body.recipientIds).then(function(createdInvites) {
+		createActivities(createdInvites).then(function(createdActivities) {
+			res.send(200, "Invites and activities all successfully created.");
+		}, function(err) {
+			res.send(200, "Invites created but failed to create activities.");
+		});
+	}, function(err) {
+		res.send(500, err);
+	});
+};
