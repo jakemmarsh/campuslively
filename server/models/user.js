@@ -20,11 +20,13 @@ var userSchema = new mongoose.Schema({
     },
     salt: {
         type: String, 
-        required: true
+        required: true,
+        select: false
     },
     hash: {
         type: String,
-        required: true
+        required: true,
+        select: false
     },
     email: {
         type: String,

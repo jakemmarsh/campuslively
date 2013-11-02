@@ -47,6 +47,7 @@ function authenticate(name, pass, fn) {
                 { path: 'school' }
             ];
         User.findOne({ username: username.toLowerCase() })
+        .select('+hash +salt')
         .populate(populateObj)
         .exec(function (err, retrievedUser) {
             if (err || !retrievedUser) {
@@ -78,12 +79,9 @@ function authenticate(name, pass, fn) {
 exports.check = function(req, res) {
     if (req.session) {
         if (req.session.user) {
-            var returnUser = JSON.parse(JSON.stringify(req.session.user));
-            delete returnUser.salt;
-            delete returnUser.hash;
             var data = {
                 loggedIn: true,
-                user: returnUser
+                user: req.session.user
             };
 
             res.json(200, data);
@@ -116,11 +114,7 @@ exports.login = function(req, res) {
                     // increase duration of cookie
                     req.session.cookie.maxAge = 604800000;
 
-                    // respond with user object, minus salt and hash properties
-                    var returnUser = JSON.parse(JSON.stringify(user));
-                    delete returnUser.salt;
-                    delete returnUser.hash;
-                    res.json(200, returnUser);
+                    res.json(200, user);
                 });
             }
         } 

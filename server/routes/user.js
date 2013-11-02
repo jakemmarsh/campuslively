@@ -167,11 +167,7 @@ exports.updateUser = function(req, res) {
             // or in this case the entire user object
             req.session.user = data;
 
-            // respond with user object, minus salt and hash properties
-            var returnUser = JSON.parse(JSON.stringify(data));
-            delete returnUser.salt;
-            delete returnUser.hash;
-            res.json(200, returnUser);
+            res.json(200, data);
         });
 	}, function(err) {
 		res.send(500, err);
@@ -287,11 +283,7 @@ exports.subscribe = function(req, res) {
 	                // or in this case the entire user object
 	                req.session.user = updatedUser;
 
-	                // respond with user object, minus salt and hash properties
-	                var returnUser = JSON.parse(JSON.stringify(updatedUser));
-	                delete returnUser.salt;
-	                delete returnUser.hash;
-	                res.json(200, returnUser);
+	                res.json(200, updatedUser);
 	            });
 			}, function(err) {
 				res.send(200, "Subscription added but activity could not be created.");
@@ -351,20 +343,13 @@ exports.unsubscribe = function(req, res) {
 	            // or in this case the entire user object
 	            req.session.user = updatedUser;
 
-	            // respond with user object, minus salt and hash properties
-	            var returnUser = JSON.parse(JSON.stringify(updatedUser));
-	            delete returnUser.salt;
-	            delete returnUser.hash;
-	            res.json(200, returnUser);
+	            res.json(200, updatedUser);
 	        });
 		}, function(err) {
 			req.session.regenerate(function(){
 	            req.session.user = updatedUser;
 	            
-	            var returnUser = JSON.parse(JSON.stringify(updatedUser));
-	            delete returnUser.salt;
-	            delete returnUser.hash;
-	            res.json(200, returnUser);
+	            res.json(200, updatedUser);
 	        });
 		});
 	}, function(err) {
