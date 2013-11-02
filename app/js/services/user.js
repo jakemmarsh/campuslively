@@ -121,7 +121,7 @@ define(['./index'], function (services) {
 			return deferred.promise;
 		},
 		addFacebookSubscriptions: function(userId) {
-			var deferred = $q.defer;
+			var deferred = $q.defer();
 
 			$http.post(this.apiPath + userId + '/addFacebookSubscriptions').success(function(data, status) {
 				deferred.resolve(data);
