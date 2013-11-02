@@ -62,6 +62,7 @@ app.configure(function() {
     app.post('/api/v1/contact', mailer.sendContactEmail);
 
     // users
+    app.get('/api/v1/user', restrict, routes.user.getAllUsers);
     app.get('/api/v1/user/:userId', restrict, routes.user.getUser);
     app.get('/api/v1/user/username/:username', restrict, routes.user.getUserByName);
     app.patch('/api/v1/user/:userId', routes.user.updateUser);
@@ -82,6 +83,7 @@ app.configure(function() {
     // events
     app.get('/api/v1/event/count', routes.event.getCount);
 
+    app.get('/api/v1/event', restrict, routes.event.getAllEvents);
     app.get('/api/v1/event/:eventId', restrict, routes.event.getEvent);
 
     app.get('/api/v1/event/user/:userId/school/:schoolId/limit/:limit', restrict, routes.event.getEventsBySchool);
