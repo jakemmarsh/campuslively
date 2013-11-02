@@ -16,18 +16,18 @@
 					<a data-ng-href="{{profile.website}}" target="_blank" data-tooltip="Website" data-ng-show="profile.type == 'business' && profile.website">
 						<i class="beta icon-paper-clip nudge-half--right"></i>
 					</a>
-					<a href="http://www.twitter.com/" target="_blank" data-tooltip="Twitter">
+					<a data-ng-href="http://www.twitter.com/{{profile.twitterLink}}" target="_blank" data-tooltip="Twitter" data-ng-show="profile.twitterLink">
 						<i class="beta icon-twitter nudge-half--right"></i>
 					</a>
-					<a href="http://www.facebook.com" target="_blank" data-tooltip="Facebook">
+					<a data-ng-href="http://www.facebook.com/{{profile.facebookLink}}" target="_blank" data-tooltip="Facebook" data-ng-show="profile.facebookLink">
 						<i class="beta icon-facebook nudge-half--right"></i>
 					</a>
 
 				</div>
 			</div>
 			<div class="td six-tenths full-height normal-lh vertical-align-middle text-right">
-				<a href class="btn nudge-half--right" data-ng-click="toggleSubscribe()" data-ng-hide="isSubscribed() || profile._id == user._id"><i class="icon-star"></i> Subscribe</a>
-				<a href class="btn nudge-half--right" data-ng-click="toggleSubscribe()" data-ng-show="isSubscribed() && profile._id != user._id"><i class="icon-star-empty"></i> Unsubscribe</a>
+				<a href class="btn" data-ng-click="toggleSubscribe()" data-ng-hide="isSubscribed() || profile._id == user._id"><i class="icon-star"></i> Subscribe</a>
+				<a href class="btn" data-ng-click="toggleSubscribe()" data-ng-show="isSubscribed() && profile._id != user._id"><i class="icon-star-empty"></i> Unsubscribe</a>
 			</div>
 
 		</div>

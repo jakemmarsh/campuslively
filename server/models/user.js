@@ -60,6 +60,8 @@ var userSchema = new mongoose.Schema({
     },
     activationKey: String,
     passwordResetKey: String,
+    facebookLink: String,
+    twitterLink: String,
     facebook: {
         id: String,
         managedPages: {

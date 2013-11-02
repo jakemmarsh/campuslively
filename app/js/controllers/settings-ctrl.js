@@ -9,6 +9,7 @@ define(['./index'], function (controllers) {
     	});
 
     	$scope.userSchool = $rootScope.user.school;
+    	$scope.userTwitterLink = $rootScope.user.twitterLink;
 
     	if($rootScope.user.type == 'student') {
     		$scope.userFirstName = $rootScope.user.firstName;
@@ -16,6 +17,7 @@ define(['./index'], function (controllers) {
     		$scope.userEmailStudent = $rootScope.user.email;
     	}
     	else if($rootScope.user.type == 'business') {
+    		$scope.userFacebookLink = $rootScope.user.facebookLink;
     		$scope.userBusinessName = $rootScope.user.businessName;
     		$scope.userBusinessDescription = $rootScope.user.businessDescription;
     		$scope.userEmailBusiness = $rootScope.user.email;
@@ -110,6 +112,7 @@ define(['./index'], function (controllers) {
 						updateParams.facebook = {};
 						updateParams.facebook.id = res.authResponse.userID;
 						updateParams.facebook.linked = true;
+						updateParams.facebookLink = res.authResponse.userID;
 						$q.all([
                             $FB.api('/me/likes', {limit: 9999, fields: 'id'}),
                             $FB.api('/me/subscribedto', {limit: 9999, fields: 'id'})
@@ -191,6 +194,7 @@ define(['./index'], function (controllers) {
 					managedPages: null
 				};
 				updateParams.pictureUrl = 'http://s3.amazonaws.com/campuslively/user_imgs/default.png';
+				updateParams.facebookLink = null;
 				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 					$rootScope.user = data;
 					localStorageService.add('user', data);
@@ -234,7 +238,7 @@ define(['./index'], function (controllers) {
 					updateParams.businessName = $scope.userBusinessName;
 					updateParams.displayName = $scope.userBusinessName;
 				}
-				if($rootScope.user.businessDescription !== $scope.userBusinessDescription && $scope.userBusinessDescription.length > 0) {
+				if($rootScope.user.businessDescription !== $scope.userBusinessDescription) {
 					updateParams.businessDescription = $scope.userBusinessDescription;
 				}
 				if($rootScope.user.email !== $scope.userEmailBusiness && $scope.userEmailBusiness.length > 0) {
@@ -249,15 +253,21 @@ define(['./index'], function (controllers) {
 				if($scope.picturePage) {
 					updateParams.pictureUrl = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?type=large';
 				}
-				if($scope.websiteAddress.length > 0) {
+				if($scope.userFacebookLink && $scope.userFacebookLink !== $rootScope.user.facebookLink) {
+					updateParams.facebookLink = $scope.userFacebookLink;
+				}
+				else if(!$scope.userFacebookLink) {
+					updateParams.facebookLink = null;
+				}
+				if($scope.websiteAddress.length > 0 && $scope.websiteAddress !== $rootScope.user.website) {
 					if($scope.websiteAddress.indexOf('http://') == -1 && $scope.websiteAddress.indexOf('https://') == -1) {
 						$scope.websiteAddress = 'http://' + $scope.websiteAddress;
 					}
 					updateParams.website = $scope.websiteAddress;
 				}
-				else {
-					updateParams.website = null;
-				}
+			}
+			if($scope.userTwitterLink !== $rootScope.user.twitterLink) {
+				updateParams.twitterLink = $scope.userTwitterLink;
 			}
 			if($scope.userPassword) {
 				if($scope.userPassword.length > 0) {
