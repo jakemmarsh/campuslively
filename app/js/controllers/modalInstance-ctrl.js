@@ -93,16 +93,6 @@ define(['./index'], function (controllers) {
             window.open(url, 'Tweet Event', 'toolbar=no, location=yes, status=no, menubar=no, scrollbars=yes, resizable=yes, width='+width+', height='+height+', top='+top+', left='+left);
         };
 
-        $scope.inviteFriends = function() {
-            $FB.ui({
-                method: 'apprequests',
-                display: 'popup',
-                title: 'Invite Friends',
-                link: $scope.eventUrl,
-                message: 'I\'m inviting you to ' + $scope.event.title
-                }, null);
-        };
-
     	$scope.clickLink = function() {
     		$modalInstance.close();
     	};
