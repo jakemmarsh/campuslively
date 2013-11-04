@@ -47,7 +47,6 @@ exports.getAllUsers = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' },
                 { path: 'school' }
             ];
 
@@ -146,7 +145,6 @@ exports.getUser = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' },
                 { path: 'school' }
             ];
 
@@ -180,7 +178,6 @@ exports.getUserByName = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' },
                 { path: 'school' }
             ];
 
@@ -241,7 +238,6 @@ exports.updateUser = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' },
                 { path: 'school' }
             ];
 
@@ -339,7 +335,6 @@ exports.subscribe = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' },
                 { path: 'school' }
             ];
 
@@ -405,7 +400,6 @@ exports.unsubscribe = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' },
                 { path: 'school' }
             ];
 
@@ -783,7 +777,6 @@ exports.addFacebookSubscriptions = function(req, res) {
                 { path: 'subscriptions' },
                 { path: 'postedEvents' }, 
                 { path: 'attending' },
-                { path: 'invites' },
                 { path: 'school' }
             ];
 

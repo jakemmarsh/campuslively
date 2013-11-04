@@ -1317,7 +1317,7 @@ exports.inviteUsers = function(req, res) {
 		    	deferred.reject(err.message);
 		    }
 		    else {
-			    for (var i = 0; i < arguments.length; i++) {
+			    for (var i = 1; i < arguments.length; ++i) {
 			    	createdInvites.push(arguments[i]);
 			    }
 			    deferred.resolve(createdInvites);
@@ -1349,7 +1349,7 @@ exports.inviteUsers = function(req, res) {
 		    	deferred.reject(err.message);
 		    }
 		    else {
-			    for (var i = 0; i < arguments.length; i++) {
+			    for (var i = 1; i < arguments.length; ++i) {
 			    	createdActivities.push(arguments[i]);
 			    }
 			    deferred.resolve(createdActivities);
