@@ -63,6 +63,7 @@ app.configure(function() {
 
     // users
     app.get('/api/v1/user', restrict, routes.user.getAllUsers);
+    app.get('/api/v1/user/:userId/inviteTo/event/:eventId', restrict, routes.user.getUsersForInvite);
     app.get('/api/v1/user/:userId', restrict, routes.user.getUser);
     app.get('/api/v1/user/username/:username', restrict, routes.user.getUserByName);
     app.patch('/api/v1/user/:userId', routes.user.updateUser);

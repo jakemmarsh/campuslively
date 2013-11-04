@@ -195,7 +195,7 @@ define(['./index'], function (controllers) {
 	                    return $scope.event;
 	                },
 			      	items: function() {
-			      		return userService.getAllUsers().then(function (data, status) {
+			      		return userService.getUsersForInvite($rootScope.user._id, $scope.event._id).then(function (data, status) {
 	                        return data;
 	                    },
 	                    function (errorMessage, status) {

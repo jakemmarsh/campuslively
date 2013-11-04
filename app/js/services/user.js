@@ -16,6 +16,17 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		getUsersForInvite: function(userId, eventId) {
+			var deferred = $q.defer();
+			
+			$http.get(this.apiPath + userId + '/inviteTo/event/' + eventId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
     	getUserById: function(userId) {
 			var deferred = $q.defer();
 			

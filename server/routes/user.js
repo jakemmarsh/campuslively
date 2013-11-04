@@ -72,6 +72,73 @@ exports.getAllUsers = function(req, res) {
 	});
 };
 
+exports.getUsersForInvite = function(req, res) {
+	var getEvent = function(eventId) {
+		var deferred = Q.defer();
+
+		Event.findOne({
+			_id: eventId
+		})
+		.exec(function (err, retrievedEvent) {
+	        if (err || !retrievedEvent) {
+	        	deferred.reject(new Error("No event exists with specified ID."));
+	        }
+	        else {
+	        	deferred.resolve(retrievedEvent);
+	        }
+	    });
+
+		return deferred.promise;
+	},
+	getUsers = function(userId, event) {
+		var deferred = Q.defer(),
+			populateObj = [
+                { path: 'subscriptions' },
+                { path: 'postedEvents' }, 
+                { path: 'attending' },
+                { path: 'school' }
+            ];
+
+        User.find({
+        	attending: { $ne: event._id },
+        	invites: { $ne: event._id },
+        	$and: [
+        		{ 
+        			_id: {
+        				$ne: userId
+        			}
+        		},
+        		{
+        			_id: {
+        				$ne: event.creator
+        			}
+        		}
+        	]
+        })
+		.populate(populateObj)
+		.exec(function (err, retrievedUsers) {
+	        if (err || !retrievedUsers) {
+	        	deferred.reject(new Error("No user exists with specified ID."));
+	        }
+	        else {
+	        	deferred.resolve(retrievedUsers);
+	        }
+	    });
+
+	    return deferred.promise;
+	};
+
+	getEvent(req.params.eventId).then(function(retrievedEvent) {
+		getUsers(req.params.userId, retrievedEvent).then(function(data) {
+	        res.json(200, data);
+		}, function(err) {
+			res.send(500, err);
+		});
+	}, function(err) {
+		res.send(500, err);
+	});
+}
+
 exports.getUser = function(req, res) {
 	var getUser = function(userId) {
 		var deferred = Q.defer(),
