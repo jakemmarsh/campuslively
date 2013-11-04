@@ -283,6 +283,17 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		inviteUsers: function(eventId, senderId, recipientIds) {
+			var deferred = $q.defer();
+
+			$http.post(this.apiPath + eventId + '/invite/sender/' + senderId, recipientIds).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		deleteEvent: function(eventId) {
 			var deferred = $q.defer();
 

@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('modalInstanceCtrl', ['$scope', '$modalInstance', '$FB', 'items', 'location', 'event', function ($scope, $modalInstance, $FB, items, location, event) {
+    controllers.controller('modalInstanceCtrl', ['$scope', '$rootScope', '$modalInstance', '$FB', 'items', 'location', 'event', 'eventService', function ($scope, $rootScope, $modalInstance, $FB, items, location, event, eventService) {
     	if(items) {
             $scope.items = items;
             $scope.invitees = [];
@@ -111,8 +111,16 @@ define(['./index'], function (controllers) {
         };
 
         $scope.sendInvites = function() {
+            var dataToSend = {};
             if($scope.invitees.length > 0) {
-                console.log('sending invites');
+                dataToSend.recipientIds = $scope.invitees;
+
+                eventService.inviteUsers($scope.event._id, $rootScope.user._id, dataToSend).then(function (data) {
+                    console.log(data);
+                    $modalInstance.close();
+                },
+                function (errorMessage) {
+                });
             }
         };
 
