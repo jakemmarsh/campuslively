@@ -5,6 +5,17 @@ define(['./index'], function (services) {
   	function checkStatus() {}
     return {
     	apiPath: '/api/v1/user/',
+    	getAllUsers: function() {
+			var deferred = $q.defer();
+			
+			$http.get(this.apiPath).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
     	getUserById: function(userId) {
 			var deferred = $q.defer();
 			

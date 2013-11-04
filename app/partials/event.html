@@ -169,7 +169,7 @@
         <h2 class="flush">Invite Friends</h2>
     </div>
     <div class="modal-body">
-    
+    	<div data-ng-repeat="user in items">{{ user.username }}</div>
     </div>
     <div class="modal-footer">
         <button class="btn" data-ng-click="ok()">OK</button>

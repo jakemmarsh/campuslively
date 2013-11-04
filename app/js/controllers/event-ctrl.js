@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('eventCtrl', ['$scope', '$rootScope', '$modal', 'eventService', 'resolvedEvent', '$location',  function ($scope, $rootScope, $modal, eventService, resolvedEvent, $location) {
+    controllers.controller('eventCtrl', ['$scope', '$rootScope', '$modal', 'eventService', 'userService', 'resolvedEvent', '$location',  function ($scope, $rootScope, $modal, eventService, userService, resolvedEvent, $location) {
     	$scope.event = resolvedEvent;
 
     	if($scope.event.loc) {
@@ -194,8 +194,14 @@ define(['./index'], function (controllers) {
 			      	event: function() {
 	                    return $scope.event;
 	                },
-	                location: null,
-			      	items: null
+			      	items: function() {
+			      		return userService.getAllUsers().then(function (data, status) {
+	                        return data;
+	                    },
+	                    function (errorMessage, status) {
+	                    }); 
+			      	},
+			      	location: null
 			      }
 			    });
 			}
