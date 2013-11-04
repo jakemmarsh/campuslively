@@ -226,7 +226,7 @@
     </div>
     <div class="modal-body">
         <div data-ng-repeat="attendingUser in items" class="user-img-modal nudge-half--right" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-			<a href data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-tooltip="{{attendingUser.displayName}}" data-tooltip-placement="right"></a>
+			<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-tooltip="{{attendingUser.displayName}}" data-tooltip-placement="right"></a>
 		</div>
 		<div data-ng-hide="items.length">
 			<h2 class="flush green text-center">No one has RSVPd to this event yet!</h2>
