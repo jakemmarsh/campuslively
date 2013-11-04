@@ -145,7 +145,15 @@ exports.getEventsBySchool = function(req, res) {
 			];
 
 		if(req.params.limit) {
-			Event.find({ school: schoolId, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+			Event.find({ 
+				school: schoolId, 
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				] 
+			})
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(eventPopulateObj)
@@ -166,7 +174,15 @@ exports.getEventsBySchool = function(req, res) {
 		    });
 		}
 		else {
-			Event.find({ school: schoolId, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+			Event.find({ 
+				school: schoolId, 
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				] 
+			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
 			.exec(function (err, retrievedEvents) {
@@ -211,7 +227,16 @@ exports.getEventsBySchoolNewer = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ school: schoolId, _id: { $gt: newestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+		Event.find({ 
+			school: schoolId, 
+			_id: { $gt: newestId }, 
+			$or: [
+				{ privacy: 'public' }, 
+				{ invited: userId }, 
+				{ attending: userId }, 
+				{ creator: userId }
+			] 
+		})
 		.sort({ _id: -1 })
 		.populate(eventPopulateObj)
 		.exec(function (err, retrievedEvents) {
@@ -255,7 +280,16 @@ exports.getEventsBySchoolOlder = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ school: schoolId, _id: { $lt: oldestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+		Event.find({ 
+			school: schoolId, 
+			_id: { $lt: oldestId }, 
+			$or: [
+				{ privacy: 'public' }, 
+				{ invited: userId }, 
+				{ attending: userId }, 
+				{ creator: userId }
+			] 
+		})
 		.sort({ _id: -1 })
 		.limit(limit)	
 		.populate(eventPopulateObj)
@@ -306,7 +340,19 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 		floorDay.setDate(floorDay.getDate() - 1);
 		ceilingDay.setDate(ceilingDay.getDate() + 1);
 
-		Event.find({ school: schoolId, startDate: { $gt: floorDay, $lt: ceilingDay }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+		Event.find({ 
+			school: schoolId, 
+			startDate: { 
+				$gt: floorDay, 
+				$lt: ceilingDay 
+			}, 
+			$or: [
+				{ privacy: 'public' }, 
+				{ invited: userId }, 
+				{ attending: userId }, 
+				{ creator: userId }
+			] 
+		})
 		.populate(eventPopulateObj)
 		.exec(function (err, retrievedEvents) {
 	        if(err) {
@@ -359,7 +405,19 @@ exports.getEventsByLocationAndDay = function(req, res) {
 		floorDay.setDate(floorDay.getDate() - 1);
 		ceilingDay.setDate(ceilingDay.getDate() + 1);
 
-		Event.find({ loc : { $near : locationPoint }, startDate: { $gt: floorDay, $lt: ceilingDay }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+		Event.find({ 
+			loc: { $near : locationPoint }, 
+			startDate: { 
+				$gt: floorDay, 
+				$lt: ceilingDay 
+			}, 
+			$or: [
+				{ privacy: 'public' }, 
+				{ invited: userId }, 
+				{ attending: userId }, 
+				{ creator: userId }
+			] 
+		})
 		.populate(eventPopulateObj)
 		.exec(function (err, retrievedEvents) {
 	        if(err) {
@@ -403,7 +461,15 @@ exports.getEventsByUser = function(req, res) {
 			];
 
 		if(req.params.limit) {
-			Event.find({ creator: profileId, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+			Event.find({ 
+				creator: profileId, 
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				] 
+			})
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(eventPopulateObj)
@@ -424,7 +490,15 @@ exports.getEventsByUser = function(req, res) {
 		    });
 		}
 		else {
-			Event.find({ creator: profileId, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+			Event.find({ 
+				creator: profileId, 
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				] 
+			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
 			.exec(function (err, retrievedEvent) {
@@ -469,7 +543,16 @@ exports.getEventsByUserNewer = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ creator: profileId, _id: { $gt: newestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+		Event.find({ 
+			creator: profileId, 
+			_id: { $gt: newestId }, 
+			$or: [
+				{ privacy: 'public' }, 
+				{ invited: userId }, 
+				{ attending: userId }, 
+				{ creator: userId }
+			] 
+		})
 		.sort({ _id: -1 })
 		.populate(eventPopulateObj)
 		.exec(function (err, retrievedEvent) {
@@ -513,7 +596,16 @@ exports.getEventsByUserOlder = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ creator: profileId, _id: { $lt: oldestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+		Event.find({ 
+			creator: profileId, 
+			_id: { $lt: oldestId }, 
+			$or: [
+				{ privacy: 'public' }, 
+				{ invited: userId }, 
+				{ attending: userId }, 
+				{ creator: userId }
+			] 
+		})
 		.sort({ _id: -1 })
 		.limit(limit)
 		.populate(eventPopulateObj)
@@ -556,14 +648,25 @@ exports.getEventsByLocation = function(req, res) {
 			commentPopulateObj = [
 				{ path: 'creator' },
 				{ path: 'subComments.creator'}
-			],
-			locationPoint = {
-					type: 'Point',
-					coordinates: [lat, lng]
-			};
+			];
 
 		if(req.params.limit) {
-			Event.find({ loc : { $near : locationPoint }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+			Event.find({ 
+				loc: { 
+					$near: { 
+						$geometry: {
+							type: "Point",
+							coordinates: [lng, lat]
+						}
+					}
+				}, 
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				]
+			})
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(eventPopulateObj)
@@ -584,7 +687,17 @@ exports.getEventsByLocation = function(req, res) {
 	        });
 	    }
 	    else {
-			Event.find({ loc : { $near : locationPoint }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+			Event.find({
+				loc : {
+					$near : locationPoint
+				}, 
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				] 
+			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
 			.exec(function(err, retrievedEvent) {
@@ -633,7 +746,20 @@ exports.getEventsByLocationNewer = function(req, res) {
 					coordinates: [lat, lng]
 			};
 
-		Event.find({ loc: { $near : locationPoint }, _id: { $gt: newestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+		Event.find({ 
+			loc: { 
+				$near : locationPoint 
+			}, 
+			_id: { 
+				$gt: newestId 
+			}, 
+			$or: [
+				{ privacy: 'public' }, 
+				{ invited: userId }, 
+				{ attending: userId }, 
+				{ creator: userId }
+			] 
+		})
 		.sort({ _id: -1 })
 		.populate(eventPopulateObj)
 		.exec(function(err, retrievedEvent) {
@@ -681,7 +807,16 @@ exports.getEventsByLocationOlder = function(req, res) {
 					coordinates: [lat, lng]
 			};
 
-		Event.find({ loc: { $near : locationPoint }, _id: { $lt: oldestId }, $or: [{ privacy: 'public' }, { invited: userId }, { attending: userId }, { creator: userId }] })
+		Event.find({ 
+			loc: { $near: locationPoint }, 
+			_id: { $lt: oldestId }, 
+			$or: [
+				{ privacy: 'public' }, 
+				{ invited: userId }, 
+				{ attending: userId }, 
+				{ creator: userId }
+			] 
+		})
 		.sort({ _id: -1 })
 		.limit(limit)
 		.populate(eventPopulateObj)

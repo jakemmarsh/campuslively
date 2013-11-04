@@ -83,7 +83,11 @@ exports.getUser = function(req, res) {
                 { path: 'school' }
             ];
 
-		User.findOne({ _id: req.params.userId }).populate(populateObj).exec(function (err, retrievedUser) {
+		User.findOne({ 
+			_id: req.params.userId 
+		})
+		.populate(populateObj)
+		.exec(function (err, retrievedUser) {
 	        if (err || !retrievedUser) {
 	        	deferred.reject(new Error("No user exists with specified ID."));
 	        }
@@ -113,7 +117,9 @@ exports.getUserByName = function(req, res) {
                 { path: 'school' }
             ];
 
-		User.findOne({ username: username.toLowerCase() })
+		User.findOne({ 
+			username: username.toLowerCase() 
+		})
 		.populate(populateObj)
 		.exec(function (err, retrievedUser) {
 	        if (err || !retrievedUser) {
@@ -246,7 +252,10 @@ exports.subscribe = function(req, res) {
 	var findSubscription = function(userId) {
 		var deferred = Q.defer();
 
-		User.findOne({ _id: userId }, function (err, retrievedUser) {
+		User.findOne({ 
+			_id: userId 
+		})
+		.exec(function (err, retrievedUser) {
 	        if (err || !retrievedUser) {
 	        	deferred.reject(new Error("No user exists with specified ID."));
 	        }
@@ -349,7 +358,12 @@ exports.unsubscribe = function(req, res) {
 	deleteActivity = function(userId, subscriptionId) {
 		var deferred = Q.defer();
 
-		Activity.remove({ actor: userId, recipient: subscriptionId, activity: 'subscribed' }, function(err) {
+		Activity.remove({ 
+			actor: userId, 
+			recipient: subscriptionId, 
+			activity: 'subscribed' 
+		})
+		.exec(function(err) {
 			if(err) {
 				deferred.reject(err.message);
 			}
@@ -387,7 +401,10 @@ exports.getActivities = function(req, res) {
 	var getUser = function(userId) {
 		var deferred = Q.defer();
 
-		User.findOne({ _id: userId }, function (err, retrievedUser) {
+		User.findOne({ 
+			_id: userId 
+		})
+		.exec(function (err, retrievedUser) {
 	        if (err || !retrievedUser) {
 	        	deferred.reject(new Error("No user exists with specified ID."));
 	        }
@@ -414,7 +431,22 @@ exports.getActivities = function(req, res) {
 			];
 
 		if(req.params.limit) {
-			Activity.find({ $or: [{recipient: user._id}, {eventCreator: user._id}, {actor: {$in: user.subscriptions}, $or: [{eventPrivacy: 'public'}, {event: {$in: user.attending}}, {event: {$in: user.invites}}]}, {event: {$in: user.attending}}], actor: { $ne: user._id } })
+			Activity.find({ 
+				$or: [
+					{recipient: user._id}, 
+					{eventCreator: user._id}, 
+					{
+						actor: {$in: user.subscriptions}, 
+						$or: [
+						 	{eventPrivacy: 'public'}, 
+						 	{event: {$in: user.attending}}, 
+						 	{event: {$in: user.invites}}
+					 	]
+					}, 
+					{event: {$in: user.attending}}
+				], 
+				actor: { $ne: user._id } 
+			})
 			.sort({ _id: -1 })
 			.populate(activityPopulateObj)
 			.exec(function(err, retrievedActivities) {
@@ -434,7 +466,22 @@ exports.getActivities = function(req, res) {
 			});
 		}
 		else {
-			Activity.find({ $or: [{recipient: user._id}, {eventCreator: user._id}, {actor: {$in: user.subscriptions}, $or: [{eventPrivacy: 'public'}, {event: {$in: user.attending}}, {event: {$in: user.invites}}]}, {event: {$in: user.attending}}], actor: { $ne: user._id } })
+			Activity.find({ 
+				$or: [
+					{recipient: user._id}, 
+					{eventCreator: user._id}, 
+					{
+						actor: {$in: user.subscriptions}, 
+						$or: [
+							{eventPrivacy: 'public'}, 
+							{event: {$in: user.attending}}, 
+							{event: {$in: user.invites}}
+						]
+					}, 
+					{event: {$in: user.attending}}
+				], 
+				actor: { $ne: user._id } 
+			})
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
 			.populate(activityPopulateObj)
@@ -473,7 +520,10 @@ exports.getActivitiesNewer = function(req, res) {
 	var getUser = function(userId) {
 		var deferred = Q.defer();
 
-		User.findOne({ _id: userId }, function (err, retrievedUser) {
+		User.findOne({ 
+			_id: userId 
+		})
+		.exec(function (err, retrievedUser) {
 	        if (err || !retrievedUser) {
 	        	deferred.reject(new Error("No user exists with specified ID."));
 	        }
@@ -497,7 +547,23 @@ exports.getActivitiesNewer = function(req, res) {
 				{ path: 'comment.creator', model: User }
 			];
 
-		Activity.find({ $or: [{recipient: user._id}, {eventCreator: user._id}, {actor: {$in: user.subscriptions}, $or: [{eventPrivacy: 'public'}, {event: {$in: user.attending}}, {event: {$in: user.invites}}]}, {event: {$in: user.attending}}], actor: { $ne: user._id }, _id: { $gt: newestId } })
+		Activity.find({ 
+			$or: [
+				{recipient: user._id}, 
+				{eventCreator: user._id}, 
+				{
+					actor: {$in: user.subscriptions}, 
+					$or: [
+						{eventPrivacy: 'public'}, 
+						{event: {$in: user.attending}}, 
+						{event: {$in: user.invites}}
+					]
+				}, 
+				{event: {$in: user.attending}}
+			], 
+			actor: { $ne: user._id }, 
+			_id: { $gt: newestId } 
+		})
 		.sort({ _id: -1 })
 		.populate(activityPopulateObj)
 		.exec(function(err, retrievedActivities) {
@@ -534,7 +600,10 @@ exports.getActivitiesOlder = function(req, res) {
 	var getUser = function(userId) {
 		var deferred = Q.defer();
 
-		User.findOne({ _id: userId }, function (err, retrievedUser) {
+		User.findOne({ 
+			_id: userId 
+		})
+		.exec(function (err, retrievedUser) {
 	        if (err || !retrievedUser) {
 	        	deferred.reject(new Error("No user exists with specified ID."));
 	        }
@@ -558,7 +627,23 @@ exports.getActivitiesOlder = function(req, res) {
 				{ path: 'comment.creator', model: User }
 			];
 
-		Activity.find({ $or: [{recipient: user._id}, {eventCreator: user._id}, {actor: {$in: user.subscriptions}, $or: [{eventPrivacy: 'public'}, {event: {$in: user.attending}}, {event: {$in: user.invites}}]}, {event: {$in: user.attending}}], actor: { $ne: user._id }, _id: { $lt: oldestId } })
+		Activity.find({ 
+			$or: [
+				{recipient: user._id}, 
+				{eventCreator: user._id}, 
+				{
+					actor: {$in: user.subscriptions}, 
+					$or: [
+						{eventPrivacy: 'public'}, 
+						{event: {$in: user.attending}}, 
+						{event: {$in: user.invites}}
+					]
+				}, 
+				{event: {$in: user.attending}}
+			], 
+			actor: { $ne: user._id }, 
+			_id: { $lt: oldestId } 
+		})
 		.sort({ _id: -1 })
 		.limit(limit)
 		.populate(activityPopulateObj)
