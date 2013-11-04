@@ -71,7 +71,6 @@ define(['./index'], function (controllers) {
     			}
 	        },
 	        function (errorMessage) {
-	            console.log(errorMessage);
 	        });
     	};
 
@@ -90,7 +89,6 @@ define(['./index'], function (controllers) {
 		            }
 		        },
 		        function (errorMessage) {
-		            console.log(errorMessage);
 		        });
     		}
     	};
@@ -105,7 +103,6 @@ define(['./index'], function (controllers) {
 	    			}
 		        },
 		        function (errorMessage) {
-		            console.log(errorMessage);
 		        });
     		}
     	}
@@ -119,7 +116,6 @@ define(['./index'], function (controllers) {
     			}
 	        },
 	        function (errorMessage) {
-	            console.log(errorMessage);
 	        });
     	};
 
@@ -132,7 +128,6 @@ define(['./index'], function (controllers) {
     			}
 	        },
 	        function (errorMessage) {
-	            console.log(errorMessage);
 	        });
     	};
 
@@ -150,7 +145,6 @@ define(['./index'], function (controllers) {
     			$scope.event = data;
 	        },
 	        function (errorMessage) {
-	            console.log(errorMessage);
 	        });
     	};
 
@@ -159,7 +153,6 @@ define(['./index'], function (controllers) {
     			$scope.event = data;
 	        },
 	        function (errorMessage) {
-	            console.log(errorMessage);
 	        });
     	};
 
