@@ -3,6 +3,7 @@ define(['./index'], function (controllers) {
     controllers.controller('modalInstanceCtrl', ['$scope', '$modalInstance', '$FB', 'items', 'location', 'event', function ($scope, $modalInstance, $FB, items, location, event) {
     	if(items) {
             $scope.items = items;
+            $scope.invitees = [];
         }
 
         if(location) {
@@ -91,6 +92,28 @@ define(['./index'], function (controllers) {
                 url = 'https://twitter.com/share?url=http://www.campuslively.com/event/' + $scope.event._id + '&text=' + $scope.event.title + ' - &hashtags=campuslively';
             
             window.open(url, 'Tweet Event', 'toolbar=no, location=yes, status=no, menubar=no, scrollbars=yes, resizable=yes, width='+width+', height='+height+', top='+top+', left='+left);
+        };
+
+        $scope.toggleInvitee = function(userId) {
+            if($scope.invitees.indexOf(userId) > -1) {
+                $scope.invitees.splice($scope.invitees.indexOf(userId), 1);
+            }
+            else {
+                $scope.invitees.push(userId);
+            }
+        };
+
+        $scope.isInvitee = function(userId) {
+            if($scope.invitees.indexOf(userId) > -1) {
+                return true;
+            }
+            return false;
+        };
+
+        $scope.sendInvites = function() {
+            if($scope.invitees.length > 0) {
+                console.log('sending invites');
+            }
         };
 
     	$scope.clickLink = function() {

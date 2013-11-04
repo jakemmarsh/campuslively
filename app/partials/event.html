@@ -169,10 +169,15 @@
         <h2 class="flush">Invite Friends</h2>
     </div>
     <div class="modal-body">
-    	<div data-ng-repeat="user in items">{{ user.username }}</div>
+    	<h3 class="caps flush--top nudge-half--bottom">Select people to invite:</h3>
+    	<div data-ng-repeat="user in items | orderBy: 'displayName'" class="inline-block islet" data-ng-class="{highlight: isInvitee(user._id)}">
+    		<div class="user-img-modal" data-ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}">
+				<a href data-ng-click="toggleInvitee(user._id)" data-tooltip="{{user.displayName}}" data-tooltip-placement="bottom"></a>
+			</div>
+		</div>
     </div>
     <div class="modal-footer">
-        <button class="btn" data-ng-click="ok()">OK</button>
+        <button class="btn" data-ng-click="ok()" data-ng-disabled="!invitees.length">Send Invites</button>
         <button class="btn--blue" data-ng-click="cancel()">Cancel</button>
     </div>
 </script>
