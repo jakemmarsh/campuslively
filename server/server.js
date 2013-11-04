@@ -50,7 +50,7 @@ app.configure(function() {
     app.get('/api/v1/auth/check', routes.auth.check);
     app.post('/api/v1/auth/login', routes.auth.login);
     app.post('/api/v1/auth/logout', routes.auth.logout);
-    app.post('/api/v1/auth/register', routes.auth.register);
+    app.put('/api/v1/auth/register', routes.auth.register);
     app.get('/api/v1/auth/username/:username', routes.auth.checkUsername);
     app.get('/api/v1/auth/email/:email', routes.auth.checkEmail);
     app.get('/api/v1/auth/user/:username/resend', routes.auth.resendActivation);
@@ -105,10 +105,10 @@ app.configure(function() {
     app.get('/api/v1/event/user/:userId/near/:lat/:lng/newerThan/:newestId', restrict, routes.event.getEventsByLocationNewer);
     app.get('/api/v1/event/user/:userId/near/:lat/:lng/olderThan/:oldestId/limit/:limit', restrict, routes.event.getEventsByLocationOlder);
 
-    app.post('/api/v1/event', restrict, routes.event.postEvent);
+    app.put('/api/v1/event', restrict, routes.event.postEvent);
     app.post('/api/v1/event/:eventId/image', restrict, routes.event.uploadImage);
     app.patch('/api/v1/event/:eventId', restrict, routes.event.updateEvent);
-    app.post('/api/v1/event/:eventId/sender/:senderId', restrict, routes.event.inviteUsers);
+    app.post('/api/v1/event/:eventId/invite/sender/:senderId', restrict, routes.event.inviteUsers);
     app.post('/api/v1/event/:eventId/rsvp/:userId', restrict, routes.event.rsvp);
     app.delete('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
 

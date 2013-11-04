@@ -29,7 +29,7 @@ define(['./index'], function (services) {
 		register: function(newUser) {
 			var deferred = $q.defer();
 
-			$http.post(this.apiPath + 'register', newUser).success(function(data, status) {
+			$http.put(this.apiPath + 'register', newUser).success(function(data, status) {
 				deferred.resolve(data, status);
 			}).error(function(err, status) {
 				deferred.reject(err, status);

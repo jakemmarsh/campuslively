@@ -159,7 +159,7 @@ define(['./index'], function (services) {
 		postEvent: function(event) {
 			var deferred = $q.defer();
 			
-			$http.post(this.apiPath, event).success(function(data, status) {
+			$http.put(this.apiPath, event).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
