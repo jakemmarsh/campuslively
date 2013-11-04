@@ -89,8 +89,8 @@
 	</ul>
 </nav>
 <div style="position:fixed;bottom:10px;right:10px;z-index:999;">
-	<alert data-ng-repeat="alert in alerts" data-close="closeAlert($index)">
-		<p data-ng-bind-html="alert.msg"></p>
+	<alert data-ng-repeat="notification in notifications" data-close="closeNotification($index)">
+		<p data-ng-bind-html="notification.msg"></p>
 	</alert>
 </div>
 <section class="main full-height" data-ui-view></section>

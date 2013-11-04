@@ -115,7 +115,7 @@ app.configure(function() {
     app.delete('/api/v1/event/:eventId', restrict, routes.event.deleteEvent);
 
     // comments
-    app.get('api/v1/comment/:commentId', restrict, routes.comment.getComment);
+    app.get('/api/v1/comment/:commentId', restrict, routes.comment.getComment);
 
     app.post('/api/v1/event/:eventId/comment', restrict, routes.comment.postComment);
     app.post('/api/v1/event/:eventId/comment/:commentId/subcomment', restrict, routes.comment.postSubComment);
@@ -124,6 +124,10 @@ app.configure(function() {
 
     app.delete('/api/v1/event/:eventId/comment/:commentId', restrict, routes.comment.deleteComment);
     app.delete('/api/v1/event/:eventId/comment/:commentId/subComment/:subCommentId', restrict, routes.comment.deleteSubComment);
+
+    // invites
+    app.get('/api/v1/invite/user/:userId', restrict, routes.invite.getUnreadInvites);
+    app.post('/api/v1/invite/:inviteId/read', restrict, routes.invite.markInviteAsRead);
 
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {

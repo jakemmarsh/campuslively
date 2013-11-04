@@ -33,6 +33,7 @@ define([
     'services/school',
     'services/event',
     'services/contact',
+    'services/invite',
     'filters/parse-url',
     'filters/readable-date',
     'filters/time-past',
