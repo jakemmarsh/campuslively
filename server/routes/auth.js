@@ -114,7 +114,11 @@ exports.login = function(req, res) {
                     // increase duration of cookie
                     req.session.cookie.maxAge = 604800000;
 
-                    res.json(200, user);
+                    // respond with user object, minus salt and hash properties
+                    var returnUser = JSON.parse(JSON.stringify(user));
+                    delete returnUser.salt;
+                    delete returnUser.hash;
+                    res.json(200, returnUser);
                 });
             }
         } 
