@@ -165,9 +165,11 @@ define(['./index'], function (controllers) {
 
     	$scope.isAttending = function() {
     		for(var i = 0; i < $scope.event.attending.length; i++) {
-    			if($scope.event.attending[i]._id == $rootScope.user._id) {
-    				return true;
-    			}
+    			if($scope.event.attending[i]) {
+	    			if($scope.event.attending[i]._id == $rootScope.user._id) {
+	    				return true;
+	    			}
+	    		}
     		}
     		return false;
     	};

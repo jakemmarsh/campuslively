@@ -1202,40 +1202,6 @@ exports.deleteEvent = function(req, res) {
 
 		return deferred.promise;
 	},
-	findInvites = function(eventId) {
-		var deferred = Q.defer();
-
-		Invite.find({ event: eventId })
-		.exec(function(err, retrievedInvites) {
-			if(err) {
-         		deferred.reject(err.message);
-         	}
-         	else {
-				deferred.resolve(retrievedInvites);
-         	}
-        });
-
-		return deferred.promise;
-	},
-	removeInvitesFromUsers = function(invites) {
-		var deferred = Q.defer(),
-			inviteIds = [];
-
-		for(var i = 0; i < invites.length; i++) {
-			inviteIds.push(invites[i]._id);
-		}
-
-		User.update({}, { $pull: { invites: { $in: inviteIds} } }, function(err) {
-			if(err) {
-				deferred.reject(err.message);
-			}
-			else {
-				deferred.resolve();
-			}
-		});
-
-		return deferred.promise;
-	},
 	deleteInvites = function(eventId) {
 		var deferred = Q.defer();
 
@@ -1250,10 +1216,10 @@ exports.deleteEvent = function(req, res) {
 
 		return deferred.promise;
 	},
-	removeAttendingFromUsers = function(eventId) {
+	removeEventFromUsers = function(eventId) {
 		var deferred = Q.defer();
 
-		User.update({}, { $pull: { attending: eventId } }, function(err) {
+		User.update({}, { $pull: { attending: eventId }, $pull: { invites: eventId } }, function(err) {
 			if(err) {
 				deferred.reject(err.message);
 			}
@@ -1268,19 +1234,11 @@ exports.deleteEvent = function(req, res) {
 	deleteEvent(req.params.eventId).then(function() {
 		deleteComments(req.params.eventId).then(function() {
 			deleteActivities(req.params.eventId).then(function() {
-				findInvites(req.params.eventId).then(function(retrievedInvites) {
-					removeInvitesFromUsers(retrievedInvites).then(function() {
-						deleteInvites(req.params.eventId).then(function() {
-							removeAttendingFromUsers(req.params.eventId).then(function() {
-								res.send(200, "Event and all related items deleted successfully.")
-							}, function(err) {
-								res.send(200, "Event deleted but failed to remove users from attending.");
-							});
-						}, function(err) {
-							res.send(200, "Event deleted but failed to delete invitations.");
-						});
+				deleteInvites(req.params.eventId).then(function() {
+					removeEventFromUsers(req.params.eventId).then(function() {
+						res.send(200, "Event and all related items deleted successfully.")
 					}, function(err) {
-						res.send(200, "Event deleted but failed to remove invitations from users.");
+						res.send(200, "Event deleted but failed to remove users from attending.");
 					});
 				}, function(err) {
 					res.send(200, "Event deleted but failed to find invitations.");
@@ -1326,6 +1284,24 @@ exports.inviteUsers = function(req, res) {
 
 		return deferred.promise;
 	},
+	updateUsers = function(recipientIds, eventId) {
+		var deferred = Q.defer();
+
+		// update each user that has been invited to the event
+		for(var i = 0; i < recipientIds.length; i++) {
+			(function(i) {
+				User.findOneAndUpdate({ _id: recipientIds[i] }, { $addToSet: { invites: eventId } })
+				.exec(function(err, updatedUser) {
+		         	if(err) {
+		         		deferred.reject(err.message);
+		         	}
+			    });
+		    })(i);
+		}
+		deferred.resolve();
+
+		return deferred.promise;
+	},
 	createActivities = function(createdInvites) {
 		var deferred = Q.defer(),
 			activities = [],
@@ -1360,10 +1336,14 @@ exports.inviteUsers = function(req, res) {
 	};
 
 	createInvites(req.params.eventId, req.params.senderId, req.body.recipientIds).then(function(createdInvites) {
-		createActivities(createdInvites).then(function(createdActivities) {
-			res.send(200, "Invites and activities all successfully created.");
+		updateUsers(req.body.recipientIds, req.params.eventId).then(function() {
+			createActivities(createdInvites).then(function(createdActivities) {
+				res.send(200, "Invites and activities all successfully created.");
+			}, function(err) {
+				res.send(200, "Invites created but failed to create activities.");
+			});
 		}, function(err) {
-			res.send(200, "Invites created but failed to create activities.");
+			res.send(200, "Invites created but failed to update users.");
 		});
 	}, function(err) {
 		res.send(500, err);

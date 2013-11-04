@@ -758,7 +758,12 @@ exports.addFacebookSubscriptions = function(req, res) {
 	findSubscriptions = function(fbIds) {
 		var deferred = Q.defer();
 
-		User.find({ $or: [{ 'facebook.id': fbIds }, { 'facebook.managedPages.id': fbIds }]})
+		User.find({ 
+			$or: [
+				{ 'facebook.id': fbIds }, 
+				{ 'facebook.managedPages.id': fbIds }
+			]
+		})
 		.select('_id')
 		.exec(function (err, retrievedUsers) {
 	        if (err || !retrievedUsers) {
