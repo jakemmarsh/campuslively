@@ -85,7 +85,7 @@ define(['./index'], function (controllers) {
 		    			$scope.locationMap.panTo(new google.maps.LatLng($scope.venues[i].location.lat, $scope.venues[i].location.lng));
 		    			$scope.event.loc = {
 			    			type: 'Point',
-			    			coordinates: [$scope.venues[i].location.lat.toFixed(2), $scope.venues[i].location.lng.toFixed(2)]
+			    			coordinates: [$scope.venues[i].location.lng.toFixed(2), $scope.venues[i].location.lat.toFixed(2)]
 		    			};
 		    			if(locationMarker) {
 		    				locationMarker.close();
@@ -122,7 +122,7 @@ define(['./index'], function (controllers) {
 			    			$scope.locationMap.panTo(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
 			    			$scope.event.loc = {
 			    				type: 'Point',
-				    			coordinates: [data.results[0].geometry.location.lat.toFixed(2), data.results[0].geometry.location.lng.toFixed(2)]
+				    			coordinates: [data.results[0].geometry.location.lng.toFixed(2), data.results[0].geometry.location.lat.toFixed(2)]
 			    			};
 			    			if(locationMarker) {
 			    				locationMarker.close();

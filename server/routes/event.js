@@ -657,7 +657,8 @@ exports.getEventsByLocation = function(req, res) {
 						$geometry: {
 							type: "Point",
 							coordinates: [lng, lat]
-						}
+						},
+						$maxDistance: 8047 // five miles
 					}
 				}, 
 				$or: [
