@@ -1255,7 +1255,23 @@ exports.deleteEvent = function(req, res) {
 };
 
 exports.inviteUsers = function(req, res) {
-	var createInvites = function(eventId, senderId, recipientIds) {
+	var getEvent = function(eventId) {
+		var deferred = Q.defer();
+
+		Event.findOne({ _id: eventId })
+		.select('creator privacy')
+		.exec(function(err, retrievedEvent) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(retrievedEvent);
+         	}
+	    });
+
+		return deferred.promise;
+	},
+	createInvites = function(eventId, senderId, recipientIds) {
 		var deferred = Q.defer(),
 			invites = [],
 			createdInvites = [];
@@ -1302,7 +1318,7 @@ exports.inviteUsers = function(req, res) {
 
 		return deferred.promise;
 	},
-	createActivities = function(createdInvites) {
+	createActivities = function(createdInvites, retrievedEvent) {
 		var deferred = Q.defer(),
 			activities = [],
 			createdActivities = [];
@@ -1313,8 +1329,8 @@ exports.inviteUsers = function(req, res) {
 				recipient: createdInvites[i].recipient,
 				activity: 'invited',
 				event: createdInvites[i].event,
-				eventPrivacy: null,
-				eventCreator: null
+				eventPrivacy: retrievedEvent.privacy,
+				eventCreator: retrievedEvent.creator
 			};
 
 			activities.push(activity);
@@ -1336,14 +1352,18 @@ exports.inviteUsers = function(req, res) {
 	};
 
 	createInvites(req.params.eventId, req.params.senderId, req.body.recipientIds).then(function(createdInvites) {
-		updateUsers(req.body.recipientIds, req.params.eventId).then(function() {
-			createActivities(createdInvites).then(function(createdActivities) {
-				res.send(200, "Invites and activities all successfully created.");
+		getEvent(req.params.eventId).then(function(retrievedEvent) {
+			updateUsers(req.body.recipientIds, req.params.eventId).then(function() {
+				createActivities(createdInvites, retrievedEvent).then(function(createdActivities) {
+					res.send(200, "Invites and activities all successfully created.");
+				}, function(err) {
+					res.send(200, "Invites created but failed to create activities.");
+				});
 			}, function(err) {
-				res.send(200, "Invites created but failed to create activities.");
+				res.send(200, "Invites created but failed to update users.");
 			});
 		}, function(err) {
-			res.send(200, "Invites created but failed to update users.");
+			res.send(200, "Invites created but failed to retrieve event or create activities.");
 		});
 	}, function(err) {
 		res.send(500, err);
