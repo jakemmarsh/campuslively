@@ -1,4 +1,8 @@
 @mixin circle-img($size) {
+	box-sizing: content-box;
+    -ms-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;
@@ -7,6 +11,10 @@
 	width: $size;
 	@include corners($size, $size, $size, $size);
 	position: relative;
+	border: $size/18 solid $white;
+	-moz-box-shadow: 0px 0px 0px 1px $border-grey;
+	-webkit-box-shadow: 0px 0px 0px 1px $border-grey;
+	box-shadow: 0px 0px 0px 1px $border-grey;
 }
 
 .user-img-modal {
@@ -62,7 +70,7 @@
 	}
 
 .user-img-profile {
-	@include circle-img(90px);
+	@include circle-img(85px);
 }
 
 .user-img-settings {
@@ -83,4 +91,8 @@
 .school-img {
 	@include circle-img(100px);
 	border: 2px solid $border-grey;
+}
+
+.highlight {
+	background: lighten($secondary, 35);
 }
