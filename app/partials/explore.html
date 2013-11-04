@@ -19,7 +19,7 @@
 		<h1 class="flush blue">No events have been posted for your school yet!</h1>
 		<a href="/post" class="btn nudge--top">Be the First</a>
 	</div>
-	<div class="table soft-half--ends full-width">
+	<div class="table soft-half--ends full-width" data-ng-hide="!loading && !events.length">
 		<div class="td one-half vertical-align-middle">
 			<div class="input-prepend">
 				<div class="icon">
@@ -41,7 +41,7 @@
 			</div>
 		</div>
 	</div>
-	<hr />
+	<hr data-ng-hide="!loading && !events.length" />
 	<div class="text-center" data-ng-show="!loading && !filteredEvents.length && events.length">
 		<h2 class="flush blue" data-ng-show="events.length >= 20">No events match your search. Have you tried loading more?</h2>
 		<h2 class="flush blue" data-ng-show="events.length < 20">No events match your search.</h2>
@@ -125,7 +125,7 @@
 	<div class="text-center" data-ng-show="showLocationError">
 		<h1 class="flush blue">We were unable to determine your location</h1>
 	</div>
-	<div class="table soft-half--ends full-width">
+	<div class="table soft-half--ends full-width" data-ng-hide="!loading && !events.length">
 		<div class="td one-half vertical-align-middle">
 			<div class="input-prepend">
 				<div class="icon">
@@ -147,7 +147,7 @@
 			</div>
 		</div>
 	</div>
-	<hr />
+	<hr data-ng-hide="!loading && !events.length" />
 	<div class="line fade nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
