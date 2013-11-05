@@ -760,8 +760,14 @@ exports.addFacebookSubscriptions = function(req, res) {
 
 		User.find({ 
 			$or: [
-				{ 'facebook.id': fbIds }, 
-				{ 'facebook.managedPages.id': fbIds }
+				{ 'facebook.id': {
+						$in: fbIds
+					} 
+				}, 
+				{ 'facebook.managedPages.id': {
+						$in: fbIds
+				   } 
+				}
 			]
 		})
 		.select('_id')
@@ -785,7 +791,7 @@ exports.addFacebookSubscriptions = function(req, res) {
                 { path: 'school' }
             ];
 
-		User.findOneAndUpdate({ _id: userId }, { $addToSet: { subscriptions: { $each: newSubscriptions } } })
+		User.findOneAndUpdate({ _id: userId }, { $addToSet: { subscriptions: { $each: newSubscriptions } }, $set: { 'facebook.lastUpdated': new Date().toISOString() } })
 		.populate(populateObj)
 		.exec(function(err, updatedUser) {
 			if(err) {

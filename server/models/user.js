@@ -74,7 +74,8 @@ var userSchema = new mongoose.Schema({
         linked: {
             type: Boolean,
             default: false
-        }
+        },
+        lastUpdated: Date
     },
 });
 
