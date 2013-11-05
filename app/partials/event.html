@@ -170,14 +170,14 @@
     </div>
     <div class="modal-body">
     	<h3 class="caps flush--top nudge-half--bottom" data-ng-show="items.length">Select people to invite:</h3>
-    	<div data-ng-repeat="user in items | orderBy: 'displayName'" class="inline-block islet" data-ng-class="{highlight: isInvitee(user._id)}">
+    	<input type="text" class="full-width nudge-half--bottom" placeholder="Search users..." data-ng-model="searchUsers" data-ng-show="items.length" />
+    	<div data-ng-repeat="user in filteredItems = (items | filter:searchUsers | orderBy: 'displayName')" class="inline-block islet" data-ng-class="{highlight: isInvitee(user._id)}">
     		<div class="user-img-modal" data-ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}">
 				<a href data-ng-click="toggleInvitee(user._id)" data-tooltip="{{user.displayName}}" data-tooltip-placement="bottom"></a>
 			</div>
 		</div>
-		<h2 class="green text-center" data-ng-show="!items.length">
-			No users left to invite!
-		</h2>
+		<h2 class="green text-center" data-ng-show="!items.length">No users left to invite!</h2>
+		<h2 class="blue text-center" data-ng-show="!filteredItems.length">No users match your search.</h2>
     </div>
     <div class="modal-footer">
         <button class="btn" data-ng-click="sendInvites()" data-ng-disabled="!invitees.length">Send Invites</button>
