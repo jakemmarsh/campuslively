@@ -18,9 +18,17 @@ define([
         }); 
     }]);
 
-    app.run(['$rootScope', '$location', 'authService', 'localStorageService', '$FB', function ($rootScope, $location, authService, localStorageService, $FB) {
+    app.run(['$rootScope', '$location', 'authService', 'localStorageService', '$FB', 'userService', '$q', function ($rootScope, $location, authService, localStorageService, $FB, userService, $q) {
         if(localStorageService.get('user')) {
+            // temporarily use user from cookie/local storage
             $rootScope.user = localStorageService.get('user');
+
+            // update user from API to get any changes
+            userService.getUserById($rootScope.user._id).then(function(data) {
+                $rootScope.user = data;
+                localStorageService.add('user', data);
+            }, function(err, status) {
+            });
         }
 
         $rootScope.$on('event:auth-loginConfirmed', function() {
@@ -32,6 +40,7 @@ define([
             else {
                 $location.path('/feed');
             }
+            checkFbStatusAndSubscriptions();
         });
 
         $rootScope.$on('event:auth-loginRequired', function() {
@@ -85,7 +94,54 @@ define([
         };
 
         // check FB status on app load
-        $rootScope.updateFbStatus();
+        // update user subscriptions if a week has passed since lastUpdated
+        function checkFbStatusAndSubscriptions() {
+            $FB.getLoginStatus(function (res) {
+                $rootScope.fbStatus = res;
+
+                if($rootScope.fbStatus.status == 'connected') {
+                    var lastUpdated = new Date($rootScope.user.facebook.lastUpdated),
+                        oneWeekAgo = new Date(),
+                        fbSubscriptions = [],
+                        updateParams = {};
+
+                    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+                    if(lastUpdated <= oneWeekAgo) {
+                        $q.all([
+                            $FB.api('/me/likes', {limit: 9999, fields: 'id'}),
+                            $FB.api('/me/subscribedto', {limit: 9999, fields: 'id'})
+                        ])
+                        .then(function (rsvList) {
+                            // result of api('/me/likes')
+                            for(var i = 0; i < rsvList[0].data.length; i++) {
+                                fbSubscriptions.push(rsvList[0].data[i].id);
+                            }
+
+                            // result of api('/me/subscribedto')
+                            for(var j = 0; j < rsvList[1].data.length; j++) {
+                                fbSubscriptions.push(rsvList[1].data[j].id);
+                            }
+                            updateParams.facebook = {};
+                            updateParams.facebook.subscriptions = fbSubscriptions;
+                            userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+                                userService.addFacebookSubscriptions($rootScope.user._id).then(function (data, status) {
+                                    $rootScope.user = data;
+                                    localStorageService.add('user', data);
+                                },
+                                function (errorMessage, status) {
+                                });
+                            },
+                            function (errorMessage, status) {
+                            });
+                        });
+                    }
+                }
+            });
+        };
+        if($rootScope.user) {
+            checkFbStatusAndSubscriptions();
+        }
 
         // get latest FB details
         $rootScope.updateApiMe = function() {
