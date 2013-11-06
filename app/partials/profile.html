@@ -137,10 +137,10 @@
 	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="moreToLoad && !loadingMore && !loading">Load More</a>
 	<a href class="btn full-width text-center" data-ng-show="loadingMore && !loading">Loading more...</a>
 	<div class="text-center" data-ng-hide="events.length">
-		<h1 class="flush blue" data-ng-show="profile._id !== user._id"><span data-ng-bind="profile.displayName"></span> has not posted any events!</h1>
+		<h1 class="flush blue" data-ng-show="profile._id !== user._id"><span data-ng-bind="profile.displayName"></span> has no upcoming events yet!</h1>
 		<div data-ng-show="profile._id == user._id">
-			<h1 class="flush blue">You haven't posted any events!</h1>
-			<a href="/post" class="btn nudge--top">Create Event</a>
+			<h1 class="flush blue">You haven't posted any upcoming events yet!</h1>
+			<a href="/post" class="btn nudge--top">Post Event</a>
 		</div>
 	</div>
 </div>

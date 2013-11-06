@@ -20,8 +20,13 @@
 			<h1 class="flush blue">Loading events...</h1>
 		</div>
 	</div>
-	<div data-ng-hide="dayEvents.length || loadingDayEvents || !showDay" class="text-center soft--ends">
-		<h1 class="blue nudge--ends">No events have been posted for your school on {{ selectedDay | readableDate}}.</h1>
+	<div data-ng-hide="currentView == 'school' || dayEvents.length || loadingDayEvents || !showDay" class="text-center soft--ends">
+		<h1 class="blue nudge--ends">There are no upcoming events near you on {{ selectedDay | readableDate}} yet!</h1>
+		<a href="/post" class="btn nudge--top">Post One</a>
+	</div>
+	<div data-ng-hide="currentView == 'nearby' || dayEvents.length || loadingDayEvents || !showDay" class="text-center soft--ends">
+		<h1 class="blue nudge--ends">There are no upcoming events for your school on {{ selectedDay | readableDate}} yet!</h1>
+		<a href="/post" class="btn nudge--top">Post One</a>
 	</div>
 	<div data-ng-show="showDay && dayEvents.length && !loadingDayEvents" id="dayEvents">
 		<div class="table full-width">

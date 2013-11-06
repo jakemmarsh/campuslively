@@ -142,7 +142,10 @@ exports.getEventsBySchool = function(req, res) {
 			commentPopulateObj = [
 				{ path: 'creator' },
 				{ path: 'subComments.creator'}
-			];
+			],
+			today = new Date();
+
+		today.setHours(0,0,0,0);
 
 		if(req.params.limit) {
 			Event.find({ 
@@ -152,7 +155,8 @@ exports.getEventsBySchool = function(req, res) {
 					{ invited: userId }, 
 					{ attending: userId }, 
 					{ creator: userId }
-				] 
+				],
+				startDate: { $gte: today } 
 			})
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
@@ -181,7 +185,8 @@ exports.getEventsBySchool = function(req, res) {
 					{ invited: userId }, 
 					{ attending: userId }, 
 					{ creator: userId }
-				] 
+				],
+				startDate: { $gte: today }
 			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
@@ -235,7 +240,7 @@ exports.getEventsBySchoolNewer = function(req, res) {
 				{ invited: userId }, 
 				{ attending: userId }, 
 				{ creator: userId }
-			] 
+			]
 		})
 		.sort({ _id: -1 })
 		.populate(eventPopulateObj)
@@ -458,7 +463,10 @@ exports.getEventsByUser = function(req, res) {
 			commentPopulateObj = [
 				{ path: 'creator' },
 				{ path: 'subComments.creator'}
-			];
+			],
+			today = new Date();
+
+		today.setHours(0,0,0,0);
 
 		if(req.params.limit) {
 			Event.find({ 
@@ -468,7 +476,8 @@ exports.getEventsByUser = function(req, res) {
 					{ invited: userId }, 
 					{ attending: userId }, 
 					{ creator: userId }
-				] 
+				],
+				startDate: { $gt: today }
 			})
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
@@ -541,7 +550,10 @@ exports.getEventsByUserNewer = function(req, res) {
 			commentPopulateObj = [
 				{ path: 'creator' },
 				{ path: 'subComments.creator'}
-			];
+			],
+			today = new Date();
+
+		today.setHours(0,0,0,0);
 
 		Event.find({ 
 			creator: profileId, 
@@ -551,7 +563,8 @@ exports.getEventsByUserNewer = function(req, res) {
 				{ invited: userId }, 
 				{ attending: userId }, 
 				{ creator: userId }
-			] 
+			],
+			startDate: { $gt: today }
 		})
 		.sort({ _id: -1 })
 		.populate(eventPopulateObj)
@@ -594,7 +607,10 @@ exports.getEventsByUserOlder = function(req, res) {
 			commentPopulateObj = [
 				{ path: 'creator' },
 				{ path: 'subComments.creator'}
-			];
+			],
+			today = new Date();
+
+		today.setHours(0,0,0,0);
 
 		Event.find({ 
 			creator: profileId, 
@@ -604,7 +620,8 @@ exports.getEventsByUserOlder = function(req, res) {
 				{ invited: userId }, 
 				{ attending: userId }, 
 				{ creator: userId }
-			] 
+			],
+			startDate: { $gt: today }
 		})
 		.sort({ _id: -1 })
 		.limit(limit)
@@ -648,7 +665,10 @@ exports.getEventsByLocation = function(req, res) {
 			commentPopulateObj = [
 				{ path: 'creator' },
 				{ path: 'subComments.creator'}
-			];
+			],
+			today = new Date();
+
+		today.setHours(0,0,0,0);
 
 		if(req.params.limit) {
 			Event.find({ 
@@ -666,7 +686,8 @@ exports.getEventsByLocation = function(req, res) {
 					{ invited: userId }, 
 					{ attending: userId }, 
 					{ creator: userId }
-				]
+				],
+				startDate: { $gt: today }
 			})
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
@@ -690,14 +711,21 @@ exports.getEventsByLocation = function(req, res) {
 	    else {
 			Event.find({
 				loc : {
-					$near : locationPoint
+					$near: { 
+						$geometry: {
+							type: "Point",
+							coordinates: [lng, lat]
+						},
+						$maxDistance: 8047 // five miles
+					}
 				}, 
 				$or: [
 					{ privacy: 'public' }, 
 					{ invited: userId }, 
 					{ attending: userId }, 
 					{ creator: userId }
-				] 
+				],
+				startDate: { $gt: today }
 			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
@@ -745,7 +773,10 @@ exports.getEventsByLocationNewer = function(req, res) {
 			locationPoint = {
 					type: 'Point',
 					coordinates: [lat, lng]
-			};
+			},
+			today = new Date();
+
+		today.setHours(0,0,0,0);
 
 		Event.find({ 
 			loc: { 
@@ -759,7 +790,8 @@ exports.getEventsByLocationNewer = function(req, res) {
 				{ invited: userId }, 
 				{ attending: userId }, 
 				{ creator: userId }
-			] 
+			],
+			startDate: { $gt: today }
 		})
 		.sort({ _id: -1 })
 		.populate(eventPopulateObj)
@@ -806,7 +838,10 @@ exports.getEventsByLocationOlder = function(req, res) {
 			locationPoint = {
 					type: 'Point',
 					coordinates: [lat, lng]
-			};
+			},
+			today = new Date();
+
+		today.setHours(0,0,0,0);
 
 		Event.find({ 
 			loc: { $near: locationPoint }, 
@@ -816,7 +851,8 @@ exports.getEventsByLocationOlder = function(req, res) {
 				{ invited: userId }, 
 				{ attending: userId }, 
 				{ creator: userId }
-			] 
+			],
+			startDate: { $gt: today }
 		})
 		.sort({ _id: -1 })
 		.limit(limit)

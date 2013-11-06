@@ -16,8 +16,8 @@
 </div>
 <div class="container soft-half--ends" data-ng-show="currentView == 'school'">
 	<div class="text-center" data-ng-show="!loading && !events.length">
-		<h1 class="flush blue">No events have been posted for your school yet!</h1>
-		<a href="/post" class="btn nudge--top">Be the First</a>
+		<h1 class="flush blue">There are no upcoming events for your school yet!</h1>
+		<a href="/post" class="btn nudge--top">Post One</a>
 	</div>
 	<div class="table soft-half--ends full-width" data-ng-hide="!loading && !events.length">
 		<div class="td one-half vertical-align-middle">
@@ -119,8 +119,8 @@
 </div>
 <div class="container soft-half--ends" data-ng-show="currentView == 'nearby'">
 	<div class="text-center" data-ng-show="!loading && !events.length">
-		<h1 class="flush blue">No events have been posted near you yet!</h1>
-		<a href="/post" class="btn nudge--top">Be the First</a>
+		<h1 class="flush blue">There are no upcoming events near you yet!</h1>
+		<a href="/post" class="btn nudge--top">Post One</a>
 	</div>
 	<div class="text-center" data-ng-show="showLocationError">
 		<h1 class="flush blue">We were unable to determine your location</h1>
