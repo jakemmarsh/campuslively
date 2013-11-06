@@ -18,7 +18,7 @@ define(['./index'], function (controllers) {
 			$scope.loading = true;
 			$scope.events = [];
 			if($scope.currentView == 'school') {
-				eventService.getEventsBySchool($rootScope.user._id, $rootScope.user.school._id, 20).then(function (data, status) {
+				eventService.getEventsBySchool($rootScope.user.school._id, 20).then(function (data, status) {
 					$scope.events = data;
 					$scope.loading = false;
 					if(data.length == 20) {
@@ -43,7 +43,7 @@ define(['./index'], function (controllers) {
 			            $rootScope.userPosition = data;
 			            $scope.gettingPosition = false;
 			            $scope.loading = true;
-			            eventService.getEventsByLocation($rootScope.user._id, $rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
+			            eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
 							$scope.events = data;
 							$scope.loading = false;
 							if(data.length == 20) {
@@ -66,7 +66,7 @@ define(['./index'], function (controllers) {
 			        });
 				}
 				else {
-					eventService.getEventsByLocation($rootScope.user._id, $rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
+					eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
 						$scope.events = data;
 						$scope.loading = false;
 						if(data.length == 20) {
@@ -89,7 +89,7 @@ define(['./index'], function (controllers) {
 
 		$scope.loadNew = function() {
 			if($scope.currentView == 'school') {
-	            eventService.getEventsBySchoolNewer($rootScope.user._id, $rootScope.user.school._id, newestId).then(function (data) {
+	            eventService.getEventsBySchoolNewer($rootScope.user.school._id, newestId).then(function (data) {
 	                if(data.length > 0) {
 	                    for(var i = 0; i < data.length; i++) {
 	                        $scope.events.unshift(data[i]);
@@ -101,7 +101,7 @@ define(['./index'], function (controllers) {
 	            });
         	}
         	else if($scope.currentView == 'nearby') {
-        		eventService.getEventsByLocationNewer($rootScope.user._id, $rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), newestId).then(function (data) {
+        		eventService.getEventsByLocationNewer($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), newestId).then(function (data) {
 	                if(data.length > 0) {
 	                    for(var i = 0; i < data.length; i++) {
 	                        $scope.events.unshift(data[i]);
@@ -186,7 +186,7 @@ define(['./index'], function (controllers) {
 		$scope.loadMore = function() {
 			$scope.loadingMore = true;
 			if($scope.currentView == 'school') {
-				eventService.getEventsBySchoolOlder($rootScope.user._id, $rootScope.user.school._id, oldestId, 20).then(function (data, status) {
+				eventService.getEventsBySchoolOlder($rootScope.user.school._id, oldestId, 20).then(function (data, status) {
 					if(data.length < 20) {
 	                    $scope.moreToLoadSchool = false;
 	                }
@@ -202,7 +202,7 @@ define(['./index'], function (controllers) {
 				});
 			}
 			else if($scope.currentView == 'nearby') {
-				eventService.getEventsByLocationOlder($rootScope.user._id, $rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), oldestId, 20).then(function (data, status) {
+				eventService.getEventsByLocationOlder($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), oldestId, 20).then(function (data, status) {
 					if(data.length < 20) {
 	                    $scope.moreToLoadNearby = false;
 	                }

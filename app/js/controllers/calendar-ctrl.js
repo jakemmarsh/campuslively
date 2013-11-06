@@ -24,7 +24,7 @@ define(['./index'], function (controllers) {
 
         $scope.showDay = false;
         if($scope.currentView == 'school') {
-          eventService.getEventsBySchool($rootScope.user._id, $rootScope.user.school._id).then(function (data, status) {
+          eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
             for(var i = 0; i < data.length; i++) {
               var event = {
                 title: data[i].title,
@@ -53,7 +53,7 @@ define(['./index'], function (controllers) {
           if(!$rootScope.userPosition) {
             locationService.getGeo().then(function (data) {
               $rootScope.userPosition = data;
-              eventService.getEventsByLocation($rootScope.user._id, $rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
+              eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
                 for(var i = 0; i < data.length; i++) {
                   var event = {
                     title: data[i].title,
@@ -82,7 +82,7 @@ define(['./index'], function (controllers) {
             });
           }
           else {
-            eventService.getEventsByLocation($rootScope.user._id, $rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
+            eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
               for(var i = 0; i < data.length; i++) {
                 var event = {
                   title: data[i].title,
@@ -116,7 +116,7 @@ define(['./index'], function (controllers) {
                 $scope.loadingDayEvents = true;
                 $scope.dayEvents = [];
                 if($scope.currentView == 'school') {
-                  eventService.getEventsBySchoolAndDay($rootScope.user._id, $rootScope.user.school._id, $scope.selectedDay).then(function (data, status) {
+                  eventService.getEventsBySchoolAndDay($rootScope.user.school._id, $scope.selectedDay).then(function (data, status) {
                     $scope.loadingDayEvents = false;
                     $scope.dayEvents = data;
                     $scope.showDay = true;
@@ -134,7 +134,7 @@ define(['./index'], function (controllers) {
                   });
                 }
                 else if($scope.currentView == 'nearby') {
-                  eventService.getEventsByLocationAndDay($rootScope.user._id, $rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.selectedDay).then(function (data, status) {
+                  eventService.getEventsByLocationAndDay($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.selectedDay).then(function (data, status) {
                     $scope.loadingDayEvents = false;
                     $scope.dayEvents = data;
                     $scope.showDay = true;

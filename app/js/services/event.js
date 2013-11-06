@@ -16,19 +16,19 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsBySchool: function(userId, schoolId, limit) {
+		getEventsBySchool: function(schoolId, limit) {
 			var deferred = $q.defer(),
 				limit = (typeof limit === "undefined") ? null : limit;
 
 			if(limit) {
-				$http.get(this.apiPath + 'user/' + userId + '/school/' + schoolId + '/limit/' + limit).success(function(data, status) {
+				$http.get(this.apiPath + 'school/' + schoolId + '/limit/' + limit).success(function(data, status) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
 					deferred.reject(err);
 				});
 			}
 			else {
-				$http.get(this.apiPath + 'user/' + userId + '/school/' + schoolId).success(function(data, status) {
+				$http.get(this.apiPath + 'school/' + schoolId).success(function(data, status) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
 					deferred.reject(err);
@@ -37,10 +37,10 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsBySchoolNewer: function(userId, schoolId, newestId) {
+		getEventsBySchoolNewer: function(schoolId, newestId) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + userId + '/school/' + schoolId + '/newerThan/' + newestId).success(function(data, status) {
+			$http.get(this.apiPath + 'school/' + schoolId + '/newerThan/' + newestId).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -48,10 +48,10 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsBySchoolOlder: function(userId, schoolId, oldestId, limit) {
+		getEventsBySchoolOlder: function(schoolId, oldestId, limit) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + userId + '/school/' + schoolId + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
+			$http.get(this.apiPath + 'school/' + schoolId + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -59,19 +59,19 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsByLocation: function(userId, lat, lng, limit) {
+		getEventsByLocation: function(lat, lng, limit) {
 			var deferred = $q.defer(),
 				limit = (typeof limit === "undefined") ? null : limit;
 
 			if(limit) {
-				$http.get(this.apiPath + 'user/' + userId + '/near/' + lat + '/' + lng + '/limit/' + limit).success(function(data, status) {
+				$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/limit/' + limit).success(function(data, status) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
 					deferred.reject(err);
 				});
 			}
 			else {
-				$http.get(this.apiPath + 'user/' + userId + '/near/' + lat + '/' + lng).success(function(data, status) {
+				$http.get(this.apiPath + 'near/' + lat + '/' + lng).success(function(data, status) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
 					deferred.reject(err);
@@ -80,10 +80,10 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsByLocationNewer: function(userId, lat, lng, newestId) {
+		getEventsByLocationNewer: function(lat, lng, newestId) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + userId + '/near/' + lat + '/' + lng + '/newerThan/' + newestId).success(function(data, status) {
+			$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/newerThan/' + newestId).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -91,10 +91,10 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsByLocationOlder: function(userId, lat, lng, oldestId, limit) {
+		getEventsByLocationOlder: function(lat, lng, oldestId, limit) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + userId + '/near/' + lat + '/' + lng + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
+			$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -102,10 +102,10 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsBySchoolAndDay: function(userId, schoolId, date) {
+		getEventsBySchoolAndDay: function(schoolId, date) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + userId + '/school/' + schoolId + '/day/' + date).success(function(data, status) {
+			$http.get(this.apiPath + 'school/' + schoolId + '/day/' + date).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -113,10 +113,10 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsByLocationAndDay: function(userId, lat, lng, date) {
+		getEventsByLocationAndDay: function(lat, lng, date) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + userId + '/lat/' + lat + '/lng/' + lng + '/day/' + date).success(function(data, status) {
+			$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/day/' + date).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -124,19 +124,19 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsByUser: function(userId, profileId, limit) {
+		getEventsByUser: function(profileId, limit) {
 			var deferred = $q.defer(),
 				limit = (typeof limit === "undefined") ? null : limit;
 
 			if(limit) {
-				$http.get(this.apiPath + 'user/' + userId + '/profile/' + profileId + '/limit/' + limit).success(function(data, status) {
+				$http.get(this.apiPath + 'profile/' + profileId + '/limit/' + limit).success(function(data, status) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
 					deferred.reject(err);
 				});
 			}
 			else {
-				$http.get(this.apiPath + 'user/' + userId + '/profile/' + profileId).success(function(data, status) {
+				$http.get(this.apiPath + 'profile/' + profileId).success(function(data, status) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
 					deferred.reject(err);
@@ -145,10 +145,10 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
-		getEventsByUserOlder: function(userId, profileId, oldestId, limit) {
+		getEventsByUserOlder: function(profileId, oldestId, limit) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + userId + '/profile/' + profileId + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
+			$http.get(this.apiPath + 'profile/' + profileId + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);

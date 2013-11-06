@@ -210,7 +210,7 @@ exports.getEventsBySchool = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.schoolId).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.schoolId).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -263,7 +263,7 @@ exports.getEventsBySchoolNewer = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.schoolId, req.params.newestId).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.schoolId, req.params.newestId).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -317,7 +317,7 @@ exports.getEventsBySchoolOlder = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.schoolId, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.schoolId, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -378,7 +378,7 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.schoolId, req.params.date).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.schoolId, req.params.date).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -443,7 +443,7 @@ exports.getEventsByLocationAndDay = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.lat, req.params.lng, req.params.date).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.lat, req.params.lng, req.params.date).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -530,7 +530,7 @@ exports.getEventsByUser = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.profileId).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.profileId).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -587,7 +587,7 @@ exports.getEventsByUserNewer = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.profileId, req.params.newestId).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.profileId, req.params.newestId).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -645,7 +645,7 @@ exports.getEventsByUserOlder = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.profileId, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.profileId, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -749,7 +749,7 @@ exports.getEventsByLocation = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.lat, req.params.lng).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.lat, req.params.lng).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -814,7 +814,7 @@ exports.getEventsByLocationNewer = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.lat, req.params.lng, req.params.newestId).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.lat, req.params.lng, req.params.newestId).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
@@ -876,7 +876,7 @@ exports.getEventsByLocationOlder = function(req, res) {
 		return deferred.promise;
 	};
 
-	getEvents(req.params.userId, req.params.lat, req.params.lng, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
+	getEvents(req.session.user._id, req.params.lat, req.params.lng, req.params.oldestId, req.params.limit).then(function(retrievedEvents) {
 		res.json(200, retrievedEvents);
 	}, function(err) {
 		res.send(500, err);
