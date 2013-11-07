@@ -1,24 +1,28 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('innerCtrl', ['$scope', '$rootScope', 'inviteService', function ($scope, $rootScope, inviteService) {
+    	var gotInvites = false;
         $scope.notifications = [];
 
-        if($rootScope.user) {
-        	inviteService.getUnreadInvites($rootScope.user._id).then(function (data) {
-    			for(var i = 0; i < data.length; i++) {
-    				var notification = {
-    					type: 'invite',
-    					msg: '<a href="/profile/'+data[i].sender.username+'">'+data[i].sender.displayName+'</a> '+
-    						 'invited you to <a href="/event/'+data[i].event._id+'">'+data[i].event.title+'</a>.',
-    					inviteId: data[i]._id
-    				};
+        $rootScope.$watch('user', function() {
+        	if($rootScope.user && !gotInvites) {
+        		inviteService.getUnreadInvites($rootScope.user._id).then(function (data) {
+	    			for(var i = 0; i < data.length; i++) {
+	    				var notification = {
+	    					type: 'invite',
+	    					msg: '<a href="/profile/'+data[i].sender.username+'">'+data[i].sender.displayName+'</a> '+
+	    						 'invited you to <a href="/event/'+data[i].event._id+'">'+data[i].event.title+'</a>.',
+	    					inviteId: data[i]._id
+	    				};
 
-    				$scope.notifications.push(notification);
-    			}
-	        },
-	        function (errorMessage) {
-	        });
-        }
+	    				$scope.notifications.push(notification);
+	    				gotInvites = true;
+	    			}
+		        },
+		        function (errorMessage) {
+		        });
+        	}
+        });
 
 		$scope.$watch('fbStatus', function() {
 			if($rootScope.user && $rootScope.fbStatus && $rootScope.user.facebook.linked == false) {
