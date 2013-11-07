@@ -37,7 +37,7 @@
 				<div class="td one-half vertical-align-middle text-right">
 					<div class="dropdown">
 						<a href class="dropdown-toggle">
-							{{ currentSort.label }} <i class="icon-chevron-down muted weight--normal"></i>
+							{{ currentSort.label }} <i class="fa fa-chevron-down muted weight--normal"></i>
 						</a>
 						<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
 							<li data-ng-repeat="option in sortOptions">
@@ -60,8 +60,8 @@
 					<div class="event-header soft-half--sides">
 						<div class="line">
 							<div class="unit one-half">
-								<i class="beta icon-circle nudge-half--right float-left" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
-								<i class="beta icon-circle-blank nudge-half--right float-left" data-ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
+								<i class="beta fa fa-circle nudge-half--right float-left" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
+								<i class="beta fa fa-circle-o nudge-half--right float-left" data-ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
 								<h2 class="flush">
 									<a data-ng-href="/event/{{event._id}}">
 										{{ event.title }}
@@ -80,13 +80,13 @@
 							<div class="unit full-width last-unit">
 								<span class="delta weight--bold">
 									<span data-ng-show="event.locationName" class="nudge--right">
-										<i class="icon-map-marker muted"></i> <span data-ng-bind="event.locationName"></span> 
+										<i class="fa fa-map-marker muted"></i> <span data-ng-bind="event.locationName"></span> 
 									</span>
 									<span data-ng-show="event.startDate" class="nudge--right">
-										<i class="icon-calendar-empty muted"></i> <span>{{ event.startDate | readableDate }}</span>
+										<i class="fa fa-calendar-o muted"></i> <span>{{ event.startDate | readableDate }}</span>
 									</span>
 									<span data-ng-show="event.startTime">
-										<i class="icon-time muted"></i> <span data-ng-bind="event.startTime"></span>
+										<i class="fa fa-clock-o muted"></i> <span data-ng-bind="event.startTime"></span>
 									</span>
 								</span>
 							</div>
@@ -104,11 +104,11 @@
 							<div class="td one-fourth text-right soft-half--right vertical-align-middle">
 								<div class="action-buttons nudge-half--right">
 									<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(event)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
-									<a href data-ng-click="rsvpToEvent(event._id)" data-ng-hide="isAttending(event)"><i class="icon-thumbs-up"></i> RSVP</a>
-									<a href data-ng-click="unRsvpToEvent(event._id)" data-ng-show="isAttending(event)"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
+									<a href data-ng-click="rsvpToEvent(event._id)" data-ng-hide="isAttending(event)"><i class="fa fa-thumbs-up"></i> RSVP</a>
+									<a href data-ng-click="unRsvpToEvent(event._id)" data-ng-show="isAttending(event)"><i class="fa fa-thumbs-p-up"></i> Un-RSVP</a>
 								</div>
 								<div class="action-buttons green">
-									<a href data-ng-href="/event/{{event._id}}">Details <i class="icon-chevron-right epsilon"></i></a>
+									<a href data-ng-href="/event/{{event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
 								</div>
 							</div>
 						</div>

@@ -2,26 +2,26 @@
 	<ul data-ng-show="getClass('/login') || getClass('/register') || getClass('/forgot')">
 		<li class="solo" data-ng-show="getClass('/login')">
 			<div class="link">
-				<i class="icon-signin"></i>
+				<i class="fa fa-sign-in"></i>
 				Login
 			</div>
 		</li>
 		<li class="solo" data-ng-show="getClass('/register')">
 			<a href="/register" class="link">
-				<i class="icon-edit"></i>
+				<i class="fa fa-pencil"></i>
 				Register
 			</a>
 		</li>
 		<li class="solo" data-ng-show="getClass('/forgot')">
 			<div class="link">
-				<i class="icon-question"></i>
+				<i class="fa fa-question"></i>
 				Forgot
 			</div>
 		</li>
 		<div class="bottom">
 			<li>
 				<a href="/" class="link">
-					<i class="icon-home"></i>
+					<i class="fa fa-home"></i>
 					Home
 				</a>
 			</li>
@@ -30,23 +30,23 @@
 	<ul data-ng-show="(getClass('/privacy') || getClass('/contact')) || getClass('/about') && !isLoggedIn()">
 		<li class="solo" data-ng-show="getClass('/privacy')">
 			<div class="link">
-				<i class="icon-question"></i>
+				<i class="fa fa-question"></i>
 			</div>
 		</li>
 		<li class="solo" data-ng-show="getClass('/contact')">
 			<div class="link">
-				<i class="icon-envelope"></i>
+				<i class="fa fa-envelope"></i>
 			</div>
 		</li>
 		<li class="solo" data-ng-show="getClass('/about')">
 			<div class="link">
-				<i class="icon-user"></i>
+				<i class="fa fa-user"></i>
 			</div>
 		</li>
 		<div class="bottom">
 			<li>
 				<a href="/" class="link">
-					<i class="icon-home"></i>
+					<i class="fa fa-home"></i>
 					Home
 				</a>
 			</li>
@@ -55,38 +55,38 @@
 	<ul data-ng-hide="getClass('/login') || getClass('/register') || getClass('/forgot') || !isLoggedIn()">
 		<li class="post" data-ng-class="{true:'active', false:''}[getClass('/post')]">
 			<a href="/post" class="link">
-				<i class="icon-plus"></i>
+				<i class="fa fa-plus"></i>
 				Post
 			</a>
 		</li>
 		<li data-ng-class="{true:'active', false:''}[getClass('/feed')]">
 			<a href="/feed" class="link">
-				<i class="icon-list-ul"></i>
+				<i class="fa fa-list"></i>
 				My Feed
 			</a>
 		</li>
 		<li data-ng-class="{true:'active', false:''}[getClass('/explore')]">
 			<a href="/explore" class="link">
-				<i class="icon-compass"></i>
+				<i class="fa fa-compass"></i>
 				Explore
 			</a>
 		</li>
 		<li data-ng-class="{true:'active', false:''}[getClass('/calendar')]">
 			<a href="/calendar" class="link">
-				<i class="icon-calendar-empty"></i>
+				<i class="fa fa-calendar-o"></i>
 				Calendar		
 			</a>
 		</li>
 		<div class="bottom">
 			<li data-ng-class="{true:'active', false:''}[getClass('/settings')]">
 				<a href="/settings" class="link">
-					<i class="icon-cogs"></i>
+					<i class="fa fa-cogs"></i>
 					Settings
 				</a>
 			</li>
 			<li>
 				<a href data-ng-click="logout()" class="link">
-					<i class="icon-signout"></i>
+					<i class="fa fa-sign-out"></i>
 					Sign Out
 				</a>
 			</li>

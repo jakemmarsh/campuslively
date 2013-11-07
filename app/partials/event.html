@@ -4,8 +4,8 @@
 			<div class="unit one-half text-left">
 				<h1 class="flush">
 					<span data-ng-bind="event.title"></span>
-					<i class="muted weight--normal zeta icon-circle-blank" data-ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="right"></i>
-					<i class="muted weight--normal zeta icon-circle" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="right"></i>
+					<i class="muted weight--normal zeta fa fa-circle-o" data-ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="right"></i>
+					<i class="muted weight--normal zeta fa fa-circle" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="right"></i>
 				</h1>
 				<h3 class="flush muted weight--normal">
 					hosted by
@@ -13,10 +13,10 @@
 				</h3>
 			</div>
 			<div class="unit one-half last-unit text-right">
-				<a href class="btn nudge-half--right" data-ng-click="rsvpToEvent()" data-ng-hide="isAttending()"><i class="icon-thumbs-up"></i> RSVP</a>
-				<a href class="btn nudge-half--right" data-ng-click="unRsvpToEvent()" data-ng-show="isAttending()"><i class="icon-thumbs-up-alt"></i> Un-RSVP</a>
-				<a href class="btn nudge-half--right" data-ng-click="open('invite')"><i class="icon-plus-sign"></i> Invite</a>
-				<a class="btn" data-ng-click="open('share')"><i class="icon-share"></i> Share</a>
+				<a href class="btn nudge-half--right" data-ng-click="rsvpToEvent()" data-ng-hide="isAttending()"><i class="fa fa-thumbs-up"></i> RSVP</a>
+				<a href class="btn nudge-half--right" data-ng-click="unRsvpToEvent()" data-ng-show="isAttending()"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
+				<a href class="btn nudge-half--right" data-ng-click="open('invite')"><i class="fa fa-plus-square"></i> Invite</a>
+				<a class="btn" data-ng-click="open('share')"><i class="fa fa-share-square"></i> Share</a>
 			</div>
 		</div>
 	</div>
@@ -29,7 +29,7 @@
 			<a href class="btn--red delete-button epsilon" data-ng-click="deleteEvent()" data-ng-show="event.creator._id == user._id">Delete Event</a>
 			<div class="line" data-ng-show="event.startDate">
 				<div class="unit three-percent">
-					<h4 class="flush--top nudge-half--bottom"><i class="muted icon-calendar-empty"></i></h4>
+					<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-calendar-o"></i></h4>
 				</div>
 				<div class="unit ninety-seven-percent last-unit">
 					<p class="nudge-half--bottom" data-ng-bind="event.startDate | readableDate"></p>
@@ -37,7 +37,7 @@
 			</div>
 				<div class="line" data-ng-show="event.startTime">
 					<div class="unit three-percent">
-						<h4 class="flush--top nudge-half--bottom"><i class="muted icon-time"></i></h4>
+						<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-clock-o"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
 						<p class="nudge-half--bottom" data-ng-bind="event.startTime"></p>
@@ -45,7 +45,7 @@
 				</div>
 				<div class="line" data-ng-show="event.locationName">
 					<div class="unit three-percent">
-						<h4 class="flush--top nudge-half--bottom"><i class="muted icon-map-marker"></i></h4>
+						<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-map-marker"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
 						<p class="nudge-half--bottom" data-ng-bind="event.locationName"></p>
@@ -74,7 +74,7 @@
 				<div class="unit nine-tenths last-unit">
 					<div class="box islet comment">
 						<a href class="delete-comment-button" data-ng-click="deleteComment(comment)" data-ng-show="comment.creator._id == user._id">
-							<i class="icon-remove"></i>
+							<i class="fa fa-times"></i>
 						</a>
 						<h4 class="flush">
 							<a href data-ng-href="/profile/{{comment.creator.username}}">{{comment.creator.displayName}}</a>
@@ -85,10 +85,10 @@
 									<div class="action-buttons comment nudge-half--top">
 										<a class="first" href><span class="gamma" data-ng-class="{green: likesComment(comment)}">{{ comment.likes.length }}</span></a>
 										<a href data-ng-click="likeComment(comment)" data-ng-hide="likesComment(comment)">
-											<i class="icon-heart"></i> Like
+											<i class="fa fa-heart"></i> Like
 										</a>
 										<a href data-ng-click="unlikeComment(comment)" data-ng-show="likesComment(comment)">
-											<i class="icon-heart-empty"></i> Unlike
+											<i class="fa fa-heart-o"></i> Unlike
 										</a>
 									</div>
 								</div>
@@ -105,7 +105,7 @@
 							</div>
 							<div class="unit eleven-twelfths last-unit subcomment-body islet">
 								<a href class="delete-subcomment-button" data-ng-click="deleteSubComment(comment._id, subComment)" data-ng-show="subComment.creator._id == user._id">
-									<i class="icon-remove"></i>
+									<i class="fa fa-times"></i>
 								</a>
 								<p class="epsilon" data-ng-bind-html="subComment.body | parseUrl"></p>
 								<div class="text-right nudge-half--top">
@@ -194,13 +194,13 @@
     	<input type="text" class="full-width" data-ng-model="eventUrl" data-input-select />
     	<div class="line nudge--top">
 	    	<div class="unit one-third soft--right">
-	        	<a data-ng-click="openTweet()" class="btn twitter full-width text-center"><i class="icon-twitter"></i> Tweet</a>
+	        	<a data-ng-click="openTweet()" class="btn twitter full-width text-center"><i class="fa fa-twitter"></i> Tweet</a>
 			</div>
 			<div class="unit one-third soft-half--sides">
-				<a href data-ng-click="shareEvent()" class="btn fb full-width text-center"><i class="icon-facebook"></i> Share</a>
+				<a href data-ng-click="shareEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Share</a>
 			</div>
 			<div class="unit one-third last-unit soft--left">
-				<a href data-ng-click="sendEvent()" class="btn fb full-width text-center"><i class="icon-facebook"></i> Send</a>
+				<a href data-ng-click="sendEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Send</a>
 			</div>
 		</div>
     </div>

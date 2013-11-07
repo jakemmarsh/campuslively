@@ -32,7 +32,7 @@
 			<div class="unit eleven-twelfths last-unit">
 				<div class="input-prepend full">
 					<div class="icon">
-						<i class="icon-building"></i>
+						<i class="fa fa-building-o"></i>
 					</div>
 					<input class="foursquare" type="text" id="location" data-ng-model="eventLocation" placeholder="Location of event" data-ng-required="!locationAddress" data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" data-ng-blur="checkLocation()" autocomplete="off" />
 				</div>
@@ -49,7 +49,7 @@
 			<div class="unit eleven-twelfths last-unit">
 				<div class="input-prepend full">
 					<div class="icon">
-						<i class="icon-map-marker"></i>
+						<i class="fa fa-map-marker"></i>
 					</div>
 					<input type="text" class="full-width" id="locationAddress" data-ng-model="locationAddress" placeholder="Address of location" data-ng-blur="checkAddress()" data-ng-required="!eventLocation" />
 				</div>
@@ -68,7 +68,7 @@
 			<div class="unit three-twelfths soft--right">
 				<div class="input-prepend full">
 					<div class="icon pointer" data-ng-click="openDatepicker()">
-						<i class="icon-calendar-empty"></i>
+						<i class="fa fa-calendar-o"></i>
 					</div>
 					<input type="text" id="eventDate" data-datepicker-popup="MM/dd/yy" data-ng-model="event.startDate" name="eventDate" placeholder="9/30/13" data-is-open="datepickerOpened" data-min="today" data-show-weeks="false" required />
 				</div>
@@ -76,7 +76,7 @@
 			<div class="unit three-twelfths">
 				<div class="input-prepend full">
 					<div class="icon">
-						<i class="icon-time"></i>
+						<i class="fa fa-clock-o"></i>
 					</div>
 					<input type="text" id="startTime" data-ng-model="event.startTime" name="startTime" placeholder="9:00pm" data-ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
 				</div>
@@ -107,7 +107,7 @@
 			<div class="unit five-twelfths label-container last-unit">
 				<div class="dropdown">
 					<a href class="dropdown-toggle">
-						{{ eventPrivacy.label }} <i class="icon-chevron-down muted weight--normal"></i>
+						{{ eventPrivacy.label }} <i class="fa fa-chevron-down muted weight--normal"></i>
 					</a>
 					<ul class="dropdown-menu">
 						<li data-ng-repeat="option in privacyOptions">
@@ -152,13 +152,13 @@
     	<input type="text" class="full-width" data-ng-model="eventUrl" data-input-select />
     	<div class="line nudge--top">
 	    	<div class="unit one-third soft--right">
-	        	<a data-ng-click="openTweet()" class="btn twitter full-width text-center"><i class="icon-twitter"></i> Tweet</a>
+	        	<a data-ng-click="openTweet()" class="btn twitter full-width text-center"><i class="fa fa-twitter"></i> Tweet</a>
 			</div>
 			<div class="unit one-third soft-half--sides">
-				<a href data-ng-click="shareEvent()" class="btn fb full-width text-center"><i class="icon-facebook"></i> Share</a>
+				<a href data-ng-click="shareEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Share</a>
 			</div>
 			<div class="unit one-third last-unit soft--left">
-				<a href data-ng-click="sendEvent()" class="btn fb full-width text-center"><i class="icon-facebook"></i> Send</a>
+				<a href data-ng-click="sendEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Send</a>
 			</div>
 		</div>
 	</div>

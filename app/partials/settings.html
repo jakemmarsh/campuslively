@@ -27,7 +27,7 @@
 						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" />
 					</div>
 					<div class="unit three-twelfths last-unit soft-half--left label-container">
-						<a href data-ng-click="useFacebookImage()" data-ng-show="user.facebook.id && !usingFacebookImage() && user.type == 'student'" class="btn fb full-width"><i class="icon-facebook"></i> Use Facebook</a>
+						<a href data-ng-click="useFacebookImage()" data-ng-show="user.facebook.id && !usingFacebookImage() && user.type == 'student'" class="btn fb full-width"><i class="fa fa-facebook"></i> Use Facebook</a>
 						<select class="full-width" data-ng-model="picturePage" data-ng-show="user.facebook.managedPages.length && user.type =='business'" data-ng-change="usePageForImage()">
 						    <option value="">Use a Facebook page</option>
 						    <option data-ng-repeat="page in user.facebook.managedPages" value="{{page.id}}">{{ page.name }}</option>
@@ -156,13 +156,13 @@
 			<div class="inline-block" data-ng-repeat="subscription in user.subscriptions">
 				<div class="user-img-subscriptions" data-ng-style="{'background-image': 'url(' + subscription.pictureUrl + ')'}">
 					<a data-ng-href="/profile/{{subscription.username}}" data-tooltip="{{subscription.displayName}}" data-tooltip-placement="bottom"></a>
-					<a href class="remove" data-tooltip="Unsubscribe" data-tooltip-placement="top" data-ng-click="removeSubscription(subscription._id)"><i class="icon-remove"></i></a>
+					<a href class="remove" data-tooltip="Unsubscribe" data-tooltip-placement="top" data-ng-click="removeSubscription(subscription._id)"><i class="fa fa-times"></i></a>
 				</div>
 			</div>
 		</div>
 		<div class="unit one-fourth soft--left last-unit">
-			<a href data-ng-click="fbLogin()" data-ng-hide="user.facebook.id" class="btn fb full-width"><i class="icon-facebook"></i> Add Facebook</a>
-			<a href data-ng-click="fbLogout()" data-ng-show="user.facebook.id" class="btn fb full-width"><i class="icon-facebook"></i> Remove Facebook</a>
+			<a href data-ng-click="fbLogin()" data-ng-hide="user.facebook.id" class="btn fb full-width"><i class="fa fa-facebook"></i> Add Facebook</a>
+			<a href data-ng-click="fbLogout()" data-ng-show="user.facebook.id" class="btn fb full-width"><i class="fa fa-facebook"></i> Remove Facebook</a>
 		</div>
 	</div>
 </div>
