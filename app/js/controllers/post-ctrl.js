@@ -217,8 +217,9 @@ define(['./index'], function (controllers) {
 			    			pictureUrl: 'https://s3.amazonaws.com/campuslively/event_imgs/' + eventId + getExtension($scope.eventImage.file.name)
 			    		};
 
-			    		eventService.updateEvent(eventId, updateParams).then(function() {
+			    		eventService.updateEvent(eventId, updateParams).then(function(data) {
 			    			$scope.eventPosted = true;
+			    			$scope.postedEvent = data;
 			    		},
 			    		function (errorMessage, status) {
 			    			$scope.postError = errorMessage;
@@ -235,6 +236,7 @@ define(['./index'], function (controllers) {
 	    	else {
 		    	eventService.postEvent($scope.event).then(function (data) {
 			    	$scope.eventPosted = true;
+			    	$scope.postedEvent = data;
 			    },
 			    function (errorMessage, status) {
 			    	$scope.postError = errorMessage.message;

@@ -19,6 +19,7 @@ define([
     'controllers/explore-ctrl',
     'controllers/event-ctrl',
     'controllers/post-ctrl',
+    'controllers/posted-ctrl',
     'controllers/calendar-ctrl',
     'controllers/contact-ctrl',
     'controllers/modalInstance-ctrl',

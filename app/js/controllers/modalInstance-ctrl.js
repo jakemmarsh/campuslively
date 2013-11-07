@@ -116,7 +116,6 @@ define(['./index'], function (controllers) {
                 dataToSend.recipientIds = $scope.invitees;
 
                 eventService.inviteUsers($scope.event._id, $rootScope.user._id, dataToSend).then(function (data) {
-                    console.log(data);
                     $modalInstance.close();
                 },
                 function (errorMessage) {
