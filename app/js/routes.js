@@ -177,6 +177,11 @@ define(['./app'], function (app) {
             url: '/privacy',
             templateUrl: '/partials/privacy.html',
             title: 'Privacy Policy'
+        })
+        .state('inner.about', {
+            url: '/about',
+            templateUrl: '/partials/about.html',
+            title: 'About Us'
         });
 
         $urlRouterProvider.otherwise("/");
