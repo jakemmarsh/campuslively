@@ -1,8 +1,8 @@
 <div data-ng-mouseenter="pause()" data-ng-mouseleave="play()" class="carousel">
-    <ol class="carousel-indicators" data-ng-show="slides().ledata-ngth > 1">
+    <ol class="carousel-indicators" data-ng-show="slides().length > 1">
         <li data-ng-repeat="slide in slides()" data-ng-class="{active: isActive(slide)}" data-ng-click="select(slide)"></li>
     </ol>
     <div class="carousel-inner" data-ng-transclude></div>
-    <a data-ng-click="prev()" class="carousel-control left" data-ng-show="slides().ledata-ngth > 1">&lsaquo;</a>
-    <a data-ng-click="next()" class="carousel-control right" data-ng-show="slides().ledata-ngth > 1">&rsaquo;</a>
+    <a data-ng-click="prev()" class="carousel-control left" data-ng-show="slides().length > 1">&lsaquo;</a>
+    <a data-ng-click="next()" class="carousel-control right" data-ng-show="slides().length > 1">&rsaquo;</a>
 </div>
