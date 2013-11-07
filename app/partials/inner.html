@@ -27,7 +27,7 @@
 			</li>
 		</div>
 	</ul>
-	<ul data-ng-show="(getClass('/privacy') || getClass('/contact')) && !isLoggedIn()">
+	<ul data-ng-show="(getClass('/privacy') || getClass('/contact')) || getClass('/about') && !isLoggedIn()">
 		<li class="solo" data-ng-show="getClass('/privacy')">
 			<div class="link">
 				<i class="icon-question"></i>
@@ -36,6 +36,11 @@
 		<li class="solo" data-ng-show="getClass('/contact')">
 			<div class="link">
 				<i class="icon-envelope"></i>
+			</div>
+		</li>
+		<li class="solo" data-ng-show="getClass('/about')">
+			<div class="link">
+				<i class="icon-user"></i>
 			</div>
 		</li>
 		<div class="bottom">
