@@ -73,15 +73,23 @@
 					<input type="text" id="eventDate" data-datepicker-popup="MM/dd/yy" data-ng-model="event.startDate" name="eventDate" placeholder="9/30/13" data-is-open="datepickerOpened" data-min="today" data-show-weeks="false" required />
 				</div>
 			</div>
-			<div class="unit three-twelfths">
+			<div class="unit three-twelfths soft--right">
 				<div class="input-prepend full">
 					<div class="icon">
 						<i class="fa fa-clock-o"></i>
 					</div>
-					<input type="text" id="startTime" data-ng-model="event.startTime" name="startTime" placeholder="9:00pm" data-ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
+					<input type="text" id="startTime" data-ng-model="event.startTime" name="startTime" placeholder="start time" data-time-autocomplete />
 				</div>
 			</div>
-			<div class="unit five-twelfths last-unit"></div>
+			<div class="unit three-twelfths soft--right">
+				<div class="input-prepend full" data-ng-show="event.startTime">
+					<div class="icon">
+						<i class="fa fa-clock-o"></i>
+					</div>
+					<input type="text" id="startTime" data-ng-model="event.endTime" name="endTime" placeholder="end time" data-time-autocomplete="event.startTime" />
+				</div>
+			</div>
+			<div class="unit two-twelfths last-unit"></div>
 		</div>
 		<div class="line nudge-half--bottom">
 			<div class="unit one-twelfth label-container">
@@ -120,7 +128,6 @@
 		</div>
 		<div class="line">
 			<div class="unit full-width last-unit">
-				<span class="red weight--bold nudge-half--bottom" data-ng-show="eventForm.startTime.$error.pattern">Not a valid time. Must be of format HH:MM(am/pm)</span>
 				<span class="red weight--bold nudge-half--bottom" data-ng-show="postError" data-ng-bind="postError"></span>
 			</div>
 		</div>

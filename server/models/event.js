@@ -21,6 +21,7 @@ var eventSchema = new mongoose.Schema({
         required: true
     },
     startTime: String,
+    endTime: String,
     school: {
         type: mongoose.Schema.ObjectId,
         ref: 'School'
