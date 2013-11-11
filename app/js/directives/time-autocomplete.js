@@ -1,32 +1,37 @@
 define(['./index'], function (directives) {
   'use strict';
   // expand input and show post button on focus
-  directives.directive('timeAutocomplete', function() {
+  directives.directive('timeAutocomplete', ['$parse', function($parse) {
     return {
             restrict: 'A',
             require: "ngModel",
-            scope: {
-                startTime: '='
-            },
-            link: function(scope, element, attrs) {
-                require(["time-autocomplete"],
+            link: function(scope, element, attrs, ngModel) {
+                require(["timepicker"],
                     function() {
-                        if(scope.startTime) {
-                            $(element).timeAutocomplete({
-                                increment: 15,
-                                value: '20:00:00',
-                                from_selector: scope.startTime
+                        attrs.$observe("timeAutocomplete", function() {
+                            $(element).timepicker('remove');
+                            if(attrs.timeAutocomplete) {
+                                $(element).timepicker({ 
+                                    'step': 15,
+                                    'minTime': attrs.timeAutocomplete,
+                                    'showDuration': true
+                                });
+                            }
+                            else {
+                                $(element).timepicker({ 
+                                'step': 15
                             });
-                        }
-                        else {
-                            $(element).timeAutocomplete({
-                                increment: 15,
-                                value: '20:00:00'
+                            }
+                        });
+
+                        $(element).on('changeTime', function () {
+                            scope.$apply(function () {
+                                ngModel.$setViewValue(element.val());
                             });
-                        }
+                        });
                     }
                 );
             }
     };
-  });
+  }]);
 });

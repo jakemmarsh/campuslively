@@ -28,7 +28,7 @@ require.config({
         'angular-ui-select2' : './lib/angular/ui-select2',
         'image-upload' : './lib/angular/imageupload',
         'moment' : './lib/moment.min',
-        'time-autocomplete' : './lib/time-autocomplete.min'
+        'timepicker' : './lib/timepicker.min'
     },
 
     shim: {
@@ -84,7 +84,7 @@ require.config({
         'image-upload': {
             deps: ['angular']
         },
-        'time-autocomplete': {
+        'timepicker': {
             deps: ['jquery']
         }
     }
