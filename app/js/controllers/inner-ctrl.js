@@ -16,11 +16,11 @@ define(['./index'], function (controllers) {
 	    				};
 
 	    				$scope.notifications.push(notification);
-	    				gotInvites = true;
 	    			}
 		        },
 		        function (errorMessage) {
 		        });
+		        gotInvites = true;
         	}
         });
 
