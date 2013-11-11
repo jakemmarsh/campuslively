@@ -86,7 +86,7 @@
 										<i class="fa fa-calendar-o muted"></i> <span>{{ event.startDate | readableDate }}</span>
 									</span>
 									<span data-ng-show="event.startTime">
-										<i class="fa fa-clock-o muted"></i> <span data-ng-bind="event.startTime"></span>
+										<i class="fa fa-clock-o muted"></i> <span data-ng-bind="event.startTime"></span> <span data-ng-show="event.endTime">- <span data-ng-bind="event.endTime"></span></span>
 									</span>
 								</span>
 							</div>

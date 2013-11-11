@@ -83,7 +83,7 @@
 											<i class="fa fa-calendar-o muted"></i> <span>{{ activity.event.startDate | readableDate }}</span>
 										</span>
 										<span data-ng-show="activity.event.startTime">
-											<i class="fa fa-clock-o muted"></i> <span data-ng-bind="activity.event.startTime"></span>
+											<i class="fa fa-clock-o muted"></i> <span data-ng-bind="activity.event.startTime"></span> <span data-ng-show="activity.event.endTime">- <span data-ng-bind="activity.event.endTime"></span></span>
 										</span>
 									</span>
 								</div>
@@ -153,7 +153,7 @@
 											<i class="fa fa-calendar-o muted"></i> <span>{{ activity.event.startDate | readableDate }}</span>
 										</span>
 										<span data-ng-show="activity.event.startTime">
-											<i class="fa fa-clock-o muted"></i> <span data-ng-bind="activity.event.startTime"></span>
+											<i class="fa fa-clock-o muted"></i> <span data-ng-bind="activity.event.startTime"></span> <span data-ng-show="activity.event.endTime">- <span data-ng-bind="activity.event.endTime"></span></span>
 										</span>
 									</span>
 								</div>
@@ -226,7 +226,7 @@
 											<i class="fa fa-calendar-o muted"></i> <span>{{ activity.event.startDate | readableDate }}</span>
 										</span>
 										<span data-ng-show="activity.event.startTime">
-											<i class="fa fa-clock-o muted"></i> <span data-ng-bind="activity.event.startTime"></span>
+											<i class="fa fa-clock-o muted"></i> <span data-ng-bind="activity.event.startTime"></span> <span data-ng-show="activity.event.endTime">- <span data-ng-bind="activity.event.endTime"></span></span>
 										</span>
 									</span>
 								</div>

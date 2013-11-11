@@ -40,7 +40,7 @@
 						<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-clock-o"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
-						<p class="nudge-half--bottom" data-ng-bind="event.startTime"></p>
+						<p class="nudge-half--bottom"><span data-ng-bind="event.startTime"></span><span data-ng-show="event.endTime"> - <span data-ng-bind="event.endTime"></span></span></p>
 					</div>
 				</div>
 				<div class="line" data-ng-show="event.locationName">
@@ -53,7 +53,7 @@
 				</div>
 				<div class="line" data-ng-show="event.description">
 					<div class="unit three-percent">
-						<h4 class="flush"><i class="muted icon-align-left"></i></h4>
+						<h4 class="flush"><i class="muted fa fa-align-left"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
 						<p class="pre-wrap" data-ng-bind-html="event.description | parseUrl"></p>
