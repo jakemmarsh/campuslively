@@ -1,7 +1,7 @@
 define(['./index'], function (directives) {
   'use strict';
   // expand input and show post button on focus
-  directives.directive('timeAutocomplete', ['$parse', function($parse) {
+  directives.directive('timeAutocomplete', [function() {
     return {
             restrict: 'A',
             require: "ngModel",
