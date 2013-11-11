@@ -12,7 +12,7 @@
 					<a href data-ng-href="/profile/{{ event.creator.username }}">{{event.creator.displayName}}</a>
 				</h3>
 			</div>
-			<div class="unit one-half last-unit text-right">
+			<div class="unit one-half last-unit text-right" data-ng-hide="eventPassed">
 				<a href class="btn nudge-half--right" data-ng-click="rsvpToEvent()" data-ng-hide="isAttending()"><i class="fa fa-thumbs-up"></i> RSVP</a>
 				<a href class="btn nudge-half--right" data-ng-click="unRsvpToEvent()" data-ng-show="isAttending()"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
 				<a href class="btn nudge-half--right" data-ng-click="open('invite')"><i class="fa fa-plus-square"></i> Invite</a>
@@ -32,7 +32,7 @@
 					<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-calendar-o"></i></h4>
 				</div>
 				<div class="unit ninety-seven-percent last-unit">
-					<p class="nudge-half--bottom" data-ng-bind="event.startDate | readableDate"></p>
+					<p class="nudge-half--bottom"><span data-ng-bind="event.startDate | readableDate"></span> <span class="red nudge-half--left" data-ng-show="eventPassed">(Event has passed)</span></p>
 				</div>
 			</div>
 				<div class="line" data-ng-show="event.startTime">
@@ -126,7 +126,8 @@
 				<div class="header soft-half--sides">
 					<div class="line">
 						<div class="unit one-half">
-							<h2 class="flush">Going</h2>
+							<h2 class="flush" data-ng-hide="eventPassed">Going</h2>
+							<h2 class="flush" data-ng-show="eventPassed">Went</h2>
 						</div>
 						<div class="unit one-half last-unit text-right">
 							<span data-ng-bind="event.attending.length"></span>
