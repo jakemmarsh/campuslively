@@ -79,6 +79,17 @@
 			border: 1px solid darken($fb-blue, 5);
 		}
 
+	.btn.google {
+		@include gradient($google-red);
+		border: 1px solid $google-red;
+	}
+
+		.btn.google:hover, .btn.google:active, .btn.google:focus {
+			color: $white;
+			@include gradient($google-red, darken($google-red, 3));
+			border: 1px solid darken($google-red, 5);
+		}
+
 	.btn.datepicker {
 		background: $white;
 		padding: 2px 5px;
