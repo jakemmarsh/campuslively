@@ -75,64 +75,7 @@
 				<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>
 			</div>
 		</div>
-		<div class="unit eleven-twelfths last-unit">
-			<div class="box">
-				<div class="event-header soft-half--sides">
-					<div class="line">
-						<div class="unit one-half">
-							<i class="beta fa fa-circle nudge-half--right float-left" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
-							<i class="beta fa fa-circle-o nudge-half--right float-left" data-ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
-							<h2 class="flush">
-								<a data-ng-href="/event/{{event._id}}">
-									{{ event.title }}
-								</a>
-							</h2>
-						</div>
-						<div class="unit one-half last-unit text-right">
-							Posted {{event.timestamp | timePast }}
-						</div>
-					</div>
-				</div>
-				<div class="islet">
-					<div class="line">
-						<div class="unit full-width last-unit">
-							<span class="delta weight--bold">
-								<span data-ng-show="event.locationName" class="nudge--right">
-									<i class="fa fa-map-marker muted"></i> <span data-ng-bind="event.locationName"></span> 
-								</span>
-								<span data-ng-show="event.startDate" class="nudge--right">
-									<i class="fa fa-calendar-o muted"></i> <span>{{ event.startDate | readableDate }}</span>
-								</span>
-								<span data-ng-show="event.startTime">
-									<i class="fa fa-clock-o muted"></i> <span data-ng-bind="event.startTime"></span> <span data-ng-show="event.endTime">- <span data-ng-bind="event.endTime"></span></span>
-								</span>
-							</span>
-						</div>
-					</div>
-					<hr data-ng-show="event.description" />
-					<p class="pre-wrap soft-half--ends" data-ng-show="event.description" data-ng-bind-html="event.description | parseUrl"></p>
-				</div>
-				<div class="event-footer table full-width soft-quarter--ends">
-					<div class="tr">
-						<div class="td three-fourths">
-							<ul class="tags">
-								<li data-ng-repeat="tag in event.tags" data-ng-bind="tag"></li>
-							</ul>
-						</div>
-						<div class="td one-fourth text-right soft-half--right vertical-align-middle">
-							<div class="action-buttons nudge-half--right">
-								<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(event)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
-								<a href data-ng-click="rsvpToEvent(event._id)" data-ng-hide="isAttending(event)"><i class="fa fa-thumbs-up"></i> RSVP</a>
-								<a href data-ng-click="unRsvpToEvent(event._id)" data-ng-show="isAttending(event)"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
-							</div>
-							<div class="action-buttons green">
-								<a href data-ng-href="/event/{{event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div class="unit eleven-twelfths last-unit" data-ng-include="'templates/event.html'"></div>
 	</div><!-- event end -->
 	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="moreToLoad && !loadingMore && !loading">Load More</a>
 	<a href class="btn full-width text-center" data-ng-show="loadingMore && !loading">Loading more...</a>
