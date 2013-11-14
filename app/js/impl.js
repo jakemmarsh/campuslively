@@ -36,6 +36,7 @@ define([
     'services/event',
     'services/contact',
     'services/invite',
+    'services/google',
     'filters/parse-url',
     'filters/readable-date',
     'filters/time-past',

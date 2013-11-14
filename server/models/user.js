@@ -77,6 +77,9 @@ var userSchema = new mongoose.Schema({
         },
         lastUpdated: Date
     },
+    google: {
+        id: String
+    }
 });
 
 userSchema.index({ loc : '2dsphere' });

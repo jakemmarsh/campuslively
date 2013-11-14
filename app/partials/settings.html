@@ -161,8 +161,10 @@
 			</div>
 		</div>
 		<div class="unit one-fourth soft--left last-unit">
-			<a href data-ng-click="fbLogin()" data-ng-hide="user.facebook.id" class="btn fb full-width"><i class="fa fa-facebook"></i> Add Facebook</a>
-			<a href data-ng-click="fbLogout()" data-ng-show="user.facebook.id" class="btn fb full-width"><i class="fa fa-facebook"></i> Remove Facebook</a>
+			<a href data-ng-click="fbLogin()" data-ng-hide="user.facebook.id" class="btn fb full-width nudge-half--bottom"><i class="fa fa-facebook"></i> Add Facebook</a>
+			<a href data-ng-click="fbLogout()" data-ng-show="user.facebook.id" class="btn fb full-width nudge-half--bottom"><i class="fa fa-facebook"></i> Remove Facebook</a>
+			<a href data-ng-click="googleLogin()" data-ng-hide="user.google.id" class="btn google full-width"><i class="fa fa-google-plus"></i> Add Google</a>
+			<a href data-ng-click="googleLogout()" data-ng-show="user.google.id" class="btn google full-width"><i class="fa fa-google-plus"></i> Remove Google</a>
 		</div>
 	</div>
 </div>

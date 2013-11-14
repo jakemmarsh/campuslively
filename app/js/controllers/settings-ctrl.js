@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', '$FB', 'localStorageService', '$q', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService, $FB, localStorageService, $q) {
+    controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', '$FB', 'localStorageService', '$q', 'googleService', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService, $FB, localStorageService, $q, googleService) {
     	var updateParams = {};
 
     	schoolService.getAllSchools().then(function (data, status) {
@@ -184,7 +184,7 @@ define(['./index'], function (controllers) {
 			}
 		};
 
-		$scope.fbLogout = function () {
+		$scope.fbLogout = function() {
 			var updateParams = {};
 			$FB.logout(function () {
 				$rootScope.updateFbStatus($rootScope.updateApiMe);
@@ -203,6 +203,33 @@ define(['./index'], function (controllers) {
 				});
 			});
 		};
+
+		$scope.googleLogin = function() {
+			var updateParams = {};
+            googleService.login().then(function (data) {
+            	updateParams.google = {};
+            	updateParams.google.id = data.id;
+                userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+					$rootScope.user = data;
+					localStorageService.add('user', data);
+				},
+				function (errorMessage, status) {
+				});
+            }, function (errorMessage) {
+            });
+        };
+
+        $scope.googleLogout = function() {
+        	var updateParams = {};
+        	updateParams.google = {};
+        	updateParams.google.id = null;
+        	userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+				$rootScope.user = data;
+				localStorageService.add('user', data);
+			},
+			function (errorMessage, status) {
+			});
+        };
 
 		$scope.saveChanges = function() {
 			var toTitleCase = function(str) {
