@@ -10,10 +10,15 @@
 		position: relative;
 		width: 100%;
 		background: $primary;
-		color: $white;
+		color: lighten($primary, 40);
 		@include corners(3px, 3px, 0, 0);
 		line-height: 2.3em;
+		border-bottom: 1px solid $border-grey;
 	}
+
+		.box .event-header i {
+			color: $white;
+		}
 
 		.box .event-header h2 a {
 			color: $white;
@@ -24,15 +29,15 @@
 			}
 
 		.box .event-header a {
-			color: lighten($secondary, 2);
+			color: lighten($primary, 40);
 		}
 
 			.box .event-header a:hover, .box .event-header a:focus, .box .event-header a:active {
-				color: lighten($secondary, 5);
+				color: lighten($primary, 45);
 			}
 
 	.box .event-footer {
-		background: lighten($light-grey, 2);
+		background: lighten($light-blue, 1);
 		@include corners(0px, 0px, 3px, 3px);
 		border-top: 1px solid $border-grey;
 		color: $dark-grey;

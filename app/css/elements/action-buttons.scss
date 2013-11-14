@@ -12,6 +12,7 @@
 
 		.box .action-buttons.green a {
 			@include gradient($secondary);
+			box-shadow: inset 0 1px 0 0 lighten($secondary, 15);
 			border: 1px solid darken($secondary, 5);
 			color: $white;
 			@include corners();
@@ -19,8 +20,8 @@
 		}
 
 			.box .action-buttons.green a:hover, .box .action-buttons.green a:focus, .box .action-buttons.green a:active {
-				@include gradient($secondary, darken($secondary, 3));
-				border: 1px solid darken($secondary, 5);
+				@include gradient($secondary, darken($secondary, 5));
+				border: 1px solid darken($secondary, 7);
 				color: $white;
 				@include corners();
 			}

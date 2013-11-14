@@ -43,7 +43,7 @@
 			}
 
 				.sidebar ul li.post:hover, .sidebar ul li.post:active, .sidebar ul li.post:focus {
-					@include gradient($secondary, darken($secondary, 3));
+					@include gradient($secondary, darken($secondary, 5));
 				}
 
 				.sidebar ul li.post.active, .sidebar ul li.solo {
