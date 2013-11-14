@@ -263,18 +263,18 @@
 				</div>
 			</div>
 			<div class="line nudge-half--top">
-				<div class="unit one-tenth">
-					<div class="user-img-comment" data-ng-style="{'background-image': 'url(' + activity.comment.creator.pictureUrl + ')'}">
+				<div class="unit one-twelfth">
+					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.comment.creator.pictureUrl + ')'}">
 						<a href data-tooltip="{{activity.comment.creator.displayName}}" data-tooltip-placement="left" data-ng-href="profile/{{activity.comment.creator.username}}"></a>
 					</div>
 				</div>
-				<div class="unit nine-tenths last-unit">
+				<div class="unit eleven-twelfths last-unit">
 					<div class="box islet comment">
 						<p class="nudge-half--bottom pre-wrap" data-ng-bind-html="activity.comment.body | parseUrl"></p>
 						<div class="table full-width">
 							<div class="td one-half">
 								<div class="action-buttons comment nudge-half--top">
-									<a class="first" href><span class="gamma" data-ng-class="{green: likesComment(activity.comment)}">{{ comment.likes.length }}</span></a>
+									<a class="first" href><span class="gamma" data-ng-class="{green: likesComment(activity.comment)}">{{ activity.comment.likes.length }}</span></a>
 									<a href data-ng-click="likeComment(activity.comment)" data-ng-hide="likesComment(activity.comment)">
 										<i class="fa fa-heart"></i> Like
 									</a>
@@ -284,7 +284,7 @@
 								</div>
 							</div>
 							<div class="td one-half text-right">
-								<span class="muted epsilon" data-ng-bind="activity.comment.posted | timePast"></span>
+								<span class="muted epsilon" data-ng-bind="activity.comment.timestamp | timePast"></span>
 							</div>
 						</div>
 					</div>
