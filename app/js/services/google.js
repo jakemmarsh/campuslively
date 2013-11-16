@@ -42,8 +42,11 @@ define(['./index', 'https://apis.google.com/js/client.js'], function (services) 
       },
       getAllEvents: function() {
         var deferred = $q.defer(),
+
         // get all calendars that the user has on Google Calendar
         getCalendars = function() {
+          var calDeferred = $q.defer();
+
           gapi.client.load('calendar', 'v3', function() {
               var request = gapi.client.calendar.calendarList.list({});
               request.execute(function(resp) {
@@ -52,39 +55,62 @@ define(['./index', 'https://apis.google.com/js/client.js'], function (services) 
                     for(var i = 0; i < resp.items.length; i++) {
                       calendarIds.push(resp.items[i].id);
                     }
-                    getEvents(calendarIds);
+                    calDeferred.resolve(calendarIds);
                   }
                   else {
-                    deferred.reject(resp.error);
+                    calDeferred.reject(resp.error);
                   }
               });
           });
+
+          return calDeferred.promise;
         },
-        // get all events for each calendar that was found
-        getEvents = function(calendarIds) {
-          var events = [];
-          
-          for(var i = 0; i < calendarIds.length; i++) {
-            // bind i to function to allow asynchronous functions inside for loop
-            (function(cntr) {
-              var request = gapi.client.calendar.events.list({
-                calendarId: calendarIds[i]
+        // get all events for a calendar
+        getEvents = function(calendarId) {
+          var events = [],
+              eventsDeferred = $q.defer();
+
+          var request = gapi.client.calendar.events.list({
+            calendarId: calendarId
+          });
+
+          request.execute(function(resp) {
+              if(!resp.error) {
+                for(var j = 0; j < resp.items.length; j++) {
+                  events.push(resp.items[j]);
+                }
+                eventsDeferred.resolve(events);
+              }
+              else {
+                eventsDeferred.reject(resp.error);
+              }
+          });
+
+          return eventsDeferred.promise;
+        },
+        getAllEvents = function() {
+          getCalendars().then(function (calendarIds) {
+            var eventCalls = [];
+
+            // get promise for each calendar event query
+            for(var i = 0; i < calendarIds.length; i++) {
+              eventCalls.push(getEvents(calendarIds[i]));
+            }
+
+            // make all calls to get all events
+            $q.all(eventCalls).then(function(results) {
+              var aggregatedData = [];
+
+              angular.forEach(results, function (result) {
+                  aggregatedData = aggregatedData.concat(result);
               });
 
-              request.execute(function(resp) {
-                  if(!resp.error) {
-                    for(var j = 0; j < resp.items.length; j++) {
-                      console.log(j);
-                      events.push(resp.items[j]);
-                    }
-                  }
-                  else {
-                    deferred.reject(resp.error);
-                  }
-              });
-            })(i);
-          }
-          deferred.resolve(events);
+              deferred.resolve(aggregatedData);
+            });
+          },
+          function (errorMessage) {
+            deferred.reject(errorMessage);
+          });
         };
 
         // login to google API before making calls
@@ -92,7 +118,7 @@ define(['./index', 'https://apis.google.com/js/client.js'], function (services) 
               client_id: this.clientId, 
               scope: this.scopes, 
               immediate: true, 
-        }, getCalendars);
+        }, getAllEvents);
 
         return deferred.promise;
       }

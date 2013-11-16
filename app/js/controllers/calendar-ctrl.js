@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('calendarCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$modal', 'eventService', 'locationService', function ($scope, $rootScope, $location, $anchorScroll, $modal, eventService, locationService) {
+    controllers.controller('calendarCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$modal', 'eventService', 'locationService', 'googleService', function ($scope, $rootScope, $location, $anchorScroll, $modal, eventService, locationService, googleService) {
     	$scope.showDay = false;
 
       $scope.currentView = 'school';
@@ -14,6 +14,39 @@ define(['./index'], function (controllers) {
           value: 'nearby'
         }
       ];
+
+      var getGoogleCalEvents = function() {
+        if($rootScope.user.google.id) {
+          googleService.getAllEvents().then(function(data) {
+            for(var i = 0; i < data.length; i++) {
+              if(data[i].start) {
+                if(data[i].start.dateTime) {
+                  var event = {
+                    title: data[i].summary,
+                    start: data[i].start.dateTime,
+                    editable: false,
+                    backgroundColor: '#dd4b39'
+                  };
+                }
+                else if(data[i].start.date) {
+                  var event = {
+                    title: data[i].summary,
+                    start: data[i].start.date,
+                    editable: false,
+                    backgroundColor: '#dd4b39'
+                  };
+                }
+                $scope.events.push(event);
+              }
+            }
+            // remove any previous events before adding to avoid duplicates
+            $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+            $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+            $scope.loading = false;
+          }, function(err) {
+          });
+        }
+      };
 
       $scope.events = [];
       $scope.$watch('currentView', function() {
@@ -41,12 +74,18 @@ define(['./index'], function (controllers) {
               }
               $scope.events.push(event);
             }
-            // remove any previous events before adding to avoid duplicates
-            $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
-            $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
-            $scope.loading = false;
+
+            // get user's events from Google Calendar if they've logged in
+            if($rootScope.user.google) {
+              getGoogleCalEvents();
+            }
+            else {
+              // remove any previous events before adding to avoid duplicates
+              $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+              $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+              $scope.loading = false;
+            }
           }, function(err, status) {
-          
           });
         }
         else if($scope.currentView == 'nearby') {
@@ -70,15 +109,21 @@ define(['./index'], function (controllers) {
                   }
                   $scope.events.push(event);
                 }
-                // remove any previous events before adding to avoid duplicates
-                $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
-                $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
-                $scope.loading = false;
+                
+                // get user's events from Google Calendar if they've logged in
+                if($rootScope.user.google) {
+                  getGoogleCalEvents();
+                }
+                else {
+                  // remove any previous events before adding to avoid duplicates
+                  $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+                  $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+                  $scope.loading = false;
+                }
               }, function(err, status) {
               });
             },
             function (errorMessage) {
-                console.log(errorMessage);
             });
           }
           else {
@@ -99,10 +144,17 @@ define(['./index'], function (controllers) {
                 }
                 $scope.events.push(event);
               }
-              // remove any previous events before adding to avoid duplicates
-              $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
-              $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
-              $scope.loading = false;
+              
+              // get user's events from Google Calendar if they've logged in
+              if($rootScope.user.google) {
+                getGoogleCalEvents();
+              }
+              else {
+                // remove any previous events before adding to avoid duplicates
+                $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+                $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+                $scope.loading = false;
+              }
             }, function(err, status) {
             });
           }
