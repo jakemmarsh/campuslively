@@ -216,6 +216,7 @@ html .fc,
 	background: darken($border-grey, 4);
 	border: 1px solid darken($border-grey, 4);
 	color: $white;
+	box-shadow: none;
 	}
 
 	.fc-state-disabled:hover, .fc-state-disabled:active, .fc-state-disabled:focus {
