@@ -68,10 +68,14 @@ define(['./index', 'https://apis.google.com/js/client.js'], function (services) 
         // get all events for a calendar
         getEvents = function(calendarId) {
           var events = [],
-              eventsDeferred = $q.defer();
+              eventsDeferred = $q.defer(),
+              today = new Date();
+
+          today.setHours(0,0,0,0);
 
           var request = gapi.client.calendar.events.list({
-            calendarId: calendarId
+            calendarId: calendarId,
+            timeMin: today.toISOString()
           });
 
           request.execute(function(resp) {
