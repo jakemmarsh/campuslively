@@ -91,7 +91,24 @@ define(['./app'], function (app) {
             templateUrl: '/partials/reset.html',
             controller: 'resetCtrl',
             title: 'Reset Password',
-            access: 'notLoggedIn'
+            access: 'notLoggedIn',
+            resolve: {
+                checkResetKey: ['$stateParams', 'authService', '$location', function($stateParams, authService, $location) {
+                    if($stateParams.resetKey) {
+                        return authService.checkResetKey($stateParams.resetKey).then(function (data, status) {
+                            if(!data) {
+                                $location.path('/login');
+                            }
+                        },
+                        function (errorMessage, status) {
+                            $location.path('/login');
+                        });
+                    }
+                    else {
+                        $location.path('/login');
+                    }
+                }]
+            }
         })
         .state('inner.feed', {
             url: '/feed',
