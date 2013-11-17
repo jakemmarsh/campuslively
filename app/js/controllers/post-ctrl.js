@@ -205,6 +205,16 @@ define(['./index'], function (controllers) {
 	    	}
 
 	    	if($scope.eventImage) {
+	    		// verify that uploaded file is of type "image/x"
+				if($scope.eventImage.file.type.toLowerCase().indexOf("image") === -1) {
+					$scope.postError = "The event picture must be an image.";
+					return;
+				}
+				// verify that uploaded file is no larger than 3MB
+				else if($scope.eventImage.file.size > 3145728) {
+					$scope.postError = "That image is too large.";
+					return;
+				}
 	    		var eventId;
 	    		eventService.postEvent($scope.event).then(function (data) {
 	    			eventId = data._id;
@@ -223,14 +233,17 @@ define(['./index'], function (controllers) {
 			    		},
 			    		function (errorMessage, status) {
 			    			$scope.postError = errorMessage;
+			    			return;
 			    		});
 			    	}, 
 			    	function (errorMessage, status) {
 			    		$scope.postError = errorMessage;
+			    		return;
 			    	});
 			    },
 			    function (errorMessage, status) {
 			    	$scope.postError = errorMessage.message;
+			    	return;
 			    });
 	    	}
 	    	else {
@@ -240,6 +253,7 @@ define(['./index'], function (controllers) {
 			    },
 			    function (errorMessage, status) {
 			    	$scope.postError = errorMessage.message;
+			    	return;
 			    });
 			}
 	    };

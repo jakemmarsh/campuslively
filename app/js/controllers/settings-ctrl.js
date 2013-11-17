@@ -305,7 +305,17 @@ define(['./index'], function (controllers) {
 				updateParams.school = $scope.userSchool;
 			}
 
-			if($scope.newUserImage && $scope.newUserImage.file) {
+			if($scope.newUserImage) {
+				// verify that uploaded file is of type "image/x"
+				if($scope.newUserImage.file.type.toLowerCase().indexOf("image") === -1) {
+					$scope.saveError = "Your account picture must be an image.";
+					return;
+				}
+				// verify that uploaded file is no larger than 3MB
+				else if($scope.newUserImage.file.size > 3145728) {
+					$scope.saveError = "That image is too large.";
+					return;
+				}
 				userService.uploadImage($scope.newUserImage.file, $rootScope.user._id).then(function (data, status) {
 					var getExtension = function(filename) {
 					    var i = filename.lastIndexOf('.');
@@ -323,6 +333,7 @@ define(['./index'], function (controllers) {
 						$scope.emailTaken = false;
 						$scope.changesSaved = false;
 						$scope.saveError = "Error occurred while saving changes.";
+						return;
 					});
 	            },
 	            function (errorMessage, status) {
@@ -334,6 +345,7 @@ define(['./index'], function (controllers) {
 			else {
 				if($.isEmptyObject(updateParams)) {
 					$scope.saveError = "You haven't made any changes!"
+					return;
 				}
 				else {
 					userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
@@ -346,6 +358,7 @@ define(['./index'], function (controllers) {
 						$scope.emailTaken = false;
 						$scope.changesSaved = false;
 						$scope.saveError = "Error occurred while saving changes.";
+						return;
 					});
 				}
 			}
