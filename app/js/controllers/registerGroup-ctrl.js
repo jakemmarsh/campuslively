@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('registerBusinessCtrl', ['$scope', 'authService', 'schoolService', function ($scope, authService, schoolService) {
+    controllers.controller('registerGroupCtrl', ['$scope', 'authService', 'schoolService', function ($scope, authService, schoolService) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {

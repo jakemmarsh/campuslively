@@ -32,9 +32,9 @@ define(['./app'], function (app) {
             access: 'notLoggedIn'
         })
         .state('inner.registerBusiness', {
-            url: '/register/business',
-            templateUrl: '/partials/register-business.html',
-            controller: 'registerBusinessCtrl',
+            url: '/register/group',
+            templateUrl: '/partials/register-group.html',
+            controller: 'registerGroupCtrl',
             title: 'Register',
             access: 'notLoggedIn'
         })

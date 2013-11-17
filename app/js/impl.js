@@ -7,7 +7,7 @@ define([
     'controllers/home-ctrl',
     'controllers/inner-ctrl',
     'controllers/login-ctrl',
-    'controllers/registerBusiness-ctrl',
+    'controllers/registerGroup-ctrl',
     'controllers/registerStudent-ctrl',
     'controllers/activate-ctrl',
     'controllers/resend-ctrl',
