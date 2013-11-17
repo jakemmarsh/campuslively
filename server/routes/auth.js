@@ -286,6 +286,30 @@ exports.forgotPassword = function(req, res) {
     });
 };
 
+exports.checkResetKey = function(req, res) {
+    var checkKey = function(resetKey) {
+        var deferred = Q.defer();
+
+        User.findOne({ passwordResetKey: resetKey })
+        .exec(function (err, retrievedUser) {
+            if (err) {
+                deferred.reject(err.message);
+            }
+            else {
+                deferred.resolve(retrievedUser);
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    checkKey(req.params.resetKey).then(function(data) {
+        res.send(200, data);
+    }, function(err) {
+        res.send(404, err);
+    });
+};
+
 exports.resetPassword = function(req, res) {
     var getUserAndUpdatePassword = function(userId, resetKey) {
         var deferred = Q.defer();

@@ -54,6 +54,7 @@ app.configure(function() {
     app.get('/api/v1/auth/username/:username', routes.auth.checkUsername);
     app.get('/api/v1/auth/email/:email', routes.auth.checkEmail);
     app.get('/api/v1/auth/user/:username/resend', routes.auth.resendActivation);
+    app.get('/api/v1/auth/checkKey/:resetKey', routes.auth.checkResetKey);
     app.post('/api/v1/auth/user/:userId/activate/:activateKey', routes.auth.activate);
     app.post('/api/v1/auth/forgot', routes.auth.forgotPassword);
     app.post('/api/v1/auth/reset', routes.auth.resetPassword);

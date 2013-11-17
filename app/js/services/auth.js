@@ -92,6 +92,17 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		checkResetKey: function(resetKey) {
+			var deferred = $q.defer();
+
+			$http.get(this.apiPath + 'checkKey/' + resetKey).success(function(data, status) {
+				deferred.resolve(data, status);
+			}).error(function(err, status) {
+				deferred.reject(err, status);
+			});
+
+			return deferred.promise;
+		},
 		resetPassword: function(password) {
 			var deferred = $q.defer();
 
