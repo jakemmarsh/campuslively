@@ -87,11 +87,11 @@ exports.check = function(req, res) {
             res.json(200, data);
         }
         else {
-            res.send(401, "No session exists for user.");
+            res.send(404, "No session exists for user.");
         }
     }
     else {
-        res.send(401, "No session exists for user.");
+        res.send(404, "No session exists for user.");
     }
 };
 
@@ -99,7 +99,7 @@ exports.login = function(req, res) {
     authenticate(req.body.username, req.body.password, function(err, user){
         if (user) {
             if(user.activated == false) {
-                res.send(401, "Account has not been activated.");
+                res.send(403, "Account has not been activated.");
                 return;
             }
             else {
@@ -123,7 +123,7 @@ exports.login = function(req, res) {
             }
         } 
         else {
-            res.send(401, "Username or password incorrect.");
+            res.send(403, "Username or password incorrect.");
         }
     });
 };
