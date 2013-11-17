@@ -14,11 +14,21 @@
 				<label for="password" class="muted">New Password</label>
 				<div class="input-prepend full nudge--bottom">
 					<div class="icon">
-						<i class="icon-lock"></i>
+						<i class="fa fa-lock"></i>
 					</div>
 					<input type="password" id="password" data-ng-model="password" placeholder="your new password" required />
 				</div>
+				<label for="password" class="muted">Confirm New Password</label>
+				<div class="input-prepend full nudge--bottom">
+					<div class="icon">
+						<i class="fa fa-lock"></i>
+					</div>
+					<input type="password" id="confirmPassword" data-ng-model="confirmPassword" name="confirmPassword" data-password-verify="password" class="full-width" placeholder="Confirm your new password" required />
+				</div>
 				<span class="block nudge--ends red weight--bold" data-ng-show="resetError" data-ng-bind="resetError"></span>
+				<span class="red weight--bold block nudge-half--bottom" data-ng-show="passwordForm.confirmPassword.$error.passwordVerify">
+					Passwords do not match.
+				</span>
 				<input type="submit" value="Change Password" class="btn full-width" data-ng-disabled="passwordForm.$invalid" />
 			</form>
 		</div>
