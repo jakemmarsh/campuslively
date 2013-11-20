@@ -184,6 +184,27 @@ define(['./index'], function (controllers) {
 			}
 		};
 
+		$scope.changeFbAutoPost = function() {
+			console.log($rootScope.user.facebook.autoPost);
+			var updateParams = {};
+			updateParams.facebook = {};
+			updateParams.facebook.id = $rootScope.user.facebook.id;
+			updateParams.facebook.lastUpdated = $rootScope.user.facebook.lastUpdated;
+			updateParams.facebook.linked = true;
+			updateParams.facebook.subscriptions = $rootScope.user.facebook.subscriptions;
+			updateParams.facebook.managedPages = $rootScope.user.facebook.managedPages;
+			updateParams.facebook.autoPost = $rootScope.user.facebook.autoPost;
+
+			// get value from checkbox
+
+			userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+				$rootScope.user = data;
+				localStorageService.add('user', data);
+			},
+			function (errorMessage, status) {
+			});
+		};
+
 		$scope.fbLogout = function() {
 			var updateParams = {};
 			$FB.logout(function () {
@@ -363,6 +384,18 @@ define(['./index'], function (controllers) {
 				}
 			}
 		};
+
+		$scope.openExplanation = function (event) {
+          var modalInstance = $modal.open({
+            templateUrl: 'explanationModal.html',
+            controller: 'modalInstanceCtrl',
+            resolve: {
+              items: null,
+              location: null,
+              event: null
+            }
+          });
+      };
 
 		$scope.removeSubscription = function(subscriptionId) {
 			userService.unsubscribe($rootScope.user._id, subscriptionId).then(function (data, status) {

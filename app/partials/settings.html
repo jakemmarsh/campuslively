@@ -163,8 +163,35 @@
 		<div class="unit one-fourth soft--left last-unit">
 			<a href data-ng-click="fbLogin()" data-ng-hide="user.facebook.id" class="btn fb full-width nudge-half--bottom"><i class="fa fa-facebook"></i> Add Facebook</a>
 			<a href data-ng-click="fbLogout()" data-ng-show="user.facebook.id" class="btn fb full-width nudge-half--bottom"><i class="fa fa-facebook"></i> Remove Facebook</a>
+			<div class="line nudge-half--bottom" data-ng-show="user.facebook.id">
+				<div class="one-twelfth unit">
+					<input type="checkbox" data-ng-model="user.facebook.autoPost" data-ng-change="changeFbAutoPost()" id="autoPost" name="autoPost" />
+				</div>
+				<div class="eleven-twelfths last-unit label-container soft-half--left">
+					<label for="autoPost">Autopost Activity</label> 
+					<i class="fa fa-question-circle nudge-half--left pointer" data-ng-click="openExplanation()"></i>
+				</div>
+			</div>
 			<a href data-ng-click="googleLogin()" data-ng-hide="user.google.id" class="btn google full-width"><i class="fa fa-google-plus"></i> Add Google</a>
 			<a href data-ng-click="googleLogout()" data-ng-show="user.google.id" class="btn google full-width"><i class="fa fa-google-plus"></i> Remove Google</a>
 		</div>
 	</div>
 </div>
+
+<script type="text/ng-template" id="explanationModal.html">
+    <div class="modal-header">
+        <h2 class="flush">Autopost Activity</h2>
+    </div>
+    <div class="modal-body">
+    	<h3 class="caps flush--top nudge-half--bottom">What does this do?</h3>
+    	<p>Enabling this option will automatically post items to Facebook when you:</p>
+    	<ol>
+    		<li class="nudge-half--bottom">Create a new public event</li>
+    		<li>RSVP to an existing public event</li>
+    	</ol>
+    	<p>Disabling this option means nothing will be posted to Facebook without you explicitly doing so.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-ng-click="ok()">Ok</button>
+    </div>
+</script>
