@@ -84,6 +84,11 @@ define(['./index'], function (controllers) {
     	$scope.rsvpToEvent = function(activity) {
             eventService.rsvp(activity.event._id, $rootScope.user._id).then(function (data) {
                 activity.event = data;
+
+                // automatically post to Facebook if user is linked and has option enabled
+                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
+                    // make call to facebook API to autopost RSVP event
+                }
             },
             function (errorMessage) {
             });
