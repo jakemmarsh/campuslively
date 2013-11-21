@@ -45,7 +45,8 @@ var eventSchema = new mongoose.Schema({
     },
     pictureUrl: {
         type: String
-    }
+    },
+    facebookId: String
 });
 
 eventSchema.index({ loc : '2dsphere' });

@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('postCtrl', ['$scope', '$rootScope', 'locationService', 'eventService', '$timeout', function ($scope, $rootScope, locationService, eventService, $timeout) {
+    controllers.controller('postCtrl', ['$scope', '$rootScope', 'locationService', 'eventService', '$timeout', '$FB', function ($scope, $rootScope, locationService, eventService, $timeout, $FB) {
     	// initialize map options
     	$scope.mapOptions = {
 			zoom: 15,
@@ -215,31 +215,51 @@ define(['./index'], function (controllers) {
 					$scope.postError = "That image is too large.";
 					return;
 				}
-	    		var eventId;
-	    		eventService.postEvent($scope.event).then(function (data) {
-	    			eventId = data._id;
-			    	eventService.uploadImage($scope.eventImage.file, eventId).then(function () {
+	    		eventService.postEvent($scope.event).then(function (postedEvent) {
+	    			var updateParams;
+			    	eventService.uploadImage($scope.eventImage.file, postedEvent._id).then(function () {
 			    		var getExtension = function(filename) {
 						    var i = filename.lastIndexOf('.');
 			    			return (i < 0) ? '' : filename.substr(i);
 						},
 			    		updateParams = {
-			    			pictureUrl: 'https://s3.amazonaws.com/campuslively/event_imgs/' + eventId + getExtension($scope.eventImage.file.name)
+			    			pictureUrl: 'https://s3.amazonaws.com/campuslively/event_imgs/' + postedEvent._id + getExtension($scope.eventImage.file.name)
 			    		};
+			    		// create corresponding Facebook open graph object
+				    	eventService.createFacebookObject(postedEvent).then(function (response) {
+				    		updateParams.facebookId = response.id;
 
-			    		eventService.updateEvent(eventId, updateParams).then(function(data) {
-			    			$scope.eventPosted = true;
-			    			$scope.postedEvent = data;
+				    		// add facebook object ID and picture URL to event
+				    		eventService.updateEvent(postedEvent._id, updateParams).then(function(updatedEvent) {
+				    			$scope.eventPosted = true;
+				    			$scope.postedEvent = updatedEvent;
 
-			    			// automatically post to Facebook if user is linked and has option enabled
-			    			if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
-			                    // make call to facebook API to autopost RSVP event
-			                }
-			    		},
-			    		function (errorMessage, status) {
-			    			$scope.postError = errorMessage;
-			    			return;
-			    		});
+				    			// automatically post to Facebook if user is linked and has option enabled
+						    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
+						    		$FB.api(
+										'/me/campuslively:post',
+										'post',
+										{ event: updatedEvent.facebookId },
+										function(response) {
+											if (!response || response.error) {
+												alert('Error occured');
+												console.log(response.error);
+											} 
+											else {
+												alert('Publish was successful! Action ID: ' + response.id);
+											}
+										}
+									);
+				                }
+				    		},
+				    		function (errorMessage, status) {
+				    			$scope.postError = errorMessage;
+				    			return;
+				    		});
+				    	},
+				    	function (errorMessage, status) {
+				    		$scope.postError = errorMessage;
+				    	});
 			    	}, 
 			    	function (errorMessage, status) {
 			    		$scope.postError = errorMessage;
@@ -252,14 +272,38 @@ define(['./index'], function (controllers) {
 			    });
 	    	}
 	    	else {
-		    	eventService.postEvent($scope.event).then(function (data) {
-			    	$scope.eventPosted = true;
-			    	$scope.postedEvent = data;
+		    	eventService.postEvent($scope.event).then(function (postedEvent) {
+		    		var updateParams = {};
 
-			    	// automatically post to Facebook if user is linked and has option enabled
-			    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
-	                    // make call to facebook API to autopost RSVP event
-	                }
+		    		// create corresponding Facebook open graph object
+			    	eventService.createFacebookObject(postedEvent).then(function (response) {
+			    		updateParams.facebookId = response.id;
+
+			    		// add Facebook object ID to event
+			    		eventService.updateEvent(postedEvent._id, updateParams).then(function(updatedEvent) {
+			    			$scope.eventPosted = true;
+			    			$scope.postedEvent = updatedEvent;
+
+			    			// automatically post to Facebook if user is linked and has option enabled
+					    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
+					    		$FB.api(
+									'/me/campuslively:post',
+									'post',
+									{ event: updatedEvent.facebookId },
+									function(response) {
+									}
+								);
+			                }
+			    		},
+			    		function (errorMessage, status) {
+			    			$scope.postError = errorMessage;
+			    			return;
+			    		});
+			    	},
+			    	function (errorMessage, status) {
+			    		$scope.postError = errorMessage;
+			    		return;
+			    	});
 			    },
 			    function (errorMessage, status) {
 			    	$scope.postError = errorMessage.message;

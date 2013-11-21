@@ -167,6 +167,40 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		createFacebookObject: function(event) {
+			var deferred = $q.defer(),
+				accessToken = '458852510898409|6dr7y1LgXO06y2iTfvl6Q9KB38M',
+				object,
+				privacy = {
+					'value': 'SELF'
+				};
+
+			if(event.description) {
+				object = {
+					title: event.title,
+					image: event.pictureUrl,
+					url: 'http://localhost:3000/event/' + event._id,
+					description: event.description
+				};
+			}
+			else {
+				object = {
+					title: event.title,
+					image: event.pictureUrl,
+					url: 'http://localhost:3000/event/' + event._id
+				};
+			}
+
+			object = JSON.stringify(object);
+
+			$http.post('https://graph.facebook.com/app/objects/campuslively:event?access_token=' + accessToken + '&privacy=' + privacy + '&object=' + object).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
+		},
 		updateEvent: function(eventId, updatedParams) {
 			var deferred = $q.defer();
 

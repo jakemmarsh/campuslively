@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('profileCtrl', ['$scope', '$rootScope', '$modal', 'resolvedUser', 'userService', 'eventService', 'localStorageService', function ($scope, $rootScope, $modal, resolvedUser, userService, eventService, localStorageService) {
+    controllers.controller('profileCtrl', ['$scope', '$rootScope', '$modal', 'resolvedUser', 'userService', 'eventService', 'localStorageService', '$FB', function ($scope, $rootScope, $modal, resolvedUser, userService, eventService, localStorageService, $FB) {
         var oldestId;
         $scope.profile = resolvedUser;
     	$scope.loading = true;
@@ -70,18 +70,24 @@ define(['./index'], function (controllers) {
             $scope.isSubscribed();
         };
 
-        $scope.rsvpToEvent = function(eventId) {
-            eventService.rsvp(eventId, $rootScope.user._id).then(function (data) {
+        $scope.rsvpToEvent = function(event) {
+            eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
                 for (var i = 0; i < $scope.events.length; i++) {
-                    if($scope.events[i]._id == eventId) {
+                    if($scope.events[i]._id == event._id) {
                         $scope.events[i] = data;
                         break;
                     }
                 }
 
                 // automatically post to Facebook if user is linked and has option enabled
-                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
-                    // make call to facebook API to autopost RSVP event
+                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId) {
+                    $FB.api(
+                        '/me/campuslively:rsvp_to',
+                        'post',
+                        { event: event.facebookId },
+                        function(response) {
+                        }
+                    );
                 }
             },
             function (errorMessage) {
@@ -89,10 +95,10 @@ define(['./index'], function (controllers) {
             });
         };
 
-        $scope.unRsvpToEvent = function(eventId) {
-            eventService.unRsvp(eventId, $rootScope.user._id).then(function (data) {
+        $scope.unRsvpToEvent = function(event) {
+            eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
                 for (var i = 0; i < $scope.events.length; i++) {
-                    if($scope.events[i]._id == eventId) {
+                    if($scope.events[i]._id == event._id) {
                         $scope.events[i] = data;
                         break;
                     }

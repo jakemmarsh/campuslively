@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('feedCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'eventService', '$timeout', function ($scope, $rootScope, $modal, userService, eventService, $timeout) {
+    controllers.controller('feedCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'eventService', '$timeout', '$FB', function ($scope, $rootScope, $modal, userService, eventService, $timeout, $FB) {
         var oldestId, newestId;
     	$scope.loading = true;
 
@@ -88,6 +88,17 @@ define(['./index'], function (controllers) {
                 // automatically post to Facebook if user is linked and has option enabled
                 if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
                     // make call to facebook API to autopost RSVP event
+                }
+
+                // automatically post to Facebook if user is linked and has option enabled
+                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && activity.event.facebookId) {
+                    $FB.api(
+                        '/me/campuslively:rsvp_to',
+                        'post',
+                        { event: activity.event.facebookId },
+                        function(response) {
+                        }
+                    );
                 }
             },
             function (errorMessage) {

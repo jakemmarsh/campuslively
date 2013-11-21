@@ -47,8 +47,8 @@
 			<div class="td one-fourth text-right soft-half--right vertical-align-middle">
 				<div class="action-buttons nudge-half--right">
 					<a class="first" data-ng-class="{green: isAttending(event)}" href data-ng-click="openAttending(event)" data-tooltip="People Attending"><span class="gamma" data-ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
-					<a href data-ng-click="rsvpToEvent(event._id)" data-ng-hide="isAttending(event)"><i class="fa fa-thumbs-up"></i> RSVP</a>
-					<a href data-ng-click="unRsvpToEvent(event._id)" data-ng-show="isAttending(event)"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
+					<a href data-ng-click="rsvpToEvent(event)" data-ng-hide="isAttending(event)"><i class="fa fa-thumbs-up"></i> RSVP</a>
+					<a href data-ng-click="unRsvpToEvent(event)" data-ng-show="isAttending(event)"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
 				</div>
 				<div class="action-buttons green">
 					<a href data-ng-href="/event/{{event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>

@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('calendarCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$modal', 'eventService', 'locationService', 'googleService', function ($scope, $rootScope, $location, $anchorScroll, $modal, eventService, locationService, googleService) {
+    controllers.controller('calendarCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$modal', 'eventService', 'locationService', 'googleService', '$FB', function ($scope, $rootScope, $location, $anchorScroll, $modal, eventService, locationService, googleService, $FB) {
     	$scope.showDay = false;
 
       $scope.currentView = 'school';
@@ -215,16 +215,16 @@ define(['./index'], function (controllers) {
           dayClick: $scope.dayClick
       };
 
-    	$scope.rsvpToEvent = function(eventId) {
-          eventService.rsvp(eventId, $rootScope.user._id).then(function (data) {
+    	$scope.rsvpToEvent = function(event) {
+          eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
               for (var i = 0; i < $scope.dayEvents.length; i++) {
-                  if($scope.dayEvents[i]._id == eventId) {
+                  if($scope.dayEvents[i]._id == event._id) {
                       $scope.dayEvents[i] = data;
                       break;
                   }
               }
               for (var i = 0; i < $scope.events.length; i++) {
-                if($scope.events[i].id == eventId) {
+                if($scope.events[i].id == event._id) {
                   // highlight event on calendar
                   $scope.events[i].backgroundColor = '#4fbda2';
                   $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
@@ -234,24 +234,30 @@ define(['./index'], function (controllers) {
               }
 
               // automatically post to Facebook if user is linked and has option enabled
-              if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
-                // make call to facebook API to autopost RSVP event
+              if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId) {
+                $FB.api(
+                  '/me/campuslively:rsvp_to',
+                  'post',
+                  { event: event.facebookId },
+                  function(response) {
+                  }
+                );
               }
           },
           function (errorMessage) {
           });
       };
 
-      $scope.unRsvpToEvent = function(eventId) {
-          eventService.unRsvp(eventId, $rootScope.user._id).then(function (data) {
+      $scope.unRsvpToEvent = function(event) {
+          eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
               for (var i = 0; i < $scope.dayEvents.length; i++) {
-                  if($scope.dayEvents[i]._id == eventId) {
+                  if($scope.dayEvents[i]._id == event._id) {
                       $scope.dayEvents[i] = data;
                       break;
                   }
               }
               for (var i = 0; i < $scope.events.length; i++) {
-                if($scope.events[i].id == eventId) {
+                if($scope.events[i].id == event._id) {
                   // un-highlight event on calendar
                   $scope.events[i].backgroundColor = '#315273';
                   $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
