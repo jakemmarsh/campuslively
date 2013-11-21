@@ -151,6 +151,7 @@ define(['./index'], function (controllers) {
 						updateParams.facebook = {};
 						updateParams.facebook.id = res.authResponse.userID;
 						updateParams.facebook.linked = true;
+						updateParams.facebook.autoPost = true;
 						$q.all([
                             $FB.api('/me/likes', {limit: 9999, fields: 'id'}),
                             $FB.api('/me/subscribedto', {limit: 9999, fields: 'id'}),
@@ -212,7 +213,8 @@ define(['./index'], function (controllers) {
 				updateParams.facebook = {
 					id: null,
 					subscriptions: null,
-					managedPages: null
+					managedPages: null,
+					autoPost: null
 				};
 				updateParams.pictureUrl = 'http://s3.amazonaws.com/campuslively/user_imgs/default.png';
 				updateParams.facebookLink = null;
