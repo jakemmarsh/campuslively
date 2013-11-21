@@ -317,7 +317,7 @@ define(['./index'], function (controllers) {
 				}
 			}
 			if($scope.userTwitterLink !== $rootScope.user.twitterLink) {
-				updateParams.twitterLink = $scope.userTwitterLink;
+				updateParams.twitterLink = $scope.userTwitterLink.replace('@', '');
 			}
 			if($scope.userPassword) {
 				if($scope.userPassword.length > 0) {
