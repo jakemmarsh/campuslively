@@ -165,7 +165,7 @@
 		<div class="unit one-fourth soft--left last-unit">
 			<a href data-ng-click="fbLogin()" data-ng-hide="user.facebook.id" class="btn fb full-width nudge-half--bottom"><i class="fa fa-facebook"></i> Add Facebook</a>
 			<a href data-ng-click="fbLogout()" data-ng-show="user.facebook.id" class="btn fb full-width nudge-half--bottom"><i class="fa fa-facebook"></i> Remove Facebook</a>
-			<div class="line nudge-half--bottom" data-ng-show="user.facebook.id">
+			<div class="line nudge-half--bottom" data-ng-show="user.facebook.id && user.type == 'student'">
 				<div class="one-twelfth unit">
 					<input type="checkbox" data-ng-model="user.facebook.autoPost" data-ng-change="changeFbAutoPost()" id="autoPost" name="autoPost" />
 				</div>

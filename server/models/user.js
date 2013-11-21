@@ -78,7 +78,7 @@ var userSchema = new mongoose.Schema({
         lastUpdated: Date,
         autoPost: {
             type: Boolean,
-            default: true
+            default: false
         }
     },
     google: {
