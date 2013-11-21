@@ -235,7 +235,7 @@ define(['./index'], function (controllers) {
 				    			$scope.postedEvent = updatedEvent;
 
 				    			// automatically post to Facebook if user is linked and has option enabled
-						    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
+						    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && updatedEvent.privacy == 'public') {
 						    		$FB.api(
 										'/me/campuslively:post',
 										'post',
@@ -285,7 +285,7 @@ define(['./index'], function (controllers) {
 			    			$scope.postedEvent = updatedEvent;
 
 			    			// automatically post to Facebook if user is linked and has option enabled
-					    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
+					    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && updatedEvent.privacy == 'public') {
 					    		$FB.api(
 									'/me/campuslively:post',
 									'post',

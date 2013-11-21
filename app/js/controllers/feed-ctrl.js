@@ -91,7 +91,7 @@ define(['./index'], function (controllers) {
                 }
 
                 // automatically post to Facebook if user is linked and has option enabled
-                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && activity.event.facebookId) {
+                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && activity.event.facebookId && activity.event.privacy == 'public') {
                     $FB.api(
                         '/me/campuslively:rsvp_to',
                         'post',
