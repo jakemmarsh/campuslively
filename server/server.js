@@ -73,6 +73,8 @@ app.configure(function() {
     app.post('/api/v1/user/:userId/unsubscribe/:subscribeId', restrict, routes.user.unsubscribe);
 
     app.post('/api/v1/user/:userId/addFacebookSubscriptions', restrict, routes.user.addFacebookSubscriptions);
+
+    app.delete('/api/v1/user/:userId', restrict, routes.user.deleteUser);
     
     app.get('/api/v1/user/:userId/activities', restrict, routes.user.getActivities);
     app.get('/api/v1/user/:userId/activities/limit/:limit', restrict, routes.user.getActivities);

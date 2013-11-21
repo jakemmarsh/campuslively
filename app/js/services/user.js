@@ -152,6 +152,17 @@ define(['./index'], function (services) {
 			});
 
 			return deferred.promise;
+		},
+		deleteUser: function(userId) {
+			var deferred = $q.defer();
+
+			$http.delete(this.apiPath + userId).success(function(data, status) {
+				deferred.resolve(data);
+			}).error(function(err, status) {
+				deferred.reject(err);
+			});
+
+			return deferred.promise;
 		}
     }
   }]);

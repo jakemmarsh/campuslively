@@ -819,3 +819,76 @@ exports.addFacebookSubscriptions = function(req, res) {
 		res.send(500, err);
 	});
 };
+
+exports.deleteUser = function(req, res) {
+	var removeSubscriptions = function(userId) {
+		var deferred = Q.defer();
+
+		User.update({}, { $pull: { 'subscriptions': subscriptionId } }, { multi: true })
+		.exec(function (err, numberAffected) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve(numberAffected);
+			}
+    	});
+
+		return deferred.promise;
+	},
+	removeActivities = function(userId) {
+		var deferred = Q.defer();
+
+		Activity.remove({
+			$or: [
+				{ actor: userId },
+				{ recipient: userId }
+			]
+		})
+		.exec(function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
+
+		return deferred.promise;
+	},
+	deleteUser = function(userId) {
+		var deferred = Q.defer();
+
+		User.remove({ _id: userId })
+		.exec(function(err) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve();
+			}
+		});
+
+		return deferred.promise;
+	};
+
+	// only allow users to delete their own account
+	if(req.session.user._id === req.params.userId) {
+		removeSubscriptions(req.params.userId).then(function() {
+			removeActivities(req.params.userId).then(function() {
+				deleteUser(req.params.userId).then(function() {
+					res.send(200, "User and related items deleted successfully.");
+				}, function(err) {
+					res.send(500, err);
+				});
+			}, function(err) {
+				res.send(500, err);
+			});
+		}, function(err) {
+			res.send(500, err);
+		});
+	}
+	else {
+		res.send(403, "You do not have permission to delete other users' accounts.");
+	}
+};
