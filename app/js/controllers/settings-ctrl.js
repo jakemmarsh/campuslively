@@ -387,17 +387,29 @@ define(['./index'], function (controllers) {
 			}
 		};
 
-		$scope.openExplanation = function (event) {
-          var modalInstance = $modal.open({
-            templateUrl: 'explanationModal.html',
-            controller: 'modalInstanceCtrl',
-            resolve: {
-              items: null,
-              location: null,
-              event: null
-            }
-          });
-      };
+		$scope.openExplanation = function() {
+			var modalInstance = $modal.open({
+				templateUrl: 'explanationModal.html',
+				controller: 'modalInstanceCtrl',
+				resolve: {
+					items: null,
+					location: null,
+					event: null
+				}
+			});
+      	};
+
+      	$scope.openDelete = function() {
+			var modalInstance = $modal.open({
+				templateUrl: 'deleteModal.html',
+				controller: 'modalInstanceCtrl',
+				resolve: {
+					items: null,
+					location: null,
+					event: null
+				}
+			});
+      	};
 
 		$scope.removeSubscription = function(subscriptionId) {
 			userService.unsubscribe($rootScope.user._id, subscriptionId).then(function (data, status) {

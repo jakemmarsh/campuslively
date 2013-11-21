@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('modalInstanceCtrl', ['$scope', '$rootScope', '$modalInstance', '$FB', 'items', 'location', 'event', 'eventService', function ($scope, $rootScope, $modalInstance, $FB, items, location, event, eventService) {
+    controllers.controller('modalInstanceCtrl', ['$scope', '$rootScope', '$modalInstance', '$FB', '$location', 'items', 'location', 'event', 'eventService', 'userService', 'localStorageService', function ($scope, $rootScope, $modalInstance, $FB, $location, items, location, event, eventService, userService, localStorageService) {
     	if(items) {
             $scope.items = items;
             $scope.invitees = [];
@@ -126,6 +126,18 @@ define(['./index'], function (controllers) {
     	$scope.clickLink = function() {
     		$modalInstance.close();
     	};
+
+        $scope.deleteUser = function() {
+            userService.deleteUser($rootScope.user._id).then(function (data, status) {
+                $modalInstance.close();
+                localStorageService.clearAll();
+                $rootScope.user = null;
+                $location.path('/');
+            }, 
+            function (errorMessage, status) {
+
+            });
+        };
 
     	$scope.ok = function() {
 			$modalInstance.close();
