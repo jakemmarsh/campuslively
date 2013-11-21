@@ -9,7 +9,8 @@
 				</h1>
 				<h3 class="flush muted weight--normal">
 					hosted by
-					<a href data-ng-href="/profile/{{ event.creator.username }}">{{event.creator.displayName}}</a>
+					<a href data-ng-href="/profile/{{ event.creator.username }}" data-ng-show="event.creator">{{event.creator.displayName}}</a>
+					<span data-ng-hide="event.creator">[deleted]</span>
 				</h3>
 			</div>
 			<div class="unit one-half last-unit text-right" data-ng-hide="eventPassed">
@@ -77,7 +78,8 @@
 							<i class="fa fa-times"></i>
 						</a>
 						<h4 class="flush">
-							<a href data-ng-href="/profile/{{comment.creator.username}}">{{comment.creator.displayName}}</a>
+							<a href data-ng-href="/profile/{{comment.creator.username}}" data-ng-show="comment.creator">{{comment.creator.displayName}}</a>
+							<span class="muted" data-ng-hide="comment.creator">[deleted]</span>
 						</h4>
 						<p class="nudge-half--ends pre-wrap" data-ng-bind-html="comment.body | parseUrl"></p>
 						<div class="table full-width">

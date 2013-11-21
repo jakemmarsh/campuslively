@@ -12,7 +12,8 @@
 			</div>
 			<div class="unit one-half last-unit text-right">
 				Posted by
-				 <a data-ng-href="/profile/{{event.creator.username}}">{{event.creator.displayName}}</a>
+				 <a data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator">{{event.creator.displayName}}</a>
+				 <span data-ng-hide="event.creator">[deleted]</span>
 				 {{ event.timestamp | timePast }}
 			</div>
 		</div>
