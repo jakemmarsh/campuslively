@@ -276,11 +276,16 @@ exports.forgotPassword = function(req, res) {
     };
 
     getUserAndSetKey(req.body.username).then(function(savedUser) {
-        mailer.sendResetEmail(savedUser).then(function(data) {
-            res.send(200, "Successfully set user's password reset key.");
-        }, function() {
-            res.send(500, "Password reset key set, but failed to send email.");
-        });
+        if(savedUser) {
+            mailer.sendResetEmail(savedUser).then(function(data) {
+                res.send(200, "Successfully set user's password reset key.");
+            }, function() {
+                res.send(500, "Password reset key set, but failed to send email.");
+            });
+        }
+        else {
+            res.send(404, "No user exists with that username.");
+        }
     }, function() {
         res.send(500, "Failed to set user's password reset key.");
     });
