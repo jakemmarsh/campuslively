@@ -839,7 +839,7 @@ exports.deleteUser = function(req, res) {
 	removeFromEvents = function(userId) {
 		var deferred = Q.defer();
 
-		Event.update({}, { $pull: { 'attending': userId }, $pull: { 'invited': userId } }, { multi: true })
+		Event.update({}, { $pull: { 'attending': userId, 'invited': userId } }, { multi: true })
 		.exec(function (err, numberAffected) {
 			if(err) {
 				deferred.reject(err.message);
