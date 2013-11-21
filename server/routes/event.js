@@ -1168,7 +1168,11 @@ exports.unRsvp = function(req, res) {
 	deleteActivity = function(eventId, userId) {
 		var deferred = Q.defer();
 
-		Activity.remove({ event: eventId, actor: userId, activity: 'rsvpd' }, function(err) {
+		Activity.remove({ 
+			event: eventId, 
+			actor: userId, 
+			activity: 'rsvpd' 
+		}, function(err) {
 			if(err) {
 				deferred.reject(err.message);
 			}
@@ -1241,7 +1245,9 @@ exports.deleteEvent = function(req, res) {
 	deleteInvites = function(eventId) {
 		var deferred = Q.defer();
 
-		Invite.remove({ event: eventId }, function(err) {
+		Invite.remove({ 
+			event: eventId 
+		}, function(err) {
 			if(err) {
 				deferred.reject(err.message);
 			}
@@ -1255,7 +1261,14 @@ exports.deleteEvent = function(req, res) {
 	removeEventFromUsers = function(eventId) {
 		var deferred = Q.defer();
 
-		User.update({}, { $pull: { attending: eventId }, $pull: { invites: eventId } }, function(err) {
+		User.update({}, { 
+			$pull: { 
+				attending: eventId 
+			}, 
+			$pull: { 
+				invites: eventId 
+			} 
+		}, function(err) {
 			if(err) {
 				deferred.reject(err.message);
 			}
