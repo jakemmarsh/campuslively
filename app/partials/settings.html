@@ -152,6 +152,9 @@
 					</div>
 				</div>
 			</form>
+
+			<hr />
+
 			<h2 class="flush soft-half--bottom" data-ng-show="user.subscriptions">Manage Subscriptions</h2>
 			<div class="inline-block" data-ng-repeat="subscription in user.subscriptions">
 				<div class="user-img-subscriptions" data-ng-style="{'background-image': 'url(' + subscription.pictureUrl + ')'}">
@@ -159,8 +162,10 @@
 					<a href class="remove" data-tooltip="Unsubscribe" data-tooltip-placement="top" data-ng-click="removeSubscription(subscription._id)"><i class="fa fa-times"></i></a>
 				</div>
 			</div>
+
 			<hr />
-			<a class="btn--red float-right" href data-ng-click="openDelete()">Delete Account</a>
+
+			<a class="btn--red float-right nudge-half--top" href data-ng-click="openDelete()">Delete Account</a>
 		</div>
 		<div class="unit one-fourth soft--left last-unit">
 			<a href data-ng-click="fbLogin()" data-ng-hide="user.facebook.id" class="btn fb full-width nudge-half--bottom"><i class="fa fa-facebook"></i> Add Facebook</a>
