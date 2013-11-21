@@ -824,7 +824,22 @@ exports.deleteUser = function(req, res) {
 	var removeSubscriptions = function(userId) {
 		var deferred = Q.defer();
 
-		User.update({}, { $pull: { 'subscriptions': subscriptionId } }, { multi: true })
+		User.update({}, { $pull: { 'subscriptions': userId } }, { multi: true })
+		.exec(function (err, numberAffected) {
+			if(err) {
+				deferred.reject(err.message);
+			}
+			else {
+				deferred.resolve(numberAffected);
+			}
+    	});
+
+		return deferred.promise;
+	},
+	removeFromEvents = function(userId) {
+		var deferred = Q.defer();
+
+		Event.update({}, { $pull: { 'attending': userId }, $pull: { 'invited': userId } }, { multi: true })
 		.exec(function (err, numberAffected) {
 			if(err) {
 				deferred.reject(err.message);
@@ -875,9 +890,13 @@ exports.deleteUser = function(req, res) {
 	// only allow users to delete their own account
 	if(req.session.user._id === req.params.userId) {
 		removeSubscriptions(req.params.userId).then(function() {
-			removeActivities(req.params.userId).then(function() {
-				deleteUser(req.params.userId).then(function() {
-					res.send(200, "User and related items deleted successfully.");
+			removeFromEvents(req.params.userId).then(function() {
+				removeActivities(req.params.userId).then(function() {
+					deleteUser(req.params.userId).then(function() {
+						res.send(200, "User and related items deleted successfully.");
+					}, function(err) {
+						res.send(500, err);
+					});
 				}, function(err) {
 					res.send(500, err);
 				});
