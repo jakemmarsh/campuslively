@@ -38,20 +38,30 @@ define(['./index'], function (services) {
 			return deferred.promise;
 		},
 		getEventsBySchoolNewer: function(schoolId, newestId) {
-			var deferred = $q.defer();
+			var deferred = $q.defer(),
+				newestId = (typeof newestId === "undefined") ? null : newestId;
 
-			$http.get(this.apiPath + 'school/' + schoolId + '/newerThan/' + newestId).success(function(data, status) {
-				deferred.resolve(data);
-			}).error(function(err, status) {
-				deferred.reject(err);
-			});
+			if(newestId) {
+				$http.get(this.apiPath + 'school/' + schoolId + '/newer/' + newestId).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
+			else {
+				$http.get(this.apiPath + 'school/' + schoolId + '/newer').success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
 
 			return deferred.promise;
 		},
 		getEventsBySchoolOlder: function(schoolId, oldestId, limit) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'school/' + schoolId + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
+			$http.get(this.apiPath + 'school/' + schoolId + '/older/' + oldestId + '/limit/' + limit).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -81,20 +91,30 @@ define(['./index'], function (services) {
 			return deferred.promise;
 		},
 		getEventsByLocationNewer: function(lat, lng, newestId) {
-			var deferred = $q.defer();
+			var deferred = $q.defer(),
+				newestId = (typeof newestId === "undefined") ? null : newestId;
 
-			$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/newerThan/' + newestId).success(function(data, status) {
-				deferred.resolve(data);
-			}).error(function(err, status) {
-				deferred.reject(err);
-			});
+			if(newestId) {
+				$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/newer/' + newestId).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
+			else {
+				$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/newer').success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
 
 			return deferred.promise;
 		},
 		getEventsByLocationOlder: function(lat, lng, oldestId, limit) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
+			$http.get(this.apiPath + 'near/' + lat + '/' + lng + '/older/' + oldestId + '/limit/' + limit).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
@@ -145,10 +165,31 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		},
+		getEventsByUserNewer: function(profileId, newestId) {
+			var deferred = $q.defer(),
+				newestId = (typeof newestId === "undefined") ? null : newestId;
+
+			if(newestId) {
+				$http.get(this.apiPath + 'profile/' + profileId + '/newer/' + newestId).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
+			else {
+				$http.get(this.apiPath + 'profile/' + profileId + '/newer').success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
+
+			return deferred.promise;
+		},
 		getEventsByUserOlder: function(profileId, oldestId, limit) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'profile/' + profileId + '/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
+			$http.get(this.apiPath + 'profile/' + profileId + '/older/' + oldestId + '/limit/' + limit).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);

@@ -232,33 +232,63 @@ exports.getEventsBySchoolNewer = function(req, res) {
 				{ path: 'subComments.creator'}
 			];
 
-		Event.find({ 
-			school: schoolId, 
-			_id: { $gt: newestId }, 
-			$or: [
-				{ privacy: 'public' }, 
-				{ invited: userId }, 
-				{ attending: userId }, 
-				{ creator: userId }
-			]
-		})
-		.sort({ _id: -1 })
-		.populate(eventPopulateObj)
-		.exec(function (err, retrievedEvents) {
-	        if(err) {
-         		deferred.reject(err.message);
-         	}
-         	else {
-				Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
-					if(err) {
-						deferred.reject(err.message);
-					}
-					else {
-						deferred.resolve(retrievedEvents);
-					}
-				});
-         	}
-	    });
+		if(newestId) {
+			Event.find({ 
+				school: schoolId, 
+				_id: { $gt: newestId }, 
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				]
+			})
+			.sort({ _id: -1 })
+			.populate(eventPopulateObj)
+			.exec(function (err, retrievedEvents) {
+		        if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvents);
+						}
+					});
+	         	}
+		    });
+		}
+		else {
+			Event.find({ 
+				school: schoolId,
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				]
+			})
+			.sort({ _id: -1 })
+			.populate(eventPopulateObj)
+			.exec(function (err, retrievedEvents) {
+		        if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvents);
+						}
+					});
+	         	}
+		    });
+		}
 
 		return deferred.promise;
 	};
@@ -555,34 +585,65 @@ exports.getEventsByUserNewer = function(req, res) {
 
 		today.setHours(0,0,0,0);
 
-		Event.find({ 
-			creator: profileId, 
-			_id: { $gt: newestId }, 
-			$or: [
-				{ privacy: 'public' }, 
-				{ invited: userId }, 
-				{ attending: userId }, 
-				{ creator: userId }
-			],
-			startDate: { $gt: today }
-		})
-		.sort({ _id: -1 })
-		.populate(eventPopulateObj)
-		.exec(function (err, retrievedEvent) {
-	        if(err) {
-         		deferred.reject(err.message);
-         	}
-         	else {
-				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-					if(err) {
-						deferred.reject(err.message);
-					}
-					else {
-						deferred.resolve(retrievedEvent);
-					}
-				});
-         	}
-	    });
+		if(newestId) {
+			Event.find({ 
+				creator: profileId, 
+				_id: { $gt: newestId }, 
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				],
+				startDate: { $gt: today }
+			})
+			.sort({ _id: -1 })
+			.populate(eventPopulateObj)
+			.exec(function (err, retrievedEvent) {
+		        if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvent);
+						}
+					});
+	         	}
+		    });
+		}
+		else {
+			Event.find({ 
+				creator: profileId,
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				],
+				startDate: { $gt: today }
+			})
+			.sort({ _id: -1 })
+			.populate(eventPopulateObj)
+			.exec(function (err, retrievedEvent) {
+		        if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvent);
+						}
+					});
+	         	}
+		    });
+		}
 
 		return deferred.promise;
 	};
@@ -778,38 +839,71 @@ exports.getEventsByLocationNewer = function(req, res) {
 
 		today.setHours(0,0,0,0);
 
-		Event.find({ 
-			loc: { 
-				$near : locationPoint 
-			}, 
-			_id: { 
-				$gt: newestId 
-			}, 
-			$or: [
-				{ privacy: 'public' }, 
-				{ invited: userId }, 
-				{ attending: userId }, 
-				{ creator: userId }
-			],
-			startDate: { $gt: today }
-		})
-		.sort({ _id: -1 })
-		.populate(eventPopulateObj)
-		.exec(function(err, retrievedEvent) {
-			if(err) {
-         		deferred.reject(err.message);
-         	}
-         	else {
-				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-					if(err) {
-						deferred.reject(err.message);
-					}
-					else {
-						deferred.resolve(retrievedEvent);
-					}
-				});
-         	}
-        });
+		if(newestId) {
+			Event.find({ 
+				loc: { 
+					$near : locationPoint 
+				}, 
+				_id: { 
+					$gt: newestId 
+				}, 
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				],
+				startDate: { $gt: today }
+			})
+			.sort({ _id: -1 })
+			.populate(eventPopulateObj)
+			.exec(function(err, retrievedEvent) {
+				if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvent);
+						}
+					});
+	         	}
+	        });
+	    }
+	    else {
+	    	Event.find({ 
+				loc: { 
+					$near : locationPoint 
+				},
+				$or: [
+					{ privacy: 'public' }, 
+					{ invited: userId }, 
+					{ attending: userId }, 
+					{ creator: userId }
+				],
+				startDate: { $gt: today }
+			})
+			.sort({ _id: -1 })
+			.populate(eventPopulateObj)
+			.exec(function(err, retrievedEvent) {
+				if(err) {
+	         		deferred.reject(err.message);
+	         	}
+	         	else {
+					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedEvent);
+						}
+					});
+	         	}
+	        });
+	    }
 
 		return deferred.promise;
 	};

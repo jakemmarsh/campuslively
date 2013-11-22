@@ -608,40 +608,77 @@ exports.getActivitiesNewer = function(req, res) {
 				{ path: 'comment.creator', model: User }
 			];
 
-		Activity.find({ 
-			$or: [
-				{recipient: user._id}, 
-				{eventCreator: user._id}, 
-				{
-					actor: {$in: user.subscriptions}, 
-					$or: [
-						{eventPrivacy: 'public'}, 
-						{event: {$in: user.attending}}, 
-						{event: {$in: user.invites}}
-					]
-				}, 
-				{event: {$in: user.attending}}
-			], 
-			actor: { $ne: user._id }, 
-			_id: { $gt: newestId } 
-		})
-		.sort({ _id: -1 })
-		.populate(activityPopulateObj)
-		.exec(function(err, retrievedActivities) {
-			if(err || !retrievedActivities) {
-				deferred.reject(new Error("No events found."));
-			}
-			else {
-				User.populate(retrievedActivities, userPopulateObj, function(err, data){
-					if(err) {
-						deferred.reject(err.message);
-					}
-					else {
-						deferred.resolve(retrievedActivities);
-					}
-				});
-			}
-		});
+		if(newestId) {
+			Activity.find({ 
+				$or: [
+					{recipient: user._id}, 
+					{eventCreator: user._id}, 
+					{
+						actor: {$in: user.subscriptions}, 
+						$or: [
+							{eventPrivacy: 'public'}, 
+							{event: {$in: user.attending}}, 
+							{event: {$in: user.invites}}
+						]
+					}, 
+					{event: {$in: user.attending}}
+				], 
+				actor: { $ne: user._id }, 
+				_id: { $gt: newestId } 
+			})
+			.sort({ _id: -1 })
+			.populate(activityPopulateObj)
+			.exec(function(err, retrievedActivities) {
+				if(err || !retrievedActivities) {
+					deferred.reject(new Error("No events found."));
+				}
+				else {
+					User.populate(retrievedActivities, userPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedActivities);
+						}
+					});
+				}
+			});
+		}
+		else {
+			Activity.find({ 
+				$or: [
+					{recipient: user._id}, 
+					{eventCreator: user._id}, 
+					{
+						actor: {$in: user.subscriptions}, 
+						$or: [
+							{eventPrivacy: 'public'}, 
+							{event: {$in: user.attending}}, 
+							{event: {$in: user.invites}}
+						]
+					}, 
+					{event: {$in: user.attending}}
+				], 
+				actor: { $ne: user._id }
+			})
+			.sort({ _id: -1 })
+			.populate(activityPopulateObj)
+			.exec(function(err, retrievedActivities) {
+				if(err || !retrievedActivities) {
+					deferred.reject(new Error("No events found."));
+				}
+				else {
+					User.populate(retrievedActivities, userPopulateObj, function(err, data){
+						if(err) {
+							deferred.reject(err.message);
+						}
+						else {
+							deferred.resolve(retrievedActivities);
+						}
+					});
+				}
+			});
+		}
 
 		return deferred.promise;
 	};

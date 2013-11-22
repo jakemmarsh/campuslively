@@ -121,20 +121,30 @@ define(['./index'], function (services) {
 			return deferred.promise;
 		},
 		getActivitiesNewer: function(userId, newestId) {
-			var deferred = $q.defer();
+			var deferred = $q.defer(),
+				newestId = (typeof newestId === "undefined") ? null : newestId;
 
-			$http.get(this.apiPath + userId + '/activities/newerThan/' + newestId).success(function(data, status) {
-				deferred.resolve(data);
-			}).error(function(err, status) {
-				deferred.reject(err);
-			});
+			if(newestId) {
+				$http.get(this.apiPath + userId + '/activities/newer/' + newestId).success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
+			else {
+				$http.get(this.apiPath + userId + '/activities/newer/').success(function(data, status) {
+					deferred.resolve(data);
+				}).error(function(err, status) {
+					deferred.reject(err);
+				});
+			}
 
 			return deferred.promise;
 		},
 		getActivitiesOlder: function(userId, oldestId, limit) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + userId + '/activities/olderThan/' + oldestId + '/limit/' + limit).success(function(data, status) {
+			$http.get(this.apiPath + userId + '/activities/older/' + oldestId + '/limit/' + limit).success(function(data, status) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err);
