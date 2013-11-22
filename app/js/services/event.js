@@ -170,25 +170,23 @@ define(['./index'], function (services) {
 		createFacebookObject: function(event) {
 			var deferred = $q.defer(),
 				accessToken = '458852510898409|6dr7y1LgXO06y2iTfvl6Q9KB38M',
-				object,
+				object = {
+					title: event.title,
+					url: 'http://localhost:3000/event/' + event._id
+				},
 				privacy = {
 					'value': 'SELF'
 				};
 
 			if(event.description) {
-				object = {
-					title: event.title,
-					image: event.pictureUrl,
-					url: 'http://localhost:3000/event/' + event._id,
-					description: event.description
-				};
+				object.description = event.description;
+			}
+
+			if(event.pictureUrl) {
+				object.image = event.pictureUrl;
 			}
 			else {
-				object = {
-					title: event.title,
-					image: event.pictureUrl,
-					url: 'http://localhost:3000/event/' + event._id
-				};
+				object.image = 'http://campuslively.s3.amazonaws.com/assets/img/fb_logo.png';
 			}
 
 			object = JSON.stringify(object);

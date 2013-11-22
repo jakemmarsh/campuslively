@@ -64,7 +64,7 @@ define(['./index'], function (controllers) {
                     method: 'feed',
                     display: 'popup',
                     name: $scope.event.title,
-                    picture: 'http://www.campuslively.com/img/home_logo.png',
+                    picture: 'http://campuslively.s3.amazonaws.com/assets/img/fb_logo.png',
                     link: $scope.eventUrl,
                     description: $scope.event.description
                 }, null);
@@ -87,7 +87,7 @@ define(['./index'], function (controllers) {
                     method: 'send',
                     display: 'popup',
                     name: $scope.postedEvent.title,
-                    picture: 'http://www.campuslively.com/img/home_logo.png',
+                    picture: 'http://campuslively.s3.amazonaws.com/assets/img/fb_logo.png',
                     link: $scope.eventUrl,
                     description: $scope.postedEvent.description
                 }, null);
