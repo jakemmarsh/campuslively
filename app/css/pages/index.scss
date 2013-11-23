@@ -4,13 +4,45 @@
 	margin: 0 auto;
 }
 
-.dark_section {
+.top_section {
 	width: 100%;
-	background: $dark-grey;
 	text-align: center;
+	position: relative;
 }
 
+#white_top {
+	height: 160px;
+	background: $white;
+}
+
+	.top_section #schools {
+		position: absolute;
+		bottom: 0px;
+	}
+
+	@media only screen and (max-width: 480px) {
+		#dark_top {
+			height: auto !important;
+			padding: 0 5px;
+		}
+
+			#dark_top .btn:first-child {
+				margin-top: 10px;
+			}
+
+		#white_top {
+			height: 0;
+		}
+
+		.top_section #schools {
+			position: relative;
+			background: $white;
+			padding: 10px 0;
+		}
+	}
+
 #dark_top {
+	height: 550px;
 	background-color: $dark-grey;
 	background: url('../img/crowd.jpg') no-repeat center center fixed; 
 	-webkit-background-size: cover;
@@ -21,18 +53,8 @@
 
 	#dark_top #logo {
 		width: 90%;
-		max-width: 700px;
+		max-width: 500px;
 		min-width: 250px;
-	}
-
-	#dark_top h1 {
-	color: #fff;
-	}
-
-	#dark_top #browser {
-		width: 90%;
-		max-width: 890px;
-		@extend .nudge--top;
 	}
 
 .index_button {
@@ -73,10 +95,11 @@
 
 #dark_bottom {
 	text-align: left;
+	background: $dark-grey;
 }
 
 #get_mobile {
-	margin-top: 9%;
+	margin-top: 7%;
 	padding-left: 40px;
 }
 
@@ -93,7 +116,7 @@
 
 .phones {
 	width: 100%;
-	max-width: 352px;
+	max-width: 225px;
 	padding: 15px 0;
 }
 

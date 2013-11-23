@@ -31,7 +31,7 @@
 }
 
 .huge {
-	font-size: 2.7em;
+	font-size: 2.7em !important;
 }
 
 .small {
@@ -73,6 +73,6 @@ h6, .zeta {
 }
 
 h1,h2,h3,h4,h5,h6 {
-	@extend .weight--bold;
-	font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 300;
+	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }

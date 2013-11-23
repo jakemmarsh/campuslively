@@ -1,45 +1,57 @@
-<section class="dark_section" id="dark_top">
-	<div class="inside_container">
-		<div class="section group">
-			<div class="col span_12_of_12 text-center">
-				<img src="https://s3.amazonaws.com/campuslively/assets/img/logo.png" alt="Campuslively logo" id="logo" />
+<section class="top_section">
+	<div id="dark_top">
+		<div class="inside_container">
+			<div class="section group">
+				<div class="col span_12_of_12 text-center">
+					<img src="https://s3.amazonaws.com/campuslively/assets/img/logo.png" alt="Campuslively logo" id="logo" />
+				</div>
+			</div>
+			<div class="section group">
+				<div class="col span_12_of_12">
+					<h1 class="huge flush white">Don't miss a thing</h1>
+					<h2 class="flush muted">An easy way to view and share everything going on around your school.</h2>
+				</div>
+			</div>
+			<div class="section group nudge--bottom">
+				<div class="col span_6_of_12 responsive_right nudge--bottom">
+					<a href="login" title="Log In" class="btn--blue">Log In</a>
+				</div>
+				<div class="col span_6_of_12 responsive_left nudge--bottom">
+					<a href="register" title="Sign Up" class="btn">Sign Up</a>
+				</div>
+			</div>
+			<div class="section group nudge--top">
+				<div class="col span_12_of_12 text-center nudge--bottom">
+					<h3 class="flush muted">Now available at these schools:</h3>
+				</div>
 			</div>
 		</div>
+	</div>
+	<div id="white_top">
+	</div>
+	<div id="schools" class="full-width">
 		<div class="section group">
-			<div class="col span_12_of_12">
-				<h1 class="flush">A new way to see what's going on near your school.</h1>
-			</div>
-		</div>
-		<div class="section group">
-			<div class="col span_6_of_12 responsive_right nudge--bottom">
-				<a href="login" title="Log In" class="btn--blue">Log In</a>
-			</div>
-			<div class="col span_6_of_12 responsive_left nudge--bottom">
-				<a href="register" title="Sign Up" class="btn">Sign Up</a>
-			</div>
-		</div>
-		<div class="section group nudge--top">
 			<div class="col span_3_of_12">
 			</div>
 			<div class="col span_3_of_12">
 				<div class="school-img center-block" style="background-image: url('https://s3.amazonaws.com/campuslively/assets/img/bu.png')"></div>
-				<h3 class="text-center white">Boston University</h3>
+				<h3 class="text-center muted">Boston University</h3>
 			</div>
 			<div class="col span_3_of_12">
 				<div class="school-img center-block" style="background-image: url('https://s3.amazonaws.com/campuslively/assets/img/umaine.png')"></div>
-				<h3 class="text-center white">University of Maine</h3>
+				<h3 class="text-center muted">University of Maine</h3>
 			</div>
 			<div class="col span_3_of_12">
 			</div>
 		</div>
-		<div class="section group">
-			<div class="col span_12_of_12">
-				<img src="img/browser.png" alt="screenshot of events page" id="browser" />
+		<div class="section group nudge--bottom">
+			<div class="col span_12_of_12 flush--top flush--bottom">
+				<a href="/contact">Request Your School</a>
 			</div>
 		</div>
 	</div>
 </section>
-<section class="light_section">
+<section class="light_section soft--ends">
 	<div class="inside_container">
 		<div class="section group">
 			<div class="col span_12_of_12 text-center">
@@ -48,7 +60,7 @@
 			</div>
 		</div>
 		<div data-ng-show="currentView == 'student'">
-			<div class="section group">
+			<div class="section group soft--ends">
 				<div class="col span_4_of_12 index_item">
 					<h3><i class="fa fa-lock"></i> Only for college students</h3>
 					<p>In order to register and log in to Campuslively, you must be either a club or group, or provide a valid .edu email address.
@@ -64,7 +76,7 @@
 					<p>Not only can you see what is happening around your campus, but you're also able to see all events near you based on your location.</p>
 				</div>
 			</div>
-			<div class="section group">
+			<div class="section group soft--ends">
 				<div class="col span_4_of_12 index_item soft--bottom">
 					<h3><i class="fa fa-clock-o"></i> View events as a live feed</h3>
 					<p>When viewing events and parties, you have two choices. The first is to view them as a live feed.
@@ -82,7 +94,7 @@
 			</div>
 		</div>
 		<div data-ng-show="currentView == 'business'">
-			<div class="section group">
+			<div class="section group soft--ends">
 				<div class="col span_4_of_12 index_item">
 					<h3><i class="fa fa-plus"></i> Easily post your events</h3>
 					<p>Immediately after registering as a club/group, you will have the ability to post events. It's as simple as filling out one form and instantly reaching your target audience!</p>
@@ -96,7 +108,7 @@
 					<p>Your events can also be found by any user, regardless of school, if they are nearby the location you specified. This allows you to reach an even bigger audience!</p>
 				</div>
 			</div>
-			<div class="section group">
+			<div class="section group soft--ends">
 				<div class="col span_4_of_12 index_item">
 					<h3><i class="fa fa-thumbs-up"></i> Automatically reach your social media followers</h3>
 					<p>In addition to the new users you'll reach, we also offer the ability to instantly connect with your followers from other social media sites. This means you can maintain your current fanbase while continuing to grow with Campuslively!</p>
@@ -119,6 +131,7 @@
 			</div>
 			<div class="col span_6_of_12" id="get_mobile">
 				<h1 id="white_header">Coming soon to your mobile device!</h1>
+				<a href="/contact" class="btn nudge-half--top">Request It Sooner</a>
 			</div>
 			<div class="col span_1_of_12">
 			</div>

@@ -161,7 +161,7 @@
 		background-color: darken($border-grey, 4);
 		color: $white;
 		border: 1px solid $border-grey;
-		font-weight: bold;
+		font-weight: 300;
 		text-align: center;		
 		@include corners();
 	}
