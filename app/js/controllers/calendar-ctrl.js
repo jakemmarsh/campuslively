@@ -88,8 +88,10 @@ define(['./index'], function (controllers) {
         }
         else if($scope.currentView == 'nearby') {
           if(!$rootScope.userPosition) {
+            $scope.gettingPosition = true;
             locationService.getGeo().then(function (data) {
               $rootScope.userPosition = data;
+              $scope.gettingPosition = false;
               eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
                 for(var i = 0; i < data.length; i++) {
                   var event = {
