@@ -16,11 +16,11 @@ define(['./index'], function (controllers) {
     		$scope.userLastName = $rootScope.user.lastName;
     		$scope.userEmailStudent = $rootScope.user.email;
     	}
-    	else if($rootScope.user.type == 'business') {
+    	else if($rootScope.user.type == 'group') {
     		$scope.userFacebookLink = $rootScope.user.facebookLink;
-    		$scope.userBusinessName = $rootScope.user.businessName;
-    		$scope.userBusinessDescription = $rootScope.user.businessDescription;
-    		$scope.userEmailBusiness = $rootScope.user.email;
+    		$scope.userGroupName = $rootScope.user.groupName;
+    		$scope.userGroupDescription = $rootScope.user.groupDescription;
+    		$scope.userEmailGroup = $rootScope.user.email;
     		$scope.locationAddress = $rootScope.user.address;
     		$scope.websiteAddress = $rootScope.user.website;
     	}
@@ -67,9 +67,9 @@ define(['./index'], function (controllers) {
 		    		});
 		    	}
 		    }
-	    	else if($scope.userEmailBusiness) {
-	    		if($scope.userEmailBusiness.length > 0 && $scope.userEmailBusiness !== $rootScope.user.email) {
-		    		authService.checkEmail($scope.userEmailBusiness).then(function (isTaken, status) {
+	    	else if($scope.userEmailGroup) {
+	    		if($scope.userEmailGroup.length > 0 && $scope.userEmailGroup !== $rootScope.user.email) {
+		    		authService.checkEmail($scope.userEmailGroup).then(function (isTaken, status) {
 		    			if(isTaken == 'true') {
 		    				$scope.emailTaken = true;
 		    			}
@@ -144,7 +144,7 @@ define(['./index'], function (controllers) {
 					}
 				}, {scope: 'user_subscriptions,user_likes,publish_stream,publish_actions'});
 			}
-			else if ($rootScope.user.type == 'business') {
+			else if ($rootScope.user.type == 'group') {
 				$FB.login(function (res) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
@@ -284,16 +284,16 @@ define(['./index'], function (controllers) {
 					updateParams.email = $scope.userEmailStudent;
 				}
 			}
-			else if($rootScope.user.type == 'business') {
-				if($rootScope.user.businessName !== $scope.userBusinessName && $scope.userBusinessName.length > 0) {
-					updateParams.businessName = $scope.userBusinessName;
-					updateParams.displayName = $scope.userBusinessName;
+			else if($rootScope.user.type == 'group') {
+				if($rootScope.user.groupName !== $scope.userGroupName && $scope.userGroupName.length > 0) {
+					updateParams.groupName = $scope.userGroupName;
+					updateParams.displayName = $scope.userGroupName;
 				}
-				if($rootScope.user.businessDescription !== $scope.userBusinessDescription) {
-					updateParams.businessDescription = $scope.userBusinessDescription;
+				if($rootScope.user.groupDescription !== $scope.userGroupDescription) {
+					updateParams.groupDescription = $scope.userGroupDescription;
 				}
-				if($rootScope.user.email !== $scope.userEmailBusiness && $scope.userEmailBusiness.length > 0) {
-					updateParams.email = $scope.userEmailBusiness;
+				if($rootScope.user.email !== $scope.userEmailGroup && $scope.userEmailGroup.length > 0) {
+					updateParams.email = $scope.userEmailGroup;
 				}
 				if($scope.loc) {
 					updateParams.loc = $scope.loc;

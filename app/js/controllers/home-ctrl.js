@@ -9,7 +9,7 @@ define(['./index'], function (controllers) {
 			},
 			{
 				label: 'Club/Group',
-				value: 'business'
+				value: 'group'
 			}
 		];
 

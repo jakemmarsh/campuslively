@@ -35,9 +35,9 @@ var userSchema = new mongoose.Schema({
     },
     firstName: String,
     lastName: String,
-    businessName: String,
+    groupName: String,
     displayName: String,
-    businessDescription: String,
+    groupDescription: String,
     businessPictureUrls: [String],
     address: String,
     loc: {

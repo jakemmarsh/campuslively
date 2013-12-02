@@ -10,10 +10,10 @@
 			<div class="td three-tenths full-height">
 				<h1 class="flush" data-ng-bind="profile.displayName"></h1>
 				<div class="normal-lh">
-					<a href data-ng-click="openLocation(profile)" data-tooltip="Location" data-ng-show="profile.type == 'business' && profile.loc">
+					<a href data-ng-click="openLocation(profile)" data-tooltip="Location" data-ng-show="profile.type == 'group' && profile.loc">
 						<i class="beta fa fa-map-marker nudge-half--right"></i>
 					</a>
-					<a data-ng-href="{{profile.website}}" target="_blank" data-tooltip="Website" data-ng-show="profile.type == 'business' && profile.website">
+					<a data-ng-href="{{profile.website}}" target="_blank" data-tooltip="Website" data-ng-show="profile.type == 'group' && profile.website">
 						<i class="beta fa fa-paperclip nudge-half--right"></i>
 					</a>
 					<a data-ng-href="http://www.twitter.com/{{profile.twitterLink}}" target="_blank" data-tooltip="Twitter" data-ng-show="profile.twitterLink">
@@ -34,13 +34,13 @@
 	</div>
 </div>
 <div class="container soft-half--ends" data-ng-hide="loading">
-	<div class="box top-highlight islet nudge-half--bottom" data-ng-show="profile.type == 'business' && profile.businessDescription">
+	<div class="box top-highlight islet nudge-half--bottom" data-ng-show="profile.type == 'group' && profile.groupDescription">
 		<div class="line">
 			<div class="unit three-percent">
 				<h4 class="flush"><i class="muted icon-align-left"></i></h4>
 			</div>
 			<div class="unit ninety-seven-percent last-unit">
-				<p class="pre-wrap" data-ng-bind-html="profile.businessDescription | parseUrl"></p>
+				<p class="pre-wrap" data-ng-bind-html="profile.groupDescription | parseUrl"></p>
 			</div>
 		</div>
 		<carousel interval="5000" class="flush nudge-half--top" data-ng-show="profile.businessPictureUrls">

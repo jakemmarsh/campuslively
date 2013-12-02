@@ -155,7 +155,7 @@ exports.register = function(req, res) {
     hash(req.body.password, function(err, salt, hash){
         if (err) throw err;
 
-        // create user object from traits that are shared between student and business accounts
+        // create user object from traits that are shared between student and group accounts
         newUser = new User({
             username: req.body.username.toLowerCase(),
             salt: salt,
@@ -179,12 +179,12 @@ exports.register = function(req, res) {
             newUser.gender = req.body.gender;
             newUser.school = req.body.school;
         }
-        else if(req.body.type.toLowerCase() == 'business') {
-            newUser.type = 'business';
-            newUser.businessName = req.body.businessName;
-            newUser.displayName = req.body.businessName;
-            if(req.body.businessDescription) {
-                newUser.businessDescription = req.body.businessDescription;
+        else if(req.body.type.toLowerCase() == 'group') {
+            newUser.type = 'group';
+            newUser.groupName = req.body.groupName;
+            newUser.displayName = req.body.groupName;
+            if(req.body.groupDescription) {
+                newUser.groupDescription = req.body.groupDescription;
             }
             if(req.body.school) {
                 newUser.school = req.body.school;

@@ -31,7 +31,7 @@ define(['./index'], function (controllers) {
     	};
 
     	$scope.register = function() {
-    		$scope.user.type = 'business';
+    		$scope.user.type = 'group';
 
     		authService.register($scope.user).then(function (data, status) {
     			$scope.usernameTaken = false;
