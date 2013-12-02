@@ -41,7 +41,8 @@ var eventSchema = new mongoose.Schema({
     tags: [String],
     privacy: {
         type: String,
-        default: 'public'
+        default: 'public',
+        enum: ['public', 'inviteOnly']
     },
     pictureUrl: {
         type: String

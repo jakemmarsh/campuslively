@@ -7,7 +7,8 @@ var mongoose         = require('mongoose'),
 var userSchema = new mongoose.Schema({
     type: {
         type: String,
-        required: true
+        required: true,
+        enum: ['student', 'group']
     },
     timestamp: {
         type: Date, 
