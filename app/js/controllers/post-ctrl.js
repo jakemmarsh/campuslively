@@ -204,6 +204,15 @@ define(['./index'], function (controllers) {
 	    		$scope.event.locationName = $scope.locationAddress;
 	    	}
 
+	    	// if no location has been specified, make it a nonsensical location by default
+	    	// TODO: fix this logic?
+	    	if(!$scope.event.loc) {
+	    		$scope.event.loc = {
+	    			type: 'Point',
+	    			coordinates: [-180, -90]
+	    		};
+	    	}
+
 	    	if($scope.eventImage) {
 	    		// verify that uploaded file is of type "image/x"
 				if($scope.eventImage.file.type.toLowerCase().indexOf("image") === -1) {
