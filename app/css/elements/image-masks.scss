@@ -22,6 +22,25 @@
 	display: inline-block;
 }
 
+	.user-img-modal .checkmark {
+		background: $secondary;
+		color: $white;
+		height: 15px;
+		width: 15px;
+		@include corners(15px, 15px, 15px, 15px);
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		text-align: center;
+		font-size: 0.8em;
+		line-height: 1.2em;
+		display: none;
+	}
+
+		.user-img-modal.invitee .checkmark {
+			display: block;
+		}
+
 .user-img-comment {
 	@include circle-img(60px);
 }
@@ -91,8 +110,4 @@
 .school-img {
 	@include circle-img(100px);
 	border: 2px solid $border-grey;
-}
-
-.highlight {
-	background: lighten($secondary, 35);
 }
