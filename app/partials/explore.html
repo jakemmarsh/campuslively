@@ -46,6 +46,8 @@
 		<h2 class="flush blue" data-ng-show="events.length >= 20">No events match your search. Have you tried loading more?</h2>
 		<h2 class="flush blue" data-ng-show="events.length < 20">No events match your search.</h2>
 	</div>
+	<a href data-ng-click="addNew()" class="btn full-width text-center" data-ng-show="newEvents.length == 1 && !loading">Show 1 New Event</a>
+	<a href data-ng-click="addNew()" class="btn full-width text-center" data-ng-show="newEvents.length > 1 && !loading">Show {{ newEvents.length }} New Events</a>
 	<div class="line fade nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">

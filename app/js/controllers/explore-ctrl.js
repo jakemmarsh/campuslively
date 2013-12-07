@@ -87,14 +87,14 @@ define(['./index'], function (controllers) {
 			}
 		});
 
+		$scope.newEvents = [];
+
+		// get events with newer _id
 		$scope.loadNew = function() {
 			if($scope.currentView == 'school') {
 	            eventService.getEventsBySchoolNewer($rootScope.user.school._id, newestId).then(function (data) {
 	                if(data.length > 0) {
-	                    for(var i = 0; i < data.length; i++) {
-	                        $scope.events.unshift(data[i]);
-	                    }
-	                    newestId = data[0]._id;
+	                    $scope.newEvents = data;
 	                }
 	            },
 	            function (errorMessage) {
@@ -103,10 +103,7 @@ define(['./index'], function (controllers) {
         	else if($scope.currentView == 'nearby') {
         		eventService.getEventsByLocationNewer($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), newestId).then(function (data) {
 	                if(data.length > 0) {
-	                    for(var i = 0; i < data.length; i++) {
-	                        $scope.events.unshift(data[i]);
-	                    }
-	                    newestId = data[0]._id;
+	                    $scope.newEvents = data;
 	                }
 	            },
 	            function (errorMessage) {
@@ -121,6 +118,17 @@ define(['./index'], function (controllers) {
                     $scope.loadNew();
                     $scope.checkForEvents();
             }, 30000);
+        };
+
+        // add newly retrieved events to view
+        $scope.addNew = function() {
+        	if($scope.newEvents.length > 0) {
+	        	for(var i = 0; i < $scope.newEvents.length; i++) {
+	        		$scope.events.unshift($scope.newEvents[i]);
+	        	}
+	        	newestId = $scope.newEvents[0]._id;
+	        	$scope.newEvents = [];
+	        }
         };
 
         // stop refreshing list upon page leave
