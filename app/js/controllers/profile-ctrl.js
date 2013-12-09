@@ -156,8 +156,9 @@ define(['./index'], function (controllers) {
               controller: 'modalInstanceCtrl',
               resolve: {
                 location: function() {
-                    profile.loc.address = profile.address;
-                    return profile.loc;
+                    newLoc = profile.loc;
+                    newLoc.address = profile.address;
+                    return newLoc;
                 },
                 items: null,
                 event: null

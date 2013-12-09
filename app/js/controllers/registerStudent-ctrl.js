@@ -18,7 +18,7 @@ define(['./index'], function (controllers) {
     	};
 
     	$scope.checkEmail = function() {
-    		if($scope.user.email.length > 0) {
+    		if($scope.user.email) {
 	    		authService.checkEmail($scope.user.email).then(function (isTaken, status) {
 	    			if(isTaken == 'true') {
 	    				$scope.emailTaken = true;
@@ -31,7 +31,14 @@ define(['./index'], function (controllers) {
     	};
 
     	$scope.register = function() {
+            // populate remaining fields
     		$scope.user.type = 'student';
+            // make nonsensical location by default
+            // TODO: fix this logic?
+            $scope.user.loc = {
+                type: 'Point',
+                coordinates: [-180, -90]
+            };
 
     		authService.register($scope.user).then(function (data, status) {
     			$scope.usernameTaken = false;

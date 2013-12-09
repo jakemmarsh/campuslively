@@ -32,6 +32,12 @@ define(['./index'], function (controllers) {
 
     	$scope.register = function() {
     		$scope.user.type = 'group';
+            // make nonsensical location by default
+            // TODO: fix this logic?
+            $scope.user.loc = {
+                type: 'Point',
+                coordinates: [-180, -90]
+            };
 
     		authService.register($scope.user).then(function (data, status) {
     			$scope.usernameTaken = false;

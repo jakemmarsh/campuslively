@@ -76,6 +76,10 @@ function authenticate(name, pass, fn) {
     });
 }
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 exports.check = function(req, res) {
     if (req.session) {
         if (req.session.user) {
@@ -173,11 +177,12 @@ exports.register = function(req, res) {
             }
 
             newUser.type = 'student';
-            newUser.firstName = req.body.firstName;
-            newUser.lastName = req.body.lastName;
-            newUser.displayName = req.body.firstName + ' ' + req.body.lastName;
+            newUser.firstName = capitalizeFirstLetter(req.body.firstName);
+            newUser.lastName = capitalizeFirstLetter(req.body.lastName);
+            newUser.displayName = capitalizeFirstLetter(req.body.firstName) + ' ' + capitalizeFirstLetter(req.body.lastName);
             newUser.gender = req.body.gender;
             newUser.school = req.body.school;
+            newUser.loc = req.body.loc;
         }
         else if(req.body.type.toLowerCase() == 'group') {
             newUser.type = 'group';
@@ -189,6 +194,7 @@ exports.register = function(req, res) {
             if(req.body.school) {
                 newUser.school = req.body.school;
             }
+            newUser.loc = req.body.loc;
         }
         registerUser(newUser).then(function(savedUser) {
             mailer.sendActivationEmail(savedUser).then(function(data) {
