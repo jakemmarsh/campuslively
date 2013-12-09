@@ -14,7 +14,7 @@ exports.sendActivationEmail = function(user) {
 	        from: "Campuslively <jake@campuslively.com>",
 	        to: user.email,
 	        subject: "Activate your Account",
-	        html: '<a href="localhost:3000/activate/' + user._id + '/' + user.activationKey + '">Click Here to Activate Your Account</a>'
+	        html: '<a href="http://www.campuslively.com/activate/' + user._id + '/' + user.activationKey + '">Click Here to Activate Your Account</a>'
 	    };
 
     transport.sendMail(mailOptions, function(error, response){
@@ -36,7 +36,7 @@ exports.sendResetEmail = function(user) {
 	        from: "Campuslively <jake@campuslively.com>",
 	        to: user.email,
 	        subject: "Reset your Password",
-	        html: '<a href="localhost:3000/reset/' + user._id + '/' + user.passwordResetKey + '">Click Here to Set a New Password</a>'
+	        html: '<a href="http://www.campuslively.com/reset/' + user._id + '/' + user.passwordResetKey + '">Click Here to Set a New Password</a>'
 	    };
 
     transport.sendMail(mailOptions, function(error, response){
