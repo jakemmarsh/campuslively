@@ -72,7 +72,7 @@ var userSchema = new mongoose.Schema({
             id: String
         },
         subscriptions: [String],
-        linked: {
+        hasLinked: {
             type: Boolean,
             default: false
         },

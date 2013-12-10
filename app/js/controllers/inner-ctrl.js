@@ -24,8 +24,8 @@ define(['./index'], function (controllers) {
         	}
         });
 
-		$scope.$watch('fbStatus', function() {
-			if($rootScope.user && $rootScope.fbStatus && $rootScope.user.facebook.linked == false) {
+		$rootScope.$watch('fbStatus', function() {
+			if($rootScope.user && $rootScope.fbStatus && $rootScope.user.facebook.hasLinked == false) {
 				if(!$rootScope.user.fbId && $rootScope.fbStatus.status !== 'connected') {
 					var fbMessage = { 
 						msg: 'You haven\'t linked your account to Facebook yet. '+
