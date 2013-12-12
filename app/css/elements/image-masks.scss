@@ -109,5 +109,7 @@
 
 .school-img {
 	@include circle-img(100px);
-	border: 2px solid $border-grey;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
