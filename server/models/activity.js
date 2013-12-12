@@ -19,7 +19,8 @@ var activitySchema = new mongoose.Schema({
     },
     activity: {
         type: String,
-        required: true
+        required: true,
+        enum: ['subscribed', 'posted', 'commented', 'invited', 'rsvpd']
     },
     event: {
         type: mongoose.Schema.ObjectId,
