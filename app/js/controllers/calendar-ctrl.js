@@ -261,7 +261,7 @@ define(['./index'], function (controllers) {
               for (var i = 0; i < $scope.events.length; i++) {
                 if($scope.events[i].id == event._id) {
                   // un-highlight event on calendar
-                  $scope.events[i].backgroundColor = '#315273';
+                  $scope.events[i].backgroundColor = '#3e90be';
                   $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
                   $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
                   break;
