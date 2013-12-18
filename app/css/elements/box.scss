@@ -37,7 +37,7 @@
 			}
 
 	.box .event-footer {
-		background: lighten($light-blue, 1);
+		background: $light-grey;
 		@include corners(0px, 0px, 3px, 3px);
 		border-top: 1px solid $border-grey;
 		color: $dark-grey;

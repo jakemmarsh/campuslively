@@ -10,16 +10,16 @@
 			<div class="td three-tenths full-height">
 				<h1 class="flush" data-ng-bind="profile.displayName"></h1>
 				<div class="normal-lh">
-					<a href data-ng-click="openLocation(profile)" data-tooltip="Location" data-ng-show="profile.type == 'group' && profile.address">
+					<a href data-ng-click="openLocation(profile)" data-tooltip="Location" data-ng-show="profile.type == 'group' && profile.address" class="icon-link">
 						<i class="beta fa fa-map-marker nudge-half--right"></i>
 					</a>
-					<a data-ng-href="{{profile.website}}" target="_blank" data-tooltip="Website" data-ng-show="profile.type == 'group' && profile.website">
+					<a data-ng-href="{{profile.website}}" target="_blank" data-tooltip="Website" data-ng-show="profile.type == 'group' && profile.website" class="icon-link">
 						<i class="beta fa fa-paperclip nudge-half--right"></i>
 					</a>
-					<a data-ng-href="http://www.twitter.com/{{profile.twitterLink}}" target="_blank" data-tooltip="Twitter" data-ng-show="profile.twitterLink">
+					<a data-ng-href="http://www.twitter.com/{{profile.twitterLink}}" target="_blank" data-tooltip="Twitter" data-ng-show="profile.twitterLink" class="icon-link">
 						<i class="beta fa fa-twitter nudge-half--right"></i>
 					</a>
-					<a data-ng-href="http://www.facebook.com/{{profile.facebookLink}}" target="_blank" data-tooltip="Facebook" data-ng-show="profile.facebookLink">
+					<a data-ng-href="http://www.facebook.com/{{profile.facebookLink}}" target="_blank" data-tooltip="Facebook" data-ng-show="profile.facebookLink" class="icon-link">
 						<i class="beta fa fa-facebook nudge-half--right"></i>
 					</a>
 
@@ -89,30 +89,35 @@
 </div>
 
 <script type="text/ng-template" id="attendingModal.html">
-    <div class="modal-header">
-        <h2 class="flush">Attending</h2>
+    <div class="modal-header clearfix">
+        <h3 class="flush float-left weight--bold">Attending</h3>
+        <i class="fa fa-times close" data-ng-click="ok()"></i>
     </div>
     <div class="modal-body">
-        <div data-ng-repeat="attendingUser in items" class="user-img-modal nudge-half--right" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-			<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-tooltip="{{attendingUser.displayName}}" data-tooltip-placement="right"></a>
-		</div>
+    	<ul data-ng-show="items.length" class="modal-user-list table full-width">
+	        <li data-ng-repeat="attendingUser in items" class="tr full-width">
+	        	<div class="td one-tenth vertical-align-middle">
+	        		<div class="user-img-modal" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
+	        			<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()"></a>
+	        		</div>
+	        	</div>
+	        	<div class="td nine-tenths vertical-align-middle soft--left">
+	        		<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" class="weight--bold" data-ng-bind="attendingUser.displayName"></a>
+	        	</div>
+			</li>
+		</ul>
 		<div data-ng-hide="items.length">
-			<h2 class="flush text-center">No one has RSVPd to this event yet!</h2>
+			<h2 class="flush green text-center">No one has RSVPd to this event yet!</h2>
 		</div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-ng-click="ok()">Close</button>
     </div>
 </script>
 
 <script type="text/ng-template" id="locationModal.html">
     <div class="modal-header">
-        <h2 class="flush">Location</h2>
+        <h3 class="flush float-left weight--bold">Location</h3>
+        <i class="fa fa-times close" data-ng-click="ok()"></i>
     </div>
     <div class="modal-body">
         <div data-ui-map="locationMap" data-ui-options="mapOptions" data-ui-event="{'map-tilesloaded': 'placeMarker(locationMap)'}" class="map nudge--ends"></div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-ng-click="ok()">Close</button>
     </div>
 </script>

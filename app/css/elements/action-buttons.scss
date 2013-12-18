@@ -24,6 +24,7 @@
 				border: 1px solid darken($secondary, 7);
 				color: $white;
 				@include corners();
+				text-decoration: none;
 			}
 
 			.box .action-buttons.green a:active {
@@ -69,6 +70,7 @@
 
 		.box .action-buttons a:hover, .box .action-buttons a:focus, .box .action-buttons a:active {
 			color: $secondary;
+			text-decoration: none;
 		}
 
 		.box .action-buttons a i {

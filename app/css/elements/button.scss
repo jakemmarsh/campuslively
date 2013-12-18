@@ -18,6 +18,7 @@
 		color: $white;
 		@include gradient($secondary, darken($secondary, 3));
 		border: 1px solid darken($secondary, 5);
+		text-decoration: none;
 	}
 
 	.btn:active, .btn--blue:active, .btn--red:active {

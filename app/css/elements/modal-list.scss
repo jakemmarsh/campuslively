@@ -1,0 +1,54 @@
+.modal-user-list {
+	position: relative;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+	.modal-user-list.invite li:hover span {
+		text-decoration: underline;
+	}
+
+	.modal-user-list li {
+		position: relative;
+	}
+
+		.modal-user-list li .td {
+			padding-top: $half-space/2;
+			padding-bottom: $half-space/2;
+		}
+
+		.modal-user-list li:not(:last-child) .td {
+			border-bottom: 1px solid $border-grey;
+		}
+
+		.modal-user-list li a {
+			color: $dark-grey;
+			font-weight: bold;
+		}
+
+			.modal-user-list li a:hover {
+				text-decoration: underline;
+			}
+
+		.modal-user-list li .toggle-invitee {
+			border: 2px solid $border-grey;
+			height: 20px;
+			width: 20px;
+			@include corners(20px, 20px, 20px, 20px);
+			display: block;
+		}
+
+			.modal-user-list li .toggle-invitee i {
+				display: none;
+			}
+
+			.modal-user-list li .toggle-invitee.invitee {
+				background: $secondary;
+				border-color: $secondary;
+			}
+
+				.modal-user-list li .toggle-invitee.invitee i {
+					color: $white;
+					display: inline-block;
+				}

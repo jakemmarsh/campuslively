@@ -312,11 +312,20 @@
 }
 .modal-header {
   @extend .islet;
-  background: $primary;
-  color: $white;
+  background: $light-grey;
+  border-bottom: 1px solid $border-grey;
+  color: darken($border-grey, 40);
+  text-shadow: 0 1px 0 $white;
+  font-weight: bolder !important;
 }
 .modal-header .close {
-  margin-top: 2px;
+  float: right;
+  color: lighten($muted-text, 20);
+  cursor: pointer;
+  margin-top: 8px;
+}
+.modal-header .close:hover {
+  color: $dark-grey;
 }
 .modal-header h3 {
   margin: 0;
@@ -428,6 +437,7 @@
   line-height: 20px;
   color: #333333;
   white-space: nowrap;
+  cursor: pointer;
 }
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus,

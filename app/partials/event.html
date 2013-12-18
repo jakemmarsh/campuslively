@@ -7,11 +7,11 @@
 					<i class="muted weight--normal zeta fa fa-circle-o" data-ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="right"></i>
 					<i class="muted weight--normal zeta fa fa-circle" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="right"></i>
 				</h1>
-				<h3 class="flush muted weight--normal">
+				<h4 class="flush muted weight--normal">
 					hosted by
 					<a href data-ng-href="/profile/{{ event.creator.username }}" data-ng-show="event.creator">{{event.creator.displayName}}</a>
 					<span data-ng-hide="event.creator">[deleted]</span>
-				</h3>
+				</h4>
 			</div>
 			<div class="unit one-half last-unit text-right" data-ng-hide="eventPassed">
 				<a href class="btn nudge-half--right" data-ng-click="rsvpToEvent()" data-ng-hide="isAttending()"><i class="fa fa-thumbs-up"></i> RSVP</a>
@@ -85,7 +85,7 @@
 						<div class="table full-width">
 								<div class="td one-half">
 									<div class="action-buttons comment nudge-half--top">
-										<a class="first" href><span class="gamma" data-ng-class="{green: likesComment(comment)}">{{ comment.likes.length }}</span></a>
+										<a class="first cursor-normal" href><span class="gamma" data-ng-class="{green: likesComment(comment)}">{{ comment.likes.length }}</span></a>
 										<a href data-ng-click="likeComment(comment)" data-ng-hide="likesComment(comment)">
 											<i class="fa fa-heart"></i> Like
 										</a>
@@ -168,18 +168,29 @@
 </div>
 
 <script type="text/ng-template" id="inviteModal.html">
-    <div class="modal-header">
-        <h2 class="flush">Invite Friends</h2>
+    <div class="modal-header clearfix">
+        <h3 class="flush weight--bold">Invite Friends</h2>
     </div>
     <div class="modal-body">
     	<h3 class="caps flush--top nudge-half--bottom" data-ng-show="items.length">Select people to invite:</h3>
     	<input type="text" class="full-width nudge-half--bottom" placeholder="Search users..." data-ng-model="searchUsers" data-ng-show="items.length" />
-    	<div data-ng-repeat="user in filteredItems = (items | filter:searchUsers | orderBy: 'displayName')" class="inline-block islet">
-    		<div class="user-img-modal" data-ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}" data-ng-class="{invitee: isInvitee(user._id)}">
-				<a href data-ng-click="toggleInvitee(user._id)" data-tooltip="{{user.displayName}}" data-tooltip-placement="bottom"></a>
-				<div class="checkmark"><i class="fa fa-check"></i></a>
-			</div>
-		</div>
+		<ul data-ng-show="items.length" class="modal-user-list invite table full-width">
+	        <li data-ng-repeat="user in filteredItems = (items | filter:{ displayName: searchUsers } | orderBy: 'displayName')" class="tr full-width pointer" data-ng-click="toggleInvitee(user._id)">
+	        	<div class="td one-tenth vertical-align-middle">
+	        		<div class="user-img-modal" data-ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}">
+	        			<a data-ng-href="profile/{{user.username}}" data-ng-click="clickLink()"></a>
+	        		</div>
+	        	</div>
+	        	<div class="td eight-tenths vertical-align-middle soft--left">
+	        		<span class="weight--bold" data-ng-bind="user.displayName"></span>
+	        	</div>
+	        	<div class="td one-tenth vertical-align-middle">
+	        		<a href class="toggle-invitee" data-ng-class="{invitee: isInvitee(user._id)}">
+	        			<i class="fa fa-check"></i>
+	        		</a>
+	        	</div>
+			</li>
+		</ul>
 		<h2 class="green text-center" data-ng-show="!items.length">No users left to invite!</h2>
 		<h2 class="blue text-center" data-ng-show="!filteredItems.length">No users match your search.</h2>
     </div>
@@ -190,8 +201,9 @@
 </script>
 
 <script type="text/ng-template" id="shareModal.html">
-    <div class="modal-header">
-        <h2 class="flush">Share Event</h2>
+    <div class="modal-header clearfix">
+        <h3 class="flush float-left weight--bold">Share Event</h2>
+        <i class="fa fa-times close" data-ng-click="ok()"></i>
     </div>
     <div class="modal-body">
     	<h3 class="caps flush--top nudge-half--bottom">Event URL:</h3>
@@ -207,8 +219,5 @@
 				<a href data-ng-click="sendEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Send</a>
 			</div>
 		</div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-ng-click="ok()">Close</button>
     </div>
 </script>

@@ -141,10 +141,10 @@
 	</form>
 	<div data-ng-show="eventPosted" data-ng-controller="postedCtrl">
 		<div data-ng-hide="invitesSent">
-			<h2 class="flush green">Select people to invite:</h2>
+			<h2 class="flush green weight--bold">Select people to invite:</h2>
 			<h2 class="blue text-center" data-ng-show="loadingUsers">Loading...</h2>
 			<input type="text" class="full-width nudge-half--bottom" placeholder="Search users..." data-ng-model="searchUsers" data-ng-show="users.length" />
-	    	<div data-ng-repeat="user in filteredUsers = (users | filter:searchUsers | orderBy: 'displayName')" class="inline-block islet" data-ng-class="{highlight: isInvitee(user._id)}">
+	    	<div data-ng-repeat="user in filteredUsers = (users | filter:{ displayName: searchUsers } | orderBy: 'displayName')" class="inline-block islet" data-ng-class="{highlight: isInvitee(user._id)}">
 	    		<div class="user-img-modal" data-ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}">
 					<a href data-ng-click="toggleInvitee(user._id)" data-tooltip="{{user.displayName}}" data-tooltip-placement="bottom"></a>
 				</div>
@@ -156,7 +156,7 @@
 			</div>
 		</div>
 		<h2 class="blue text-center" data-ng-show="invitesSent">Invites sent!</h2>
-		<h2 class="flush green">Share the event:</h2>
+		<h2 class="flush green weight--bold">Share the event:</h2>
 		<h3 class="caps nudge-half--ends">Event URL:</h3>
     	<input type="text" class="full-width" data-ng-model="eventUrl" data-input-select />
     	<div class="line nudge--top">

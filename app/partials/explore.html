@@ -105,18 +105,25 @@
 </div>
 
 <script type="text/ng-template" id="attendingModal.html">
-    <div class="modal-header">
-        <h2 class="flush">Attending</h2>
+    <div class="modal-header clearfix">
+        <h3 class="flush float-left weight--bold">Attending</h3>
+        <i class="fa fa-times close" data-ng-click="ok()"></i>
     </div>
     <div class="modal-body">
-        <div data-ng-repeat="attendingUser in items" class="user-img-modal nudge-half--right" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-			<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" data-tooltip="{{attendingUser.displayName}}" data-tooltip-placement="right"></a>
-		</div>
+    	<ul data-ng-show="items.length" class="modal-user-list table full-width">
+	        <li data-ng-repeat="attendingUser in items" class="tr full-width">
+	        	<div class="td one-tenth vertical-align-middle">
+	        		<div class="user-img-modal" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
+	        			<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()"></a>
+	        		</div>
+	        	</div>
+	        	<div class="td nine-tenths vertical-align-middle soft--left">
+	        		<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" class="weight--bold" data-ng-bind="attendingUser.displayName"></a>
+	        	</div>
+			</li>
+		</ul>
 		<div data-ng-hide="items.length">
 			<h2 class="flush green text-center">No one has RSVPd to this event yet!</h2>
 		</div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-ng-click="ok()">Close</button>
     </div>
 </script>

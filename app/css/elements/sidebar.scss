@@ -30,6 +30,10 @@
 				@include gradient($dark-grey, darken($dark-grey, 3));
 			}
 
+			.sidebar ul li:hover .link, .sidebar ul li:focus .link, .sidebar ul li:active .link {
+				text-decoration: none;
+			} 
+
 			.sidebar ul li.active {
 				background: $light-grey;
 			}
