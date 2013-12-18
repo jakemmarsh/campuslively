@@ -50,6 +50,7 @@ exports.getAllEvents = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -93,6 +94,7 @@ exports.getEvent = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -136,6 +138,7 @@ exports.getEventsBySchool = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -224,6 +227,7 @@ exports.getEventsBySchoolNewer = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -307,6 +311,7 @@ exports.getEventsBySchoolOlder = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -361,6 +366,7 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -422,6 +428,7 @@ exports.getEventsByLocationAndDay = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -487,6 +494,7 @@ exports.getEventsByUser = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -574,6 +582,7 @@ exports.getEventsByUserNewer = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -662,6 +671,7 @@ exports.getEventsByUserOlder = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -720,6 +730,7 @@ exports.getEventsByLocation = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -824,6 +835,7 @@ exports.getEventsByLocationNewer = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -922,6 +934,7 @@ exports.getEventsByLocationOlder = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -1086,6 +1099,7 @@ exports.updateEvent = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -1144,6 +1158,7 @@ exports.rsvp = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -1231,6 +1246,7 @@ exports.unRsvp = function(req, res) {
 				{ path: 'location' },
                 { path: 'creator' }, 
                 { path: 'attending' },
+                { path: 'invited' },
                 { path: 'comments' },
                 { path: 'school' }
 			],
@@ -1398,10 +1414,11 @@ exports.deleteEvent = function(req, res) {
 };
 
 exports.inviteUsers = function(req, res) {
-	var getEvent = function(eventId) {
+	var updateAndGetEvent = function(eventId, recipientIds) {
 		var deferred = Q.defer();
 
 		Event.findOne({ _id: eventId })
+		Event.findOneAndUpdate({ _id: eventId }, { $addToSet: { invited: { $each: recipientIds } } })
 		.select('creator privacy')
 		.exec(function(err, retrievedEvent) {
          	if(err) {
@@ -1495,7 +1512,7 @@ exports.inviteUsers = function(req, res) {
 	};
 
 	createInvites(req.params.eventId, req.params.senderId, req.body.recipientIds).then(function(createdInvites) {
-		getEvent(req.params.eventId).then(function(retrievedEvent) {
+		updateAndGetEvent(req.params.eventId, req.body.recipientIds).then(function(retrievedEvent) {
 			updateUsers(req.body.recipientIds, req.params.eventId).then(function() {
 				createActivities(createdInvites, retrievedEvent).then(function(createdActivities) {
 					res.send(200, "Invites and activities all successfully created.");
