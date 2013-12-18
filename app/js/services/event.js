@@ -213,7 +213,7 @@ define(['./index'], function (services) {
 				accessToken = '458852510898409|6dr7y1LgXO06y2iTfvl6Q9KB38M',
 				object = {
 					title: event.title,
-					url: 'http://localhost:3000/event/' + event._id
+					url: 'http://www.campuslively.com/event/' + event._id
 				},
 				privacy = {
 					'value': 'SELF'
