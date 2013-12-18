@@ -43,15 +43,15 @@ define(['./index'], function (controllers) {
 	    $scope.usePageForImage = function() {
 	    	if($scope.picturePage) {
 	    		$scope.newUserImage = {};
-	    		$scope.newUserImage.url = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?type=large';
-	    		updateParams.pictureUrl = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?type=large';
+	    		$scope.newUserImage.url = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?width=250&height=250';
+	    		updateParams.pictureUrl = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?width=250&height=250';
 	    	}
 	    };
 
 	    $scope.useFacebookImage = function() {
 	    	$scope.newUserImage = {};
-	    	$scope.newUserImage.url = 'http://graph.facebook.com/' + $rootScope.fbMe.id + '/picture?type=large';
-	    	updateParams.pictureUrl = 'http://graph.facebook.com/' + $rootScope.fbMe.id + '/picture?type=large';
+	    	$scope.newUserImage.url = 'http://graph.facebook.com/' + $rootScope.fbMe.id + '/picture?width=250&height=250';
+	    	updateParams.pictureUrl = 'http://graph.facebook.com/' + $rootScope.fbMe.id + '/picture?width=250&height=250';
 	    };
 
 	    $scope.checkEmail = function() {
@@ -129,7 +129,7 @@ define(['./index'], function (controllers) {
                                 fbSubscriptions.push(rsvList[1].data[j].id);
                             }
                             updateParams.facebook.subscriptions = fbSubscriptions;
-                            updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?type=large';
+                            updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?width=250&height=250';
 							userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 								userService.addFacebookSubscriptions($rootScope.user._id).then(function (data, status) {
 									$rootScope.user = data;
@@ -302,7 +302,7 @@ define(['./index'], function (controllers) {
 					updateParams.address = toTitleCase($scope.locationAddress);
 				}
 				if($scope.picturePage) {
-					updateParams.pictureUrl = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?type=large';
+					updateParams.pictureUrl = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?width=250&height=250';
 				}
 				if($scope.userFacebookLink && $scope.userFacebookLink !== $rootScope.user.facebookLink) {
 					updateParams.facebookLink = $scope.userFacebookLink;
