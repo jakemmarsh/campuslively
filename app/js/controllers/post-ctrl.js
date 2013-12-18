@@ -242,6 +242,7 @@ define(['./index'], function (controllers) {
 				    		eventService.updateEvent(postedEvent._id, updateParams).then(function(updatedEvent) {
 				    			$scope.eventPosted = true;
 				    			$scope.postedEvent = updatedEvent;
+				    			$rootScope.pageTitle = "Event Posted";
 
 				    			// automatically post to Facebook if user is linked and has option enabled
 						    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && updatedEvent.privacy == 'public') {
@@ -292,6 +293,7 @@ define(['./index'], function (controllers) {
 			    		eventService.updateEvent(postedEvent._id, updateParams).then(function(updatedEvent) {
 			    			$scope.eventPosted = true;
 			    			$scope.postedEvent = updatedEvent;
+			    			$rootScope.pageTitle = "Event Posted";
 
 			    			// automatically post to Facebook if user is linked and has option enabled
 					    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && updatedEvent.privacy == 'public') {
