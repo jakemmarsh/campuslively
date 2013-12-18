@@ -52,4 +52,12 @@ var eventSchema = new mongoose.Schema({
 
 eventSchema.index({ loc : '2dsphere' });
 
+eventSchema.index({ loc : 1 });
+eventSchema.index({ loc : 1, startDate : 1 });
+
+eventSchema.index({ creator : 1 });
+
+eventSchema.index({ school : 1 });
+eventSchema.index({ school : 1, startDate : 1 });
+
 module.exports = mongoose.model('Event', eventSchema);

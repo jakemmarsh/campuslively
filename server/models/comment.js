@@ -40,4 +40,6 @@ comment.add({
     subComments: [subCommentSchema]
 });
 
+comment.index({ eventId: 1 });
+
 module.exports = mongoose.model('Comment', comment);

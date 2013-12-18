@@ -89,4 +89,10 @@ var userSchema = new mongoose.Schema({
 
 userSchema.index({ loc : '2dsphere' });
 
+userSchema.index({ "facebook.id" : 1 });
+
+userSchema.index({ attending : 1 });
+
+userSchema.index({ invites : 1 });
+
 module.exports = mongoose.model('User', userSchema);
