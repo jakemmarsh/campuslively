@@ -140,7 +140,6 @@ define(['./index'], function (controllers) {
 			    	}
 				},
 				function (errorMessage) {
-					console.log(errorMessage);
 		        });
 		    }
 	    };
@@ -265,7 +264,7 @@ define(['./index'], function (controllers) {
 										{ event: updatedEvent.facebookId },
 										function(response) {
 											if (!response || response.error) {
-												console.log(response.error);
+												//console.log(response.error);
 											} 
 											else {
 												//alert('Publish was successful! Action ID: ' + response.id);

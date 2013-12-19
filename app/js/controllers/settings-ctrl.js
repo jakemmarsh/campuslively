@@ -95,7 +95,6 @@ define(['./index'], function (controllers) {
 			    	}
 				},
 				function (errorMessage) {
-					console.log(errorMessage);
 		        });
 		    }
 	    };
@@ -187,7 +186,6 @@ define(['./index'], function (controllers) {
 		};
 
 		$scope.changeFbAutoPost = function() {
-			console.log($rootScope.user.facebook.autoPost);
 			var updateParams = {};
 			updateParams.facebook = {};
 			updateParams.facebook.id = $rootScope.user.facebook.id;

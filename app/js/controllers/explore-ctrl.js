@@ -62,7 +62,6 @@ define(['./index'], function (controllers) {
 						});
 			        },
 			        function (errorMessage) {
-			            console.log(errorMessage);
 			        });
 				}
 				else {
@@ -189,7 +188,6 @@ define(['./index'], function (controllers) {
     			}
 	        },
 	        function (errorMessage) {
-	            console.log(errorMessage);
 	        });
     	};
 
