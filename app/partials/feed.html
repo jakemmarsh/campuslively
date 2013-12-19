@@ -271,22 +271,6 @@
 				<div class="unit eleven-twelfths last-unit">
 					<div class="box islet comment">
 						<p class="nudge-half--bottom pre-wrap" data-ng-bind-html="activity.comment.body | parseUrl"></p>
-						<div class="table full-width">
-							<div class="td one-half">
-								<div class="action-buttons comment nudge-half--top">
-									<a class="first" href><span class="gamma" data-ng-class="{green: likesComment(activity.comment)}">{{ activity.comment.likes.length }}</span></a>
-									<a href data-ng-click="likeComment(activity.comment)" data-ng-hide="likesComment(activity.comment)">
-										<i class="fa fa-heart"></i> Like
-									</a>
-									<a href data-ng-click="unlikeComment(activity.comment)" data-ng-show="likesComment(activity.comment)">
-										<i class="fa fa-heart-o"></i> Unlike
-									</a>
-								</div>
-							</div>
-							<div class="td one-half text-right">
-								<span class="muted epsilon" data-ng-bind="activity.comment.timestamp | timePast"></span>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
