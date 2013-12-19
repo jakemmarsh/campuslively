@@ -142,6 +142,7 @@ define(['./app'], function (app) {
                         return data;
                     },
                     function (errorMessage, status) {
+                        $rootScope.originalDestination = $location.path();
                         $location.path('/feed');
                     });
                 }]
@@ -174,6 +175,7 @@ define(['./app'], function (app) {
                         return data;
                     },
                     function (errorMessage, status) {
+                        $rootScope.originalDestination = $location.path();
                         $location.path('/feed');
                     });
                 }]

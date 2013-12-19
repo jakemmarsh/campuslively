@@ -44,6 +44,9 @@ define([
         });
 
         $rootScope.$on('event:auth-loginRequired', function() {
+            if(!$rootScope.originalDestination) {
+                $rootScope.originalDestination = $location.path();
+            }
             localStorageService.clearAll();
             $rootScope.user = null;
             $location.path('/login');
@@ -158,7 +161,6 @@ define([
                 $location.path('/');
             },
             function (errorMessage, status) {
-                console.log(errorMessage);
             });
         };
     }]);

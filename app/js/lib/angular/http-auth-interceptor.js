@@ -51,7 +51,6 @@
 
       function error(response) {
         if (response.status === 401 && !response.config.ignoreAuthModule) {
-          $rootScope.originalDestination = $location.path();
           var deferred = $q.defer();
           httpBuffer.append(response.config, deferred);
           $rootScope.$broadcast('event:auth-loginRequired', response);
