@@ -51,13 +51,14 @@
 			border: 1px solid darken($red, 7);
 		}		
 
-	.btn:disabled {
+	.btn:disabled, .btn[disabled="disabled"] {
 		background: darken($border-grey, 4);
 		border: 1px solid darken($border-grey, 4);
 		box-shadow: none;
 	}
 
-		.btn:disabled:hover, .btn:disabled:active, .btn:disabled:focus {
+		.btn:disabled:hover, .btn:disabled:active, .btn:disabled:focus,
+		.btn[disabled="disabled"]:hover, .btn[disabled="disabled"]:active, .btn[disabled="disabled"]:focus {
 			background: darken($border-grey, 4);
 			border: 1px solid darken($border-grey, 4);
 		}
