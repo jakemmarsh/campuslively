@@ -204,6 +204,19 @@ define(['./index'], function (controllers) {
 	    		$scope.event.locationName = $scope.locationAddress;
 	    	}
 
+	    	// add time to event's startDate for proper querying
+	    	var timeArray = $scope.event.startTime.split(':'),
+	    		hours = parseInt(timeArray[0]),
+	    		minutes = parseInt(timeArray[1].replace(/\D/g,''));
+
+	    	// adjust 24-hour format for am/pm
+	    	if(timeArray[1].toLowerCase().indexOf('pm') !== -1) {
+	    		hours += 12;
+	    	}
+
+	    	$scope.event.startDate.setHours(hours);
+	    	$scope.event.startDate.setMinutes(minutes);
+
 	    	// if no location has been specified, make it a nonsensical location by default
 	    	// TODO: fix this logic?
 	    	if(!$scope.event.loc) {

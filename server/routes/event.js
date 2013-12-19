@@ -148,8 +148,6 @@ exports.getEventsBySchool = function(req, res) {
 			],
 			today = new Date();
 
-		today.setHours(0,0,0,0);
-
 		if(req.params.limit) {
 			Event.find({ 
 				school: schoolId, 
@@ -234,7 +232,8 @@ exports.getEventsBySchoolNewer = function(req, res) {
 			commentPopulateObj = [
 				{ path: 'creator' },
 				{ path: 'subComments.creator'}
-			];
+			],
+			today = new Date();
 
 		if(newestId) {
 			Event.find({ 
@@ -245,7 +244,8 @@ exports.getEventsBySchoolNewer = function(req, res) {
 					{ invited: userId }, 
 					{ attending: userId }, 
 					{ creator: userId }
-				]
+				],
+				startDate: { $gte: today }
 			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
@@ -273,7 +273,8 @@ exports.getEventsBySchoolNewer = function(req, res) {
 					{ invited: userId }, 
 					{ attending: userId }, 
 					{ creator: userId }
-				]
+				],
+				startDate: { $gte: today }
 			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
@@ -504,8 +505,6 @@ exports.getEventsByUser = function(req, res) {
 			],
 			today = new Date();
 
-		today.setHours(0,0,0,0);
-
 		if(req.params.limit) {
 			Event.find({ 
 				creator: profileId, 
@@ -515,7 +514,7 @@ exports.getEventsByUser = function(req, res) {
 					{ attending: userId }, 
 					{ creator: userId }
 				],
-				startDate: { $gt: today }
+				startDate: { $gte: today }
 			})
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
@@ -592,8 +591,6 @@ exports.getEventsByUserNewer = function(req, res) {
 			],
 			today = new Date();
 
-		today.setHours(0,0,0,0);
-
 		if(newestId) {
 			Event.find({ 
 				creator: profileId, 
@@ -604,7 +601,7 @@ exports.getEventsByUserNewer = function(req, res) {
 					{ attending: userId }, 
 					{ creator: userId }
 				],
-				startDate: { $gt: today }
+				startDate: { $gte: today }
 			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
@@ -633,7 +630,7 @@ exports.getEventsByUserNewer = function(req, res) {
 					{ attending: userId }, 
 					{ creator: userId }
 				],
-				startDate: { $gt: today }
+				startDate: { $gte: today }
 			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
@@ -681,8 +678,6 @@ exports.getEventsByUserOlder = function(req, res) {
 			],
 			today = new Date();
 
-		today.setHours(0,0,0,0);
-
 		Event.find({ 
 			creator: profileId, 
 			_id: { $lt: oldestId }, 
@@ -692,7 +687,7 @@ exports.getEventsByUserOlder = function(req, res) {
 				{ attending: userId }, 
 				{ creator: userId }
 			],
-			startDate: { $gt: today }
+			startDate: { $gte: today }
 		})
 		.sort({ _id: -1 })
 		.limit(limit)
@@ -740,8 +735,6 @@ exports.getEventsByLocation = function(req, res) {
 			],
 			today = new Date();
 
-		today.setHours(0,0,0,0);
-
 		if(req.params.limit) {
 			Event.find({ 
 				loc: { 
@@ -759,7 +752,7 @@ exports.getEventsByLocation = function(req, res) {
 					{ attending: userId }, 
 					{ creator: userId }
 				],
-				startDate: { $gt: today }
+				startDate: { $gte: today }
 			})
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
@@ -797,7 +790,7 @@ exports.getEventsByLocation = function(req, res) {
 					{ attending: userId }, 
 					{ creator: userId }
 				],
-				startDate: { $gt: today }
+				startDate: { $gte: today }
 			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
@@ -849,8 +842,6 @@ exports.getEventsByLocationNewer = function(req, res) {
 			},
 			today = new Date();
 
-		today.setHours(0,0,0,0);
-
 		if(newestId) {
 			Event.find({ 
 				loc: { 
@@ -865,7 +856,7 @@ exports.getEventsByLocationNewer = function(req, res) {
 					{ attending: userId }, 
 					{ creator: userId }
 				],
-				startDate: { $gt: today }
+				startDate: { $gte: today }
 			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
@@ -896,7 +887,7 @@ exports.getEventsByLocationNewer = function(req, res) {
 					{ attending: userId }, 
 					{ creator: userId }
 				],
-				startDate: { $gt: today }
+				startDate: { $gte: today }
 			})
 			.sort({ _id: -1 })
 			.populate(eventPopulateObj)
@@ -948,8 +939,6 @@ exports.getEventsByLocationOlder = function(req, res) {
 			},
 			today = new Date();
 
-		today.setHours(0,0,0,0);
-
 		Event.find({ 
 			loc: { $near: locationPoint }, 
 			_id: { $lt: oldestId }, 
@@ -959,7 +948,7 @@ exports.getEventsByLocationOlder = function(req, res) {
 				{ attending: userId }, 
 				{ creator: userId }
 			],
-			startDate: { $gt: today }
+			startDate: { $gte: today }
 		})
 		.sort({ _id: -1 })
 		.limit(limit)
