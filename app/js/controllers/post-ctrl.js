@@ -252,11 +252,10 @@ define(['./index'], function (controllers) {
 										{ event: updatedEvent.facebookId },
 										function(response) {
 											if (!response || response.error) {
-												alert('Error occured');
 												console.log(response.error);
 											} 
 											else {
-												alert('Publish was successful! Action ID: ' + response.id);
+												//alert('Publish was successful! Action ID: ' + response.id);
 											}
 										}
 									);

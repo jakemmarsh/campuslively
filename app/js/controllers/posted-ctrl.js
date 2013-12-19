@@ -19,6 +19,7 @@ define(['./index'], function (controllers) {
     		}
     	});
 
+        $scope.invitees = [];
         $scope.toggleInvitee = function(userId) {
             if($scope.invitees.indexOf(userId) > -1) {
                 $scope.invitees.splice($scope.invitees.indexOf(userId), 1);
