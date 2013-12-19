@@ -12,7 +12,7 @@ define(['./index'], function (controllers) {
 
     	if($scope.event.loc) {
 	    	$scope.mapOptions = {
-				center: new google.maps.LatLng($scope.event.loc.coordinates[0], $scope.event.loc.coordinates[1]),
+				center: new google.maps.LatLng($scope.event.loc.coordinates[1], $scope.event.loc.coordinates[0]),
 				zoom: 15,
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				disableDefaultUI: true,
@@ -21,21 +21,21 @@ define(['./index'], function (controllers) {
 				scrollwheel: false,
 				panControl: false
 		    };
+
+		    $scope.placeMarker = function() {
+				var contentString = '<h3 class="flush">'+$scope.event.locationName+'</h3>'+
+									'<a href="https://maps.google.com/maps?daddr='+$scope.event.loc.coordinates[1]+','+$scope.event.loc.coordinates[0]+'&hl=en&t=m&mra=mift&mrsp=1&sz=5&z=18"'+
+									'target="_blank" class="block">Get Directions</a>',
+				
+				locationMarker = new google.maps.InfoWindow({
+					content: contentString,
+					maxWidth: 300,
+					position: new google.maps.LatLng($scope.event.loc.coordinates[1], $scope.event.loc.coordinates[0])
+				});
+
+				locationMarker.open($scope.locationMap);
+			};
 		}
-
-		$scope.placeMarker = function() {
-			var contentString = '<h3 class="flush">'+$scope.event.locationName+'</h3>'+
-								'<a href="https://maps.google.com/maps?daddr='+$scope.event.loc.coordinates[1]+','+$scope.event.loc.coordinates[0]+'&hl=en&t=m&mra=mift&mrsp=1&sz=5&z=18"'+
-								'target="_blank" class="block">Get Directions</a>',
-			
-			locationMarker = new google.maps.InfoWindow({
-				content: contentString,
-				maxWidth: 300,
-				position: new google.maps.LatLng($scope.event.loc.coordinates[1], $scope.event.loc.coordinates[0])
-			});
-
-			locationMarker.open($scope.locationMap);
-		};
 
 		$scope.deleteEvent = function() {
 			if($scope.event.creator._id == $rootScope.user._id) {
