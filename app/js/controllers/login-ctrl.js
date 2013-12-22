@@ -36,6 +36,6 @@ define(['./index'], function (controllers) {
     			$scope.showResend = false;
     			$scope.loginError = errorMessage;
     		});
-    	}
+    	};
     }]);
 });

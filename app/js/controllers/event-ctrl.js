@@ -112,7 +112,7 @@ define(['./index'], function (controllers) {
 		        function (errorMessage) {
 		        });
     		}
-    	}
+    	};
 
     	$scope.likeComment = function(comment) {
     		eventService.likeComment(comment._id, $rootScope.user._id).then(function (data) {
