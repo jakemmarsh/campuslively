@@ -43,22 +43,6 @@
 				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit two-tenths label-container">
-						<label for="password" class="caps weight--bold">Password <span class="red">*</span></label>
-					</div>
-					<div class="unit eight-tenths last-unit">
-						<input type="password" id="password" data-ng-model="user.password" name="password" class="full-width" placeholder="Your password" required />
-					</div>
-				</div>
-				<div class="line nudge-half--bottom">
-					<div class="unit two-tenths label-container">
-						<label for="password" class="caps weight--bold">Confirm <span class="red">*</span></label>
-					</div>
-					<div class="unit eight-tenths last-unit">
-						<input type="password" id="confirmPassword" data-ng-model="confirmPassword" name="confirmPassword" data-password-verify="user.password" class="full-width" placeholder="Confirm your password" required />
-					</div>
-				</div>
-				<div class="line nudge-half--bottom">
-					<div class="unit two-tenths label-container">
 						<label for="gender" class="caps weight--bold">Gender <span class="red">*</span></label>
 					</div>
 					<div class="unit eight-tenths last-unit">
@@ -89,6 +73,22 @@
 						    <option value=""></option>
 						    <option data-ng-repeat="school in schools" value="{{school._id}}">{{ school.name }}</option>
 						</select>
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit two-tenths label-container">
+						<label for="password" class="caps weight--bold">Password <span class="red">*</span></label>
+					</div>
+					<div class="unit eight-tenths last-unit">
+						<input type="password" id="password" data-ng-model="user.password" name="password" class="full-width" placeholder="Your password" required />
+					</div>
+				</div>
+				<div class="line nudge-half--bottom">
+					<div class="unit two-tenths label-container">
+						<label for="password" class="caps weight--bold">Confirm <span class="red">*</span></label>
+					</div>
+					<div class="unit eight-tenths last-unit">
+						<input type="password" id="confirmPassword" data-ng-model="confirmPassword" name="confirmPassword" data-password-verify="user.password" class="full-width" placeholder="Confirm your password" required />
 					</div>
 				</div>
 				<div class="line">
