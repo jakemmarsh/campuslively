@@ -5,8 +5,13 @@
 	width: 250px;
 	height: 200px;
 	color: $white;
+	text-decoration: none;
 	font-size: 1.5em;
 }
+
+	.option i {
+		color: $white;
+	}
 
 	.option:first-child {
 		@include corners(3px, 0, 0, 3px);
