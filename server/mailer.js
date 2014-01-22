@@ -57,7 +57,7 @@ exports.sendContactEmail = function(req, res) {
         var deferred = Q.defer(),
             mailOptions = {
                 from: "Campuslively <jake@campuslively.com>",
-                to: "jake@campuslively.com",
+                to: "jake@campuslively.com, matt@campuslively.com",
                 html: message.body
             };
 
