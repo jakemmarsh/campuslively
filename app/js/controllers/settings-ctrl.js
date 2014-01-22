@@ -89,7 +89,7 @@ define(['./index'], function (controllers) {
 			    		if(data.results.length > 0) {
 			    			$scope.loc = {
 			    				type: 'Point',
-				    			coordinates: [data.results[0].geometry.location.lat.toFixed(2), data.results[0].geometry.location.lng.toFixed(2)]
+				    			coordinates: [data.results[0].geometry.location.lng.toFixed(2), data.results[0].geometry.location.lat.toFixed(2)]
 			    			};
 			    		}
 			    	}
