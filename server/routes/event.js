@@ -984,6 +984,11 @@ exports.postEvent = function(req, res) {
 		var deferred = Q.defer(),
 			event = new Event(receivedEvent);
 
+		// force non-admin users to be associated with their events
+		if(!event.creator && req.session.user.admin === false) {
+			event.creator = req.session.user._id;
+		}
+
 		event.save(function (err, savedEvent) {
             if (err) {
                 deferred.reject(err.message);
@@ -1005,14 +1010,20 @@ exports.postEvent = function(req, res) {
 				eventCreator: req.body.creator
 			});
 
-		activity.save(function (err, savedActivity) {
-            if (err) {
-                deferred.reject(err.message);
-            }
-            else {
-                deferred.resolve(savedActivity);
-            }
-        });
+		// only create activity if event wasn't posted anonymously
+		if(createdEvent.creator) {
+			activity.save(function (err, savedActivity) {
+	            if (err) {
+	                deferred.reject(err.message);
+	            }
+	            else {
+	                deferred.resolve(savedActivity);
+	            }
+	        });
+	    }
+	    else {
+	    	deferred.resolve();
+	    }
 
         return deferred.promise;
 	};
@@ -1302,14 +1313,28 @@ exports.deleteEvent = function(req, res) {
 	var deleteEvent = function(eventId) {
 		var deferred = Q.defer();
 
-		Event.remove({ _id: eventId }, function(err) {
-			if(err) {
-				deferred.reject(err.message);
-			}
-			else {
-				deferred.resolve();
-			}
-		});
+		// allow admin to delete any event
+		if(req.session.user.admin === true) {
+			Event.remove({ _id: eventId }, function(err) {
+				if(err) {
+					deferred.reject(err.message);
+				}
+				else {
+					deferred.resolve();
+				}
+			});
+		}
+		// otherwise make sure user is deleting their own event
+		else {
+			Event.remove({ _id: eventId, creator: req.session.user._id }, function(err) {
+				if(err) {
+					deferred.reject(err.message);
+				}
+				else {
+					deferred.resolve();
+				}
+			});
+		}
 
 		return deferred.promise;
 	},

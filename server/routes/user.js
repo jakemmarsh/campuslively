@@ -483,8 +483,7 @@ exports.getActivities = function(req, res) {
 				{ path: 'event.creator' },
 				{ path: 'comment' },
 				{ path: 'actor' },
-				{ path: 'recipient' },
-				{ path: 'event.creator' }
+				{ path: 'recipient' }
 			],
 			userPopulateObj = [
 				{ path: 'event.creator', model: User },

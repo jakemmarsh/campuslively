@@ -50,7 +50,7 @@
 	<a href data-ng-click="addNew()" class="btn full-width text-center" data-ng-show="newEvents.length > 1 && !loading">Show {{ newEvents.length }} New Events</a>
 	<div class="line fade nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
 		<div class="unit one-twelfth">
-			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
+			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}" data-ng-show="event.creator">
 				<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>
 			</div>
 		</div>
@@ -93,7 +93,7 @@
 	<hr data-ng-hide="!loading && !events.length" />
 	<div class="line fade nudge--ends" data-ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
 		<div class="unit one-twelfth">
-			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
+			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}" data-ng-show="event.creator">
 				<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>
 			</div>
 		</div>

@@ -236,14 +236,28 @@ exports.deleteComment = function(req, res) {
 	var deleteComment = function(commentId) {
 		var deferred = Q.defer();
 
-		Comment.remove({ _id: commentId }, function(err) {
-			if(err) {
-				deferred.reject(err.message);
-			}
-			else {
-				deferred.resolve();
-			}
-		});
+		// allow admin to delete any comment
+		if(req.session.user.admin === true) {
+			Comment.remove({ _id: commentId }, function(err) {
+				if(err) {
+					deferred.reject(err.message);
+				}
+				else {
+					deferred.resolve();
+				}
+			});
+		}
+		// otherwise make sure user is deleting their own comment
+		else {
+			Comment.remove({ _id: commentId, creator: req.session.user._id }, function(err) {
+				if(err) {
+					deferred.reject(err.message);
+				}
+				else {
+					deferred.resolve();
+				}
+			});
+		}
 
 		return deferred.promise;
 	},

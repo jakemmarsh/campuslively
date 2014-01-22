@@ -10,6 +10,10 @@ var userSchema = new mongoose.Schema({
         required: true,
         enum: ['student', 'group']
     },
+    admin: {
+        type: Boolean,
+        default: false
+    },
     timestamp: {
         type: Date, 
         default: Date.now

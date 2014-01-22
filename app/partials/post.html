@@ -112,7 +112,7 @@
 			<div class="unit one-twelfth label-container">
 				<label for="private" class="caps weight--bold">Privacy</label>
 			</div>
-			<div class="unit five-twelfths label-container last-unit">
+			<div class="unit five-twelfths label-container">
 				<div class="dropdown">
 					<a href class="dropdown-toggle">
 						{{ eventPrivacy.label }} <i class="fa fa-chevron-down muted weight--normal"></i>
@@ -124,7 +124,12 @@
 					</ul>
 				</div>
 			</div>
-			<div class="unit one-half text-right"></div>
+			<div class="unit five-twelfths label-container text-right" data-ng-show="user.admin == true">
+				<label for="anonymous" class="caps weight--bold">Post Anonymously</label>
+			</div>
+			<div class="unit one-twelfth label-container text-right last-unit" data-ng-show="user.admin == true">
+				<input type="checkbox" id="anonymous" name="anonymous" data-ng-model="anonymous" />
+			</div>
 		</div>
 		<div class="line">
 			<div class="unit full-width last-unit">

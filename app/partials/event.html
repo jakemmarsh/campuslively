@@ -7,10 +7,9 @@
 					<i class="muted weight--normal zeta fa fa-circle-o" data-ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="right"></i>
 					<i class="muted weight--normal zeta fa fa-circle" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="right"></i>
 				</h1>
-				<h4 class="flush muted weight--normal">
+				<h4 class="flush muted weight--normal" data-ng-show="event.creator">
 					hosted by
-					<a href data-ng-href="/profile/{{ event.creator.username }}" data-ng-show="event.creator">{{event.creator.displayName}}</a>
-					<span data-ng-hide="event.creator">[deleted]</span>
+					<a href data-ng-href="/profile/{{ event.creator.username }}">{{event.creator.displayName}}</a>
 				</h4>
 			</div>
 			<div class="unit one-half last-unit text-right" data-ng-hide="eventPassed">
@@ -27,7 +26,7 @@
 	<div class="line text-left">
 		<div class="unit three-fourths">
 			<div class="box top-highlight islet">
-			<a href class="btn--red delete-button epsilon" data-ng-click="deleteEvent()" data-ng-show="event.creator._id == user._id">Delete Event</a>
+			<a href class="btn--red delete-button epsilon" data-ng-click="deleteEvent()" data-ng-show="event.creator._id == user._id || user.admin == true">Delete Event</a>
 			<div class="line" data-ng-show="event.startDate">
 				<div class="unit three-percent">
 					<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-calendar-o"></i></h4>
@@ -74,7 +73,7 @@
 				</div>
 				<div class="unit nine-tenths last-unit">
 					<div class="box islet comment">
-						<a href class="delete-comment-button" data-ng-click="deleteComment(comment)" data-ng-show="comment.creator._id == user._id">
+						<a href class="delete-comment-button" data-ng-click="deleteComment(comment)" data-ng-show="comment.creator._id == user._id || user.admin == true">
 							<i class="fa fa-times"></i>
 						</a>
 						<h4 class="flush">
@@ -106,7 +105,7 @@
 								</div>
 							</div>
 							<div class="unit eleven-twelfths last-unit subcomment-body islet">
-								<a href class="delete-subcomment-button" data-ng-click="deleteSubComment(comment._id, subComment)" data-ng-show="subComment.creator._id == user._id">
+								<a href class="delete-subcomment-button" data-ng-click="deleteSubComment(comment._id, subComment)" data-ng-show="subComment.creator._id == user._id || user.admin == true">
 									<i class="fa fa-times"></i>
 								</a>
 								<p class="epsilon" data-ng-bind-html="subComment.body | parseUrl"></p>

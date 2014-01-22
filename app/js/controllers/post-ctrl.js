@@ -193,7 +193,6 @@ define(['./index'], function (controllers) {
 		  //       });
 	   //  	}
 	    	// populate remaining parts of event for posting
-	    	$scope.event.creator = $rootScope.user._id;
 	    	$scope.event.privacy = $scope.eventPrivacy.value;
 	    	$scope.event.school = $rootScope.user.school._id;
 	    	if($scope.eventLocation) {
@@ -223,6 +222,14 @@ define(['./index'], function (controllers) {
 	    			type: 'Point',
 	    			coordinates: [-180, -90]
 	    		};
+	    	}
+
+	    	// allow admin users to post events anonymously
+	    	if($scope.anonymous && $rootScope.user.admin === true) {
+	    		$scope.event.creator = null;
+	    	}
+	    	else {
+	    		$scope.event.creator = $rootScope.user._id;
 	    	}
 
 	    	if($scope.eventImage) {

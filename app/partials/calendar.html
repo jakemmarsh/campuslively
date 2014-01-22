@@ -52,7 +52,7 @@
 		<hr />
 		<div class="line fade nudge--ends" data-ng-repeat="event in dayEvents | orderBy:currentSort.value">
 			<div class="unit one-twelfth">
-				<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
+				<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}" data-ng-show="event.creator">
 					<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>
 				</div>
 			</div>
