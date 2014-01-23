@@ -1,7 +1,7 @@
 <div class="box">
-	<div class="event-header soft-half--sides">
+	<div class="event-header soft-half">
 		<div class="line">
-			<div class="unit one-half">
+			<div class="unit three-fifths">
 				<i class="beta fa fa-circle nudge-half--right float-left" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
 				<i class="beta fa fa-circle-o nudge-half--right float-left" data-ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
 				<h2 class="flush">
@@ -10,9 +10,9 @@
 					</a>
 				</h2>
 			</div>
-			<div class="unit one-half last-unit text-right">
-				Posted 
-				 <a data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator">by {{event.creator.displayName}}</a>
+			<div class="unit two-fifths last-unit text-right">
+				Posted <span data-ng-show="event.creator">by </span>
+				 <a data-ng-href="/profile/{{event.creator.username}}" data-ng-show="event.creator">{{event.creator.displayName}}</a>
 				 {{ event.timestamp | timePast }}
 			</div>
 		</div>

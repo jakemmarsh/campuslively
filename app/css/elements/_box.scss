@@ -20,13 +20,17 @@
 			color: $white;
 		}
 
-		.box .event-header h2 a {
-			color: $white;
+		.box .event-header h2 {
+			line-height: 1em;
 		}
 
-			.box .event-header h2 a:hover, .box .event-header h2 a:focus, .box .event-header h2 a:active {
+			.box .event-header h2 a {
 				color: $white;
 			}
+
+				.box .event-header h2 a:hover, .box .event-header h2 a:focus, .box .event-header h2 a:active {
+					color: $white;
+				}
 
 		.box .event-header a {
 			color: lighten($primary, 40);

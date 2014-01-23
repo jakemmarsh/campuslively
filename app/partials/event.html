@@ -1,18 +1,18 @@
 <div class="white-top">
 	<div class="container">
 		<div class="line">
-			<div class="unit one-half text-left">
-				<h1 class="flush">
+			<div class="unit three-fifths text-left">
+				<h2 class="nudge-half--ends height--normal">
 					<span data-ng-bind="event.title"></span>
 					<i class="muted weight--normal zeta fa fa-circle-o" data-ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="right"></i>
 					<i class="muted weight--normal zeta fa fa-circle" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="right"></i>
-				</h1>
+				</h2>
 				<h4 class="flush muted weight--normal" data-ng-show="event.creator">
 					hosted by
 					<a href data-ng-href="/profile/{{ event.creator.username }}">{{event.creator.displayName}}</a>
 				</h4>
 			</div>
-			<div class="unit one-half last-unit text-right" data-ng-hide="eventPassed">
+			<div class="unit two-fifths last-unit text-right" data-ng-hide="eventPassed">
 				<a href class="btn nudge-half--right" data-ng-click="rsvpToEvent()" data-ng-hide="isAttending()"><i class="fa fa-thumbs-up"></i> RSVP</a>
 				<a href class="btn nudge-half--right" data-ng-click="unRsvpToEvent()" data-ng-show="isAttending()"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
 				<a href class="btn nudge-half--right" data-ng-click="open('invite')"><i class="fa fa-plus-square"></i> Invite</a>
