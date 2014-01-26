@@ -5,7 +5,8 @@ define(['./index'], function (controllers) {
 
       $scope.currentView = 'school';
       
-      $scope.viewOptions = [{
+      $scope.viewOptions = [
+        {
           label: 'My School',
           value: 'school'
         },

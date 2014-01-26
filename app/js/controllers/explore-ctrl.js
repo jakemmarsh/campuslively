@@ -4,7 +4,8 @@ define(['./index'], function (controllers) {
     	var oldestId, newestId;
     	$scope.currentView = 'school';
     	
-    	$scope.viewOptions = [{
+    	$scope.viewOptions = [
+    		{
 				label: 'My School',
 				value: 'school'
 			},
