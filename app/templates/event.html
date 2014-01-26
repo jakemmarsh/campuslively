@@ -40,7 +40,7 @@
 		<div class="tr">
 			<div class="td three-fourths">
 				<ul class="tags">
-					<li data-ng-repeat="tag in event.tags" data-ng-bind="tag"></li>
+					<li class="pointer" data-ng-repeat="tag in event.tags" data-ng-bind="tag" data-ng-click="$parent.$parent.$parent.searchEvents = tag"></li>
 				</ul>
 			</div>
 			<div class="td one-fourth text-right soft-half--right vertical-align-middle">
