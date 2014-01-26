@@ -3,15 +3,18 @@
 </div>
 <div class="white-top">
 	<div class="container full-height">
-		<div class="table full-height">
-			<div class="td vertical-align-middle">
+		<div class="table full-height full-width">
+			<div class="td vertical-align-middle one-half">
 				<h1 class="flush blue">My Feed</h1>
+			</div>
+			<div class="td vertical-align-middle one-half text-right">
+				<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions" class="float-right"></ng-switch-toggle-group>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="container soft-half--ends" data-ng-show="!loading">
-	<div class="fade" data-ng-repeat="activity in activities | orderBy:'-timestamp'">
+	<div class="fade" data-ng-show="currentView == 'actions'" data-ng-repeat="activity in actionActivities | orderBy:'-timestamp'">
 		<div data-ng-show="activity.activity == 'subscribed'" class="soft-half--ends">
 			<div class="table full-width">
 				<div class="tr">
@@ -69,76 +72,6 @@
 									Posted by
 									 <a data-ng-href="/profile/{{activity.event.creator.username}}">{{activity.event.creator.displayName}}</a>
 									 {{ activity.event.timestamp | timePast }}
-								</div>
-							</div>
-						</div>
-						<div class="islet">
-							<div class="line">
-								<div class="unit full-width last-unit">
-									<span class="delta weight--bold">
-										<span data-ng-show="activity.event.locationName" class="nudge--right">
-											<i class="fa fa-map-marker muted"></i> <span data-ng-bind="activity.event.locationName"></span> 
-										</span>
-										<span data-ng-show="activity.event.startDate" class="nudge--right">
-											<i class="fa fa-calendar-o muted"></i> <span>{{ activity.event.startDate | readableDate }}</span>
-										</span>
-										<span data-ng-show="activity.event.startTime">
-											<i class="fa fa-clock-o muted"></i> <span data-ng-bind="activity.event.startTime"></span> <span data-ng-show="activity.event.endTime">- <span data-ng-bind="activity.event.endTime"></span></span>
-										</span>
-									</span>
-								</div>
-							</div>
-							<hr data-ng-show="activity.event.description" />
-							<p class="pre-wrap soft-half--ends" data-ng-show="activity.event.description" data-ng-bind-html="activity.event.description | parseUrl"></p>
-						</div>
-						<div class="event-footer table full-width soft-quarter--ends">
-							<div class="tr">
-								<div class="td three-fourths">
-									<ul class="tags">
-										<li data-ng-repeat="tag in activity.event.tags" data-ng-bind="tag"></li>
-									</ul>
-								</div>
-								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
-									<div class="action-buttons green">
-										<a href data-ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div><!-- event end -->
-		</div>
-		<div data-ng-show="activity.activity == 'posted'" class="soft-half--ends">
-			<div class="line">
-				<div class="unit three-fourths">
-					<a href data-ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
-					 posted an event:
-				</div>
-				<div class="unit one-fourth last-unit text-right">
-					<span class="muted">{{ activity.timestamp | timePast }}</span>
-				</div>
-			</div>
-			<div class="line nudge-half--top">
-				<div class="unit one-twelfth">
-					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
-						<a href data-tooltip="{{activity.event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}"></a>
-					</div>
-				</div>
-				<div class="unit eleven-twelfths last-unit">
-					<div class="box">
-						<div class="event-header soft-half">
-							<div class="line">
-								<div class="unit three-fifths">
-									<i class="beta fa fa-circle nudge-half--right float-left" data-ng-show="activity.event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
-									<i class="beta fa fa-circle-blank nudge-half--right float-left" data-ng-show="activity.event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
-									<h2 class="flush">
-										<a data-ng-href="/event/{{activity.event._id}}">
-											{{ activity.event.title }}
-										</a>
-									</h2>
-								</div>
-								<div class="unit two-fifths last-unit text-right">
 								</div>
 							</div>
 						</div>
@@ -277,8 +210,84 @@
 		</div>
 		<hr />
 	</div>
-	<div data-ng-show="!activities.length && !loading">
-		<h2 class="flush green text-center">There hasn't been any activity related to you yet. Try subscribing to other users!</h2>
+	<div class="fade" data-ng-show="currentView == 'events'" data-ng-repeat="activity in eventActivities | orderBy:'-timestamp'">
+		<div class="soft-half--ends">
+			<div class="line">
+				<div class="unit three-fourths">
+					<a href data-ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
+					 posted an event:
+				</div>
+				<div class="unit one-fourth last-unit text-right">
+					<span class="muted">{{ activity.timestamp | timePast }}</span>
+				</div>
+			</div>
+			<div class="line nudge-half--top">
+				<div class="unit one-twelfth">
+					<div class="user-img-event" data-ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
+						<a href data-tooltip="{{activity.event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{activity.event.creator.username}}"></a>
+					</div>
+				</div>
+				<div class="unit eleven-twelfths last-unit">
+					<div class="box">
+						<div class="event-header soft-half">
+							<div class="line">
+								<div class="unit three-fifths">
+									<i class="beta fa fa-circle nudge-half--right float-left" data-ng-show="activity.event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
+									<i class="beta fa fa-circle-blank nudge-half--right float-left" data-ng-show="activity.event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
+									<h2 class="flush">
+										<a data-ng-href="/event/{{activity.event._id}}">
+											{{ activity.event.title }}
+										</a>
+									</h2>
+								</div>
+								<div class="unit two-fifths last-unit text-right">
+								</div>
+							</div>
+						</div>
+						<div class="islet">
+							<div class="line">
+								<div class="unit full-width last-unit">
+									<span class="delta weight--bold">
+										<span data-ng-show="activity.event.locationName" class="nudge--right">
+											<i class="fa fa-map-marker muted"></i> <span data-ng-bind="activity.event.locationName"></span> 
+										</span>
+										<span data-ng-show="activity.event.startDate" class="nudge--right">
+											<i class="fa fa-calendar-o muted"></i> <span>{{ activity.event.startDate | readableDate }}</span>
+										</span>
+										<span data-ng-show="activity.event.startTime">
+											<i class="fa fa-clock-o muted"></i> <span data-ng-bind="activity.event.startTime"></span> <span data-ng-show="activity.event.endTime">- <span data-ng-bind="activity.event.endTime"></span></span>
+										</span>
+									</span>
+								</div>
+							</div>
+							<hr data-ng-show="activity.event.description" />
+							<p class="pre-wrap soft-half--ends" data-ng-show="activity.event.description" data-ng-bind-html="activity.event.description | parseUrl"></p>
+						</div>
+						<div class="event-footer table full-width soft-quarter--ends">
+							<div class="tr">
+								<div class="td three-fourths">
+									<ul class="tags">
+										<li data-ng-repeat="tag in activity.event.tags" data-ng-bind="tag"></li>
+									</ul>
+								</div>
+								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
+									<div class="action-buttons green">
+										<a href data-ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!-- event end -->
+		</div>
+		<hr />
+	</div>
+	<div data-ng-show="currentView == 'events' && !eventActivities.length && !loading">
+		<h2 class="flush green text-center">None of your subscriptions have posted any events yet. Try subscribing to other users!</h2>
+	</div>
+	<div data-ng-show="currentView == 'actions' && !actionActivities.length && !loading">
+		<h2 class="flush green text-center">None of your subscriptions have performed any actions yet. Try subscribing to other users!</h2>
 	</div>
 	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="moreToLoad && !loadingMore && !loading">Load More</a>
 	<a href class="btn full-width text-center" data-ng-show="loadingMore && !loading">Loading more...</a>

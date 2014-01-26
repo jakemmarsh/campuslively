@@ -2,10 +2,36 @@ define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('feedCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'eventService', '$timeout', '$FB', function ($scope, $rootScope, $modal, userService, eventService, $timeout, $FB) {
         var oldestId, newestId;
+        $scope.currentView = 'events';
+        $scope.eventActivities = [];
+        $scope.actionActivities = [];
+        
+        $scope.viewOptions = [
+            {
+                label: 'Events',
+                value: 'events'
+            },
+            {
+                label: 'Actions',
+                value: 'actions'
+            }
+        ];
+
     	$scope.loading = true;
 
         userService.getActivities($rootScope.user._id, 20).then(function (data) {
-            $scope.activities = data;
+            // separate activities into "event activites" and "action activities" for proper filtering
+            for(var i = 0; i < data.length; i++) {
+                if(data[i].activity == 'subscribed' || 
+                    data[i].activity == 'rsvpd' || 
+                    data[i].activity == 'commented' || 
+                    data[i].activity == 'invited') {
+                    $scope.actionActivities.push(data[i]);
+                }
+                else if (data[i].activity == 'posted') {
+                    $scope.eventActivities.push(data[i]);
+                }
+            }
             $scope.loading = false;
             if(data.length == 20) {
                 $scope.moreToLoad = true;
@@ -25,8 +51,17 @@ define(['./index'], function (controllers) {
         $scope.loadNew = function() {
             userService.getActivitiesNewer($rootScope.user._id, newestId).then(function (data) {
                 if(data.length > 0) {
+                    // separate activities into "event activites" and "action activities" for proper filtering
                     for(var i = 0; i < data.length; i++) {
-                        $scope.activities.unshift(data[i]);
+                        if(data[i].activity == 'subscribed' || 
+                           data[i].activity == 'rsvpd' || 
+                           data[i].activity == 'commented' || 
+                           data[i].activity == 'invited') {
+                            $scope.actionActivities.unshift(data[i]);
+                        }
+                        else if(data[i].activity == 'posted') {
+                            $scope.eventActivities.unshift(data[i]);
+                        }
                     }
                     newestId = data[0]._id;
                 }
