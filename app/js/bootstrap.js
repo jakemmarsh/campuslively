@@ -73,7 +73,7 @@ define([
         });
 
         // global function to highlight current page link
-        $rootScope.getClass = function(path) {
+        $rootScope.isActivePage = function(path) {
             if ($location.path().substr(0, path.length) == path) {
               return true;
             } 

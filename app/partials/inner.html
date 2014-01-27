@@ -1,18 +1,18 @@
 <nav class="sidebar" data-fixed-sidebar>
-	<ul data-ng-show="getClass('/login') || getClass('/register') || getClass('/forgot')">
-		<li class="solo" data-ng-show="getClass('/login')">
+	<ul data-ng-show="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot')">
+		<li class="solo" data-ng-show="isCurrentPage('/login')">
 			<div class="link">
 				<i class="fa fa-sign-in"></i>
 				Login
 			</div>
 		</li>
-		<li class="solo" data-ng-show="getClass('/register')">
+		<li class="solo" data-ng-show="isCurrentPage('/register')">
 			<a href="/register" class="link">
 				<i class="fa fa-pencil"></i>
 				Register
 			</a>
 		</li>
-		<li class="solo" data-ng-show="getClass('/forgot')">
+		<li class="solo" data-ng-show="isCurrentPage('/forgot')">
 			<div class="link">
 				<i class="fa fa-question"></i>
 				Forgot
@@ -27,18 +27,18 @@
 			</li>
 		</div>
 	</ul>
-	<ul data-ng-show="(getClass('/privacy') || getClass('/contact')) || getClass('/about')">
-		<li class="solo" data-ng-show="getClass('/privacy')">
+	<ul data-ng-show="(isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about')">
+		<li class="solo" data-ng-show="isCurrentPage('/privacy')">
 			<div class="link">
 				<i class="fa fa-question"></i>
 			</div>
 		</li>
-		<li class="solo" data-ng-show="getClass('/contact')">
+		<li class="solo" data-ng-show="isCurrentPage('/contact')">
 			<div class="link">
 				<i class="fa fa-envelope"></i>
 			</div>
 		</li>
-		<li class="solo" data-ng-show="getClass('/about')">
+		<li class="solo" data-ng-show="isCurrentPage('/about')">
 			<div class="link">
 				<i class="fa fa-users"></i>
 			</div>
@@ -52,33 +52,39 @@
 			</li>
 		</div>
 	</ul>
-	<ul data-ng-hide="getClass('/login') || getClass('/register') || getClass('/forgot') || (getClass('/privacy') || getClass('/contact')) || getClass('/about') || !isLoggedIn()">
-		<li class="post" data-ng-class="{true:'active', false:''}[getClass('/post')]">
+	<ul data-ng-hide="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot') || isCurrentPage('/reset') || (isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about') || !isLoggedIn()">
+		<li class="post" data-ng-class="{true:'active', false:''}[isCurrentPage('/post')]">
 			<a href="/post" class="link">
 				<i class="fa fa-plus"></i>
 				Post
 			</a>
 		</li>
-		<li data-ng-class="{true:'active', false:''}[getClass('/feed')]">
+		<li data-ng-class="{true:'active', false:''}[isCurrentPage('/feed')]">
 			<a href="/feed" class="link">
 				<i class="fa fa-list"></i>
 				My Feed
 			</a>
 		</li>
-		<li data-ng-class="{true:'active', false:''}[getClass('/explore')]">
+		<li data-ng-class="{true:'active', false:''}[isCurrentPage('/explore')]">
 			<a href="/explore" class="link">
 				<i class="fa fa-compass"></i>
 				Explore
 			</a>
 		</li>
-		<li data-ng-class="{true:'active', false:''}[getClass('/calendar')]">
+		<li data-ng-class="{true:'active', false:''}[isCurrentPage('/calendar')]">
 			<a href="/calendar" class="link">
 				<i class="fa fa-calendar-o"></i>
 				Calendar		
 			</a>
 		</li>
+		<li data-ng-class="{true:'active', false:''}[isCurrentPage('/profile')]">
+			<a ng-href="/profile/{{user.username}}" class="link">
+				<i class="fa fa-user"></i>
+				Profile		
+			</a>
+		</li>
 		<div class="bottom">
-			<li data-ng-class="{true:'active', false:''}[getClass('/settings')]">
+			<li data-ng-class="{true:'active', false:''}[isCurrentPage('/settings')]">
 				<a href="/settings" class="link">
 					<i class="fa fa-cogs"></i>
 					Settings
