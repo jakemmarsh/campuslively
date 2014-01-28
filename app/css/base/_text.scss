@@ -18,6 +18,17 @@
   color: $muted-text;
 }
 
+.muted-link {
+	color: $muted-text;
+}
+
+	.muted-link:hover,
+	.muted-link:active,
+	.muted-link:focus {
+		text-decoration: none;
+		color: $primary;
+	}
+
 .blue {
 	color: $primary;
 }

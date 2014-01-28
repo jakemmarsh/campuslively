@@ -314,13 +314,20 @@
     text-align: center;
 }
 
-.text-right {
+.text-right, .responsive-text-right {
     text-align: right;
 }
 
-.text-left {
+.text-left, .responsive-text-left {
     text-align: left;
 }
+
+    @media only screen and (max-width: 480px) {
+        .responsive-text-left,
+        .responsive-text-right {
+            text-align: center;
+        }
+    }
 
 .float-left {
     float: left;
