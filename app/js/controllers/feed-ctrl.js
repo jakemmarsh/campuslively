@@ -46,6 +46,7 @@ define(['./index'], function (controllers) {
             $scope.checkForActivities();
         },
         function (errorMessage) {
+            $scope.loading = false;
         });
 
         $scope.loadNew = function() {

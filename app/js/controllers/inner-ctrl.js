@@ -17,10 +17,11 @@ define(['./index'], function (controllers) {
 
 	    				$scope.notifications.push(notification);
 	    			}
+	    			gotInvites = true;
 		        },
 		        function (errorMessage) {
+		        	gotInvites = true;
 		        });
-		        gotInvites = true;
         	}
         });
 
@@ -34,9 +35,6 @@ define(['./index'], function (controllers) {
 					};
 					$scope.notifications.unshift(fbMessage);
 				}
-				else {
-					$scope.notifications.splice(0,1);
-				}
 			}
 		});
 
@@ -46,6 +44,7 @@ define(['./index'], function (controllers) {
 	    			$scope.notifications.splice(index, 1);
 		        },
 		        function (errorMessage) {
+		        	$scope.notifications.splice(index, 1);
 		        });
 			}
 			else {

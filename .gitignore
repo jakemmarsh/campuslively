@@ -1,3 +1,4 @@
+*.gz
 .idea
 .sass-cache
 nginx.conf

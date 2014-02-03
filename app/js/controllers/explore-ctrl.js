@@ -1,7 +1,46 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('exploreCtrl', ['$scope', '$rootScope', '$modal', 'locationService', 'eventService', '$timeout', '$FB', function ($scope, $rootScope, $modal, locationService, eventService, $timeout, $FB) {
-    	var oldestId, newestId;
+    	var oldestId, newestId,
+    	getSchoolEvents = function() {
+    		eventService.getEventsBySchool($rootScope.user.school._id, 20).then(function (data, status) {
+				$scope.events = data;
+				$scope.loading = false;
+				if(data.length == 20) {
+	                $scope.moreToLoadSchool = true;
+	            }
+	            else {
+	                $scope.moreToLoadSchool = false;
+	            }
+	            if(data.length > 0) {
+		            oldestId = data[data.length-1]._id;
+		            newestId = data[0]._id;
+		        }
+		        $scope.checkForEvents();
+			}, function(err, status) {
+				$scope.loading = false;
+			});
+    	},
+    	getNearbyEvents = function() {
+    		eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
+				$scope.events = data;
+				$scope.loading = false;
+				if(data.length == 20) {
+                	$scope.moreToLoadNearby = true;
+	            }
+	            else {
+	                $scope.moreToLoadNearby = false;
+	            }
+	            if(data.length > 0) {
+		            oldestId = data[data.length-1]._id;
+		            newestId = data[0]._id;
+		        }
+		        $scope.checkForEvents();
+			}, function(err, status) {
+				$scope.loading = false;
+			});
+    	};
+
     	$scope.currentView = 'school';
     	
     	$scope.viewOptions = [
@@ -19,70 +58,24 @@ define(['./index'], function (controllers) {
 			$scope.loading = true;
 			$scope.events = [];
 			if($scope.currentView == 'school') {
-				eventService.getEventsBySchool($rootScope.user.school._id, 20).then(function (data, status) {
-					$scope.events = data;
-					$scope.loading = false;
-					if(data.length == 20) {
-		                $scope.moreToLoadSchool = true;
-		            }
-		            else {
-		                $scope.moreToLoadSchool = false;
-		            }
-		            if(data.length > 0) {
-			            oldestId = data[data.length-1]._id;
-			            newestId = data[0]._id;
-			        }
-			        $scope.checkForEvents();
-				}, function(err, status) {
-					$scope.loading = false;
-				});
+				getSchoolEvents();
 			}
 			else if($scope.currentView == 'nearby') {
+				// get user's location before events if not already known
 				if(!$rootScope.userPosition) {
 					$scope.gettingPosition = true;
 					locationService.getGeo().then(function (data) {
 			            $rootScope.userPosition = data;
 			            $scope.gettingPosition = false;
 			            $scope.loading = true;
-			            eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
-							$scope.events = data;
-							$scope.loading = false;
-							if(data.length == 20) {
-			                	$scope.moreToLoadNearby = true;
-				            }
-				            else {
-				                $scope.moreToLoadNearby = false;
-				            }
-				            if(data.length > 0) {
-					            oldestId = data[data.length-1]._id;
-					            newestId = data[0]._id;
-					        }
-					        $scope.checkForEvents();
-						}, function(err, status) {
-							$scope.loading = false;
-						});
+			            
+			            getNearbyEvents();
 			        },
 			        function (errorMessage) {
 			        });
 				}
 				else {
-					eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
-						$scope.events = data;
-						$scope.loading = false;
-						if(data.length == 20) {
-		                	$scope.moreToLoadNearby = true;
-			            }
-			            else {
-			                $scope.moreToLoadNearby = false;
-			            }
-			            if(data.length > 0) {
-				            oldestId = data[data.length-1]._id;
-				            newestId = data[0]._id;
-				        }
-				        $scope.checkForEvents();
-					}, function(err, status) {
-						$scope.loading = false;
-					});
+					getNearbyEvents();
 				}
 			}
 		});

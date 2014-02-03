@@ -3,10 +3,7 @@ define(['./index'], function (controllers) {
     controllers.controller('eventCtrl', ['$scope', '$rootScope', '$modal', 'eventService', 'userService', 'resolvedEvent', '$location',  function ($scope, $rootScope, $modal, eventService, userService, resolvedEvent, $location) {
     	$scope.event = resolvedEvent;
 
-    	var eventDate = new Date($scope.event.startDate),
-    		now = new Date();
-
-    	if(eventDate < now) {
+    	if(new Date($scope.event.startDate) < new Date()) {
     		$scope.eventPassed = true;
     	}
 
@@ -38,7 +35,7 @@ define(['./index'], function (controllers) {
 		}
 
 		$scope.deleteEvent = function() {
-			if($scope.event.creator._id == $rootScope.user._id) {
+			if($scope.event.creator._id == $rootScope.user._id || $rootScope.user.admin) {
 				eventService.deleteEvent($scope.event._id).then(function (data) {
     				$location.path('/feed');
 		        },
@@ -152,8 +149,20 @@ define(['./index'], function (controllers) {
     			$scope.event = data;
 
     			// automatically post to Facebook if user is linked and has option enabled
-    			if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
-                    // make call to facebook API to autopost RSVP event
+    			if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && $scope.event.privacy == 'public') {
+                    $FB.api(
+						'/me/campuslively:post',
+						'rsvp_to',
+						{ event: $scope.event.facebookId },
+						function(response) {
+							if (!response || response.error) {
+								//console.log(response.error);
+							} 
+							else {
+								//alert('Publish was successful! Action ID: ' + response.id);
+							}
+						}
+					);
                 }
 	        },
 	        function (errorMessage) {

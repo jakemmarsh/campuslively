@@ -1,7 +1,89 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('calendarCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$modal', 'eventService', 'locationService', 'googleService', '$FB', function ($scope, $rootScope, $location, $anchorScroll, $modal, eventService, locationService, googleService, $FB) {
-    	$scope.showDay = false;
+    	var getGoogleCalEvents = function() {
+        googleService.getAllEvents().then(function(data) {
+          for(var i = 0; i < data.length; i++) {
+            if(data[i].start) {
+              var event = {
+                title: data[i].summary,
+                start: data[i].start.dateTime == null ? data[i].start.date : data[i].start.dateTime,
+                editable: false,
+                backgroundColor: '#dd4b39'
+              };
+              $scope.events.push(event);
+            }
+          }
+          // remove any previous events before adding to avoid duplicates
+          $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+          $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+          $scope.loading = false;
+        }, function(err) {
+          $scope.loading = false;
+        });
+      },
+      getSchoolEvents = function() {
+        eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
+          for(var i = 0; i < data.length; i++) {
+            var event = {
+              title: data[i].title,
+              start: data[i].startDate,
+              editable: false,
+              id: data[i]._id
+            };
+            
+            // highlight events that user has RSVP'd to
+            event.backgroundColor = $scope.isAttending(data[i]) ? '#4fbda2' : '#3e90be';
+            
+            $scope.events.push(event);
+          }
+
+          // get user's events from Google Calendar if they've logged in
+          if($rootScope.user.google.id) {
+            getGoogleCalEvents();
+          }
+          else {
+            // remove any previous events before adding to avoid duplicates
+            $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+            $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+            $scope.loading = false;
+          }
+        }, function(err, status) {
+          $scope.loading = false;
+        });
+      },
+      getNearbyEvents = function() {
+        eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
+          for(var i = 0; i < data.length; i++) {
+            var event = {
+              title: data[i].title,
+              start: data[i].startDate,
+              editable: false,
+              id: data[i]._id
+            };
+            
+            // highlight events that user has RSVP'd to
+            event.backgroundColor = $scope.isAttending(data[i]) ? '#4fbda2' : '#3e90be';
+
+            $scope.events.push(event);
+          }
+          
+          // get user's events from Google Calendar if they've logged in
+          if($rootScope.user.google.id) {
+            getGoogleCalEvents();
+          }
+          else {
+            // remove any previous events before adding to avoid duplicates
+            $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+            $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+            $scope.loading = false;
+          }
+        }, function(err, status) {
+          $scope.loading = false;
+        });
+      };
+
+      $scope.showDay = false;
 
       $scope.currentView = 'school';
       
@@ -16,37 +98,6 @@ define(['./index'], function (controllers) {
         }
       ];
 
-      var getGoogleCalEvents = function() {
-        googleService.getAllEvents().then(function(data) {
-          for(var i = 0; i < data.length; i++) {
-            if(data[i].start) {
-              if(data[i].start.dateTime) {
-                var event = {
-                  title: data[i].summary,
-                  start: data[i].start.dateTime,
-                  editable: false,
-                  backgroundColor: '#dd4b39'
-                };
-              }
-              else if(data[i].start.date) {
-                var event = {
-                  title: data[i].summary,
-                  start: data[i].start.date,
-                  editable: false,
-                  backgroundColor: '#dd4b39'
-                };
-              }
-              $scope.events.push(event);
-            }
-          }
-          // remove any previous events before adding to avoid duplicates
-          $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
-          $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
-          $scope.loading = false;
-        }, function(err) {
-        });
-      };
-
       $scope.events = [];
       $scope.$watch('currentView', function() {
         $scope.loading = true;
@@ -56,108 +107,23 @@ define(['./index'], function (controllers) {
 
         $scope.showDay = false;
         if($scope.currentView == 'school') {
-          eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
-            for(var i = 0; i < data.length; i++) {
-              var event = {
-                title: data[i].title,
-                start: data[i].startDate,
-                editable: false,
-                id: data[i]._id
-              };
-              // highlight events that user has RSVP'd to
-              for(var j = 0; j < data[i].attending.length; j++) {
-                if(data[i].attending[j]._id == $rootScope.user._id) {
-                  event.backgroundColor = '#4fbda2';
-                  break;
-                }
-              }
-              $scope.events.push(event);
-            }
-
-            // get user's events from Google Calendar if they've logged in
-            if($rootScope.user.google.id) {
-              getGoogleCalEvents();
-            }
-            else {
-              // remove any previous events before adding to avoid duplicates
-              $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
-              $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
-              $scope.loading = false;
-            }
-          }, function(err, status) {
-          });
+          getSchoolEvents();
         }
         else if($scope.currentView == 'nearby') {
           if(!$rootScope.userPosition) {
             $scope.gettingPosition = true;
+
             locationService.getGeo().then(function (data) {
               $rootScope.userPosition = data;
               $scope.gettingPosition = false;
-              eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
-                for(var i = 0; i < data.length; i++) {
-                  var event = {
-                    title: data[i].title,
-                    start: data[i].startDate,
-                    editable: false,
-                    id: data[i]._id
-                  };
-                  // highlight events that user has RSVP'd to
-                  for(var j = 0; j < data[i].attending.length; j++) {
-                    if(data[i].attending[j]._id == $rootScope.user._id) {
-                      event.backgroundColor = '#4fbda2';
-                      break;
-                    }
-                  }
-                  $scope.events.push(event);
-                }
-                
-                // get user's events from Google Calendar if they've logged in
-                if($rootScope.user.google.id) {
-                  getGoogleCalEvents();
-                }
-                else {
-                  // remove any previous events before adding to avoid duplicates
-                  $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
-                  $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
-                  $scope.loading = false;
-                }
-              }, function(err, status) {
-              });
+              
+              getNearbyEvents();
             },
             function (errorMessage) {
             });
           }
           else {
-            eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
-              for(var i = 0; i < data.length; i++) {
-                var event = {
-                  title: data[i].title,
-                  start: data[i].startDate,
-                  editable: false,
-                  id: data[i]._id
-                };
-                // highlight events that user has RSVP'd to
-                for(var j = 0; j < data[i].attending.length; j++) {
-                  if(data[i].attending[j]._id == $rootScope.user._id) {
-                    event.backgroundColor = '#4fbda2';
-                    break;
-                  }
-                }
-                $scope.events.push(event);
-              }
-              
-              // get user's events from Google Calendar if they've logged in
-              if($rootScope.user.google) {
-                getGoogleCalEvents();
-              }
-              else {
-                // remove any previous events before adding to avoid duplicates
-                $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
-                $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
-                $scope.loading = false;
-              }
-            }, function(err, status) {
-            });
+            getNearbyEvents();
           }
         }
       });

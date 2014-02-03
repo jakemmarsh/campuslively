@@ -4,10 +4,10 @@
 <div class="white-top">
 	<div class="container full-height">
 		<div class="table full-height">
-			<div class="td one-tenth full-height vertical-align-middle soft-half--right">
+			<div class="td one-tenth vertical-align-middle soft-half--right">
 				<div class="user-img-profile" data-ng-style="{'background-image': 'url(' + profile.pictureUrl + ')'}"></div>
 			</div>
-			<div class="td three-tenths full-height">
+			<div class="td three-tenths">
 				<h1 class="flush" data-ng-bind="profile.displayName"></h1>
 				<div class="normal-lh">
 					<a href data-ng-click="openLocation(profile)" data-tooltip="Location" data-ng-show="profile.type == 'group' && profile.address" class="icon-link">
@@ -25,7 +25,7 @@
 
 				</div>
 			</div>
-			<div class="td six-tenths full-height normal-lh vertical-align-middle text-right">
+			<div class="td six-tenths normal-lh vertical-align-middle text-right">
 				<a href="/settings" class="btn" data-ng-show="profile._id == user._id"><i class="fa fa-cogs"></i> Settings</a>
 				<a href class="btn" data-ng-click="toggleSubscribe()" data-ng-hide="isSubscribed() || profile._id == user._id"><i class="fa fa-star"></i> Subscribe</a>
 				<a href class="btn" data-ng-click="toggleSubscribe()" data-ng-show="isSubscribed() && profile._id != user._id"><i class="fa fa-star-o"></i> Unsubscribe</a>
