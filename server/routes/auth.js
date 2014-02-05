@@ -21,7 +21,7 @@ function hash(pwd, salt, fn) {
     // Iterations. ~300ms
         iterations = 12000;
 
-    if (3 == arguments.length) {
+    if (3 === arguments.length) {
         crypto.pbkdf2(pwd, salt, iterations, len, fn);
     } else {
         fn = salt;
@@ -68,7 +68,7 @@ function authenticate(name, pass, fn) {
         // found the user
         hash(pass, data.salt, function(err, hash){
             if (err) return fn(err);
-            if (hash.toString('hex') == data.hash) return fn(null, data);
+            if (hash.toString('hex') === data.hash) return fn(null, data);
             return fn('Invalid password.');
         });
     }, function() {
@@ -102,7 +102,7 @@ exports.check = function(req, res) {
 exports.login = function(req, res) {
     authenticate(req.body.username, req.body.password, function(err, user){
         if (user) {
-            if(user.activated == false) {
+            if(user.activated === false) {
                 res.send(403, "Account has not been activated.");
                 return;
             }
@@ -171,7 +171,7 @@ exports.register = function(req, res) {
         newUser.activationKey = crypto.randomBytes(16).toString('hex');
 
         // check for account type
-        if(req.body.type.toLowerCase() == 'student') {
+        if(req.body.type.toLowerCase() === 'student') {
             if((newUser.email.substring(newUser.email.length - 4)).toLowerCase() != '.edu') {
                 res.send(400, 'Email address must end in .edu.');
             }
@@ -184,7 +184,7 @@ exports.register = function(req, res) {
             newUser.school = req.body.school;
             newUser.loc = req.body.loc;
         }
-        else if(req.body.type.toLowerCase() == 'group') {
+        else if(req.body.type.toLowerCase() === 'group') {
             newUser.type = 'group';
             newUser.groupName = req.body.groupName;
             newUser.displayName = req.body.groupName;

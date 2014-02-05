@@ -31,7 +31,7 @@ function hashSync(pwd, salt, fn) {
     // Iterations. ~300ms
         iterations = 12000;
 
-    if (3 == arguments.length) {
+    if (3 === arguments.length) {
         fn(null, crypto.pbkdf2Sync(pwd, salt, iterations, len));
     } else {
         fn = salt;
@@ -101,6 +101,7 @@ exports.getUsersForInvite = function(req, res) {
         User.find({
         	attending: { $ne: event._id },
         	invites: { $ne: event._id },
+        	subscriptions: userId,
         	$and: [
         		{ 
         			_id: {
@@ -216,7 +217,7 @@ exports.updateUser = function(req, res) {
 				if(key !== '_id' && key !== 'password') {
 					updateParams[key] = req.body[key];
 				}
-				if(key == 'password') {
+				if(key === 'password') {
 					hashSync(req.body[key], function(err, salt, hash){
 			            if (err) {
 			            	throw err;
@@ -307,7 +308,7 @@ exports.uploadImage = function(req, res) {
 };
 
 exports.subscribe = function(req, res) {
-	if(req.params.subscribeId == req.params.userId) {
+	if(req.params.subscribeId === req.params.userId) {
 		res.send(400, "Cannot subscribe user to themselves.");
 		return;
 	}
