@@ -8,7 +8,7 @@ define(['./index'], function (controllers) {
 
     	$scope.checkUsername = function() {
     		authService.checkUsername($scope.user.username).then(function (isTaken, status) {
-    			if(isTaken == 'true') {
+    			if(isTaken === 'true') {
     				$scope.usernameTaken = true;
     			}
     			else {
@@ -20,7 +20,7 @@ define(['./index'], function (controllers) {
     	$scope.checkEmail = function() {
     		if($scope.user.email) {
 	    		authService.checkEmail($scope.user.email).then(function (isTaken, status) {
-	    			if(isTaken == 'true') {
+	    			if(isTaken === 'true') {
 	    				$scope.emailTaken = true;
 	    			}
 	    			else {

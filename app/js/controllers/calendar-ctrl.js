@@ -106,10 +106,10 @@ define(['./index'], function (controllers) {
         $scope.events = [];
 
         $scope.showDay = false;
-        if($scope.currentView == 'school') {
+        if($scope.currentView === 'school') {
           getSchoolEvents();
         }
-        else if($scope.currentView == 'nearby') {
+        else if($scope.currentView === 'nearby') {
           if(!$rootScope.userPosition) {
             $scope.gettingPosition = true;
 
@@ -134,7 +134,7 @@ define(['./index'], function (controllers) {
         				$scope.selectedDay = date;
                 $scope.loadingDayEvents = true;
                 $scope.dayEvents = [];
-                if($scope.currentView == 'school') {
+                if($scope.currentView === 'school') {
                   eventService.getEventsBySchoolAndDay($rootScope.user.school._id, $scope.selectedDay).then(function (data, status) {
                     $scope.loadingDayEvents = false;
                     $scope.dayEvents = data;
@@ -152,7 +152,7 @@ define(['./index'], function (controllers) {
                   }, function(err, status) {
                   });
                 }
-                else if($scope.currentView == 'nearby') {
+                else if($scope.currentView === 'nearby') {
                   eventService.getEventsByLocationAndDay($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.selectedDay).then(function (data, status) {
                     $scope.loadingDayEvents = false;
                     $scope.dayEvents = data;
@@ -187,13 +187,13 @@ define(['./index'], function (controllers) {
     	$scope.rsvpToEvent = function(event) {
           eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
               for (var i = 0; i < $scope.dayEvents.length; i++) {
-                  if($scope.dayEvents[i]._id == event._id) {
+                  if($scope.dayEvents[i]._id === event._id) {
                       $scope.dayEvents[i] = data;
                       break;
                   }
               }
               for (var i = 0; i < $scope.events.length; i++) {
-                if($scope.events[i].id == event._id) {
+                if($scope.events[i].id === event._id) {
                   // highlight event on calendar
                   $scope.events[i].backgroundColor = '#4fbda2';
                   $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
@@ -203,7 +203,7 @@ define(['./index'], function (controllers) {
               }
 
               // automatically post to Facebook if user is linked and has option enabled
-              if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy == 'public') {
+              if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy === 'public') {
                 $FB.api(
                   '/me/campuslively:rsvp_to',
                   'post',
@@ -220,13 +220,13 @@ define(['./index'], function (controllers) {
       $scope.unRsvpToEvent = function(event) {
           eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
               for (var i = 0; i < $scope.dayEvents.length; i++) {
-                  if($scope.dayEvents[i]._id == event._id) {
+                  if($scope.dayEvents[i]._id === event._id) {
                       $scope.dayEvents[i] = data;
                       break;
                   }
               }
               for (var i = 0; i < $scope.events.length; i++) {
-                if($scope.events[i].id == event._id) {
+                if($scope.events[i].id === event._id) {
                   // un-highlight event on calendar
                   $scope.events[i].backgroundColor = '#3e90be';
                   $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
@@ -241,7 +241,7 @@ define(['./index'], function (controllers) {
 
       $scope.isAttending = function(event) {
           for(var i = 0; i < event.attending.length; i++) {
-              if(event.attending[i]._id == $rootScope.user._id) {
+              if(event.attending[i]._id === $rootScope.user._id) {
                   return true;
               }
           }

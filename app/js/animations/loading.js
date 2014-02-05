@@ -3,7 +3,7 @@ define(['./index'], function (animations) {
   animations.animation('.loading', function() {
     return {
       addClass : function(element, className, done) {
-        if(className == 'ng-hide') {
+        if(className === 'ng-hide') {
           jQuery(element).animate({
             top: '-100px'
           }, 1000, done);
@@ -13,7 +13,7 @@ define(['./index'], function (animations) {
         }
       },
       removeClass : function(element, className, done) {
-        if(className == 'ng-hide') {
+        if(className === 'ng-hide') {
           element.css('top','-100px');
 
           /* remove it early so you can animate on it since

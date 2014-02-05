@@ -26,7 +26,7 @@ define(['./index'], function (controllers) {
         });
 
 		$rootScope.$watch('fbStatus', function() {
-			if($rootScope.user && $rootScope.fbStatus && $rootScope.user.facebook.hasLinked == false) {
+			if($rootScope.user && $rootScope.fbStatus && $rootScope.user.facebook.hasLinked === false) {
 				if(!$rootScope.user.fbId && $rootScope.fbStatus.status !== 'connected') {
 					var fbMessage = { 
 						msg: 'You haven\'t linked your account to Facebook yet. '+
@@ -39,7 +39,7 @@ define(['./index'], function (controllers) {
 		});
 
 		$scope.closeNotification = function(index) {
-			if($scope.notifications[index].type == 'invite') {
+			if($scope.notifications[index].type === 'invite') {
 				inviteService.markAsRead($scope.notifications[index].inviteId).then(function (data) {
 	    			$scope.notifications.splice(index, 1);
 		        },

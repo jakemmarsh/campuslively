@@ -8,7 +8,7 @@ define(['./index'], function (controllers) {
         eventService.getEventsByUser($scope.profile._id, 20).then(function (data, status) {
             $scope.events = data;
             $scope.loading = false;
-            if(data.length == 20) {
+            if(data.length === 20) {
                 $scope.moreToLoad = true;
             }
             else {
@@ -40,7 +40,7 @@ define(['./index'], function (controllers) {
 
         $scope.isSubscribed = function() {
             for(var i = 0; i < $rootScope.user.subscriptions.length; i++) {
-                if($rootScope.user.subscriptions[i]._id == $scope.profile._id) {
+                if($rootScope.user.subscriptions[i]._id === $scope.profile._id) {
                     return true;
                 }
             }
@@ -73,14 +73,14 @@ define(['./index'], function (controllers) {
         $scope.rsvpToEvent = function(event) {
             eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
                 for (var i = 0; i < $scope.events.length; i++) {
-                    if($scope.events[i]._id == event._id) {
+                    if($scope.events[i]._id === event._id) {
                         $scope.events[i] = data;
                         break;
                     }
                 }
 
                 // automatically post to Facebook if user is linked and has option enabled
-                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy == 'public') {
+                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy === 'public') {
                     $FB.api(
                         '/me/campuslively:rsvp_to',
                         'post',
@@ -97,7 +97,7 @@ define(['./index'], function (controllers) {
         $scope.unRsvpToEvent = function(event) {
             eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
                 for (var i = 0; i < $scope.events.length; i++) {
-                    if($scope.events[i]._id == event._id) {
+                    if($scope.events[i]._id === event._id) {
                         $scope.events[i] = data;
                         break;
                     }
@@ -109,7 +109,7 @@ define(['./index'], function (controllers) {
 
         $scope.isAttending = function(event) {
             for(var i = 0; i < event.attending.length; i++) {
-                if(event.attending[i]._id == $rootScope.user._id) {
+                if(event.attending[i]._id === $rootScope.user._id) {
                     return true;
                 }
             }

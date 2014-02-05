@@ -22,18 +22,18 @@ define(['./index'], function (controllers) {
         userService.getActivities($rootScope.user._id, 20).then(function (data) {
             // separate activities into "event activites" and "action activities" for proper filtering
             for(var i = 0; i < data.length; i++) {
-                if(data[i].activity == 'subscribed' || 
-                    data[i].activity == 'rsvpd' || 
-                    data[i].activity == 'commented' || 
-                    data[i].activity == 'invited') {
+                if(data[i].activity === 'subscribed' || 
+                    data[i].activity === 'rsvpd' || 
+                    data[i].activity === 'commented' || 
+                    data[i].activity === 'invited') {
                     $scope.actionActivities.push(data[i]);
                 }
-                else if (data[i].activity == 'posted') {
+                else if (data[i].activity === 'posted') {
                     $scope.eventActivities.push(data[i]);
                 }
             }
             $scope.loading = false;
-            if(data.length == 20) {
+            if(data.length === 20) {
                 $scope.moreToLoad = true;
             }
             else {
@@ -54,13 +54,13 @@ define(['./index'], function (controllers) {
                 if(data.length > 0) {
                     // separate activities into "event activites" and "action activities" for proper filtering
                     for(var i = 0; i < data.length; i++) {
-                        if(data[i].activity == 'subscribed' || 
-                           data[i].activity == 'rsvpd' || 
-                           data[i].activity == 'commented' || 
-                           data[i].activity == 'invited') {
+                        if(data[i].activity === 'subscribed' || 
+                           data[i].activity === 'rsvpd' || 
+                           data[i].activity === 'commented' || 
+                           data[i].activity === 'invited') {
                             $scope.actionActivities.unshift(data[i]);
                         }
-                        else if(data[i].activity == 'posted') {
+                        else if(data[i].activity === 'posted') {
                             $scope.eventActivities.unshift(data[i]);
                         }
                     }
@@ -108,7 +108,7 @@ define(['./index'], function (controllers) {
             if(event) {
                 if(event.attending) {
                     for(var i = 0; i < event.attending.length; i++) {
-                        if(event.attending[i]._id == $rootScope.user._id || event.attending[i] == $rootScope.user._id) {
+                        if(event.attending[i]._id === $rootScope.user._id || event.attending[i] === $rootScope.user._id) {
                             return true;
                         }
                     }
@@ -127,7 +127,7 @@ define(['./index'], function (controllers) {
                 }
 
                 // automatically post to Facebook if user is linked and has option enabled
-                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && activity.event.facebookId && activity.event.privacy == 'public') {
+                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && activity.event.facebookId && activity.event.privacy === 'public') {
                     $FB.api(
                         '/me/campuslively:rsvp_to',
                         'post',

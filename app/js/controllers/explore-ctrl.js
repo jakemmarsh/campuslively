@@ -6,7 +6,7 @@ define(['./index'], function (controllers) {
     		eventService.getEventsBySchool($rootScope.user.school._id, 20).then(function (data, status) {
 				$scope.events = data;
 				$scope.loading = false;
-				if(data.length == 20) {
+				if(data.length === 20) {
 	                $scope.moreToLoadSchool = true;
 	            }
 	            else {
@@ -25,7 +25,7 @@ define(['./index'], function (controllers) {
     		eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
 				$scope.events = data;
 				$scope.loading = false;
-				if(data.length == 20) {
+				if(data.length === 20) {
                 	$scope.moreToLoadNearby = true;
 	            }
 	            else {
@@ -57,10 +57,10 @@ define(['./index'], function (controllers) {
 		$scope.$watch('currentView', function() {
 			$scope.loading = true;
 			$scope.events = [];
-			if($scope.currentView == 'school') {
+			if($scope.currentView === 'school') {
 				getSchoolEvents();
 			}
-			else if($scope.currentView == 'nearby') {
+			else if($scope.currentView === 'nearby') {
 				// get user's location before events if not already known
 				if(!$rootScope.userPosition) {
 					$scope.gettingPosition = true;
@@ -84,7 +84,7 @@ define(['./index'], function (controllers) {
 
 		// get events with newer _id
 		$scope.loadNew = function() {
-			if($scope.currentView == 'school') {
+			if($scope.currentView === 'school') {
 	            eventService.getEventsBySchoolNewer($rootScope.user.school._id, newestId).then(function (data) {
 	                if(data.length > 0) {
 	                    $scope.newEvents = data;
@@ -93,7 +93,7 @@ define(['./index'], function (controllers) {
 	            function (errorMessage) {
 	            });
         	}
-        	else if($scope.currentView == 'nearby') {
+        	else if($scope.currentView === 'nearby') {
         		eventService.getEventsByLocationNewer($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), newestId).then(function (data) {
 	                if(data.length > 0) {
 	                    $scope.newEvents = data;
@@ -151,14 +151,14 @@ define(['./index'], function (controllers) {
 		$scope.rsvpToEvent = function(event) {
     		eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
     			for (var i = 0; i < $scope.events.length; i++) {
-    				if($scope.events[i]._id == event._id) {
+    				if($scope.events[i]._id === event._id) {
     					$scope.events[i] = data;
     					break;
     				}
     			}
     			
     			// automatically post to Facebook if user is linked and has option enabled
-		    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy == 'public') {
+		    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy === 'public') {
 		    		$FB.api(
 						'/me/campuslively:rsvp_to',
 						'post',
@@ -175,7 +175,7 @@ define(['./index'], function (controllers) {
     	$scope.unRsvpToEvent = function(event) {
     		eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
     			for (var i = 0; i < $scope.events.length; i++) {
-    				if($scope.events[i]._id == event._id) {
+    				if($scope.events[i]._id === event._id) {
     					$scope.events[i] = data;
     					break;
     				}
@@ -187,7 +187,7 @@ define(['./index'], function (controllers) {
 
     	$scope.isAttending = function(event) {
     		for(var i = 0; i < event.attending.length; i++) {
-    			if(event.attending[i]._id == $rootScope.user._id) {
+    			if(event.attending[i]._id === $rootScope.user._id) {
     				return true;
     			}
     		}
@@ -196,7 +196,7 @@ define(['./index'], function (controllers) {
 
 		$scope.loadMore = function() {
 			$scope.loadingMore = true;
-			if($scope.currentView == 'school') {
+			if($scope.currentView === 'school') {
 				eventService.getEventsBySchoolOlder($rootScope.user.school._id, oldestId, 20).then(function (data, status) {
 					if(data.length < 20) {
 	                    $scope.moreToLoadSchool = false;
@@ -212,7 +212,7 @@ define(['./index'], function (controllers) {
 					$scope.loadingMore = false;
 				});
 			}
-			else if($scope.currentView == 'nearby') {
+			else if($scope.currentView === 'nearby') {
 				eventService.getEventsByLocationOlder($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), oldestId, 20).then(function (data, status) {
 					if(data.length < 20) {
 	                    $scope.moreToLoadNearby = false;

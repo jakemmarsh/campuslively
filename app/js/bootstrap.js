@@ -55,12 +55,12 @@ define([
         // take actions based on user's logged in status and destination page's protection level
         $rootScope.$on('$stateChangeStart', function(event, toState) {
             // if user is not logged in and state requires user to be logged in
-            if(!$rootScope.user && toState.access == 'loggedIn') {
+            if(!$rootScope.user && toState.access === 'loggedIn') {
                 $rootScope.originalDestination = $location.path();
                 $location.path('/login');
             }
             // if user is already logged in and state requires user to not be logged in
-            else if($rootScope.user && toState.access == 'notLoggedIn') {
+            else if($rootScope.user && toState.access === 'notLoggedIn') {
                 $location.path('/feed');
             }
         });
@@ -74,7 +74,7 @@ define([
 
         // global function to highlight current page link
         $rootScope.isCurrentPage = function(path) {
-            if ($location.path().substr(0, path.length) == path) {
+            if ($location.path().substr(0, path.length) === path) {
               return true;
             } 
             else {
@@ -102,7 +102,7 @@ define([
             $FB.getLoginStatus(function (res) {
                 $rootScope.fbStatus = res;
 
-                if($rootScope.fbStatus.status == 'connected') {
+                if($rootScope.fbStatus.status === 'connected') {
                     var lastUpdated = new Date($rootScope.user.facebook.lastUpdated),
                         oneWeekAgo = new Date(),
                         fbSubscriptions = [],

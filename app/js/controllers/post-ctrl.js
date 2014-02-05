@@ -1,6 +1,7 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('postCtrl', ['$scope', '$rootScope', 'locationService', 'eventService', '$timeout', '$FB', function ($scope, $rootScope, locationService, eventService, $timeout, $FB) {
+
     	// initialize map options
     	$scope.mapOptions = {
 			zoom: 15,
@@ -78,7 +79,7 @@ define(['./index'], function (controllers) {
 	    	if($scope.eventLocation) {
 		    	for(var i = 0; i < $scope.venues.length; i++) {
 		    		// if venue is known
-		    		if($scope.venues[i].name.toLowerCase() == $scope.eventLocation.toLowerCase()) {
+		    		if($scope.venues[i].name.toLowerCase() === $scope.eventLocation.toLowerCase()) {
 		    			// hide extra address input
 		    			$scope.showAddressInput = false;
 		    			// pan map to venue's location
@@ -164,19 +165,19 @@ define(['./index'], function (controllers) {
 	   //  		var tempAddress;
 	   //  		for(var i = 0; i < address.address_components.length; i++) {
 	   //  			for(var j = 0; j < address.address_components[i].types.length; j++) {
-	   //  				if (address.address_components[i].types[j] == 'street_number') {
+	   //  				if (address.address_components[i].types[j] === 'street_number') {
 	   //  					tempAddress = address.address_components[i].long_name;
 	   //  				}
-	   //  				else if (address.address_components[i].types[j] == 'route') {
+	   //  				else if (address.address_components[i].types[j] === 'route') {
 	   //  					tempAddress += ' ' + address.address_components[i].long_name;
 	   //  				}
-	   //  				else if (address.address_components[i].types[j] == 'administrative_area_level_1') {
+	   //  				else if (address.address_components[i].types[j] === 'administrative_area_level_1') {
 	   //  					venue.state = address.address_components[i].long_name;
 	   //  				}
-	   //  				else if (address.address_components[i].types[j] == 'locality') {
+	   //  				else if (address.address_components[i].types[j] === 'locality') {
 	   //  					venue.city = address.address_components[i].long_name;
 	   //  				}
-	   //  				else if (address.address_components[i].types[j] == 'postal_code') {
+	   //  				else if (address.address_components[i].types[j] === 'postal_code') {
 	   //  					venue.zip = address.address_components[i].long_name;
 	   //  				}
 	   //  			}
@@ -193,8 +194,12 @@ define(['./index'], function (controllers) {
 		  //       });
 	   //  	}
 	    	// populate remaining parts of event for posting
+	    	$scope.event.tags = $scope.event.tags.split(',');
+
 	    	$scope.event.privacy = $scope.eventPrivacy.value;
+
 	    	$scope.event.school = $rootScope.user.school._id;
+	    	
 	    	if($scope.eventLocation) {
 	    		$scope.event.locationName = $scope.eventLocation;
 	    	}
@@ -264,7 +269,7 @@ define(['./index'], function (controllers) {
 				    			$rootScope.pageTitle = "Event Posted";
 
 				    			// automatically post to Facebook if user is linked and has option enabled
-						    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && updatedEvent.privacy == 'public') {
+						    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && updatedEvent.privacy === 'public') {
 						    		$FB.api(
 										'/me/campuslively:post',
 										'post',
@@ -314,7 +319,7 @@ define(['./index'], function (controllers) {
 			    			$rootScope.pageTitle = "Event Posted";
 
 			    			// automatically post to Facebook if user is linked and has option enabled
-					    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && updatedEvent.privacy == 'public') {
+					    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && updatedEvent.privacy === 'public') {
 					    		$FB.api(
 									'/me/campuslively:post',
 									'post',

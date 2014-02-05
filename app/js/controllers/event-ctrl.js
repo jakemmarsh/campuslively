@@ -35,7 +35,7 @@ define(['./index'], function (controllers) {
 		}
 
 		$scope.deleteEvent = function() {
-			if($scope.event.creator._id == $rootScope.user._id || $rootScope.user.admin) {
+			if($scope.event.creator._id === $rootScope.user._id || $rootScope.user.admin) {
 				eventService.deleteEvent($scope.event._id).then(function (data) {
     				$location.path('/feed');
 		        },
@@ -69,7 +69,7 @@ define(['./index'], function (controllers) {
 
     		eventService.postSubComment($scope.event._id, comment._id, commentToPost).then(function (data) {
     			for(var i = 0; i < $scope.event.comments.length; i++) {
-    				if($scope.event.comments[i]._id == comment._id) {
+    				if($scope.event.comments[i]._id === comment._id) {
     					$scope.event.comments[i] = data;
     				}
     			}
@@ -79,11 +79,11 @@ define(['./index'], function (controllers) {
     	};
 
     	$scope.deleteComment = function(comment) {
-    		if($rootScope.user._id == comment.creator._id) {
+    		if($rootScope.user._id === comment.creator._id) {
     			eventService.deleteComment($scope.event._id, comment._id).then(function (data) {
     				var index;
 		            for(var i = 0; i < $scope.event.comments.length; i++) {
-		            	if($scope.event.comments[i]._id == comment._id) {
+		            	if($scope.event.comments[i]._id === comment._id) {
 		            		index = i;
 		            		break;
 		            	}
@@ -98,10 +98,10 @@ define(['./index'], function (controllers) {
     	};
 
     	$scope.deleteSubComment = function(commentId, subComment) {
-    		if($rootScope.user._id == subComment.creator._id) {
+    		if($rootScope.user._id === subComment.creator._id) {
     			eventService.deleteSubComment($scope.event._id, commentId, subComment._id).then(function (data) {
     				for(var i = 0; i < $scope.event.comments.length; i++) {
-	    				if($scope.event.comments[i]._id == commentId) {
+	    				if($scope.event.comments[i]._id === commentId) {
 	    					$scope.event.comments[i] = data;
 	    				}
 	    			}
@@ -114,7 +114,7 @@ define(['./index'], function (controllers) {
     	$scope.likeComment = function(comment) {
     		eventService.likeComment(comment._id, $rootScope.user._id).then(function (data) {
     			for(var i = 0; i < $scope.event.comments.length; i++) {
-    				if($scope.event.comments[i]._id == comment._id) {
+    				if($scope.event.comments[i]._id === comment._id) {
     					$scope.event.comments[i] = data;
     				}
     			}
@@ -126,7 +126,7 @@ define(['./index'], function (controllers) {
     	$scope.unlikeComment = function(comment) {
     		eventService.unlikeComment(comment._id, $rootScope.user._id).then(function (data) {
     			for(var i = 0; i < $scope.event.comments.length; i++) {
-    				if($scope.event.comments[i]._id == comment._id) {
+    				if($scope.event.comments[i]._id === comment._id) {
     					$scope.event.comments[i] = data;
     				}
     			}
@@ -137,7 +137,7 @@ define(['./index'], function (controllers) {
 
     	$scope.likesComment = function(comment) {
     		for(var i = 0; i < comment.likes.length; i++) {
-    			if(comment.likes[i].toString() == $rootScope.user._id.toString()) {
+    			if(comment.likes[i].toString() === $rootScope.user._id.toString()) {
     				return true;
     			}
     		}
@@ -149,7 +149,7 @@ define(['./index'], function (controllers) {
     			$scope.event = data;
 
     			// automatically post to Facebook if user is linked and has option enabled
-    			if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && $scope.event.privacy == 'public') {
+    			if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && $scope.event.privacy === 'public') {
                     $FB.api(
 						'/me/campuslively:post',
 						'rsvp_to',
@@ -180,7 +180,7 @@ define(['./index'], function (controllers) {
     	$scope.isAttending = function() {
     		for(var i = 0; i < $scope.event.attending.length; i++) {
     			if($scope.event.attending[i]) {
-	    			if($scope.event.attending[i]._id == $rootScope.user._id) {
+	    			if($scope.event.attending[i]._id === $rootScope.user._id) {
 	    				return true;
 	    			}
 	    		}
@@ -189,7 +189,7 @@ define(['./index'], function (controllers) {
     	};
 
 		$scope.open = function (modal) {
-		  	if (modal.toLowerCase() == 'share') {
+		  	if (modal.toLowerCase() === 'share') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'shareModal.html',
 			      controller: 'modalInstanceCtrl',
@@ -202,7 +202,7 @@ define(['./index'], function (controllers) {
 			      }
 			    });
 			}
-			else if (modal.toLowerCase() == 'invite') {
+			else if (modal.toLowerCase() === 'invite') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'inviteModal.html',
 			      controller: 'modalInstanceCtrl',

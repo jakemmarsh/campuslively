@@ -11,12 +11,12 @@ define(['./index'], function (controllers) {
     	$scope.userSchool = $rootScope.user.school;
     	$scope.userTwitterLink = $rootScope.user.twitterLink;
 
-    	if($rootScope.user.type == 'student') {
+    	if($rootScope.user.type === 'student') {
     		$scope.userFirstName = $rootScope.user.firstName;
     		$scope.userLastName = $rootScope.user.lastName;
     		$scope.userEmailStudent = $rootScope.user.email;
     	}
-    	else if($rootScope.user.type == 'group') {
+    	else if($rootScope.user.type === 'group') {
     		$scope.userFacebookLink = $rootScope.user.facebookLink;
     		$scope.userGroupName = $rootScope.user.groupName;
     		$scope.userGroupDescription = $rootScope.user.groupDescription;
@@ -58,7 +58,7 @@ define(['./index'], function (controllers) {
 	    	if($scope.userEmailStudent) {
 		    	if($scope.userEmailStudent.length > 0 && $scope.userEmailStudent !== $rootScope.user.email) {
 		    		authService.checkEmail($scope.userEmailStudent).then(function (isTaken, status) {
-		    			if(isTaken == 'true') {
+		    			if(isTaken === 'true') {
 		    				$scope.emailTaken = true;
 		    			}
 		    			else {
@@ -70,7 +70,7 @@ define(['./index'], function (controllers) {
 	    	else if($scope.userEmailGroup) {
 	    		if($scope.userEmailGroup.length > 0 && $scope.userEmailGroup !== $rootScope.user.email) {
 		    		authService.checkEmail($scope.userEmailGroup).then(function (isTaken, status) {
-		    			if(isTaken == 'true') {
+		    			if(isTaken === 'true') {
 		    				$scope.emailTaken = true;
 		    			}
 		    			else {
@@ -103,7 +103,7 @@ define(['./index'], function (controllers) {
 			var updateParams = {},
 				fbSubscriptions = [],
 				managedPages = [];
-			if($rootScope.user.type == 'student') {
+			if($rootScope.user.type === 'student') {
 				$FB.login(function (res) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
@@ -143,7 +143,7 @@ define(['./index'], function (controllers) {
 					}
 				}, {scope: 'user_subscriptions,user_likes,publish_stream,publish_actions'});
 			}
-			else if ($rootScope.user.type == 'group') {
+			else if ($rootScope.user.type === 'group') {
 				$FB.login(function (res) {
 					if (res.authResponse) {
 						$rootScope.updateFbStatus($rootScope.updateApiMe);
@@ -259,7 +259,7 @@ define(['./index'], function (controllers) {
 				};
 
 			// populate updateParams with any changed fields
-			if($rootScope.user.type == 'student') {
+			if($rootScope.user.type === 'student') {
 				if($rootScope.user.firstName !== $scope.userFirstName && $scope.userFirstName.length > 0) {
 					updateParams.firstName = $scope.userFirstName;
 					if($scope.userLastName) {
@@ -282,7 +282,7 @@ define(['./index'], function (controllers) {
 					updateParams.email = $scope.userEmailStudent;
 				}
 			}
-			else if($rootScope.user.type == 'group') {
+			else if($rootScope.user.type === 'group') {
 				if($rootScope.user.groupName !== $scope.userGroupName && $scope.userGroupName.length > 0) {
 					updateParams.groupName = $scope.userGroupName;
 					updateParams.displayName = $scope.userGroupName;
@@ -309,7 +309,7 @@ define(['./index'], function (controllers) {
 					updateParams.facebookLink = null;
 				}
 				if($scope.websiteAddress.length > 0 && $scope.websiteAddress !== $rootScope.user.website) {
-					if($scope.websiteAddress.indexOf('http://') == -1 && $scope.websiteAddress.indexOf('https://') == -1) {
+					if($scope.websiteAddress.indexOf('http://') === -1 && $scope.websiteAddress.indexOf('https://') === -1) {
 						$scope.websiteAddress = 'http://' + $scope.websiteAddress;
 					}
 					updateParams.website = $scope.websiteAddress;
