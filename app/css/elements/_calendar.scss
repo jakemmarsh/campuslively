@@ -97,13 +97,13 @@ html .fc,
 	}
 	
 .fc-day-header {
-	background: $primary;
-	color: $white;
+	background: $border-grey;
+	@extend .muted;
 	padding: $half-space/3 0 !important;
 }
 
 	.fc-day-header:first-child {
-		@include corners(3px, 0, 0, 0);
+		@include corners(2px, 0, 0, 0);
 	}
 	
 	
@@ -158,11 +158,11 @@ html .fc,
 ------------------------------------------------------------------------*/
 
 .fc-state-default.fc-corner-left { /* non-theme */
-	@include corners(3px, 0, 0, 3px);
+	@include corners(2px, 0, 0, 2px);
 	}
 
 .fc-state-default.fc-corner-right { /* non-theme */
-	@include corners(0, 3px, 3px, 0);
+	@include corners(0, 2px, 2px, 0);
 	}
 
 /*
@@ -516,12 +516,12 @@ table.fc-border-separate {
 
 .fc-event-vert.fc-event-start {
 	border-top-width: 1px;
-	@include corners(3px, 3px, 0, 0);
+	@include corners(2px, 2px, 0, 0);
 	}
 
 .fc-event-vert.fc-event-end {
 	border-bottom-width: 1px;
-	@include corners(0, 0, 3px, 3px);
+	@include corners(0, 0, 2px, 2px);
 	}
 	
 .fc-event-vert .fc-event-time {

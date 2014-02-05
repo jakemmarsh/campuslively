@@ -14,7 +14,7 @@
 	}
 
 	.option:first-child {
-		@include corners(3px, 0, 0, 3px);
+		@include corners(2px, 0, 0, 2px);
 		@include gradient($secondary);
 		border: 1px solid $secondary;
 	}
@@ -26,7 +26,7 @@
 		}
 
 	.option:last-child {
-		@include corners(0, 3px, 3px, 0);
+		@include corners(0, 2px, 2px, 0);
 		@include gradient($primary);
 		border: 1px solid $primary;
 	}

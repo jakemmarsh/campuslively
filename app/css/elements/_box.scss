@@ -6,45 +6,34 @@
 	position: relative;
 }
 
-	.box .header, .box .event-header {
+	.box .grey-header, .box .event-header {
 		position: relative;
 		width: 100%;
-		background: $primary;
-		color: lighten($primary, 40);
-		@include corners(3px, 3px, 0, 0);
-		line-height: 2.3em;
+		@include corners(2px, 2px, 0, 0);
 		border-bottom: 1px solid $border-grey;
 	}
 
 		.box .event-header i {
-			color: $white;
+			color: $border-grey;
 		}
 
-			.box .event-header h2 a {
-				color: $white;
+			.box .event-header h3 a {
+				color: $primary;
 			}
 
-				.box .event-header h2 a:hover, .box .event-header h2 a:focus, .box .event-header h2 a:active {
-					color: $white;
+				.box .event-header h3 a:hover, .box .event-header h3 a:focus, .box .event-header h3 a:active {
+					color: $primary;
 				}
 
-		.box .event-header a {
-			color: lighten($primary, 40);
+		.box .grey-header {
+			background: $light-grey;
 		}
-
-			.box .event-header a:hover, .box .event-header a:focus, .box .event-header a:active {
-				color: lighten($primary, 45);
-			}
 
 	.box .event-footer {
 		background: $light-grey;
-		@include corners(0px, 0px, 3px, 3px);
+		@include corners(0px, 0px, 2px, 2px);
 		border-top: 1px solid $border-grey;
 		color: $dark-grey;
-	}
-
-	.box.top-highlight {
-		border-top: 3px solid $primary;
 	}
 
 	.box .block-link {

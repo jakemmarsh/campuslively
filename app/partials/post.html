@@ -12,7 +12,7 @@
 	<form name="eventForm" data-ng-submit="postEvent()" data-ng-hide="eventPosted">
 		<div class="line nudge-half--bottom">
 			<div class="unit one-twelfth label-container">
-				<label for="name" class="caps weight--bold">Name <span class="red">*</span></label>
+				<label for="name">Name <span class="red">*</span></label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
 				<input type="text" id="name" data-ng-model="event.title" class="full-width" placeholder="Event name" required />
@@ -20,7 +20,7 @@
 		</div>
 		<div class="line nudge-half--bottom">
 			<div class="unit one-twelfth label-container">
-				<label for="details" class="caps weight--bold">Details</label>
+				<label for="details">Details</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
 				<textarea id="details" data-ng-model="event.description" class="full-width medium" placeholder="Details about the event"></textarea>
@@ -28,7 +28,7 @@
 		</div>
 		<div class="line">
 			<div class="unit one-twelfth label-container">
-				<label for="location" class="caps weight--bold">Where <span class="red">*</span></label>
+				<label for="location">Where <span class="red">*</span></label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
 				<div class="input-prepend full">
@@ -64,7 +64,7 @@
 		</div>
 		<div class="line nudge-half--bottom">
 			<div class="unit one-twelfth label-container">
-				<label for="eventDate" class="caps weight--bold">When <span class="red">*</span></label>
+				<label for="eventDate">When <span class="red">*</span></label>
 			</div>
 			<div class="unit three-twelfths soft--right">
 				<div class="input-prepend full">
@@ -94,7 +94,7 @@
 		</div>
 		<div class="line nudge-half--bottom">
 			<div class="unit one-twelfth label-container">
-				<label for="eventTags" class="caps weight--bold">Tags</label>
+				<label for="eventTags">Tags</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
 				<input type="text" id="eventTags" name="eventTags" class="full-width" data-ui-select2="tagOptions" data-ng-model="event.tags" placeholder="Enter up to 3 tags" />
@@ -102,7 +102,7 @@
 		</div>
 		<div class="line nudge-half--bottom">
 			<div class="unit one-twelfth label-container">
-				<label for="eventImage" class="caps weight--bold">Picture</label>
+				<label for="eventImage">Picture</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
 				<input class="full-width" id="eventImage" name="eventImage" type="file" accept="image/*" data-image="eventImage" />
@@ -111,7 +111,7 @@
 		<div class="event-img nudge-half--bottom" data-ng-show="eventImage" data-ng-style="{'background-image': 'url(' + eventImage.url + ')'}"></div>
 		<div class="line nudge-half--bottom">
 			<div class="unit one-twelfth label-container">
-				<label for="private" class="caps weight--bold">Privacy</label>
+				<label for="private">Privacy</label>
 			</div>
 			<div class="unit five-twelfths label-container">
 				<div class="dropdown">
@@ -126,7 +126,7 @@
 				</div>
 			</div>
 			<div class="unit five-twelfths label-container text-right" data-ng-show="user.admin == true">
-				<label for="anonymous" class="caps weight--bold">Post Anonymously</label>
+				<label for="anonymous">Post Anonymously</label>
 			</div>
 			<div class="unit one-twelfth label-container text-right last-unit" data-ng-show="user.admin == true">
 				<input type="checkbox" id="anonymous" name="anonymous" data-ng-model="anonymous" />

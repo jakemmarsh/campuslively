@@ -291,7 +291,7 @@
   background-color: #ffffff;
   /* IE6-7 */
 
-  @include corners();
+  @include corners(3px, 3px, 3px, 3px);
   -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);

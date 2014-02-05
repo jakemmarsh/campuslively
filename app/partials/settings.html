@@ -21,7 +21,7 @@
 				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit label-container two-twelfths">
-						<label for="userImage" class="caps weight--bold">Picture</label>
+						<label for="userImage">Picture</label>
 					</div>
 					<div class="unit seven-twelfths">
 						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" />
@@ -36,7 +36,7 @@
 				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit label-container two-twelfths">
-						<label for="school" class="caps weight--bold">School</label>
+						<label for="school">School</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
 						<select class="full-width" data-ui-select2="schoolSelectOptions" data-ng-model="userSchool" data-placeholder="Select your school">
@@ -47,13 +47,13 @@
 				</div>
 				<div class="line nudge-half--bottom" data-ng-show="user.type == 'student'">
 					<div class="unit label-container two-twelfths">
-						<label for="userFirstName" class="caps weight--bold">First</label>
+						<label for="userFirstName">First</label>
 					</div>
 					<div class="unit four-twelfths">
 						<input class="full-width" id="userFirstName" name="userFirstName" type="text" data-ng-model="userFirstName" placeholder="first name" />
 					</div>
 					<div class="unit label-container two-twelfths soft-half--right text-right">
-						<label for="userLastName" class="caps weight--bold">Last</label>
+						<label for="userLastName">Last</label>
 					</div>
 					<div class="unit four-twelfths last-unit">
 						<input class="full-width" id="userLastName" name="userLastName" type="text" data-ng-model="userLastName" placeholder="last name" />
@@ -61,7 +61,7 @@
 				</div>
 				<div class="line nudge-half--bottom" data-ng-show="user.type == 'group'">
 					<div class="unit label-container two-twelfths">
-						<label for="userGroupName" class="caps weight--bold">Name</label>
+						<label for="userGroupName">Name</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
 						<input type="text" class="full-width" id="userGroupName" placeholder="Your club or group name" data-ng-model="userGroupName" />
@@ -69,7 +69,7 @@
 				</div>
 				<div class="line nudge-half--bottom" data-ng-show="user.type == 'group'" >
 					<div class="unit label-container two-twelfths">
-						<label for="userGroupDescription" class="caps weight--bold">Description</label>
+						<label for="userGroupDescription">Description</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
 						<textarea id="userGroupDescription" name="userGroupDescription" data-ng-model="userGroupDescription" class="full-width medium" placeholder="Description of your club or group"></textarea>
@@ -77,7 +77,7 @@
 				</div>
 				<div class="line nudge-half--bottom" data-ng-show="user.type == 'group'" >
 					<div class="unit label-container two-twelfths">
-						<label for="locationAddress" class="caps weight--bold">Address</label>
+						<label for="locationAddress">Address</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
 						<input type="text" class="full-width" id="locationAddress" name="locationAddress" data-ng-model="locationAddress" placeholder="Address of your location" data-ng-blur="checkAddress()" />
@@ -85,7 +85,7 @@
 				</div>
 				<div class="line nudge-half--bottom" data-ng-show="user.type == 'group'" >
 					<div class="unit label-container two-twelfths">
-						<label for="websiteAddress" class="caps weight--bold">Website</label>
+						<label for="websiteAddress">Website</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
 						<input type="text" class="full-width" id="websiteAddress" name="websiteAddress" data-ng-model="websiteAddress" placeholder="Your website address" />
@@ -93,7 +93,7 @@
 				</div>
 				<div class="line nudge-half--bottom" data-ng-show="user.facebook.managedPages.length && user.type == 'group'" >
 					<div class="unit label-container two-twelfths">
-						<label for="userFacebookLink" class="caps weight--bold">Facebook</label>
+						<label for="userFacebookLink">Facebook</label>
 					</div>
 					<div class="unit ten-twelfths last-unit label-container">
 						<select class="full-width" id="userFacebookLink" name="userFacebookLink" data-ng-model="userFacebookLink">
@@ -104,7 +104,7 @@
 				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit label-container two-twelfths">
-						<label for="userTwitterLink" class="caps weight--bold">Twitter</label>
+						<label for="userTwitterLink">Twitter</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
 						<input type="text" class="full-width" id="userTwitterLink" name="userTwitterLink" data-ng-model="userTwitterLink" placeholder="Your Twitter handle" />
@@ -112,7 +112,7 @@
 				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit label-container two-twelfths">
-						<label for="userEmail" class="caps weight--bold">Email</label>
+						<label for="userEmail">Email</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
 						<input type="text" class="full-width" name="emailGroup" id="userEmail" placeholder="email address" data-ng-model="userEmailGroup" data-ng-show="user.type == 'group'" data-ng-blur="checkEmail()" />
@@ -121,7 +121,7 @@
 				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit label-container two-twelfths">
-						<label for="userPassword" class="caps weight--bold">Password</label>
+						<label for="userPassword">Password</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
 						<input type="password" class="full-width" id="userPassword" placeholder="New password" data-ng-model="userPassword" />
@@ -129,7 +129,7 @@
 				</div>
 				<div class="line nudge-half--bottom">
 					<div class="unit two-twelfths label-container">
-						<label for="password" class="caps weight--bold">Confirm</label>
+						<label for="password">Confirm</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
 						<input type="password" id="confirmPassword" data-ng-model="confirmPassword" name="confirmPassword" data-password-verify="userPassword" class="full-width" placeholder="Confirm new password" />

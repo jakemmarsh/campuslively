@@ -7,6 +7,9 @@
 	background: $dark-grey;
 	font-weight: 300;
 	font-size: 1em;
+	-webkit-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
+	-moz-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
+	box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
 }
 
 	.sidebar ul {
@@ -16,6 +19,9 @@
 		-webkit-padding-start: 0px;
 		@extend .full-width;
 		@extend .full-height;
+		-webkit-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
+		-moz-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
+		box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
 	}
 
 		.sidebar ul li {
@@ -24,6 +30,9 @@
 			margin: 0;
 			@include gradient($dark-grey);
 			display: table;
+			-webkit-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
+			-moz-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
+			box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
 		}
 
 			.sidebar ul li:hover, .sidebar ul li:focus, .sidebar ul li:active {
@@ -36,6 +45,9 @@
 
 			.sidebar ul li.active {
 				background: $light-grey;
+				-webkit-box-shadow: none;
+				-moz-box-shadow: none;
+				box-shadow: none;
 			}
 
 				.sidebar ul li.active .link {
@@ -44,6 +56,9 @@
 
 			.sidebar ul li.post {
 				@include gradient($secondary);
+				-webkit-box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.02);
+			    -moz-box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.02);
+			    box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.02);
 			}
 
 				.sidebar ul li.post:hover, .sidebar ul li.post:active, .sidebar ul li.post:focus {
@@ -52,6 +67,9 @@
 
 				.sidebar ul li.post.active, .sidebar ul li.solo {
 					background: $white;
+					-webkit-box-shadow: none;
+					-moz-box-shadow: none;
+					box-shadow: none;
 				}
 
 					.sidebar ul li.post.active .link, .sidebar ul li.solo .link {

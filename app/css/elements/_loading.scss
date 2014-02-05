@@ -1,5 +1,5 @@
 .loading {
-	@include corners(0, 0, 3px, 3px);
+	@include corners(0, 0, 2px, 2px);
 	background: $primary;
 	border-width: 0px 1px 1px 1px;
 	color: $white;

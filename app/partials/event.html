@@ -25,7 +25,7 @@
 	<div class="event-img nudge-half--bottom" data-ng-show="event.pictureUrl" data-ng-style="{'background-image': 'url(' + event.pictureUrl + ')'}"></div>
 	<div class="line text-left">
 		<div class="unit three-fourths">
-			<div class="box top-highlight islet">
+			<div class="box islet">
 			<a href class="btn--red delete-button epsilon" data-ng-click="deleteEvent()" data-ng-show="event.creator._id == user._id || user.admin == true">Delete Event</a>
 			<div class="line" data-ng-show="event.startDate">
 				<div class="unit three-percent">
@@ -124,13 +124,13 @@
 		</div>
 		<div class="unit one-fourth last-unit soft-half--left">
 			<div class="box nudge-half--bottom">
-				<div class="header soft-half--sides">
-					<div class="line">
-						<div class="unit one-half">
+				<div class="grey-header soft-quarter--ends soft-half--sides">
+					<div class="table full-width full-height">
+						<div class="td one-half vertical-align-middle">
 							<h2 class="flush" data-ng-hide="eventPassed">Going</h2>
 							<h2 class="flush" data-ng-show="eventPassed">Went</h2>
 						</div>
-						<div class="unit one-half last-unit text-right">
+						<div class="td one-half vertical-align-middle text-right muted">
 							<span data-ng-bind="event.attending.length"></span>
 							<span data-ng-show="event.attending.length == 1">person</span>
 							<span data-ng-hide="event.attending.length == 1">people</span>
@@ -144,12 +144,12 @@
 				</div>
 			</div>
 			<div class="box nudge-half--bottom">
-				<div class="header soft-half--sides">
-					<div class="line">
-						<div class="unit one-half">
+				<div class="grey-header soft-quarter--ends soft-half--sides">
+					<div class="table full-width full-height">
+						<div class="td one-half vertical-align-middle">
 							<h2 class="flush">Invited</h2>
 						</div>
-						<div class="unit one-half last-unit text-right">
+						<div class="td one-half vertical-align-middle text-right muted">
 							<span data-ng-bind="event.invited.length"></span>
 							<span data-ng-show="event.invited.length == 1">person</span>
 							<span data-ng-hide="event.invited.length == 1">people</span>

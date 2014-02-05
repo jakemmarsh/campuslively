@@ -48,6 +48,11 @@ textarea, input {
 	border: 1px solid $border-grey;
 }
 
+label {
+	@extend .muted;
+	font-weight: 500;
+}
+
 textarea.big {
 	height: 200px;
 	resize: vertical;
@@ -88,6 +93,10 @@ a:hover, a:active, a:focus {
 		text-decoration: none;
 		color: $secondary;
 	}
+
+.grey-bg {
+	background-color: $light-grey;
+}
 
 .pointer {
 	cursor: pointer;
