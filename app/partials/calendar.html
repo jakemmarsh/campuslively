@@ -1,6 +1,6 @@
-<div class="loading" data-ng-show="loading">
-	<h2 class="flush" data-ng-show="loading && !gettingPosition">Loading...</h2>
-	<h2 class="flush" data-ng-show="gettingPosition">Getting your location...</h2>
+<div class="loading" ng-show="loading">
+	<h2 class="flush" ng-show="loading && !gettingPosition">Loading...</h2>
+	<h2 class="flush" ng-show="gettingPosition">Getting your location...</h2>
 </div>
 <div class="white-top">
 	<div class="container full-height">
@@ -9,27 +9,27 @@
 				<h1 class="flush blue">Events Calendar</h1>
 			</div>
 			<div class="td vertical-align-middle one-half text-right">
-				<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions" class="float-right"></ng-switch-toggle-group>
+				<ng-switch-toggle-group data-theme="candy" ng-model="currentView" data-choices="viewOptions" class="float-right"></ng-switch-toggle-group>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="container soft-half--ends">
-	<div data-ui-calendar="calendarOptions" data-ng-model="events" data-calendar="eventCalendar" class="nudge-half--bottom"></div>
-	<div data-ng-show="loadingDayEvents" class="text-center soft--ends">
+	<div data-ui-calendar="calendarOptions" ng-model="events" data-calendar="eventCalendar" class="nudge-half--bottom"></div>
+	<div ng-show="loadingDayEvents" class="text-center soft--ends">
 		<div class="box island inline-block">
 			<h1 class="flush blue">Loading events...</h1>
 		</div>
 	</div>
-	<div data-ng-hide="currentView == 'school' || dayEvents.length || loadingDayEvents || !showDay" class="text-center soft--ends">
+	<div ng-hide="currentView == 'school' || dayEvents.length || loadingDayEvents || !showDay" class="text-center soft--ends">
 		<h1 class="blue nudge--ends">There are no upcoming events near you on {{ selectedDay | readableDate}} yet!</h1>
 		<a href="/post" class="btn nudge--top">Post One</a>
 	</div>
-	<div data-ng-hide="currentView == 'nearby' || dayEvents.length || loadingDayEvents || !showDay" class="text-center soft--ends">
+	<div ng-hide="currentView == 'nearby' || dayEvents.length || loadingDayEvents || !showDay" class="text-center soft--ends">
 		<h1 class="blue nudge--ends">There are no upcoming events for your school on {{ selectedDay | readableDate}} yet!</h1>
 		<a href="/post" class="btn nudge--top">Post One</a>
 	</div>
-	<div data-ng-show="showDay && dayEvents.length && !loadingDayEvents" id="dayEvents">
+	<div ng-show="showDay && dayEvents.length && !loadingDayEvents" id="dayEvents">
 		<div class="table full-width">
 			<div class="tr">
 				<div class="td one-half vertical-align-middle">
@@ -41,8 +41,8 @@
 							{{ currentSort.label }} <i class="fa fa-chevron-down muted weight--normal"></i>
 						</a>
 						<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
-							<li data-ng-repeat="option in sortOptions">
-								<a href data-ng-bind="option.label" data-ng-click="changeSort(option)"></a>
+							<li ng-repeat="option in sortOptions">
+								<a href ng-bind="option.label" ng-click="changeSort(option)"></a>
 							</li>
 						</ul>
 					</div>
@@ -50,13 +50,13 @@
 			</div>
 		</div>
 		<hr />
-		<div class="line fade nudge--ends" data-ng-repeat="event in dayEvents | orderBy:currentSort.value">
+		<div class="line fade nudge--ends" ng-repeat="event in dayEvents | orderBy:currentSort.value">
 			<div class="unit one-twelfth">
-				<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}" data-ng-show="event.creator">
-					<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>
+				<div class="user-img-event" ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}" ng-show="event.creator">
+					<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" ng-href="/profile/{{event.creator.username}}"></a>
 				</div>
 			</div>
-			<div class="unit eleven-twelfths last-unit" data-ng-include="'templates/event.html'"></div>
+			<div class="unit eleven-twelfths last-unit" ng-include="'templates/event.html'"></div>
 		</div><!-- event end -->
 	</div>
 </div>
@@ -64,22 +64,22 @@
 <script type="text/ng-template" id="attendingModal.html">
     <div class="modal-header clearfix">
         <h3 class="flush float-left weight--bold">Attending</h3>
-        <i class="fa fa-times close" data-ng-click="ok()"></i>
+        <i class="fa fa-times close" ng-click="ok()"></i>
     </div>
     <div class="modal-body">
-    	<ul data-ng-show="items.length" class="modal-user-list table full-width">
-	        <li data-ng-repeat="attendingUser in items" class="tr full-width">
+    	<ul ng-show="items.length" class="modal-user-list table full-width">
+	        <li ng-repeat="attendingUser in items" class="tr full-width">
 	        	<div class="td one-tenth vertical-align-middle">
-	        		<div class="user-img-modal" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-	        			<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()"></a>
+	        		<div class="user-img-modal" ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
+	        			<a ng-href="profile/{{attendingUser.username}}" ng-click="clickLink()"></a>
 	        		</div>
 	        	</div>
 	        	<div class="td nine-tenths vertical-align-middle soft--left">
-	        		<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" class="weight--bold" data-ng-bind="attendingUser.displayName"></a>
+	        		<a ng-href="profile/{{attendingUser.username}}" ng-click="clickLink()" class="weight--bold" ng-bind="attendingUser.displayName"></a>
 	        	</div>
 			</li>
 		</ul>
-		<div data-ng-hide="items.length">
+		<div ng-hide="items.length">
 			<h2 class="flush green text-center">No one has RSVPd to this event yet!</h2>
 		</div>
     </div>

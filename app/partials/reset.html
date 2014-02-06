@@ -7,34 +7,34 @@
 		</div>
 	</div>
 </div>
-<div class="table full-width full-height__header" data-ng-hide="passwordChanged">
+<div class="table full-width full-height__header" ng-hide="passwordChanged">
 	<div class="td vertical-align-middle text-center">
 		<div class="box island inline-block text-left top-highlight" style="width:500px;">
-			<form name="passwordForm" data-ng-submit="changePassword()">
+			<form name="passwordForm" ng-submit="changePassword()">
 				<label for="password" class="muted">New Password</label>
 				<div class="input-prepend full nudge--bottom">
 					<div class="icon">
 						<i class="fa fa-lock"></i>
 					</div>
-					<input type="password" id="password" data-ng-model="password" placeholder="your new password" required />
+					<input type="password" id="password" ng-model="password" placeholder="your new password" required />
 				</div>
 				<label for="password" class="muted">Confirm New Password</label>
 				<div class="input-prepend full nudge--bottom">
 					<div class="icon">
 						<i class="fa fa-lock"></i>
 					</div>
-					<input type="password" id="confirmPassword" data-ng-model="confirmPassword" name="confirmPassword" data-password-verify="password" class="full-width" placeholder="Confirm your new password" required />
+					<input type="password" id="confirmPassword" ng-model="confirmPassword" name="confirmPassword" data-password-verify="password" class="full-width" placeholder="Confirm your new password" required />
 				</div>
-				<span class="block nudge--ends red weight--bold" data-ng-show="resetError" data-ng-bind="resetError"></span>
-				<span class="red weight--bold block nudge-half--bottom" data-ng-show="passwordForm.confirmPassword.$error.passwordVerify">
+				<span class="block nudge--ends red weight--bold" ng-show="resetError" ng-bind="resetError"></span>
+				<span class="red weight--bold block nudge-half--bottom" ng-show="passwordForm.confirmPassword.$error.passwordVerify">
 					Passwords do not match.
 				</span>
-				<input type="submit" value="Change Password" class="btn full-width" data-ng-disabled="passwordForm.$invalid" />
+				<input type="submit" value="Change Password" class="btn full-width" ng-disabled="passwordForm.$invalid" />
 			</form>
 		</div>
 	</div>
 </div>
-<div class="container soft-half--ends" data-ng-show="passwordChanged">
+<div class="container soft-half--ends" ng-show="passwordChanged">
 	<h1 class="green flush">Password Reset!</h1>
 	<p class="gamma nudge--ends">Your password has been successfully reset.</p>
 	<a href="/login" class="btn">Log In</a>

@@ -1,56 +1,56 @@
-<div class="loading" data-ng-show="loading">
+<div class="loading" ng-show="loading">
 	<h2 class="flush">Loading events...</h2>
 </div>
 <div class="white-top">
 	<div class="container full-height">
 		<div class="table full-height">
 			<div class="td one-tenth vertical-align-middle soft-half--right">
-				<div class="user-img-profile" data-ng-style="{'background-image': 'url(' + profile.pictureUrl + ')'}"></div>
+				<div class="user-img-profile" ng-style="{'background-image': 'url(' + profile.pictureUrl + ')'}"></div>
 			</div>
 			<div class="td three-tenths">
-				<h1 class="flush" data-ng-bind="profile.displayName"></h1>
+				<h1 class="flush" ng-bind="profile.displayName"></h1>
 				<div class="normal-lh">
-					<a href data-ng-click="openLocation(profile)" data-tooltip="Location" data-ng-show="profile.type == 'group' && profile.address" class="icon-link">
+					<a href ng-click="openLocation(profile)" data-tooltip="Location" ng-show="profile.type == 'group' && profile.address" class="icon-link">
 						<i class="beta fa fa-map-marker nudge-half--right"></i>
 					</a>
-					<a data-ng-href="{{profile.website}}" target="_blank" data-tooltip="Website" data-ng-show="profile.type == 'group' && profile.website" class="icon-link">
+					<a ng-href="{{profile.website}}" target="_blank" data-tooltip="Website" ng-show="profile.type == 'group' && profile.website" class="icon-link">
 						<i class="beta fa fa-paperclip nudge-half--right"></i>
 					</a>
-					<a data-ng-href="http://www.twitter.com/{{profile.twitterLink}}" target="_blank" data-tooltip="Twitter" data-ng-show="profile.twitterLink" class="icon-link">
+					<a ng-href="http://www.twitter.com/{{profile.twitterLink}}" target="_blank" data-tooltip="Twitter" ng-show="profile.twitterLink" class="icon-link">
 						<i class="beta fa fa-twitter nudge-half--right"></i>
 					</a>
-					<a data-ng-href="http://www.facebook.com/{{profile.facebookLink}}" target="_blank" data-tooltip="Facebook" data-ng-show="profile.facebookLink" class="icon-link">
+					<a ng-href="http://www.facebook.com/{{profile.facebookLink}}" target="_blank" data-tooltip="Facebook" ng-show="profile.facebookLink" class="icon-link">
 						<i class="beta fa fa-facebook nudge-half--right"></i>
 					</a>
 
 				</div>
 			</div>
 			<div class="td six-tenths normal-lh vertical-align-middle text-right">
-				<a href="/settings" class="btn" data-ng-show="profile._id == user._id"><i class="fa fa-cogs"></i> Settings</a>
-				<a href class="btn" data-ng-click="toggleSubscribe()" data-ng-hide="isSubscribed() || profile._id == user._id"><i class="fa fa-star"></i> Subscribe</a>
-				<a href class="btn" data-ng-click="toggleSubscribe()" data-ng-show="isSubscribed() && profile._id != user._id"><i class="fa fa-star-o"></i> Unsubscribe</a>
+				<a href="/settings" class="btn" ng-show="profile._id == user._id"><i class="fa fa-cogs"></i> Settings</a>
+				<a href class="btn" ng-click="toggleSubscribe()" ng-hide="isSubscribed() || profile._id == user._id"><i class="fa fa-star"></i> Subscribe</a>
+				<a href class="btn" ng-click="toggleSubscribe()" ng-show="isSubscribed() && profile._id != user._id"><i class="fa fa-star-o"></i> Unsubscribe</a>
 			</div>
 
 		</div>
 	</div>
 </div>
-<div class="container soft-half--ends" data-ng-hide="loading">
-	<div class="box islet nudge-half--bottom" data-ng-show="profile.type == 'group' && profile.groupDescription">
+<div class="container soft-half--ends" ng-hide="loading">
+	<div class="box islet nudge-half--bottom" ng-show="profile.type == 'group' && profile.groupDescription">
 		<div class="line">
 			<div class="unit three-percent">
-				<h4 class="flush"><i class="muted icon-align-left"></i></h4>
+				<i class="muted fa fa-align-left"></i>
 			</div>
 			<div class="unit ninety-seven-percent last-unit">
-				<p class="pre-wrap" data-ng-bind-html="profile.groupDescription | parseUrl"></p>
+				<p class="pre-wrap" ng-bind-html="profile.groupDescription | parseUrl"></p>
 			</div>
 		</div>
-		<carousel interval="5000" class="flush nudge-half--top" data-ng-show="profile.businessPictureUrls">
+		<carousel interval="5000" class="flush nudge-half--top" ng-show="profile.businessPictureUrls">
 			<slide ng-repeat="slide in profile.businessPictureUrls" active="slide.active">
 				<img ng-src="{{slide}}" style="margin:auto;">
 			</slide>
 		</carousel>
 	</div>
-	<div class="table full-width" data-ng-show="events.length">
+	<div class="table full-width" ng-show="events.length">
 		<div class="tr">
 			<div class="td one-half vertical-align-middle">
 				<h2 class="flush">Posted Events</h2>
@@ -61,28 +61,28 @@
 						{{ currentSort.label }} <i class="fa fa-chevron-down muted weight--normal"></i>
 					</a>
 					<ul class="dropdown-menu pull-right" style="left:none !important;right:0;">
-						<li data-ng-repeat="option in sortOptions">
-							<a href data-ng-bind="option.label" data-ng-click="changeSort(option)"></a>
+						<li ng-repeat="option in sortOptions">
+							<a href ng-bind="option.label" ng-click="changeSort(option)"></a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
-	<hr data-ng-show="events.length" />
-	<div class="line fade nudge--ends" data-ng-repeat="event in events | orderBy:currentSort.value">
+	<hr ng-show="events.length" />
+	<div class="line fade nudge--ends" ng-repeat="event in events | orderBy:currentSort.value">
 		<div class="unit one-twelfth">
-			<div class="user-img-event" data-ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
-				<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" data-ng-href="/profile/{{event.creator.username}}"></a>
+			<div class="user-img-event" ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
+				<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" ng-href="/profile/{{event.creator.username}}"></a>
 			</div>
 		</div>
-		<div class="unit eleven-twelfths last-unit" data-ng-include="'templates/event.html'"></div>
+		<div class="unit eleven-twelfths last-unit" ng-include="'templates/event.html'"></div>
 	</div><!-- event end -->
-	<a href data-ng-click="loadMore()" class="btn full-width text-center" data-ng-show="moreToLoad && !loadingMore && !loading">Load More</a>
-	<a href class="btn full-width text-center" data-ng-show="loadingMore && !loading">Loading more...</a>
-	<div class="text-center" data-ng-hide="events.length">
-		<h1 class="flush blue" data-ng-show="profile._id !== user._id"><span data-ng-bind="profile.displayName"></span> has no upcoming events yet!</h1>
-		<div data-ng-show="profile._id == user._id">
+	<a href ng-click="loadMore()" class="btn full-width text-center" ng-show="moreToLoad && !loadingMore && !loading">Load More</a>
+	<a href class="btn full-width text-center" ng-show="loadingMore && !loading">Loading more...</a>
+	<div class="text-center" ng-hide="events.length">
+		<h1 class="flush blue" ng-show="profile._id !== user._id"><span ng-bind="profile.displayName"></span> has no upcoming events yet!</h1>
+		<div ng-show="profile._id == user._id">
 			<h1 class="flush blue">You haven't posted any upcoming events yet!</h1>
 			<a href="/post" class="btn nudge--top">Post Event</a>
 		</div>
@@ -92,22 +92,22 @@
 <script type="text/ng-template" id="attendingModal.html">
     <div class="modal-header clearfix">
         <h3 class="flush float-left weight--bold">Attending</h3>
-        <i class="fa fa-times close" data-ng-click="ok()"></i>
+        <i class="fa fa-times close" ng-click="ok()"></i>
     </div>
     <div class="modal-body">
-    	<ul data-ng-show="items.length" class="modal-user-list table full-width">
-	        <li data-ng-repeat="attendingUser in items" class="tr full-width">
+    	<ul ng-show="items.length" class="modal-user-list table full-width">
+	        <li ng-repeat="attendingUser in items" class="tr full-width">
 	        	<div class="td one-tenth vertical-align-middle">
-	        		<div class="user-img-modal" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-	        			<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()"></a>
+	        		<div class="user-img-modal" ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
+	        			<a ng-href="profile/{{attendingUser.username}}" ng-click="clickLink()"></a>
 	        		</div>
 	        	</div>
 	        	<div class="td nine-tenths vertical-align-middle soft--left">
-	        		<a data-ng-href="profile/{{attendingUser.username}}" data-ng-click="clickLink()" class="weight--bold" data-ng-bind="attendingUser.displayName"></a>
+	        		<a ng-href="profile/{{attendingUser.username}}" ng-click="clickLink()" class="weight--bold" ng-bind="attendingUser.displayName"></a>
 	        	</div>
 			</li>
 		</ul>
-		<div data-ng-hide="items.length">
+		<div ng-hide="items.length">
 			<h2 class="flush green text-center">No one has RSVPd to this event yet!</h2>
 		</div>
     </div>
@@ -116,7 +116,7 @@
 <script type="text/ng-template" id="locationModal.html">
     <div class="modal-header clearfix">
         <h3 class="flush float-left weight--bold">Location</h3>
-        <i class="fa fa-times close" data-ng-click="ok()"></i>
+        <i class="fa fa-times close" ng-click="ok()"></i>
     </div>
     <div class="modal-body">
         <div data-ui-map="locationMap" data-ui-options="mapOptions" data-ui-event="{'map-tilesloaded': 'placeMarker(locationMap)'}" class="map nudge--ends"></div>

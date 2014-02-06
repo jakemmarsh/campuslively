@@ -56,10 +56,10 @@
 		<div class="section group">
 			<div class="col span_12_of_12 text-center">
 				<h2 class="flush blue">You are a:</h2>
-				<ng-switch-toggle-group data-theme="candy" data-ng-model="currentView" data-choices="viewOptions" style="display: inline-block !important;"></ng-switch-toggle-group>
+				<ng-switch-toggle-group data-theme="candy" ng-model="currentView" data-choices="viewOptions" style="display: inline-block !important;"></ng-switch-toggle-group>
 			</div>
 		</div>
-		<div data-ng-show="currentView == 'student'">
+		<div ng-show="currentView == 'student'">
 			<div class="section group soft--ends">
 				<div class="col span_4_of_12 index_item">
 					<h3><i class="fa fa-lock"></i> Only for college students</h3>
@@ -93,7 +93,7 @@
 				</div>
 			</div>
 		</div>
-		<div data-ng-show="currentView == 'group'">
+		<div ng-show="currentView == 'group'">
 			<div class="section group soft--ends">
 				<div class="col span_4_of_12 index_item">
 					<h3><i class="fa fa-plus"></i> Easily post your events</h3>

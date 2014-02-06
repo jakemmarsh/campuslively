@@ -3,120 +3,120 @@
 		<div class="table full-width full-height">
 			<div class="td three-fifths vertical-align-middle text-left">
 				<h2 class="flush--top nudge-half--bottom height--normal">
-					<span data-ng-bind="event.title"></span>
-					<i class="muted weight--normal zeta fa fa-circle-o" data-ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="right"></i>
-					<i class="muted weight--normal zeta fa fa-circle" data-ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="right"></i>
+					<span ng-bind="event.title"></span>
+					<i class="muted weight--normal zeta fa fa-circle-o" ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="right"></i>
+					<i class="muted weight--normal zeta fa fa-circle" ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="right"></i>
 				</h2>
-				<h4 class="flush muted weight--normal" data-ng-show="event.creator">
+				<h4 class="flush muted weight--normal" ng-show="event.creator">
 					hosted by
-					<a href data-ng-href="/profile/{{ event.creator.username }}">{{event.creator.displayName}}</a>
+					<a href ng-href="/profile/{{ event.creator.username }}">{{event.creator.displayName}}</a>
 				</h4>
 			</div>
-			<div class="td two-fifths vertical-align-middle text-right" data-ng-hide="eventPassed">
-				<a href class="btn nudge-half--right" data-ng-click="rsvpToEvent()" data-ng-hide="isAttending()"><i class="fa fa-thumbs-up"></i> RSVP</a>
-				<a href class="btn nudge-half--right" data-ng-click="unRsvpToEvent()" data-ng-show="isAttending()"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
-				<a href class="btn nudge-half--right" data-ng-click="open('invite')"><i class="fa fa-plus-square"></i> Invite</a>
-				<a class="btn" data-ng-click="open('share')"><i class="fa fa-share-square"></i> Share</a>
+			<div class="td two-fifths vertical-align-middle text-right" ng-hide="eventPassed">
+				<a href class="btn nudge-half--right" ng-click="rsvpToEvent()" ng-hide="isAttending()"><i class="fa fa-thumbs-up"></i> RSVP</a>
+				<a href class="btn nudge-half--right" ng-click="unRsvpToEvent()" ng-show="isAttending()"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
+				<a href class="btn nudge-half--right" ng-click="open('invite')"><i class="fa fa-plus-square"></i> Invite</a>
+				<a class="btn" ng-click="open('share')"><i class="fa fa-share-square"></i> Share</a>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="container soft-half--ends">
-	<div class="event-img nudge-half--bottom" data-ng-show="event.pictureUrl" data-ng-style="{'background-image': 'url(' + event.pictureUrl + ')'}"></div>
+	<div class="event-img nudge-half--bottom" ng-show="event.pictureUrl" ng-style="{'background-image': 'url(' + event.pictureUrl + ')'}"></div>
 	<div class="line text-left">
 		<div class="unit three-fourths">
 			<div class="box islet">
-			<a href class="btn--red delete-button epsilon" data-ng-click="deleteEvent()" data-ng-show="event.creator._id == user._id || user.admin == true">Delete Event</a>
-			<div class="line" data-ng-show="event.startDate">
+			<a href class="btn--red delete-button epsilon" ng-click="deleteEvent()" ng-show="event.creator._id == user._id || user.admin == true">Delete Event</a>
+			<div class="line" ng-show="event.startDate">
 				<div class="unit three-percent">
 					<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-calendar-o"></i></h4>
 				</div>
 				<div class="unit ninety-seven-percent last-unit">
-					<p class="nudge-half--bottom"><span data-ng-bind="event.startDate | readableDate"></span> <span class="red nudge-half--left" data-ng-show="eventPassed">(Event has passed)</span></p>
+					<p class="nudge-half--bottom"><span ng-bind="event.startDate | readableDate"></span> <span class="red nudge-half--left" ng-show="eventPassed">(Event has passed)</span></p>
 				</div>
 			</div>
-				<div class="line" data-ng-show="event.startTime">
+				<div class="line" ng-show="event.startTime">
 					<div class="unit three-percent">
 						<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-clock-o"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
-						<p class="nudge-half--bottom"><span data-ng-bind="event.startTime"></span><span data-ng-show="event.endTime"> - <span data-ng-bind="event.endTime"></span></span></p>
+						<p class="nudge-half--bottom"><span ng-bind="event.startTime"></span><span ng-show="event.endTime"> - <span ng-bind="event.endTime"></span></span></p>
 					</div>
 				</div>
-				<div class="line" data-ng-show="event.locationName">
+				<div class="line" ng-show="event.locationName">
 					<div class="unit three-percent">
 						<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-map-marker"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
-						<p class="nudge-half--bottom" data-ng-bind="event.locationName"></p>
+						<p class="nudge-half--bottom" ng-bind="event.locationName"></p>
 					</div>
 				</div>
-				<div class="line" data-ng-show="event.description">
+				<div class="line" ng-show="event.description">
 					<div class="unit three-percent">
 						<h4 class="flush"><i class="muted fa fa-align-left"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
-						<p class="pre-wrap" data-ng-bind-html="event.description | parseUrl"></p>
+						<p class="pre-wrap" ng-bind-html="event.description | parseUrl"></p>
 					</div>
 				</div>
-				<div data-ui-map="locationMap" data-ui-options="mapOptions" data-ui-event="{'map-tilesloaded': 'placeMarker()'}" class="map nudge-half--top" data-ng-show="event.loc"></div>
+				<div data-ui-map="locationMap" data-ui-options="mapOptions" data-ui-event="{'map-tilesloaded': 'placeMarker()'}" class="map nudge-half--top" ng-show="event.loc"></div>
 			</div>
-			<form name="commentForm" class="full-width nudge-half--top clearfix" data-ng-submit="postComment()">
-				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" data-ng-model="commentBody" data-expand-comment required></textarea>
-				<button type="submit" class="btn nudge-half--ends float-right hidden" data-ng-disabled="commentForm.$invalid">Post</button>
+			<form name="commentForm" class="full-width nudge-half--top clearfix" ng-submit="postComment()">
+				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" ng-model="commentBody" data-expand-comment required></textarea>
+				<button type="submit" class="btn nudge-half--ends float-right hidden" ng-disabled="commentForm.$invalid">Post</button>
 			</form>
-			<div class="line nudge-half--bottom" data-ng-repeat="comment in event.comments | orderBy: '-posted'">
+			<div class="line nudge-half--bottom" ng-repeat="comment in event.comments | orderBy: '-posted'">
 				<div class="unit one-tenth">
-					<div class="user-img-comment" data-ng-style="{'background-image': 'url(' + comment.creator.pictureUrl + ')'}">
-						<a href data-tooltip="{{comment.creator.displayName}}" data-tooltip-placement="left" data-ng-href="profile/{{comment.creator.username}}"></a>
+					<div class="user-img-comment" ng-style="{'background-image': 'url(' + comment.creator.pictureUrl + ')'}">
+						<a href data-tooltip="{{comment.creator.displayName}}" data-tooltip-placement="left" ng-href="profile/{{comment.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit nine-tenths last-unit">
 					<div class="box islet comment">
-						<a href class="delete-comment-button" data-ng-click="deleteComment(comment)" data-ng-show="comment.creator._id == user._id || user.admin == true">
+						<a href class="delete-comment-button" ng-click="deleteComment(comment)" ng-show="comment.creator._id == user._id || user.admin == true">
 							<i class="fa fa-times"></i>
 						</a>
 						<h4 class="flush">
-							<a href data-ng-href="/profile/{{comment.creator.username}}" data-ng-show="comment.creator">{{comment.creator.displayName}}</a>
-							<span class="muted" data-ng-hide="comment.creator">[deleted]</span>
+							<a href ng-href="/profile/{{comment.creator.username}}" ng-show="comment.creator">{{comment.creator.displayName}}</a>
+							<span class="muted" ng-hide="comment.creator">[deleted]</span>
 						</h4>
-						<p class="nudge-half--ends pre-wrap" data-ng-bind-html="comment.body | parseUrl"></p>
+						<p class="nudge-half--ends pre-wrap" ng-bind-html="comment.body | parseUrl"></p>
 						<div class="table full-width">
 								<div class="td one-half">
 									<div class="action-buttons comment nudge-half--top">
-										<a class="first cursor-normal" href><span class="gamma" data-ng-class="{green: likesComment(comment)}">{{ comment.likes.length }}</span></a>
-										<a href data-ng-click="likeComment(comment)" data-ng-hide="likesComment(comment)">
+										<a class="first cursor-normal" href><span class="gamma" ng-class="{green: likesComment(comment)}">{{ comment.likes.length }}</span></a>
+										<a href ng-click="likeComment(comment)" ng-hide="likesComment(comment)">
 											<i class="fa fa-heart"></i> Like
 										</a>
-										<a href data-ng-click="unlikeComment(comment)" data-ng-show="likesComment(comment)">
+										<a href ng-click="unlikeComment(comment)" ng-show="likesComment(comment)">
 											<i class="fa fa-heart-o"></i> Unlike
 										</a>
 									</div>
 								</div>
 								<div class="td one-half text-right">
-									<span class="muted epsilon" data-ng-bind="comment.timestamp | timePast"></span>
+									<span class="muted epsilon" ng-bind="comment.timestamp | timePast"></span>
 								</div>
 						</div>
 						<hr class="nudge-half--ends" />
-						<div class="line nudge-half--bottom" data-ng-repeat="subComment in comment.subComments">
+						<div class="line nudge-half--bottom" ng-repeat="subComment in comment.subComments">
 							<div class="unit one-twelfth">
-								<div class="user-img-subcomment" data-ng-style="{'background-image': 'url(' + subComment.creator.pictureUrl + ')'}">
-									<a href data-tooltip="{{subComment.creator.displayName}}" data-tooltip-placement="left" data-ng-href="profile/{{subComment.creator.username}}"></a>
+								<div class="user-img-subcomment" ng-style="{'background-image': 'url(' + subComment.creator.pictureUrl + ')'}">
+									<a href data-tooltip="{{subComment.creator.displayName}}" data-tooltip-placement="left" ng-href="profile/{{subComment.creator.username}}"></a>
 								</div>
 							</div>
 							<div class="unit eleven-twelfths last-unit subcomment-body islet">
-								<a href class="delete-subcomment-button" data-ng-click="deleteSubComment(comment._id, subComment)" data-ng-show="subComment.creator._id == user._id || user.admin == true">
+								<a href class="delete-subcomment-button" ng-click="deleteSubComment(comment._id, subComment)" ng-show="subComment.creator._id == user._id || user.admin == true">
 									<i class="fa fa-times"></i>
 								</a>
-								<p class="epsilon" data-ng-bind-html="subComment.body | parseUrl"></p>
+								<p class="epsilon" ng-bind-html="subComment.body | parseUrl"></p>
 								<div class="text-right nudge-half--top">
-									<span class="muted epsilon" data-ng-bind="subComment.timestamp | timePast"></span>
+									<span class="muted epsilon" ng-bind="subComment.timestamp | timePast"></span>
 								</div>
 							</div>
 						</div>
-						<form name="subCommentForm" class="input-append full-width clearfix epsilon" data-ng-submit="postSubComment(comment)">
-							<input type="text" placeholder="Write a comment..." data-ng-model="comment.newSubComment" class="nine-tenths delta" required />
-							<button type="submit" class="btn one-tenth" data-ng-disabled="subCommentForm.$invalid">Post</button>
+						<form name="subCommentForm" class="input-append full-width clearfix epsilon" ng-submit="postSubComment(comment)">
+							<input type="text" placeholder="Write a comment..." ng-model="comment.newSubComment" class="nine-tenths delta" required />
+							<button type="submit" class="btn one-tenth" ng-disabled="subCommentForm.$invalid">Post</button>
 						</form>
 					</div>
 				</div>
@@ -127,19 +127,19 @@
 				<div class="grey-header soft-quarter--ends soft-half--sides">
 					<div class="table full-width full-height">
 						<div class="td one-half vertical-align-middle">
-							<h2 class="flush" data-ng-hide="eventPassed">Going</h2>
-							<h2 class="flush" data-ng-show="eventPassed">Went</h2>
+							<h2 class="flush" ng-hide="eventPassed">Going</h2>
+							<h2 class="flush" ng-show="eventPassed">Went</h2>
 						</div>
 						<div class="td one-half vertical-align-middle text-right muted">
-							<span data-ng-bind="event.attending.length"></span>
-							<span data-ng-show="event.attending.length == 1">person</span>
-							<span data-ng-hide="event.attending.length == 1">people</span>
+							<span ng-bind="event.attending.length"></span>
+							<span ng-show="event.attending.length == 1">person</span>
+							<span ng-hide="event.attending.length == 1">people</span>
 						</div>
 					</div>
 				</div>
-				<div class="islet text-center" data-ng-show="event.attending.length > 0">
-					<div data-ng-repeat="attendingUser in event.attending" class="user-img-going nudge-half--right" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-						<a href data-ng-href="profile/{{attendingUser.username}}" data-tooltip="{{attendingUser.displayName}}"></a>
+				<div class="islet text-center" ng-show="event.attending.length > 0">
+					<div ng-repeat="attendingUser in event.attending" class="user-img-going nudge-half--right" ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
+						<a href ng-href="profile/{{attendingUser.username}}" data-tooltip="{{attendingUser.displayName}}"></a>
 					</div>
 				</div>
 			</div>
@@ -150,15 +150,15 @@
 							<h2 class="flush">Invited</h2>
 						</div>
 						<div class="td one-half vertical-align-middle text-right muted">
-							<span data-ng-bind="event.invited.length"></span>
-							<span data-ng-show="event.invited.length == 1">person</span>
-							<span data-ng-hide="event.invited.length == 1">people</span>
+							<span ng-bind="event.invited.length"></span>
+							<span ng-show="event.invited.length == 1">person</span>
+							<span ng-hide="event.invited.length == 1">people</span>
 						</div>
 					</div>
 				</div>
-				<div class="islet text-center" data-ng-show="event.invited.length > 0">
-					<div data-ng-repeat="attendingUser in event.invited" class="user-img-going nudge-half--right" data-ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-						<a href data-ng-href="profile/{{attendingUser.username}}" data-tooltip="{{attendingUser.displayName}}"></a>
+				<div class="islet text-center" ng-show="event.invited.length > 0">
+					<div ng-repeat="attendingUser in event.invited" class="user-img-going nudge-half--right" ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
+						<a href ng-href="profile/{{attendingUser.username}}" data-tooltip="{{attendingUser.displayName}}"></a>
 					</div>
 				</div>
 			</div>
@@ -171,51 +171,51 @@
         <h3 class="flush weight--bold">Invite Friends</h2>
     </div>
     <div class="modal-body">
-    	<h3 class="caps flush--top nudge-half--bottom" data-ng-show="items.length">Select people to invite:</h3>
-    	<input type="text" class="full-width nudge-half--bottom" placeholder="Search users..." data-ng-model="searchUsers" data-ng-show="items.length" />
-		<ul data-ng-show="items.length" class="modal-user-list invite table full-width">
-	        <li data-ng-repeat="user in filteredItems = (items | filter:{ displayName: searchUsers } | orderBy: 'displayName')" class="tr full-width pointer" data-ng-click="toggleInvitee(user._id)">
+    	<h3 class="caps flush--top nudge-half--bottom" ng-show="items.length">Select people to invite:</h3>
+    	<input type="text" class="full-width nudge-half--bottom" placeholder="Search users..." ng-model="searchUsers" ng-show="items.length" />
+		<ul ng-show="items.length" class="modal-user-list invite table full-width">
+	        <li ng-repeat="user in filteredItems = (items | filter:{ displayName: searchUsers } | orderBy: 'displayName')" class="tr full-width pointer" ng-click="toggleInvitee(user._id)">
 	        	<div class="td one-tenth vertical-align-middle">
-	        		<div class="user-img-modal" data-ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}">
-	        			<a data-ng-href="profile/{{user.username}}" data-ng-click="clickLink()"></a>
+	        		<div class="user-img-modal" ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}">
+	        			<a ng-href="profile/{{user.username}}" ng-click="clickLink()"></a>
 	        		</div>
 	        	</div>
 	        	<div class="td eight-tenths vertical-align-middle soft--left">
-	        		<span class="weight--bold" data-ng-bind="user.displayName"></span>
+	        		<span class="weight--bold" ng-bind="user.displayName"></span>
 	        	</div>
 	        	<div class="td one-tenth vertical-align-middle">
-	        		<a href class="toggle-invitee" data-ng-class="{invitee: isInvitee(user._id)}">
+	        		<a href class="toggle-invitee" ng-class="{invitee: isInvitee(user._id)}">
 	        			<i class="fa fa-check"></i>
 	        		</a>
 	        	</div>
 			</li>
 		</ul>
-		<h2 class="green text-center" data-ng-show="!items.length">No users left to invite!</h2>
-		<h2 class="blue text-center" data-ng-show="!filteredItems.length">No users match your search.</h2>
+		<h2 class="green text-center" ng-show="!items.length">No users left to invite!</h2>
+		<h2 class="blue text-center" ng-show="!filteredItems.length">No users match your search.</h2>
     </div>
     <div class="modal-footer">
-        <button class="btn" data-ng-click="sendInvites()" data-ng-disabled="!invitees.length">Send Invites</button>
-        <button class="btn--blue" data-ng-click="cancel()">Cancel</button>
+        <button class="btn" ng-click="sendInvites()" ng-disabled="!invitees.length">Send Invites</button>
+        <button class="btn--blue" ng-click="cancel()">Cancel</button>
     </div>
 </script>
 
 <script type="text/ng-template" id="shareModal.html">
     <div class="modal-header clearfix">
         <h3 class="flush float-left weight--bold">Share Event</h2>
-        <i class="fa fa-times close" data-ng-click="ok()"></i>
+        <i class="fa fa-times close" ng-click="ok()"></i>
     </div>
     <div class="modal-body">
     	<h3 class="caps flush--top nudge-half--bottom">Event URL:</h3>
-    	<input type="text" class="full-width" data-ng-model="eventUrl" data-input-select />
+    	<input type="text" class="full-width" ng-model="eventUrl" data-input-select />
     	<div class="line nudge--top">
 	    	<div class="unit one-third soft--right">
-	        	<a data-ng-click="openTweet()" class="btn twitter full-width text-center"><i class="fa fa-twitter"></i> Tweet</a>
+	        	<a ng-click="openTweet()" class="btn twitter full-width text-center"><i class="fa fa-twitter"></i> Tweet</a>
 			</div>
 			<div class="unit one-third soft-half--sides">
-				<a href data-ng-click="shareEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Share</a>
+				<a href ng-click="shareEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Share</a>
 			</div>
 			<div class="unit one-third last-unit soft--left">
-				<a href data-ng-click="sendEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Send</a>
+				<a href ng-click="sendEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Send</a>
 			</div>
 		</div>
     </div>

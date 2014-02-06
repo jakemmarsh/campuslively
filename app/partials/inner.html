@@ -1,18 +1,18 @@
 <nav class="sidebar" data-fixed-sidebar>
-	<ul data-ng-show="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot')">
-		<li class="solo" data-ng-show="isCurrentPage('/login')">
+	<ul ng-show="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot')">
+		<li class="solo" ng-show="isCurrentPage('/login')">
 			<div class="link">
 				<i class="fa fa-sign-in"></i>
 				Login
 			</div>
 		</li>
-		<li class="solo" data-ng-show="isCurrentPage('/register')">
+		<li class="solo" ng-show="isCurrentPage('/register')">
 			<a href="/register" class="link">
 				<i class="fa fa-pencil"></i>
 				Register
 			</a>
 		</li>
-		<li class="solo" data-ng-show="isCurrentPage('/forgot')">
+		<li class="solo" ng-show="isCurrentPage('/forgot')">
 			<div class="link">
 				<i class="fa fa-question"></i>
 				Forgot
@@ -27,18 +27,18 @@
 			</li>
 		</div>
 	</ul>
-	<ul data-ng-show="(isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about')">
-		<li class="solo" data-ng-show="isCurrentPage('/privacy')">
+	<ul ng-show="(isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about')">
+		<li class="solo" ng-show="isCurrentPage('/privacy')">
 			<div class="link">
 				<i class="fa fa-question"></i>
 			</div>
 		</li>
-		<li class="solo" data-ng-show="isCurrentPage('/contact')">
+		<li class="solo" ng-show="isCurrentPage('/contact')">
 			<div class="link">
 				<i class="fa fa-envelope"></i>
 			</div>
 		</li>
-		<li class="solo" data-ng-show="isCurrentPage('/about')">
+		<li class="solo" ng-show="isCurrentPage('/about')">
 			<div class="link">
 				<i class="fa fa-users"></i>
 			</div>
@@ -52,46 +52,46 @@
 			</li>
 		</div>
 	</ul>
-	<ul data-ng-hide="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot') || isCurrentPage('/reset') || (isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about') || !isLoggedIn()">
-		<li class="post" data-ng-class="{true:'active', false:''}[isCurrentPage('/post')]">
+	<ul ng-hide="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot') || isCurrentPage('/reset') || (isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about') || !isLoggedIn()">
+		<li class="post" ng-class="{true:'active', false:''}[isCurrentPage('/post')]">
 			<a href="/post" class="link">
 				<i class="fa fa-plus"></i>
 				Post
 			</a>
 		</li>
-		<li data-ng-class="{true:'active', false:''}[isCurrentPage('/feed')]">
+		<li ng-class="{true:'active', false:''}[isCurrentPage('/feed')]">
 			<a href="/feed" class="link">
 				<i class="fa fa-list"></i>
 				My Feed
 			</a>
 		</li>
-		<li data-ng-class="{true:'active', false:''}[isCurrentPage('/explore')]">
+		<li ng-class="{true:'active', false:''}[isCurrentPage('/explore')]">
 			<a href="/explore" class="link">
 				<i class="fa fa-compass"></i>
 				Explore
 			</a>
 		</li>
-		<li data-ng-class="{true:'active', false:''}[isCurrentPage('/calendar')]">
+		<li ng-class="{true:'active', false:''}[isCurrentPage('/calendar')]">
 			<a href="/calendar" class="link">
 				<i class="fa fa-calendar-o"></i>
 				Calendar		
 			</a>
 		</li>
-		<li data-ng-class="{true:'active', false:''}[isCurrentPage('/profile')]">
+		<li ng-class="{true:'active', false:''}[isCurrentPage('/profile')]">
 			<a ng-href="/profile/{{user.username}}" class="link">
 				<i class="fa fa-user"></i>
 				Profile		
 			</a>
 		</li>
 		<div class="bottom">
-			<li data-ng-class="{true:'active', false:''}[isCurrentPage('/settings')]">
+			<li ng-class="{true:'active', false:''}[isCurrentPage('/settings')]">
 				<a href="/settings" class="link">
 					<i class="fa fa-cogs"></i>
 					Settings
 				</a>
 			</li>
 			<li>
-				<a href data-ng-click="logout()" class="link">
+				<a href ng-click="logout()" class="link">
 					<i class="fa fa-sign-out"></i>
 					Sign Out
 				</a>
@@ -100,8 +100,8 @@
 	</ul>
 </nav>
 <div style="position:fixed;bottom:10px;right:10px;z-index:999;">
-	<alert data-ng-repeat="notification in notifications" data-close="closeNotification($index)">
-		<p data-ng-bind-html="notification.msg"></p>
+	<alert ng-repeat="notification in notifications" data-close="closeNotification($index)">
+		<p ng-bind-html="notification.msg"></p>
 	</alert>
 </div>
 <section class="main full-height" data-ui-view></section>
