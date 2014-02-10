@@ -77,7 +77,7 @@
 				Calendar		
 			</a>
 		</li>
-		<li ng-class="{true:'active', false:''}[isCurrentPage('/profile')]">
+		<li ng-class="{true:'active', false:''}[isCurrentPage('/profile/{{user.username}}')]">
 			<a ng-href="/profile/{{user.username}}" class="link">
 				<i class="fa fa-user"></i>
 				Profile		
