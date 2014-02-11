@@ -8,7 +8,7 @@ define(['./index'], function (controllers) {
     	}, function(errorMessage, status) {
     	});
 
-    	$scope.userSchool = $rootScope.user.school;
+    	$scope.userSchool = $rootScope.user.school._id;
     	$scope.userTwitterLink = $rootScope.user.twitterLink;
 
     	if($rootScope.user.type === 'student') {
