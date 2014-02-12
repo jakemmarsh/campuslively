@@ -23,7 +23,7 @@
 					<div class="icon">
 						<i class="fa fa-lock"></i>
 					</div>
-					<input type="password" id="confirmPassword" ng-model="confirmPassword" name="confirmPassword" data-password-verify="password" class="full-width" placeholder="Confirm your new password" required />
+					<input type="password" id="confirmPassword" ng-model="confirmPassword" name="confirmPassword" password-verify="password" class="full-width" placeholder="Confirm your new password" required />
 				</div>
 				<span class="block nudge--ends red weight--bold" ng-show="resetError" ng-bind="resetError"></span>
 				<span class="red weight--bold block nudge-half--bottom" ng-show="passwordForm.confirmPassword.$error.passwordVerify">

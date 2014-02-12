@@ -35,7 +35,7 @@
 					<div class="icon">
 						<i class="fa fa-building-o"></i>
 					</div>
-					<input class="foursquare" type="text" id="location" ng-model="eventLocation" placeholder="Location of event" ng-required="!locationAddress" data-typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" data-typeahead-min-length="0" ng-blur="checkLocation()" autocomplete="off" />
+					<input class="foursquare" type="text" id="location" ng-model="eventLocation" placeholder="Location of event" ng-required="!locationAddress" typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" typeahead-min-length="0" ng-blur="checkLocation()" autocomplete="off" />
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@
 		<div class="line nudge-half--bottom">
 			<div class="unit one-twelfth label-container"></div>
 			<div class="unit eleven-twelfths last-unit">
-				<div data-ui-map="locationMap" data-ui-options="mapOptions" class="map"></div>
+				<div ui-map="locationMap" ui-options="mapOptions" class="map"></div>
 			</div>
 		</div>
 		<div class="line nudge-half--bottom">
@@ -71,7 +71,7 @@
 					<div class="icon pointer" ng-click="openDatepicker()">
 						<i class="fa fa-calendar-o"></i>
 					</div>
-					<input type="text" id="eventDate" data-datepicker-popup="MM/dd/yyyy" ng-model="event.startDate" name="eventDate" placeholder="9/30/2013" data-is-open="datepickerOpened" data-min="today" data-show-weeks="false" required />
+					<input type="text" id="eventDate" datepicker-popup="MM/dd/yyyy" ng-model="event.startDate" name="eventDate" placeholder="9/30/2013" is-open="datepickerOpened" min="today" show-weeks="false" required />
 				</div>
 			</div>
 			<div class="unit three-twelfths soft--right">
@@ -79,7 +79,7 @@
 					<div class="icon">
 						<i class="fa fa-clock-o"></i>
 					</div>
-					<input type="text" id="startTime" ng-model="event.startTime" name="startTime" placeholder="start time" data-time-autocomplete ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" required />
+					<input type="text" id="startTime" ng-model="event.startTime" name="startTime" placeholder="start time" time-autocomplete ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" required />
 				</div>
 			</div>
 			<div class="unit three-twelfths soft--right">
@@ -87,7 +87,7 @@
 					<div class="icon">
 						<i class="fa fa-clock-o"></i>
 					</div>
-					<input type="text" id="endTime" ng-model="event.endTime" name="endTime" placeholder="end time" data-time-autocomplete="{{event.startTime}}" ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
+					<input type="text" id="endTime" ng-model="event.endTime" name="endTime" placeholder="end time" time-autocomplete="{{event.startTime}}" ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
 				</div>
 			</div>
 			<div class="unit two-twelfths last-unit"></div>
@@ -97,7 +97,7 @@
 				<label for="eventTags">Tags</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
-				<input type="text" id="eventTags" name="eventTags" class="full-width" data-ui-select2="tagOptions" ng-model="event.tags" placeholder="Enter up to 3 tags" />
+				<input type="text" id="eventTags" name="eventTags" class="full-width" ui-select2="tagOptions" ng-model="event.tags" placeholder="Enter up to 3 tags" />
 			</div>
 		</div>
 		<div class="line nudge-half--bottom">
@@ -105,7 +105,7 @@
 				<label for="eventImage">Picture</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
-				<input class="full-width" id="eventImage" name="eventImage" type="file" accept="image/*" data-image="eventImage" />
+				<input class="full-width" id="eventImage" name="eventImage" type="file" accept="image/*" image="eventImage" />
 			</div>
 		</div>
 		<div class="event-img nudge-half--bottom" ng-show="eventImage" ng-style="{'background-image': 'url(' + eventImage.url + ')'}"></div>
@@ -152,7 +152,7 @@
 			<input type="text" class="full-width nudge-half--bottom" placeholder="Search users..." ng-model="searchUsers" ng-show="users.length" />
 			<div ng-repeat="user in filteredUsers = (users | filter: { displayName: searchUsers } | orderBy: 'displayName')" class="inline-block islet">
 				<div class="user-img-modal" ng-style="{'background-image': 'url(' + user.pictureUrl + ')'}" ng-class="{invitee: isInvitee(user._id)}">
-					<a href ng-click="toggleInvitee(user._id)" data-tooltip="{{user.displayName}}" data-tooltip-placement="bottom"></a>
+					<a href ng-click="toggleInvitee(user._id)" tooltip="{{user.displayName}}" tooltip-placement="bottom"></a>
 					<div class="checkmark"><i class="fa fa-check"></i></a></div>
 				</div>
 			</div>
@@ -165,7 +165,7 @@
 		<h2 class="blue text-center" ng-show="invitesSent">Invites sent!</h2>
 		<h2 class="flush green weight--bold">Share the event:</h2>
 		<h3 class="caps nudge-half--ends">Event URL:</h3>
-    	<input type="text" class="full-width" ng-model="eventUrl" data-input-select />
+    	<input type="text" class="full-width" ng-model="eventUrl" input-select />
     	<div class="line nudge--top">
 	    	<div class="unit one-third soft--right">
 	        	<a ng-click="openTweet()" class="btn twitter full-width text-center"><i class="fa fa-twitter"></i> Tweet</a>

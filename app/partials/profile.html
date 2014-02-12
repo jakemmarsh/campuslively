@@ -10,16 +10,16 @@
 			<div class="td three-tenths">
 				<h1 class="flush" ng-bind="profile.displayName"></h1>
 				<div class="normal-lh">
-					<a href ng-click="openLocation(profile)" data-tooltip="Location" ng-show="profile.type == 'group' && profile.address" class="icon-link">
+					<a href ng-click="openLocation(profile)" tooltip="Location" ng-show="profile.type == 'group' && profile.address" class="icon-link">
 						<i class="beta fa fa-map-marker nudge-half--right"></i>
 					</a>
-					<a ng-href="{{profile.website}}" target="_blank" data-tooltip="Website" ng-show="profile.type == 'group' && profile.website" class="icon-link">
+					<a ng-href="{{profile.website}}" target="_blank" tooltip="Website" ng-show="profile.type == 'group' && profile.website" class="icon-link">
 						<i class="beta fa fa-paperclip nudge-half--right"></i>
 					</a>
-					<a ng-href="http://www.twitter.com/{{profile.twitterLink}}" target="_blank" data-tooltip="Twitter" ng-show="profile.twitterLink" class="icon-link">
+					<a ng-href="http://www.twitter.com/{{profile.twitterLink}}" target="_blank" tooltip="Twitter" ng-show="profile.twitterLink" class="icon-link">
 						<i class="beta fa fa-twitter nudge-half--right"></i>
 					</a>
-					<a ng-href="http://www.facebook.com/{{profile.facebookLink}}" target="_blank" data-tooltip="Facebook" ng-show="profile.facebookLink" class="icon-link">
+					<a ng-href="http://www.facebook.com/{{profile.facebookLink}}" target="_blank" tooltip="Facebook" ng-show="profile.facebookLink" class="icon-link">
 						<i class="beta fa fa-facebook nudge-half--right"></i>
 					</a>
 
@@ -73,7 +73,7 @@
 	<div class="line fade nudge--ends" ng-repeat="event in events | orderBy:currentSort.value">
 		<div class="unit one-twelfth">
 			<div class="user-img-event" ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}">
-				<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" ng-href="/profile/{{event.creator.username}}"></a>
+				<a href tooltip="{{event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{event.creator.username}}"></a>
 			</div>
 		</div>
 		<div class="unit eleven-twelfths last-unit" ng-include="'templates/event.html'"></div>
@@ -119,6 +119,6 @@
         <i class="fa fa-times close" ng-click="ok()"></i>
     </div>
     <div class="modal-body">
-        <div data-ui-map="locationMap" data-ui-options="mapOptions" data-ui-event="{'map-tilesloaded': 'placeMarker(locationMap)'}" class="map nudge--ends"></div>
+        <div ui-map="locationMap" ui-options="mapOptions" ui-event="{'map-tilesloaded': 'placeMarker(locationMap)'}" class="map nudge--ends"></div>
     </div>
 </script>

@@ -9,13 +9,13 @@
 				<h1 class="flush blue">Events Calendar</h1>
 			</div>
 			<div class="td vertical-align-middle one-half text-right">
-				<ng-switch-toggle-group data-theme="candy" ng-model="currentView" data-choices="viewOptions" class="float-right"></ng-switch-toggle-group>
+				<ng-switch-toggle-group theme="candy" ng-model="currentView" choices="viewOptions" class="float-right"></ng-switch-toggle-group>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="container soft-half--ends">
-	<div data-ui-calendar="calendarOptions" ng-model="events" data-calendar="eventCalendar" class="nudge-half--bottom"></div>
+	<div ui-calendar="calendarOptions" ng-model="events" calendar="eventCalendar" class="nudge-half--bottom"></div>
 	<div ng-show="loadingDayEvents" class="text-center soft--ends">
 		<div class="box island inline-block">
 			<h1 class="flush blue">Loading events...</h1>
@@ -53,7 +53,7 @@
 		<div class="line fade nudge--ends" ng-repeat="event in dayEvents | orderBy:currentSort.value">
 			<div class="unit one-twelfth">
 				<div class="user-img-event" ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}" ng-show="event.creator">
-					<a href data-tooltip="{{event.creator.displayName}}" data-tooltip-placement="left" ng-href="/profile/{{event.creator.username}}"></a>
+					<a href tooltip="{{event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{event.creator.username}}"></a>
 				</div>
 			</div>
 			<div class="unit eleven-twelfths last-unit" ng-include="'templates/event.html'"></div>

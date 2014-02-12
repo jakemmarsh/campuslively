@@ -24,7 +24,7 @@
 						<label for="userImage">Picture</label>
 					</div>
 					<div class="unit seven-twelfths">
-						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" data-image="newUserImage" />
+						<input class="full-width" id="newUserImage" name="newUserImage" type="file" accept="image/*" image="newUserImage" />
 					</div>
 					<div class="unit three-twelfths last-unit soft-half--left label-container">
 						<a href ng-click="useFacebookImage()" ng-show="user.facebook.id && !usingFacebookImage() && user.type == 'student'" class="btn fb full-width"><i class="fa fa-facebook"></i> Use Facebook</a>
@@ -39,7 +39,7 @@
 						<label for="school">School</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<select class="full-width" data-ui-select2="schoolSelectOptions" ng-model="userSchool" data-placeholder="Select your school">
+						<select class="full-width" ui-select2="schoolSelectOptions" ng-model="userSchool" placeholder="Select your school">
 						    <option value=""></option>
 						    <option ng-repeat="school in schools" value="{{school._id}}">{{ school.name }}</option>
 						</select>
@@ -132,7 +132,7 @@
 						<label for="password">Confirm</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<input type="password" id="confirmPassword" ng-model="confirmPassword" name="confirmPassword" data-password-verify="userPassword" class="full-width" placeholder="Confirm new password" />
+						<input type="password" id="confirmPassword" ng-model="confirmPassword" name="confirmPassword" password-verify="userPassword" class="full-width" placeholder="Confirm new password" />
 					</div>
 				</div>
 				<div class="line">
@@ -158,8 +158,8 @@
 			<h2 class="flush soft-half--bottom" ng-show="user.subscriptions">Manage Subscriptions</h2>
 			<div class="inline-block" ng-repeat="subscription in user.subscriptions">
 				<div class="user-img-subscriptions" ng-style="{'background-image': 'url(' + subscription.pictureUrl + ')'}">
-					<a ng-href="/profile/{{subscription.username}}" data-tooltip="{{subscription.displayName}}" data-tooltip-placement="bottom"></a>
-					<a href class="remove" data-tooltip="Unsubscribe" data-tooltip-placement="top" ng-click="removeSubscription(subscription._id)"><i class="fa fa-times"></i></a>
+					<a ng-href="/profile/{{subscription.username}}" tooltip="{{subscription.displayName}}" tooltip-placement="bottom"></a>
+					<a href class="remove" tooltip="Unsubscribe" tooltip-placement="top" ng-click="removeSubscription(subscription._id)"><i class="fa fa-times"></i></a>
 				</div>
 			</div>
 

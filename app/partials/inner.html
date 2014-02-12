@@ -1,4 +1,4 @@
-<nav class="sidebar" data-fixed-sidebar>
+<nav class="sidebar" fixed-sidebar>
 	<ul ng-show="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot')">
 		<li class="solo" ng-show="isCurrentPage('/login')">
 			<div class="link">
@@ -105,8 +105,8 @@
 	</ul>
 </nav>
 <div style="position:fixed;bottom:10px;right:10px;z-index:999;">
-	<alert ng-repeat="notification in notifications" data-close="closeNotification($index)">
+	<alert ng-repeat="notification in notifications" close="closeNotification($index)">
 		<p ng-bind-html="notification.msg"></p>
 	</alert>
 </div>
-<section class="main full-height" data-ui-view></section>
+<section class="main full-height" ui-view></section>

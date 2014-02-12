@@ -4,8 +4,8 @@
 			<div class="td three-fifths vertical-align-middle text-left">
 				<h2 class="flush--top nudge-half--bottom height--normal">
 					<span ng-bind="event.title"></span>
-					<i class="muted weight--normal zeta fa fa-circle-o" ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="right"></i>
-					<i class="muted weight--normal zeta fa fa-circle" ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="right"></i>
+					<i class="muted weight--normal zeta fa fa-circle-o" ng-show="event.privacy == 'inviteOnly'" tooltip="Invite Only" tooltip-placement="right"></i>
+					<i class="muted weight--normal zeta fa fa-circle" ng-show="event.privacy == 'public'" tooltip="Public" tooltip-placement="right"></i>
 				</h2>
 				<h4 class="flush muted weight--normal" ng-show="event.creator">
 					hosted by
@@ -59,16 +59,16 @@
 						<p class="pre-wrap" ng-bind-html="event.description | parseUrl"></p>
 					</div>
 				</div>
-				<div data-ui-map="locationMap" data-ui-options="mapOptions" data-ui-event="{'map-tilesloaded': 'placeMarker()'}" class="map nudge-half--top" ng-show="event.loc"></div>
+				<div ui-map="locationMap" ui-options="mapOptions" ui-event="{'map-tilesloaded': 'placeMarker()'}" class="map nudge-half--top" ng-show="event.loc"></div>
 			</div>
 			<form name="commentForm" class="full-width nudge-half--top clearfix" ng-submit="postComment()" ng-hide="eventPassed">
-				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" ng-model="commentBody" data-expand-comment required></textarea>
+				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" ng-model="commentBody" expand-comment required></textarea>
 				<button type="submit" class="btn nudge-half--ends float-right hidden" ng-disabled="commentForm.$invalid">Post</button>
 			</form>
 			<div class="line nudge-half--bottom" ng-repeat="comment in event.comments | orderBy: '-posted'">
 				<div class="unit one-tenth">
 					<div class="user-img-comment" ng-style="{'background-image': 'url(' + comment.creator.pictureUrl + ')'}">
-						<a href data-tooltip="{{comment.creator.displayName}}" data-tooltip-placement="left" ng-href="profile/{{comment.creator.username}}"></a>
+						<a href tooltip="{{comment.creator.displayName}}" tooltip-placement="left" ng-href="profile/{{comment.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit nine-tenths last-unit">
@@ -101,7 +101,7 @@
 						<div class="line nudge-half--bottom" ng-repeat="subComment in comment.subComments">
 							<div class="unit one-twelfth">
 								<div class="user-img-subcomment" ng-style="{'background-image': 'url(' + subComment.creator.pictureUrl + ')'}">
-									<a href data-tooltip="{{subComment.creator.displayName}}" data-tooltip-placement="left" ng-href="profile/{{subComment.creator.username}}"></a>
+									<a href tooltip="{{subComment.creator.displayName}}" tooltip-placement="left" ng-href="profile/{{subComment.creator.username}}"></a>
 								</div>
 							</div>
 							<div class="unit eleven-twelfths last-unit subcomment-body islet">
@@ -139,7 +139,7 @@
 				</div>
 				<div class="islet text-center" ng-show="event.attending.length > 0">
 					<div ng-repeat="attendingUser in event.attending" class="user-img-going nudge-half--right" ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-						<a href ng-href="profile/{{attendingUser.username}}" data-tooltip="{{attendingUser.displayName}}"></a>
+						<a href ng-href="profile/{{attendingUser.username}}" tooltip="{{attendingUser.displayName}}"></a>
 					</div>
 				</div>
 			</div>
@@ -158,7 +158,7 @@
 				</div>
 				<div class="islet text-center" ng-show="event.invited.length > 0">
 					<div ng-repeat="attendingUser in event.invited" class="user-img-going nudge-half--right" ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-						<a href ng-href="profile/{{attendingUser.username}}" data-tooltip="{{attendingUser.displayName}}"></a>
+						<a href ng-href="profile/{{attendingUser.username}}" tooltip="{{attendingUser.displayName}}"></a>
 					</div>
 				</div>
 			</div>
@@ -206,7 +206,7 @@
     </div>
     <div class="modal-body">
     	<h3 class="caps flush--top nudge-half--bottom">Event URL:</h3>
-    	<input type="text" class="full-width" ng-model="eventUrl" data-input-select />
+    	<input type="text" class="full-width" ng-model="eventUrl" input-select />
     	<div class="line nudge--top">
 	    	<div class="unit one-third soft--right">
 	        	<a ng-click="openTweet()" class="btn twitter full-width text-center"><i class="fa fa-twitter"></i> Tweet</a>
