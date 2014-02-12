@@ -4,6 +4,13 @@ var mongoose         = require('mongoose'),
     User             = require('./user'),
     School           = require('./school');
 
+function deleteEmpty (v) {
+   if(v == null || v.length === 0){
+     return undefined;
+   }
+   return v;
+}
+
 var userSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -38,18 +45,36 @@ var userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    firstName: String,
-    lastName: String,
-    groupName: String,
-    displayName: String,
-    groupDescription: String,
+    firstName: {
+        type: String,
+        set: deleteEmpty
+    },
+    lastName: {
+        type: String,
+        set: deleteEmpty
+    },
+    groupName: {
+        type: String,
+        set: deleteEmpty
+    },
+    displayName: {
+        type: String,
+        set: deleteEmpty
+    },
+    groupDescription: {
+        type: String,
+        set: deleteEmpty
+    },
     businessPictureUrls: [String],
     address: String,
     loc: {
       type: { type: String }, 
       coordinates: [Number]
     },
-    website: String,
+    website: {
+        type: String,
+        set: deleteEmpty
+    },
     pictureUrl: {
         type: String,
         default: 'http://s3.amazonaws.com/campuslively/user_imgs/default.png'
@@ -65,10 +90,22 @@ var userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    activationKey: String,
-    passwordResetKey: String,
-    facebookLink: String,
-    twitterLink: String,
+    activationKey: {
+        type: String,
+        set: deleteEmpty
+    },
+    passwordResetKey: {
+        type: String,
+        set: deleteEmpty
+    },
+    facebookLink: {
+        type: String,
+        set: deleteEmpty
+    },
+    twitterLink: {
+        type: String,
+        set: deleteEmpty
+    },
     facebook: {
         id: String,
         managedPages: {
@@ -87,7 +124,10 @@ var userSchema = new mongoose.Schema({
         }
     },
     google: {
-        id: String
+        id: {
+            type: String,
+            set: deleteEmpty
+        }
     }
 });
 

@@ -3,6 +3,13 @@ var mongoose   = require('mongoose'),
     Comment    = require('./comment'),
     School     = require('./school');
 
+function deleteEmpty (v) {
+   if(v == null || v.length === 0){
+     return undefined;
+   }
+   return v;
+}
+
 var eventSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -15,13 +22,22 @@ var eventSchema = new mongoose.Schema({
       type: { type: String }, 
       coordinates: [Number]
     },
-    description: String,
+    description: {
+        type: String,
+        set: deleteEmpty
+    },
     startDate: {
         type: Date,
         required: true
     },
-    startTime: String,
-    endTime: String,
+    startTime: {
+        type: String,
+        set: deleteEmpty
+    },
+    endTime: {
+        type: String,
+        set: deleteEmpty
+    },
     school: {
         type: mongoose.Schema.ObjectId,
         ref: 'School'
@@ -44,9 +60,13 @@ var eventSchema = new mongoose.Schema({
         enum: ['public', 'inviteOnly']
     },
     pictureUrl: {
-        type: String
+        type: String,
+        set: deleteEmpty
     },
-    facebookId: String
+    facebookId: {
+        type: String,
+        set: deleteEmpty
+    }
 });
 
 eventSchema.index({ loc : '2dsphere' });

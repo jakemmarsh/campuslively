@@ -3,6 +3,13 @@ var mongoose = require('mongoose'),
     Event    = require('./event'),
     Comment  = require('./comment');
 
+function deleteEmpty (v) {
+   if(v == null || v.length === 0){
+     return undefined;
+   }
+   return v;
+}
+
 var activitySchema = new mongoose.Schema({
     actor: {
         type: mongoose.Schema.ObjectId,
@@ -24,7 +31,8 @@ var activitySchema = new mongoose.Schema({
     },
     event: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Event'
+        ref: 'Event',
+        set: deleteEmpty
     },
     eventPrivacy: String,
     eventCreator: mongoose.Schema.ObjectId,
