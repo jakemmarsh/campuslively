@@ -197,6 +197,11 @@ define(['./app'], function (app) {
             url: '/about',
             templateUrl: '/partials/about.html',
             title: 'About Us'
+        })
+        .state('inner.press', {
+            url: '/press',
+            templateUrl: '/partials/press.html',
+            title: 'Press'
         });
 
         $urlRouterProvider.otherwise("/");

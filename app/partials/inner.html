@@ -27,7 +27,7 @@
 			</li>
 		</div>
 	</ul>
-	<ul ng-show="(isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about')">
+	<ul ng-show="(isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about') || isCurrentPage('/press')">
 		<li class="solo" ng-show="isCurrentPage('/privacy')">
 			<div class="link">
 				<i class="fa fa-question"></i>
@@ -43,6 +43,11 @@
 				<i class="fa fa-users"></i>
 			</div>
 		</li>
+		<li class="solo" ng-show="isCurrentPage('/press')">
+			<div class="link">
+				<i class="fa fa-microphone"></i>
+			</div>
+		</li>
 		<div class="bottom">
 			<li>
 				<a href="/" class="link">
@@ -52,7 +57,7 @@
 			</li>
 		</div>
 	</ul>
-	<ul ng-hide="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot') || isCurrentPage('/reset') || (isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about') || !isLoggedIn()">
+	<ul ng-hide="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot') || isCurrentPage('/reset') || (isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about') || isCurrentPage('/press') || !isLoggedIn()">
 		<li class="post" ng-class="{true:'active', false:''}[isCurrentPage('/post')]">
 			<a href="/post" class="link">
 				<i class="fa fa-plus"></i>
