@@ -5,7 +5,9 @@ exports.getAllSchools = function(req, res) {
 	var getSchools = function() {
 		var deferred = Q.defer();
 
-		School.find({}, function (err, schools) {
+		School.find({})
+		.sort({ name: 1 })
+		.exec(function (err, schools) {
 			if(err) {
 				deferred.reject(err);
 			}
