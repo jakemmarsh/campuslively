@@ -29,6 +29,7 @@ define([
     'directives/confirm-password',
     'directives/input-select',
     'directives/time-autocomplete',
+    'directives/header-switcher',
     'services/location',
     'services/auth',
     'services/user',
