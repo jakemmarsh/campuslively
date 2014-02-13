@@ -258,10 +258,13 @@ exports.updateUser = function(req, res) {
 
 	updateUser(req.params.userId, getUpdateParams()).then(function(data) {
 		req.session.regenerate(function(){
-            // Store the user's primary key 
-            // in the session store to be retrieved,
-            // or in this case the entire user object
-            req.session.user = data;
+			var newUser = {
+				_id: data._id,
+				admin: data.admin
+			};
+            // Store the user's ID and admin status
+            // in the session store to be retrieved
+            req.session.user = newUser;
 
             res.json(200, data);
         });
@@ -376,10 +379,13 @@ exports.subscribe = function(req, res) {
 		addSubscription(returnedSubscription).then(function(updatedUser) {
 			createActivity(updatedUser, returnedSubscription).then(function() {
 				req.session.regenerate(function(){
-	                // Store the user's primary key 
-	                // in the session store to be retrieved,
-	                // or in this case the entire user object
-	                req.session.user = updatedUser;
+					var newUser = {
+						admin: updatedUser.admin,
+						_id: updatedUser._id
+					};
+	                // Store the user's ID and admin status
+	                // in the session store to be retrieved
+	                req.session.user = newUser;
 
 	                res.json(200, updatedUser);
 	            });
@@ -440,10 +446,14 @@ exports.unsubscribe = function(req, res) {
 	removeSubscription(req.params.userId, req.params.subscribeId).then(function(updatedUser) {
 		deleteActivity(req.params.userId, req.params.subscribeId).then(function() {
 			req.session.regenerate(function(){
-	            // Store the user's primary key 
-	            // in the session store to be retrieved,
-	            // or in this case the entire user object
-	            req.session.user = updatedUser;
+				var newUser = {
+					admin: updatedUser.admin,
+					_id: updatedUser._id
+				};
+
+	            // Store the user's ID and admin status
+	            // in the session store to be retrieved
+	            req.session.user = newUser;
 
 	            res.json(200, updatedUser);
 	        });

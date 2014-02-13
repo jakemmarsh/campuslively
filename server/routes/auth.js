@@ -84,8 +84,7 @@ exports.check = function(req, res) {
     if (req.session) {
         if (req.session.user) {
             var data = {
-                loggedIn: true,
-                user: req.session.user
+                loggedIn: true
             };
 
             res.json(200, data);
@@ -110,10 +109,14 @@ exports.login = function(req, res) {
                 // Regenerate session when signing in
                 // to prevent fixation 
                 req.session.regenerate(function(){
-                    // Store the user's primary key 
-                    // in the session store to be retrieved,
-                    // or in this case the entire user object
-                    req.session.user = user;
+                    var newUser = {
+                        admin: user.admin,
+                        _id: user._id
+                    };
+
+                    // Store the user's ID and admin status
+                    // in the session store to be retrieved
+                    req.session.user = newUser;
 
                     // increase duration of cookie
                     req.session.cookie.maxAge = 604800000;
