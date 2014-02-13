@@ -1,7 +1,7 @@
 define(['./index'], function (filters) {
   'use strict';
   // expand input and show post button on focus
-  filters.filter('parseUrl', function() {
+  filters.filter('urlAndFormat', function() {
     var replacements = [
         {
             //URLs starting with http://, https://, or ftp://
@@ -22,9 +22,16 @@ define(['./index'], function (filters) {
  
     return function (text) {
         if(text) {
+            // parse URLS
             for (var i = 0; replacements.length > i; i++) {
                 text = text.replace(replacements[i].search, replacements[i].replace);
             }
+
+            // bold text wrapped in double asterisks
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            // italicize text wrapped in single asterisks
+            text = text.replace(new RegExp('//(((?!https?://).)*?)//', 'g'), '<em>$1</em>');
         }
  
         return text;

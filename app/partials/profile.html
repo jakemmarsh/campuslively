@@ -41,7 +41,7 @@
 				<i class="muted fa fa-align-left"></i>
 			</div>
 			<div class="unit ninety-seven-percent last-unit">
-				<p class="pre-wrap" ng-bind-html="profile.groupDescription | parseUrl"></p>
+				<p class="pre-wrap" ng-bind-html="profile.groupDescription | urlAndFormat"></p>
 			</div>
 		</div>
 		<carousel interval="5000" class="flush nudge-half--top" ng-show="profile.businessPictureUrls">

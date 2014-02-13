@@ -38,7 +38,7 @@ define([
     'services/contact',
     'services/invite',
     'services/google',
-    'filters/parse-url',
+    'filters/url-format',
     'filters/readable-date',
     'filters/time-past',
     'animations/loading'

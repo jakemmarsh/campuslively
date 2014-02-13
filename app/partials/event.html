@@ -56,7 +56,7 @@
 						<h4 class="flush"><i class="muted fa fa-align-left"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
-						<p class="pre-wrap" ng-bind-html="event.description | parseUrl"></p>
+						<p class="pre-wrap" ng-bind-html="event.description | urlAndFormat"></p>
 					</div>
 				</div>
 				<div ui-map="locationMap" ui-options="mapOptions" ui-event="{'map-tilesloaded': 'placeMarker()'}" class="map nudge-half--top" ng-show="event.loc"></div>
@@ -80,7 +80,7 @@
 							<a href ng-href="/profile/{{comment.creator.username}}" ng-show="comment.creator">{{comment.creator.displayName}}</a>
 							<span class="muted" ng-hide="comment.creator">[deleted]</span>
 						</h4>
-						<p class="nudge-half--ends pre-wrap" ng-bind-html="comment.body | parseUrl"></p>
+						<p class="nudge-half--ends pre-wrap" ng-bind-html="comment.body | urlAndFormat"></p>
 						<div class="table full-width">
 								<div class="td one-half">
 									<div class="action-buttons comment nudge-half--top">
@@ -108,7 +108,7 @@
 								<a href class="delete-subcomment-button" ng-click="deleteSubComment(comment._id, subComment)" ng-show="subComment.creator._id == user._id || user.admin == true">
 									<i class="fa fa-times"></i>
 								</a>
-								<p class="epsilon" ng-bind-html="subComment.body | parseUrl"></p>
+								<p class="epsilon" ng-bind-html="subComment.body | urlAndFormat"></p>
 								<div class="text-right nudge-half--top">
 									<span class="muted epsilon" ng-bind="subComment.timestamp | timePast"></span>
 								</div>
