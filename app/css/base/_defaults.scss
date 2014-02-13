@@ -37,15 +37,21 @@ p {
 	margin: 0;
 }
 
-textarea, input { outline: none; }
-
-textarea, input {
+textarea, input { 
+	outline: none;
 	font-size: 16px;
 	height: 33px;
 	padding: 4px 8px;
-	line-height: 33px;
 	@include corners();
 	border: 1px solid $border-grey;
+}
+
+input {
+	line-height: 33px;
+}
+
+textarea {
+	line-height: 18px;
 }
 
 label {
@@ -84,6 +90,10 @@ a {
 	text-decoration: none;
 	font-weight: bold;
 }
+
+	a > h1, a > h2, a > h3, a > h4, a > h5, a > h6 {
+		font-weight: bold;
+	}
 
 a:hover, a:active, a:focus {
 	text-decoration: underline;
