@@ -489,7 +489,8 @@ exports.getActivities = function(req, res) {
 			userPopulateObj = [
 				{ path: 'event.creator', model: User },
 				{ path: 'comment.creator', model: User }
-			];
+			],
+			today = new Date();
 
 		if(req.params.limit) {
 			Activity.find({ 
@@ -506,9 +507,14 @@ exports.getActivities = function(req, res) {
 					}, 
 					{event: {$in: user.attending}}
 				], 
-				actor: { $ne: user._id } 
+				actor: { $ne: user._id },
+				$or: [
+					{eventStartDate: {$exists: false}},
+					{eventStartDate: {$gte: today}}
+				]
 			})
 			.sort({ _id: -1 })
+			.limit(req.params.limit)
 			.populate(activityPopulateObj)
 			.exec(function(err, retrievedActivities) {
 				if(err || !retrievedActivities) {
@@ -541,10 +547,13 @@ exports.getActivities = function(req, res) {
 					}, 
 					{event: {$in: user.attending}}
 				], 
-				actor: { $ne: user._id } 
+				actor: { $ne: user._id },
+				$or: [
+					{eventStartDate: {$exists: false}},
+					{eventStartDate: {$gte: today}}
+				]
 			})
 			.sort({ _id: -1 })
-			.limit(req.params.limit)
 			.populate(activityPopulateObj)
 			.exec(function(err, retrievedActivities) {
 				if(err || !retrievedActivities) {
@@ -606,7 +615,8 @@ exports.getActivitiesNewer = function(req, res) {
 			userPopulateObj = [
 				{ path: 'event.creator', model: User },
 				{ path: 'comment.creator', model: User }
-			];
+			],
+			today = new Date();
 
 		if(newestId) {
 			Activity.find({ 
@@ -624,7 +634,11 @@ exports.getActivitiesNewer = function(req, res) {
 					{event: {$in: user.attending}}
 				], 
 				actor: { $ne: user._id }, 
-				_id: { $gt: newestId } 
+				_id: { $gt: newestId },
+				$or: [
+					{eventStartDate: {$exists: false}},
+					{eventStartDate: {$gte: today}}
+				]
 			})
 			.sort({ _id: -1 })
 			.populate(activityPopulateObj)
@@ -659,7 +673,11 @@ exports.getActivitiesNewer = function(req, res) {
 					}, 
 					{event: {$in: user.attending}}
 				], 
-				actor: { $ne: user._id }
+				actor: { $ne: user._id },
+				$or: [
+					{eventStartDate: {$exists: false}},
+					{eventStartDate: {$gte: today}}
+				]
 			})
 			.sort({ _id: -1 })
 			.populate(activityPopulateObj)
@@ -723,7 +741,8 @@ exports.getActivitiesOlder = function(req, res) {
 			userPopulateObj = [
 				{ path: 'event.creator', model: User },
 				{ path: 'comment.creator', model: User }
-			];
+			],
+			today = new Date();
 
 		Activity.find({ 
 			$or: [
@@ -740,7 +759,11 @@ exports.getActivitiesOlder = function(req, res) {
 				{event: {$in: user.attending}}
 			], 
 			actor: { $ne: user._id }, 
-			_id: { $lt: oldestId } 
+			_id: { $lt: oldestId },
+			$or: [
+				{eventStartDate: {$exists: false}},
+				{eventStartDate: {$gte: today}}
+			]
 		})
 		.sort({ _id: -1 })
 		.limit(limit)

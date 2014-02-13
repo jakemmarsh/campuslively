@@ -85,6 +85,7 @@ exports.postComment = function(req, res) {
 				event: event._id,
 				eventPrivacy: event.privacy,
 				eventCreator: event.creator,
+				eventStartDate: event.startDate,
 				comment: comment._id,
 				activity: 'commented'
 			});

@@ -1013,7 +1013,8 @@ exports.postEvent = function(req, res) {
 				activity: 'posted',
 				event: createdEvent._id,
 				eventPrivacy: createdEvent.privacy,
-				eventCreator: req.body.creator
+				eventCreator: req.body.creator,
+				eventStartDate: createdEvent.startDate
 			});
 
 		// only create activity if event wasn't posted anonymously
@@ -1200,6 +1201,7 @@ exports.rsvp = function(req, res) {
 				event: event._id,
 				eventPrivacy: event.privacy,
 				eventCreator: event.creator,
+				eventStartDate: event.startDate,
 				activity: 'rsvpd'
 			});
 
@@ -1510,7 +1512,8 @@ exports.inviteUsers = function(req, res) {
 				activity: 'invited',
 				event: createdInvites[i].event,
 				eventPrivacy: retrievedEvent.privacy,
-				eventCreator: retrievedEvent.creator
+				eventCreator: retrievedEvent.creator,
+				eventStartDate: retrievedEvent.startDate
 			};
 
 			activities.push(activity);

@@ -18,7 +18,8 @@ var activitySchema = new mongoose.Schema({
     },
     recipient: {
         type: mongoose.Schema.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        set: deleteEmpty
     },
     timestamp: {
         type: Date, 
@@ -34,11 +35,22 @@ var activitySchema = new mongoose.Schema({
         ref: 'Event',
         set: deleteEmpty
     },
-    eventPrivacy: String,
-    eventCreator: mongoose.Schema.ObjectId,
+    eventPrivacy: {
+        type: String,
+        set: deleteEmpty
+    },
+    eventCreator: {
+        type: mongoose.Schema.ObjectId,
+        set: deleteEmpty
+    },
+    eventStartDate: {
+        type: Date,
+        set: deleteEmpty
+    },
     comment: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Comment'
+        ref: 'Comment',
+        set: deleteEmpty
     }
 });
 
