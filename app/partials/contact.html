@@ -17,6 +17,15 @@
 				<input type="text" id="subject" ng-model="message.subject" class="full-width" placeholder="Message subject" />
 			</div>
 		</div>
+		<div class="line nudge-half--bottom" ng-show="!user">
+			<div class="unit one-tenth label-container">
+				<label for="email" class="caps weight--bold">Email <span class="red">*</span></label>
+			</div>
+			<div class="unit last-unit nine-tenths">
+				<input type="email" id="email" ng-model="message.replyAddress" class="full-width" placeholder="sample@email.com" ng-required="!user" />
+				<span class="epsilon muted">If you would like us to be able to respond to your message, please provide a valid email address to contact you at.</span>
+			</div>
+		</div>
 		<div class="line nudge-half--bottom">
 			<div class="unit one-tenth label-container">
 				<label for="message" class="caps weight--bold">Message <span class="red">*</span></label>
