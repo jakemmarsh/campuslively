@@ -27,11 +27,18 @@ define([
             userService.getUserById($rootScope.user._id).then(function(data) {
                 $rootScope.user = data;
                 localStorageService.add('user', data);
+
+                // set school color
+                $rootScope.schoolColor = $rootScope.user.school.color;
             }, function(err, status) {
             });
         }
 
         $rootScope.$on('event:auth-loginConfirmed', function() {
+            // set school color
+            $rootScope.schoolColor = $rootScope.user.school.color;
+
+            // navigate to original destination if one exists
             if($rootScope.originalDestination) {
                 var originalDestination = $rootScope.originalDestination;
                 $rootScope.originalDestination = null;

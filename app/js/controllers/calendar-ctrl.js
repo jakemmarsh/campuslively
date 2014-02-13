@@ -33,7 +33,7 @@ define(['./index'], function (controllers) {
             };
             
             // highlight events that user has RSVP'd to
-            event.backgroundColor = $scope.isAttending(data[i]) ? '#4fbda2' : '#3e90be';
+            event.backgroundColor = $scope.isAttending(data[i]) ? '#4fbda2' : $rootScope.schoolColor;
             
             $scope.events.push(event);
           }
@@ -63,7 +63,7 @@ define(['./index'], function (controllers) {
             };
             
             // highlight events that user has RSVP'd to
-            event.backgroundColor = $scope.isAttending(data[i]) ? '#4fbda2' : '#3e90be';
+            event.backgroundColor = $scope.isAttending(data[i]) ? '#4fbda2' : $rootScope.schoolColor;
 
             $scope.events.push(event);
           }
@@ -228,7 +228,7 @@ define(['./index'], function (controllers) {
               for (var i = 0; i < $scope.events.length; i++) {
                 if($scope.events[i].id === event._id) {
                   // un-highlight event on calendar
-                  $scope.events[i].backgroundColor = '#3e90be';
+                  $scope.events[i].backgroundColor = $rootScope.schoolColor;
                   $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
                   $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
                   break;
