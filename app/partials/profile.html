@@ -7,7 +7,7 @@
 			<div class="td one-tenth vertical-align-middle soft-half--right">
 				<div class="user-img-profile" ng-style="{'background-image': 'url(' + profile.pictureUrl + ')'}"></div>
 			</div>
-			<div class="td three-tenths">
+			<div class="td six-tenths vertical-align-middle">
 				<h1 class="flush" ng-bind="profile.displayName"></h1>
 				<div class="normal-lh">
 					<a href ng-click="openLocation(profile)" tooltip="Location" ng-show="profile.type == 'group' && profile.address" class="icon-link">
@@ -25,7 +25,7 @@
 
 				</div>
 			</div>
-			<div class="td six-tenths normal-lh vertical-align-middle text-right">
+			<div class="td two-tenths normal-lh vertical-align-middle text-right">
 				<a href="/settings" class="btn" ng-show="profile._id == user._id"><i class="fa fa-cogs"></i> Settings</a>
 				<a href class="btn" ng-click="toggleSubscribe()" ng-hide="isSubscribed() || profile._id == user._id"><i class="fa fa-star"></i> Subscribe</a>
 				<a href class="btn" ng-click="toggleSubscribe()" ng-show="isSubscribed() && profile._id != user._id"><i class="fa fa-star-o"></i> Unsubscribe</a>
