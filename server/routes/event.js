@@ -448,7 +448,8 @@ exports.getEventsByLocationAndDay = function(req, res) {
 		floorDay.setDate(floorDay.getDate() - 1);
 		ceilingDay.setDate(ceilingDay.getDate() + 1);
 
-		Event.find({ 
+		Event.find({
+			sponsored: true,
 			loc: { $near : locationPoint }, 
 			startDate: { 
 				$gt: floorDay, 
@@ -736,7 +737,8 @@ exports.getEventsByLocation = function(req, res) {
 			today = new Date();
 
 		if(req.params.limit) {
-			Event.find({ 
+			Event.find({
+				sponsored: true,
 				loc: { 
 					$near: { 
 						$geometry: {
@@ -775,6 +777,7 @@ exports.getEventsByLocation = function(req, res) {
 	    }
 	    else {
 			Event.find({
+				sponsored: true,
 				loc : {
 					$near: { 
 						$geometry: {
@@ -843,7 +846,8 @@ exports.getEventsByLocationNewer = function(req, res) {
 			today = new Date();
 
 		if(newestId) {
-			Event.find({ 
+			Event.find({
+				sponsored: true,
 				loc: { 
 					$near : locationPoint 
 				}, 
@@ -877,7 +881,8 @@ exports.getEventsByLocationNewer = function(req, res) {
 	        });
 	    }
 	    else {
-	    	Event.find({ 
+	    	Event.find({
+	    		sponsored: true,
 				loc: { 
 					$near : locationPoint 
 				},
@@ -939,7 +944,8 @@ exports.getEventsByLocationOlder = function(req, res) {
 			},
 			today = new Date();
 
-		Event.find({ 
+		Event.find({
+			sponsored: true,
 			loc: { $near: locationPoint }, 
 			_id: { $lt: oldestId }, 
 			$or: [

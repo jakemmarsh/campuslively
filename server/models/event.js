@@ -15,6 +15,10 @@ var eventSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    sponsored: {
+        type: Boolean,
+        default: false
+    },
     locationName: {
         type: String,
         set: deleteEmpty
