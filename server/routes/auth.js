@@ -239,7 +239,7 @@ exports.activate = function(req, res) {
     var getUserAndActivate = function(userId, activateKey) {
         var deferred = Q.defer();
 
-        User.findOneAndUpdate({ activationKey: activateKey, _id: userId }, { $set: { activated: true, activationKey: undefined } }, function (err, updatedUser) {
+        User.findOneAndUpdate({ activationKey: activateKey, _id: userId }, { $set: { activated: true, activationKey: null } }, function (err, updatedUser) {
             if (err) {
                 deferred.reject(err.message);
             }
@@ -326,7 +326,7 @@ exports.resetPassword = function(req, res) {
         var deferred = Q.defer();
 
         hash(req.body.password, function(err, salt, hash){
-            User.findOneAndUpdate({ passwordResetKey: resetKey, _id: userId }, { $set: { passwordResetKey: undefined, hash: hash, salt: salt }}, function (err, retrievedUser) {
+            User.findOneAndUpdate({ passwordResetKey: resetKey, _id: userId }, { $set: { passwordResetKey: null, hash: hash, salt: salt }}, function (err, retrievedUser) {
                 if (err) {
                     deferred.reject(err.message);
                 }

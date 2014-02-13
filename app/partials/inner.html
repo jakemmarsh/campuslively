@@ -57,7 +57,7 @@
 			</li>
 		</div>
 	</ul>
-	<ul ng-hide="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot') || isCurrentPage('/reset') || (isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about') || isCurrentPage('/press') || !isLoggedIn()">
+	<ul ng-hide="isCurrentPage('/login') || isCurrentPage('/register') || isCurrentPage('/forgot') || isCurrentPage('/reset') || isCurrentPage('/activate') || (isCurrentPage('/privacy') || isCurrentPage('/contact')) || isCurrentPage('/about') || isCurrentPage('/press') || !isLoggedIn()">
 		<li class="post" ng-class="{true:'active', false:''}[isCurrentPage('/post')]">
 			<a href="/post" class="link">
 				<i class="fa fa-plus"></i>
