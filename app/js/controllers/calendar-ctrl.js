@@ -27,7 +27,7 @@ define(['./index'], function (controllers) {
           for(var i = 0; i < data.length; i++) {
             var event = {
               title: data[i].title,
-              start: data[i].startDate,
+              start: new Date(data[i].startDate),
               editable: false,
               id: data[i]._id
             };

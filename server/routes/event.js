@@ -379,8 +379,8 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 			ceilingDay = new Date(day);
 
 		// set floor and ceiling for querying events
-		floorDay.setDate(floorDay.getDate() - 1);
-		ceilingDay.setDate(ceilingDay.getDate() + 1);
+		floorDay.setHours(-1);
+		ceilingDay.setHours(24);
 
 		Event.find({ 
 			school: schoolId, 
