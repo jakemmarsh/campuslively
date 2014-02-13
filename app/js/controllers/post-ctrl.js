@@ -194,7 +194,9 @@ define(['./index'], function (controllers) {
 		  //       });
 	   //  	}
 	    	// populate remaining parts of event for posting
-	    	$scope.event.tags = $scope.event.tags.split(',');
+	    	if($scope.event.tags.length > 0) {
+	    		$scope.event.tags = $scope.event.tags.split(',');
+	    	}
 
 	    	$scope.event.privacy = $scope.eventPrivacy.value;
 
@@ -205,6 +207,11 @@ define(['./index'], function (controllers) {
 	    	}
 	    	else {
 	    		$scope.event.locationName = $scope.locationAddress;
+	    	}
+
+	    	// append room # to location name if exists
+	    	if($scope.roomNumber) {
+	    		$scope.event.locationName = $scope.event.locationName += ", Room " + $scope.roomNumber;
 	    	}
 
 	    	// add time to event's startDate for proper querying

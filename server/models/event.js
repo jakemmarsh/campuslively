@@ -16,7 +16,8 @@ var eventSchema = new mongoose.Schema({
         required: true
     },
     locationName: {
-        type: String
+        type: String,
+        set: deleteEmpty
     },
     loc: {
       type: { type: String }, 

@@ -42,7 +42,7 @@
 		<div class="line">
 			<div class="unit one-twelfth label-container"></div>
 			<div class="unit eleven-twelfths last-unit">
-				<span class="epsilon">If the venue you're looking for doesn't appear, you can separately enter a new name and/or address.</span>
+				<span class="epsilon muted">If the venue you're looking for doesn't appear, you can separately enter a new name and/or address.</span>
 			</div>
 		</div>
 		<div class="line nudge-half--bottom" ng-show="showAddressInput">
@@ -52,8 +52,16 @@
 					<div class="icon">
 						<i class="fa fa-map-marker"></i>
 					</div>
-					<input type="text" class="full-width" id="locationAddress" ng-model="locationAddress" placeholder="Address of location" ng-blur="checkAddress()" ng-required="!eventLocation" />
+					<input type="text" class="full-width" id="locationAddress" ng-model="locationAddress" placeholder="111 Road Name, City, State" ng-blur="checkAddress()" ng-required="!eventLocation" />
 				</div>
+			</div>
+		</div>
+		<div class="line nudge-half--bottom">
+			<div class="unit one-twelfth label-container">
+				<label for="roomNumber">Room #</label>
+			</div>
+			<div class="unit eleven-twelfths last-unit">
+				<input type="text" class="full-width" id="roomNumber" ng-model="roomNumber" placeholder="123" />
 			</div>
 		</div>
 		<div class="line nudge-half--bottom">
@@ -79,7 +87,7 @@
 					<div class="icon">
 						<i class="fa fa-clock-o"></i>
 					</div>
-					<input type="text" id="startTime" ng-model="event.startTime" name="startTime" placeholder="start time" time-autocomplete ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" required />
+					<input type="text" id="startTime" ng-model="event.startTime" name="startTime" placeholder="9:00pm" time-autocomplete ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" required />
 				</div>
 			</div>
 			<div class="unit three-twelfths soft--right">
