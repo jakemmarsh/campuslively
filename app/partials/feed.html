@@ -20,16 +20,16 @@
 				<div class="tr">
 					<div class="td one-twelfth">
 						<div class="user-img-event" ng-style="{'background-image': 'url(' + activity.actor.pictureUrl + ')'}">
-							<a href tooltip="{{activity.actor.displayName}}" tooltip-placement="left" ng-href="/profile/{{activity.actor.username}}"></a>
+							<a tooltip="{{activity.actor.displayName}}" tooltip-placement="left" ng-href="/profile/{{activity.actor.username}}"></a>
 						</div>
 					</div>
 					<div class="td eleven-twelfths vertical-align-middle">
 						<div class="line">
 							<div class="unit three-fourths">
-								<a href ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
+								<a ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
 								 subscribed to
-								  <span ng-show="activity.recipient._id == user._id" class="weight--bold">you.</span>
-								  <span ng-hide="activity.recipient._id == user._id" class="weight--bold">{{activity.recipient.displayName}}</span>
+								  <span ng-show="activity.recipient._id == user._id" class="weight--bold">you</span>
+								  <a ng-href="/profile/{{activity.recipient.username}}" ng-hide="activity.recipient._id == user._id">{{activity.recipient.displayName}}</a>
 							</div>
 							<div class="unit one-fourth last-unit text-right">
 								<span class="muted">{{ activity.timestamp | timePast }}</span>
@@ -42,7 +42,7 @@
 		<div ng-show="activity.activity == 'invited'" class="soft-half--ends">
 			<div class="line">
 				<div class="unit three-fourths">
-					<a href ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
+					<a ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
 					 invited you to:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
@@ -52,7 +52,7 @@
 			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
-						<a href tooltip="{{activity.event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{activity.event.creator.username}}"></a>
+						<a tooltip="{{activity.event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{activity.event.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit eleven-twelfths last-unit">
@@ -109,7 +109,7 @@
 								</div>
 								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
 									<div class="action-buttons green">
-										<a href ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
+										<a ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
 									</div>
 								</div>
 							</div>
@@ -121,7 +121,7 @@
 		<div ng-show="activity.activity == 'rsvpd'" class="soft-half--ends">
 			<div class="line">
 				<div class="unit three-fourths">
-					<a href ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
+					<a ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
 					 RSVP'd to an event:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
@@ -131,7 +131,7 @@
 			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
-						<a href tooltip="{{activity.event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{activity.event.creator.username}}"></a>
+						<a tooltip="{{activity.event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{activity.event.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit eleven-twelfths last-unit">
@@ -188,7 +188,7 @@
 								</div>
 								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
 									<div class="action-buttons green">
-										<a href ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
+										<a ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
 									</div>
 								</div>
 							</div>
@@ -200,8 +200,8 @@
 		<div ng-show="activity.activity == 'commented'" class="soft-half--ends">
 			<div class="line">
 				<div class="unit three-fourths">
-					<a href ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
-					 commented on the event <a href ng-href="/event/{{activity.event._id}}">{{activity.event.title}}</a>:
+					<a ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
+					 commented on the event <a ng-href="/event/{{activity.event._id}}">{{activity.event.title}}</a>:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
 					<span class="muted">{{ activity.timestamp | timePast }}</span>
@@ -210,7 +210,7 @@
 			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" ng-style="{'background-image': 'url(' + activity.comment.creator.pictureUrl + ')'}">
-						<a href tooltip="{{activity.comment.creator.displayName}}" tooltip-placement="left" ng-href="profile/{{activity.comment.creator.username}}"></a>
+						<a tooltip="{{activity.comment.creator.displayName}}" tooltip-placement="left" ng-href="profile/{{activity.comment.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit eleven-twelfths last-unit">
@@ -226,7 +226,7 @@
 		<div class="soft-half--ends">
 			<div class="line">
 				<div class="unit three-fourths">
-					<a href ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
+					<a ng-href="/profile/{{activity.actor.username}}">{{activity.actor.displayName}}</a>
 					 posted an event:
 				</div>
 				<div class="unit one-fourth last-unit text-right">
@@ -236,7 +236,7 @@
 			<div class="line nudge-half--top">
 				<div class="unit one-twelfth">
 					<div class="user-img-event" ng-style="{'background-image': 'url(' + activity.event.creator.pictureUrl + ')'}">
-						<a href tooltip="{{activity.event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{activity.event.creator.username}}"></a>
+						<a tooltip="{{activity.event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{activity.event.creator.username}}"></a>
 					</div>
 				</div>
 				<div class="unit eleven-twelfths last-unit">
@@ -288,7 +288,7 @@
 								</div>
 								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
 									<div class="action-buttons green">
-										<a href ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
+										<a ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
 									</div>
 								</div>
 							</div>
