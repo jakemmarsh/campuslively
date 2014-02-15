@@ -503,25 +503,27 @@ exports.getActivities = function(req, res) {
 			today = new Date();
 
 		if(req.params.limit) {
-			Activity.find({ 
-				$or: [
-					{recipient: user._id}, 
-					{eventCreator: user._id}, 
-					{
-						actor: {$in: user.subscriptions}, 
-						$or: [
-						 	{eventPrivacy: 'public'}, 
-						 	{event: {$in: user.attending}}, 
-						 	{event: {$in: user.invites}}
-					 	]
-					}, 
-					{event: {$in: user.attending}}
-				], 
-				actor: { $ne: user._id },
-				$or: [
-					{eventStartDate: {$exists: false}},
-					{eventStartDate: {$gte: today}}
-				]
+			Activity.find({
+				$and: [
+					{$or: [
+						{eventStartDate: {$exists: false}},
+						{eventStartDate: {$gte: today}}
+					]},
+					{$or: [
+						{recipient: user._id}, 
+						{eventCreator: user._id}, 
+						{
+							actor: {$in: user.subscriptions}, 
+							$or: [
+							 	{eventPrivacy: 'public'}, 
+							 	{event: {$in: user.attending}}, 
+							 	{event: {$in: user.invites}}
+						 	]
+						}, 
+						{event: {$in: user.attending}}
+					]}
+				],
+				actor: { $ne: user._id }
 			})
 			.sort({ _id: -1 })
 			.limit(req.params.limit)
@@ -544,24 +546,26 @@ exports.getActivities = function(req, res) {
 		}
 		else {
 			Activity.find({ 
-				$or: [
-					{recipient: user._id}, 
-					{eventCreator: user._id}, 
-					{
-						actor: {$in: user.subscriptions}, 
-						$or: [
-							{eventPrivacy: 'public'}, 
-							{event: {$in: user.attending}}, 
-							{event: {$in: user.invites}}
-						]
-					}, 
-					{event: {$in: user.attending}}
-				], 
-				actor: { $ne: user._id },
-				$or: [
-					{eventStartDate: {$exists: false}},
-					{eventStartDate: {$gte: today}}
-				]
+				$and: [
+					{$or: [
+						{eventStartDate: {$exists: false}},
+						{eventStartDate: {$gte: today}}
+					]},
+					{$or: [
+						{recipient: user._id}, 
+						{eventCreator: user._id}, 
+						{
+							actor: {$in: user.subscriptions}, 
+							$or: [
+							 	{eventPrivacy: 'public'}, 
+							 	{event: {$in: user.attending}}, 
+							 	{event: {$in: user.invites}}
+						 	]
+						}, 
+						{event: {$in: user.attending}}
+					]}
+				],
+				actor: { $ne: user._id }
 			})
 			.sort({ _id: -1 })
 			.populate(activityPopulateObj)
@@ -630,25 +634,27 @@ exports.getActivitiesNewer = function(req, res) {
 
 		if(newestId) {
 			Activity.find({ 
-				$or: [
-					{recipient: user._id}, 
-					{eventCreator: user._id}, 
-					{
-						actor: {$in: user.subscriptions}, 
-						$or: [
-							{eventPrivacy: 'public'}, 
-							{event: {$in: user.attending}}, 
-							{event: {$in: user.invites}}
-						]
-					}, 
-					{event: {$in: user.attending}}
-				], 
+				$and: [
+					{$or: [
+						{eventStartDate: {$exists: false}},
+						{eventStartDate: {$gte: today}}
+					]},
+					{$or: [
+						{recipient: user._id}, 
+						{eventCreator: user._id}, 
+						{
+							actor: {$in: user.subscriptions}, 
+							$or: [
+							 	{eventPrivacy: 'public'}, 
+							 	{event: {$in: user.attending}}, 
+							 	{event: {$in: user.invites}}
+						 	]
+						}, 
+						{event: {$in: user.attending}}
+					]}
+				],
 				actor: { $ne: user._id }, 
-				_id: { $gt: newestId },
-				$or: [
-					{eventStartDate: {$exists: false}},
-					{eventStartDate: {$gte: today}}
-				]
+				_id: { $gt: newestId }
 			})
 			.sort({ _id: -1 })
 			.populate(activityPopulateObj)
@@ -668,26 +674,29 @@ exports.getActivitiesNewer = function(req, res) {
 				}
 			});
 		}
+		// TODO: why does this if/else exist?
 		else {
 			Activity.find({ 
-				$or: [
-					{recipient: user._id}, 
-					{eventCreator: user._id}, 
-					{
-						actor: {$in: user.subscriptions}, 
-						$or: [
-							{eventPrivacy: 'public'}, 
-							{event: {$in: user.attending}}, 
-							{event: {$in: user.invites}}
-						]
-					}, 
-					{event: {$in: user.attending}}
-				], 
-				actor: { $ne: user._id },
-				$or: [
-					{eventStartDate: {$exists: false}},
-					{eventStartDate: {$gte: today}}
-				]
+				$and: [
+					{$or: [
+						{eventStartDate: {$exists: false}},
+						{eventStartDate: {$gte: today}}
+					]},
+					{$or: [
+						{recipient: user._id}, 
+						{eventCreator: user._id}, 
+						{
+							actor: {$in: user.subscriptions}, 
+							$or: [
+							 	{eventPrivacy: 'public'}, 
+							 	{event: {$in: user.attending}}, 
+							 	{event: {$in: user.invites}}
+						 	]
+						}, 
+						{event: {$in: user.attending}}
+					]}
+				],
+				actor: { $ne: user._id }
 			})
 			.sort({ _id: -1 })
 			.populate(activityPopulateObj)
@@ -755,25 +764,27 @@ exports.getActivitiesOlder = function(req, res) {
 			today = new Date();
 
 		Activity.find({ 
-			$or: [
-				{recipient: user._id}, 
-				{eventCreator: user._id}, 
-				{
-					actor: {$in: user.subscriptions}, 
-					$or: [
-						{eventPrivacy: 'public'}, 
-						{event: {$in: user.attending}}, 
-						{event: {$in: user.invites}}
-					]
-				}, 
-				{event: {$in: user.attending}}
-			], 
+			$and: [
+				{$or: [
+					{eventStartDate: {$exists: false}},
+					{eventStartDate: {$gte: today}}
+				]},
+				{$or: [
+					{recipient: user._id}, 
+					{eventCreator: user._id}, 
+					{
+						actor: {$in: user.subscriptions}, 
+						$or: [
+						 	{eventPrivacy: 'public'}, 
+						 	{event: {$in: user.attending}}, 
+						 	{event: {$in: user.invites}}
+					 	]
+					}, 
+					{event: {$in: user.attending}}
+				]}
+			],
 			actor: { $ne: user._id }, 
-			_id: { $lt: oldestId },
-			$or: [
-				{eventStartDate: {$exists: false}},
-				{eventStartDate: {$gte: today}}
-			]
+			_id: { $lt: oldestId }
 		})
 		.sort({ _id: -1 })
 		.limit(limit)
