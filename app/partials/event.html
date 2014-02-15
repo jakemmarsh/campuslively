@@ -223,3 +223,58 @@
 		</div>
     </div>
 </script>
+
+<script type="text/ng-template" id="editModal.html">
+    <div class="modal-header clearfix">
+        <h3 class="flush weight--bold">Edit Event</h2>
+    </div>
+    <div class="modal-body">
+    	<form name="editForm">
+	    	<label class="muted delta block" for="eventTitle">Event Title</label>
+	    	<input type="text" name="eventTitle" id="eventTitle" ng-model="newEvent.title" class="full-width nudge-quarter--top nudge-half--bottom" required />
+	    	
+	    	<div class="line nudge-half--bottom">
+	    		<div class="unit one-third soft-half--right">
+	    			<label class="muted delta block" for="eventTitle">Start Date</label>
+	    			<input type="text" name="eventTitle" id="eventTitle" ng-model="newEvent.startDate" class="full-width nudge-quarter--top" datepicker-popup="MM/dd/yyyy" placeholder="9/30/2013" is-open="datepickerOpened" min="today" show-weeks="false" required />
+	    		</div>
+	    		<div class="unit one-third soft-quarter--sides">
+	    			<label class="muted delta block" for="eventStartTime">Start Time</label>
+	    			<input type="text" name="eventStartTime" id="eventStartTime" ng-model="newEvent.startTime" class="full-width nudge-quarter--top" placeholder="9:00pm" time-autocomplete ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" required />
+	    		</div>
+	    		<div class="unit one-third last-unit soft-half--left">
+	    			<label class="muted delta block" for="eventEndTime">End Time</label>
+	    			<input type="text" name="eventEndTime" id="eventEndTime" ng-model="newEvent.endTime" class="full-width nudge-quarter--top" placeholder="9:00pm" time-autocomplete="{{newEvent.startTime}}" ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
+	    		</div>
+	    	</div>
+
+	    	<label class="muted delta block" for="eventLocation">Location</label>
+	    	<input type="text" name="eventLocation" id="eventLocation" ng-model="newEvent.locationName" class="full-width nudge-quarter--top nudge-half--bottom" ng-blur="checkLocation()" required />
+
+	    	<label class="muted delta block" for="roomNumber">Room Number</label>
+	    	<input type="text" name="roomNumber" id="roomNumber" ng-model="newEvent.roomNumber" class="full-width nudge-quarter--top nudge-half--bottom" />
+	    	
+	    	<label class="muted delta block" for="eventDescription">Event Description</label>
+	    	<textarea name="eventDescription" id="eventDescription" ng-model="newEvent.description" class="full-width medium nudge-quarter--top nudge-half--bottom"></textarea>
+	    	
+	    	<label class="muted delta block" for="eventTags">Tags</label>
+	    	<input type="text" id="eventTags" name="eventTags" class="full-width nudge-quarter--top" ui-select2="tagOptions" ng-model="newEvent.tags" placeholder="Enter up to 3 tags" />
+	    	
+	    	<label class="muted delta block nudge-half--ends">Privacy</label>
+	    	<div class="dropdown nudge-half--bottom">
+				<a href class="dropdown-toggle">
+					{{ eventPrivacy.label }} <i class="fa fa-chevron-down muted weight--normal"></i>
+				</a>
+				<ul class="dropdown-menu">
+					<li ng-repeat="option in privacyOptions">
+						<a href ng-bind="option.label" ng-click="changePrivacy(option)"></a>
+					</li>
+				</ul>
+			</div>
+		</form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" ng-click="saveChanges()" ng-disabled="editForm.$invalid">Save Changes</button>
+        <button class="btn--muted" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

@@ -224,6 +224,19 @@ define(['./index'], function (controllers) {
 			      }
 			    });
 			}
+			else if (modal.toLowerCase() === 'edit') {
+				var modalInstance = $modal.open({
+			      templateUrl: 'editModal.html',
+			      controller: 'modalInstanceCtrl',
+			      resolve: {
+			      	event: function() {
+	                    return $scope.event;
+	                },
+			      	items: null,
+			      	location: null
+			      }
+			    });
+			}
 		};
     }]);
 });
