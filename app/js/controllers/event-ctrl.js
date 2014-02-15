@@ -3,11 +3,14 @@ define(['./index'], function (controllers) {
     controllers.controller('eventCtrl', ['$scope', '$rootScope', '$modal', 'eventService', 'userService', 'resolvedEvent', '$location',  function ($scope, $rootScope, $modal, eventService, userService, resolvedEvent, $location) {
     	$scope.event = resolvedEvent;
 
+    	// check to see if event has a legitimate location
+    	$scope.hasLocation = ($scope.event.loc && ($scope.event.loc.coordinates[0] !== -180 || $scope.event.loc.coordinates[1] !== -90));
+
     	if(new Date($scope.event.startDate) < new Date()) {
     		$scope.eventPassed = true;
     	}
 
-    	if($scope.event.loc) {
+    	if($scope.hasLocation) {
 	    	$scope.mapOptions = {
 				center: new google.maps.LatLng($scope.event.loc.coordinates[1], $scope.event.loc.coordinates[0]),
 				zoom: 15,

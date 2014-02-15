@@ -59,7 +59,7 @@
 						<p class="pre-wrap" ng-bind-html="event.description | urlAndFormat"></p>
 					</div>
 				</div>
-				<div ui-map="locationMap" ui-options="mapOptions" ui-event="{'map-tilesloaded': 'placeMarker()'}" class="map nudge-half--top" ng-show="event.loc"></div>
+				<div ui-map="locationMap" ui-options="mapOptions" ui-event="{'map-tilesloaded': 'placeMarker()'}" class="map nudge-half--top" ng-show="hasLocation"></div>
 			</div>
 			<form name="commentForm" class="full-width nudge-half--top clearfix" ng-submit="postComment()" ng-hide="eventPassed">
 				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" ng-model="commentBody" expand-comment required></textarea>
