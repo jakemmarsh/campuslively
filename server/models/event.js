@@ -23,6 +23,10 @@ var eventSchema = new mongoose.Schema({
         type: String,
         set: deleteEmpty
     },
+    roomNumber: {
+        type: String,
+        set: deleteEmpty
+    },
     loc: {
       type: { type: String }, 
       coordinates: [Number]

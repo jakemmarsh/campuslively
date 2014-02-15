@@ -48,7 +48,7 @@
 						<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-map-marker"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
-						<p class="nudge-half--bottom" ng-bind="event.locationName"></p>
+						<p class="nudge-half--bottom">{{event.locationName}}<span ng-show="event.roomNumber" ng-bind="', Room ' + event.roomNumber"></span></p>
 					</div>
 				</div>
 				<div class="line" ng-show="event.description">

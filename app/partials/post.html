@@ -62,7 +62,7 @@
 				<label for="roomNumber">Room #</label>
 			</div>
 			<div class="unit eleven-twelfths last-unit">
-				<input type="text" class="full-width" id="roomNumber" ng-model="roomNumber" placeholder="123" />
+				<input type="text" class="full-width" id="roomNumber" ng-model="event.roomNumber" placeholder="123" />
 			</div>
 		</div>
 		<div class="line nudge-half--bottom">
@@ -96,7 +96,7 @@
 					<div class="icon">
 						<i class="fa fa-clock-o"></i>
 					</div>
-					<input type="text" id="endTime" ng-model="event.endTime" name="endTime" placeholder="end time" time-autocomplete="{{event.startTime}}" ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
+					<input type="text" id="endTime" ng-model="event.endTime" name="endTime" placeholder="12:00am" time-autocomplete="{{event.startTime}}" ng-pattern="/(^([0-9]|[0][0-9]|[1][0-2]):([0-5][0-9])(\s{0,1})([AM|PM|am|pm]{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})([AM|PM|am|pm]{2,2})$)/" />
 				</div>
 			</div>
 			<div class="unit two-twelfths last-unit"></div>

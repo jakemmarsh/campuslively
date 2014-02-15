@@ -209,11 +209,6 @@ define(['./index'], function (controllers) {
 	    		$scope.event.locationName = $scope.locationAddress;
 	    	}
 
-	    	// append room # to location name if exists
-	    	if($scope.roomNumber) {
-	    		$scope.event.locationName = $scope.event.locationName += ", Room " + $scope.roomNumber;
-	    	}
-
 	    	// add time to event's startDate for proper querying
 	    	var timeArray = $scope.event.startTime.split(':'),
 	    		hours = parseInt(timeArray[0]),
