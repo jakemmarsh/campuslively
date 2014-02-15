@@ -1,9 +1,12 @@
 <div class="white-top">
 	<div class="container full-height">
-		<div class="table full-height">
-			<div class="td vertical-align-middle">
+		<div class="table full-height full-width">
+			<div class="td four-fifths vertical-align-middle">
 				<h1 class="flush blue" ng-hide="eventPosted">Post An Event</h1>
 				<h1 class="flush blue" ng-show="eventPosted">Event Posted!</h1>
+			</div>
+			<div class="td one-fifth vertical-align-middle text-right">
+				<a ng-href="/event/{{postedEvent._id}}" class="btn" ng-show="eventPosted">Go To Event <i class="fa fa-arrow-right"></i></a>
 			</div>
 		</div>
 	</div>

@@ -23,6 +23,19 @@
 		box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
 	}
 
+	.btn--muted {
+		@extend .btn;
+		@include gradient($border-grey);
+		color: lighten($dark-grey, 10);
+		border: 1px solid $border-grey;
+	}
+
+		.btn--muted:hover, .btn--muted:active, .btn--muted:focus {
+			color: lighten($dark-grey, 10);
+			@include gradient($border-grey, darken($border-grey, 5));
+			border: 1px solid lighten($dark-grey, 70);
+		}
+
 	.btn--blue {
 		@extend .btn;
 		@include gradient($primary);

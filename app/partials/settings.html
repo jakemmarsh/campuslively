@@ -166,7 +166,7 @@
 
 			<hr />
 
-			<a class="btn--red float-right nudge-half--top" href ng-click="openDelete()">Delete Account</a>
+			<a class="btn--muted float-right nudge-half--top" href ng-click="openDelete()">Delete Account</a>
 		</div>
 		<div class="unit one-fourth soft--left last-unit">
 			<a href ng-click="fbLogin()" ng-hide="user.facebook.id" class="btn fb full-width nudge-half--bottom"><i class="fa fa-facebook"></i> Add Facebook</a>
@@ -213,7 +213,7 @@
     	<p class="nudge-half--top">If you ever wish to use Campuslively again, you will have to create a new account.</p>
     </div>
     <div class="modal-footer">
-    	<button class="btn" ng-click="cancel()">Cancel</button>
-        <button class="btn--red" ng-click="deleteUser()">Delete Account</button>
+    <button class="btn--red" ng-click="deleteUser()">Delete Account</button>
+    	<button class="btn--muted" ng-click="cancel()">Cancel</button>
     </div>
 </script>

@@ -26,15 +26,18 @@
 	<div class="line text-left">
 		<div class="unit three-fourths">
 			<div class="box islet">
-			<a href class="btn--red delete-button epsilon" ng-click="deleteEvent()" ng-show="event.creator._id == user._id || user.admin == true">Delete Event</a>
-			<div class="line" ng-show="event.startDate">
-				<div class="unit three-percent">
-					<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-calendar-o"></i></h4>
+				<div class="event-option-buttons">
+				<a href class="btn--muted epsilon nudge-quarter--right" ng-click="open('edit')" ng-show="event.creator._id == user._id || user.admin == true">Edit</a>
+					<a href class="btn--muted epsilon" ng-click="deleteEvent()" ng-show="event.creator._id == user._id || user.admin == true">Delete Event</a>
 				</div>
-				<div class="unit ninety-seven-percent last-unit">
-					<p class="nudge-half--bottom"><span ng-bind="event.startDate | readableDate"></span> <span class="red nudge-half--left" ng-show="eventPassed">(Event has passed)</span></p>
+				<div class="line" ng-show="event.startDate">
+					<div class="unit three-percent">
+						<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-calendar-o"></i></h4>
+					</div>
+					<div class="unit ninety-seven-percent last-unit">
+						<p class="nudge-half--bottom"><span ng-bind="event.startDate | readableDate"></span> <span class="red nudge-half--left" ng-show="eventPassed">(Event has passed)</span></p>
+					</div>
 				</div>
-			</div>
 				<div class="line" ng-show="event.startTime">
 					<div class="unit three-percent">
 						<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-clock-o"></i></h4>
@@ -195,7 +198,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn" ng-click="sendInvites()" ng-disabled="!invitees.length">Send Invites</button>
-        <button class="btn--blue" ng-click="cancel()">Cancel</button>
+        <button class="btn--muted" ng-click="cancel()">Cancel</button>
     </div>
 </script>
 
