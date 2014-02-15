@@ -1091,9 +1091,14 @@ exports.updateEvent = function(req, res) {
 		for (var key in req.body) {
 			// make sure it isn't inherited
 			if (req.body.hasOwnProperty(key)) {
-				// make sure not changing user ID
-				if(key !== '_id') {
+				// make sure not changing event ID or creator
+				if(key !== '_id' && key !== 'creator') {
 					updateParams[key] = req.body[key];
+				}
+
+				// extract school ID from school object
+				if(key === 'school') {
+					updateParams[key] = req.body[key]['_id'];
 				}
 			}
 		}
