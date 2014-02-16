@@ -17,7 +17,8 @@ define(['./index', 'timepicker'], function (directives) {
                     }
                     else {
                         $(element).timepicker({ 
-                        'step': 15
+                        'step': 15,
+                        'scrollDefaultNow': true
                     });
                     }
                 });
