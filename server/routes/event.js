@@ -1100,6 +1100,15 @@ exports.updateEvent = function(req, res) {
 				if(key === 'school') {
 					updateParams[key] = req.body[key]['_id'];
 				}
+
+				// extract IDs from attending, invited, or comments
+				if(key === 'attending' || key === 'invited' || key === 'comments') {
+					var idArray = [];
+					for (var i = 0; i < req.body[key].length; i++) {
+						idArray.push(req.body[key][i]['_id']);
+					}
+					updateParams[key] = idArray;
+				}
 			}
 		}
 

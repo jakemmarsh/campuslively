@@ -217,6 +217,7 @@ exports.updateUser = function(req, res) {
 				if(key !== '_id' && key !== 'password') {
 					updateParams[key] = req.body[key];
 				}
+				
 				if(key === 'password') {
 					hashSync(req.body[key], function(err, salt, hash){
 			            if (err) {
@@ -227,6 +228,15 @@ exports.updateUser = function(req, res) {
 			            	updateParams['hash'] = hash;
 			            }
 			        });
+				}
+
+				// extract IDs from attending, invited, or comments
+				if(key === 'attending' || key === 'subscriptions' || key === 'invites') {
+					var idArray = [];
+					for (var i = 0; i < req.body[key].length; i++) {
+						idArray.push(req.body[key][i]['_id']);
+					}
+					updateParams[key] = idArray;
 				}
 			}
 		}
