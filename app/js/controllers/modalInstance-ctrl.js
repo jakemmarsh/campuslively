@@ -5,7 +5,6 @@ define(['./index'], function (controllers) {
         var getVenues = function(position) {
             locationService.getFoursquareVenues(position).then(function (data) {
                 $scope.venues = (data.response.venues);
-                console.log($scope.venues);
             },
             function (errorMessage) {
             });
