@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('innerCtrl', ['$scope', '$rootScope', 'inviteService', function ($scope, $rootScope, inviteService) {
+    controllers.controller('innerCtrl', ['$scope', '$rootScope', 'inviteService', 'userService', function ($scope, $rootScope, inviteService, userService) {
     	var gotInvites = false;
         $scope.notifications = [];
 
@@ -26,15 +26,37 @@ define(['./index'], function (controllers) {
         });
 
 		$rootScope.$watch('fbStatus', function() {
-			if($rootScope.user && $rootScope.fbStatus && $rootScope.user.facebook.hasLinked === false) {
-				if(!$rootScope.user.fbId && $rootScope.fbStatus.status !== 'connected') {
-					var fbMessage = { 
+			// only show facebook reminder if they haven't been reminded for at least a week
+			if($rootScope.user && $rootScope.user.facebook.lastReminded) {
+				var oneDay = 1000*60*60*24,
+					today = new Date().getTime(),
+					lastReminded = new Date($rootScope.user.facebook.lastReminded).getTime(),
+					daysSinceReminder = Math.round((today - lastReminded)/oneDay);
+			}
+			else {
+				var daysSinceReminder = 8;
+			}
+
+			if($rootScope.user && $rootScope.fbStatus && $rootScope.user.facebook.hasLinked === false && daysSinceReminder >= 7 && !$rootScope.user.fbId && $rootScope.fbStatus.status !== 'connected') {
+				var updateParams = {};
+				updateParams.facebook = {
+					id: null,
+					subscriptions: null,
+					managedPages: null,
+					autoPost: null,
+					lastReminded: new Date()
+				};
+
+				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+                	var fbMessage = { 
 						msg: 'You haven\'t linked your account to Facebook yet. '+
 							 '<a href="/settings">Try it out in your account settings!</a>',
 						type: 'message'
 					};
 					$scope.notifications.unshift(fbMessage);
-				}
+				},
+				function (errorMessage, status) {
+				});
 			}
 		});
 

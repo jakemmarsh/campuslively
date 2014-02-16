@@ -194,6 +194,7 @@ define(['./index'], function (controllers) {
 			updateParams.facebook.subscriptions = $rootScope.user.facebook.subscriptions;
 			updateParams.facebook.managedPages = $rootScope.user.facebook.managedPages;
 			updateParams.facebook.autoPost = $rootScope.user.facebook.autoPost;
+			updateParams.facebook.lastReminded = $rootScope.user.facebook.lastReminded;
 
 			// get value from checkbox
 
@@ -207,22 +208,25 @@ define(['./index'], function (controllers) {
 
 		$scope.fbLogout = function() {
 			var updateParams = {};
-			$FB.logout(function () {
-				$rootScope.updateFbStatus($rootScope.updateApiMe);
-				updateParams.facebook = {
-					id: null,
-					subscriptions: null,
-					managedPages: null,
-					autoPost: null
-				};
-				updateParams.pictureUrl = 'http://s3.amazonaws.com/campuslively/user_imgs/default.png';
-				updateParams.facebookLink = null;
-				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
-					$rootScope.user = data;
-					localStorageService.add('user', data);
-				},
-				function (errorMessage, status) {
+			updateParams.facebook = {
+				id: null,
+				subscriptions: null,
+				managedPages: null,
+				autoPost: null,
+				lastReminded: $rootScope.user.facebook.lastReminded
+			};
+			updateParams.pictureUrl = 'http://s3.amazonaws.com/campuslively/user_imgs/default.png';
+			updateParams.facebookLink = null;
+
+			// update user in database before making Facebook API call
+			userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+				$rootScope.user = data;
+				localStorageService.add('user', data);
+				$FB.logout(function () {
+					$rootScope.updateFbStatus($rootScope.updateApiMe);
 				});
+			},
+			function (errorMessage, status) {
 			});
 		};
 

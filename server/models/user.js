@@ -117,6 +117,10 @@ var userSchema = new mongoose.Schema({
             type: Boolean,
             default: false
         },
+        lastReminded: {
+            type: Date,
+            default: Date.now
+        },
         lastUpdated: Date,
         autoPost: {
             type: Boolean,
