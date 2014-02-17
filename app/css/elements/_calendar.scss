@@ -165,6 +165,10 @@ html .fc,
 	@include corners(0, 2px, 2px, 0);
 	}
 
+.fc-state-default.fc-corner-right.fc-corner-left {
+	@include corners();
+	}
+
 /*
 	Our default prev/next buttons use HTML entities like &lsaquo; &rsaquo; &laquo; &raquo;
 	and we'll try to make them look good cross-browser.

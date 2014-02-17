@@ -1,5 +1,5 @@
 .sidebar {
-	width: 100px;
+	width: 50px;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -10,6 +10,11 @@
 	-webkit-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
 	-moz-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
 	box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
+	-ms-transition: width 0.20s ease-in-out;
+    -moz-transition: width 0.20s ease-in-out;
+    -webkit-transition: width 0.20s ease-in-out;
+    transition: width 0.20s ease-in-out;
+    overflow: hidden;
 }
 
 	.sidebar ul {
@@ -17,26 +22,27 @@
 		margin: 0;
 		padding: 0;
 		-webkit-padding-start: 0px;
-		@extend .full-width;
-		@extend .full-height;
+		height: 100%;
+		width: 150px;
 		-webkit-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
 		-moz-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
 		box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
 	}
 
 		.sidebar ul li {
-			@extend .full-width;
-			height: 100px;
+			width: 100%;
+			padding: 10px 0;
 			margin: 0;
-			@include gradient($dark-grey);
+			background: $dark-grey;
 			display: table;
 			-webkit-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
 			-moz-box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
 			box-shadow: inset -8px 0px 10px 0px rgba(0,0,0,0.1);
+			border-bottom: 1px solid lighten($dark-grey, 5);
 		}
 
 			.sidebar ul li:hover, .sidebar ul li:focus, .sidebar ul li:active {
-				@include gradient($dark-grey, darken($dark-grey, 3));
+				background: darken($dark-grey, 3);
 			}
 
 			.sidebar ul li:hover .link, .sidebar ul li:focus .link, .sidebar ul li:active .link {
@@ -50,54 +56,92 @@
 				box-shadow: none;
 			}
 
-				.sidebar ul li.active .link {
+				.sidebar ul li.active .link i, .sidebar ul li.active .link span {
 					color: $dark-grey;
 				}
 
 			.sidebar ul li.post {
-				@include gradient($secondary);
-				-webkit-box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.02);
-			    -moz-box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.02);
-			    box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.02);
+				height: 100px;
+				background: $secondary;
 			}
 
 				.sidebar ul li.post:hover, .sidebar ul li.post:active, .sidebar ul li.post:focus {
-					@include gradient($secondary, darken($secondary, 5));
+					background: darken($secondary, 5);
 				}
 
 				.sidebar ul li.post.active, .sidebar ul li.solo {
+					height: 100px;
 					background: $white;
+					color: $secondary;
 					-webkit-box-shadow: none;
 					-moz-box-shadow: none;
 					box-shadow: none;
 				}
 
+					.sidebar ul li.post.active .link i, .sidebar ul li.post.active .link span {
+						color: $secondary;
+					}
+
 					.sidebar ul li.post.active .link, .sidebar ul li.solo .link {
 						color: $secondary;
 					}
+
+						.sidebar ul li.solo .link i {
+							top: 27px;
+							color: $secondary;
+						}
 
 			.sidebar ul .bottom {
 				position: absolute;
 				bottom: 0;
 				left: 0;
-				width: 100%;
+				width: 150px;
 			}
 
+				.sidebar ul .bottom li:first-child {
+					border-top: 1px solid lighten($dark-grey, 5);
+				}
+
+				.sidebar ul .bottom li:last-child {
+					border-bottom: none;
+				}
+
 			.sidebar ul li .link {
-				@extend .td;
-				@extend .full-width;
-				@extend .full-height;
+				display: table-cell;
+				width: 100%;
+				height: 100%;
+				position: relative;
+				padding-left: 50px;
+				text-align: left;
 				vertical-align: middle;
-				@extend .text-center;
-				color: $light-grey;
+				font-weight: normal;
+				line-height: 35px;
 			}
 
 				.sidebar ul li .link i {
-					font-weight: normal;
+					position: absolute;
+					top: 5px;
+					left: 0;
+					text-align: center;
 					font-size: 1.6em;
-					display: block;
 					margin-bottom: 5px;
+					width: 50px;
+					color: darken($border-grey, 30);
 				}
+
+					.sidebar ul li.post .link i {
+						top: 27px;
+						color: $white;
+					}
+
+				.sidebar ul li .link span {
+					padding-left: 5px;
+					color: darken($border-grey, 25);
+				}
+
+					.sidebar ul li.post .link span {
+						color: $white;
+					}
 
 				.sidebar ul li .link .user-img-sidebar {
 					margin: 0 auto 5px auto;

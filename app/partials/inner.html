@@ -3,26 +3,26 @@
 		<li class="solo" ng-show="isCurrentPage('/login')">
 			<div class="link">
 				<i class="fa fa-sign-in"></i>
-				Login
+				<span>Login</span>
 			</div>
 		</li>
 		<li class="solo" ng-show="isCurrentPage('/register')">
 			<a href="/register" class="link">
 				<i class="fa fa-pencil"></i>
-				Register
+				<span>Register</span>
 			</a>
 		</li>
 		<li class="solo" ng-show="isCurrentPage('/forgot')">
 			<div class="link">
 				<i class="fa fa-question"></i>
-				Forgot
+				<span>Forgot</span>
 			</div>
 		</li>
 		<div class="bottom">
 			<li>
 				<a href="/" class="link">
 					<i class="fa fa-home"></i>
-					Home
+					<span>Home</span>
 				</a>
 			</li>
 		</div>
@@ -52,7 +52,7 @@
 			<li>
 				<a href="/" class="link">
 					<i class="fa fa-home"></i>
-					Home
+					<span>Home</span>
 				</a>
 			</li>
 		</div>
@@ -61,44 +61,44 @@
 		<li class="post" ng-class="{true:'active', false:''}[isCurrentPage('/post')]">
 			<a href="/post" class="link">
 				<i class="fa fa-plus"></i>
-				Post
+				<span>Post</span>
 			</a>
 		</li>
 		<li ng-class="{true:'active', false:''}[isCurrentPage('/feed')]">
 			<a href="/feed" class="link">
 				<i class="fa fa-list"></i>
-				My Feed
+				<span>My Feed</span>
 			</a>
 		</li>
 		<li ng-class="{true:'active', false:''}[isCurrentPage('/explore')]">
 			<a href="/explore" class="link">
 				<i class="fa fa-compass"></i>
-				Explore
+				<span>Explore</span>
 			</a>
 		</li>
 		<li ng-class="{true:'active', false:''}[isCurrentPage('/calendar')]">
 			<a href="/calendar" class="link">
 				<i class="fa fa-calendar-o"></i>
-				Calendar		
+				<span>Calendar</span>	
 			</a>
 		</li>
 		<li ng-class="{true:'active', false:''}[isCurrentPage('/profile/{{user.username}}')]">
 			<a ng-href="/profile/{{user.username}}" class="link">
 				<i class="fa fa-user"></i>
-				Profile		
+				<span>Profile</span>		
 			</a>
 		</li>
 		<div class="bottom">
 			<li ng-class="{true:'active', false:''}[isCurrentPage('/settings')]">
 				<a href="/settings" class="link">
 					<i class="fa fa-cogs"></i>
-					Settings
+					<span>Settings</span>
 				</a>
 			</li>
 			<li>
 				<a href ng-click="logout()" class="link">
 					<i class="fa fa-sign-out"></i>
-					Sign Out
+					<span>Sign Out</span>
 				</a>
 			</li>
 		</div>

@@ -1,12 +1,16 @@
 .main {
-    margin-left: 100px;
+    margin-left: 50px;
     width: 100%;
-    width: -webkit-calc(100% - 100px);
-    width: -moz-calc(100% - 100px);
-    width: calc(100% - 100px);
+    width: -webkit-calc(100% - 50px);
+    width: -moz-calc(100% - 50px);
+    width: calc(100% - 50px);
     min-width: 1000px;
     background: $light-grey;
     display: table;
+    -ms-transition: -ms-transform 0.20s ease-in-out;
+    -moz-transition: -moz-transform 0.20s ease-in-out;
+    -webkit-transition: -webkit-transform 0.20s ease-in-out;
+    transition: transform 0.20s ease-in-out;
 }
 
 .white-top {
