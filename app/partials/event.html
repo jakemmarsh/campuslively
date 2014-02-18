@@ -28,7 +28,7 @@
 			<div class="box islet">
 				<div class="event-option-buttons">
 				<a href class="btn--muted epsilon nudge-quarter--right" ng-click="open('edit')" ng-show="event.creator._id == user._id || user.admin == true">Edit</a>
-					<a href class="btn--muted epsilon" ng-click="deleteEvent()" ng-show="event.creator._id == user._id || user.admin == true">Delete Event</a>
+					<a href class="btn--muted epsilon" ng-click="open('delete')" ng-show="event.creator._id == user._id || user.admin == true">Delete Event</a>
 				</div>
 				<div class="line" ng-show="event.startDate">
 					<div class="unit three-percent">
@@ -276,5 +276,19 @@
     <div class="modal-footer">
         <button class="btn" ng-click="saveChanges()" ng-disabled="editForm.$invalid">Save Changes</button>
         <button class="btn--muted" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="deleteModal.html">
+    <div class="modal-header">
+        <h2 class="flush">Deleting This Event</h2>
+    </div>
+    <div class="modal-body">
+    	<h3 class="weight--bold flush--top nudge-half--bottom">Are you sure?</h3>
+    	<p>Once you click the button below, this event (and all associated activity) will be deleted fully and permanently. There will be no way to restore or retrieve the information.</p>
+    </div>
+    <div class="modal-footer">
+    	<button class="btn--red" ng-click="deleteEvent()">Delete Event</button>
+    	<button class="btn--muted" ng-click="cancel()">Cancel</button>
     </div>
 </script>

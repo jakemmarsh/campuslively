@@ -37,16 +37,6 @@ define(['./index'], function (controllers) {
 			};
 		}
 
-		$scope.deleteEvent = function() {
-			if($scope.event.creator._id === $rootScope.user._id || $rootScope.user.admin) {
-				eventService.deleteEvent($scope.event._id).then(function (data) {
-    				$location.path('/feed');
-		        },
-		        function (errorMessage, status) {
-		        });
-			}
-		};
-
     	$scope.postComment = function() {
     		var comment = {
     			eventId: $scope.event._id,
@@ -227,6 +217,19 @@ define(['./index'], function (controllers) {
 			else if (modal.toLowerCase() === 'edit') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'editModal.html',
+			      controller: 'modalInstanceCtrl',
+			      resolve: {
+			      	event: function() {
+	                    return $scope.event;
+	                },
+			      	items: null,
+			      	location: null
+			      }
+			    });
+			}
+			else if (modal.toLowerCase() === 'delete') {
+				var modalInstance = $modal.open({
+			      templateUrl: 'deleteModal.html',
 			      controller: 'modalInstanceCtrl',
 			      resolve: {
 			      	event: function() {
