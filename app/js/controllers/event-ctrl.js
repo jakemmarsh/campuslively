@@ -185,20 +185,18 @@ define(['./index'], function (controllers) {
 		  	if (modal.toLowerCase() === 'share') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'shareModal.html',
-			      controller: 'modalInstanceCtrl',
+			      controller: 'shareEventModalCtrl',
 			      resolve: {
 			      	event: function() {
 	                    return $scope.event;
-	                },
-	                location: null,
-			      	items: null
+	                }
 			      }
 			    });
 			}
 			else if (modal.toLowerCase() === 'invite') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'inviteModal.html',
-			      controller: 'modalInstanceCtrl',
+			      controller: 'inviteEventModalCtrl',
 			      resolve: {
 			      	event: function() {
 	                    return $scope.event;
@@ -209,28 +207,25 @@ define(['./index'], function (controllers) {
 	                    },
 	                    function (errorMessage, status) {
 	                    }); 
-			      	},
-			      	location: null
+			      	}
 			      }
 			    });
 			}
 			else if (modal.toLowerCase() === 'edit') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'editModal.html',
-			      controller: 'modalInstanceCtrl',
+			      controller: 'editEventModalCtrl',
 			      resolve: {
 			      	event: function() {
 	                    return $scope.event;
-	                },
-			      	items: null,
-			      	location: null
+	                }
 			      }
 			    });
 			}
 			else if (modal.toLowerCase() === 'delete') {
 				var modalInstance = $modal.open({
 			      templateUrl: 'deleteModal.html',
-			      controller: 'modalInstanceCtrl',
+			      controller: 'basicModalCtrl',
 			      resolve: {
 			      	event: function() {
 	                    return $scope.event;

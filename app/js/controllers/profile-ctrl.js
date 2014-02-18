@@ -137,13 +137,11 @@ define(['./index'], function (controllers) {
         $scope.openAttending = function (event) {
             var modalInstance = $modal.open({
               templateUrl: 'attendingModal.html',
-              controller: 'modalInstanceCtrl',
+              controller: 'attendingEventModalCtrl',
               resolve: {
                 items: function() {
                     return event.attending;
-                },
-                location: null,
-                event: null
+                }
               }
             });
         };
@@ -151,7 +149,7 @@ define(['./index'], function (controllers) {
         $scope.openLocation = function (profile) {
             var modalInstance = $modal.open({
               templateUrl: 'locationModal.html',
-              controller: 'modalInstanceCtrl',
+              controller: 'basicModalCtrl',
               resolve: {
                 location: function() {
                     var newLoc = profile.loc;
