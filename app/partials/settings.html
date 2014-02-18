@@ -92,7 +92,7 @@
 						<input type="text" class="full-width" id="websiteAddress" name="websiteAddress" ng-model="websiteAddress" placeholder="Your website address" />
 					</div>
 				</div>
-				<div class="line nudge-half--bottom" ng-show="user.facebook.managedPages.length && user.type == 'group'" >
+				<div class="line nudge-half--bottom" ng-show="user.facebook.managedPages.length && user.type == 'group'">
 					<div class="unit label-container two-twelfths">
 						<label for="userFacebookLink">Facebook</label>
 					</div>
@@ -101,6 +101,14 @@
 						    <option value="">Choose a Facebook page</option>
 						    <option ng-repeat="page in user.facebook.managedPages" value="{{page.id}}" ng-selected="page.id == userFacebookLink">{{ page.name }}</option>
 						</select>
+					</div>
+				</div>
+				<div class="line nudge-half--bottom" ng-show="!user.facebook.id">
+					<div class="unit label-container two-twelfths">
+						<label for="userFacebookLink">Facebook</label>
+					</div>
+					<div class="unit ten-twelfths last-unit">
+						<input type="text" class="full-width" id="userFacebookLink" name="userFacebookLink" ng-model="userFacebookLink" placeholder="Your Facebook username" />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom">

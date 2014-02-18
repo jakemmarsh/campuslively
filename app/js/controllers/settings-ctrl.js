@@ -9,6 +9,7 @@ define(['./index'], function (controllers) {
     	});
 
     	$scope.userSchool = $rootScope.user.school._id;
+    	$scope.userFacebookLink = $rootScope.user.facebookLink;
     	$scope.userTwitterLink = $rootScope.user.twitterLink;
 
     	if($rootScope.user.type === 'student') {
@@ -17,7 +18,6 @@ define(['./index'], function (controllers) {
     		$scope.userEmailStudent = $rootScope.user.email;
     	}
     	else if($rootScope.user.type === 'group') {
-    		$scope.userFacebookLink = $rootScope.user.facebookLink;
     		$scope.userGroupName = $rootScope.user.groupName;
     		$scope.userGroupDescription = $rootScope.user.groupDescription;
     		$scope.userEmailGroup = $rootScope.user.email;
@@ -221,6 +221,7 @@ define(['./index'], function (controllers) {
 			// update user in database before making Facebook API call
 			userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
 				$rootScope.user = data;
+				$rootScope.user.facebookLink = null;
 				localStorageService.add('user', data);
 				$FB.logout(function () {
 					$rootScope.updateFbStatus($rootScope.updateApiMe);
@@ -306,12 +307,6 @@ define(['./index'], function (controllers) {
 				if($scope.picturePage) {
 					updateParams.pictureUrl = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?width=250&height=250';
 				}
-				if($scope.userFacebookLink && $scope.userFacebookLink !== $rootScope.user.facebookLink) {
-					updateParams.facebookLink = $scope.userFacebookLink;
-				}
-				else if(!$scope.userFacebookLink) {
-					updateParams.facebookLink = null;
-				}
 				if($scope.websiteAddress.length > 0 && $scope.websiteAddress !== $rootScope.user.website) {
 					if($scope.websiteAddress.indexOf('http://') === -1 && $scope.websiteAddress.indexOf('https://') === -1) {
 						$scope.websiteAddress = 'http://' + $scope.websiteAddress;
@@ -319,6 +314,13 @@ define(['./index'], function (controllers) {
 					updateParams.website = $scope.websiteAddress;
 				}
 			}
+			if($scope.userFacebookLink && $scope.userFacebookLink !== $rootScope.user.facebookLink) {
+				updateParams.facebookLink = $scope.userFacebookLink;
+			}
+			else if(!$scope.userFacebookLink) {
+				updateParams.facebookLink = null;
+			}
+
 			if($scope.userTwitterLink !== $rootScope.user.twitterLink) {
 				updateParams.twitterLink = $scope.userTwitterLink.replace('@', '');
 			}
