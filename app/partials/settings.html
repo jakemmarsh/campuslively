@@ -81,7 +81,7 @@
 						<label for="locationAddress">Address</label>
 					</div>
 					<div class="unit ten-twelfths last-unit">
-						<input type="text" class="full-width" id="locationAddress" name="locationAddress" ng-model="locationAddress" placeholder="Address of your location" ng-blur="checkAddress()" />
+						<input type="text" class="full-width" id="locationAddress" name="locationAddress" ng-model="locationAddress" placeholder="Address of your location" ng-change="checkAddress()" />
 					</div>
 				</div>
 				<div class="line nudge-half--bottom" ng-show="user.type == 'group'" >
