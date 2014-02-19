@@ -21,7 +21,7 @@ define(['./index'], function (controllers) {
             else {
                 $scope.moreToLoad = false;
             }
-            if(data) {
+            if(data.length > 0) {
                 oldestId = data[data.length-1]._id;
             }
         }, function(err, status) {
