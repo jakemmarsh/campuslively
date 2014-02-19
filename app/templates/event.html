@@ -2,8 +2,8 @@
 	<div class="event-header soft-half--ends soft-quarter--sides">
 		<div class="table full-width full-height">
 			<div class="td three-fifths vertical-align-middle">
-				<i class="beta fa fa-circle nudge-half--right float-left" ng-show="event.privacy == 'public'" data-tooltip="Public" data-tooltip-placement="top"></i>
-				<i class="beta fa fa-circle-o nudge-half--right float-left" ng-show="event.privacy == 'inviteOnly'" data-tooltip="Invite Only" data-tooltip-placement="top"></i>
+				<i class="beta fa fa-circle nudge-half--right float-left" ng-show="event.privacy == 'public'" tooltip="Public" tooltip-placement="top"></i>
+				<i class="beta fa fa-circle-o nudge-half--right float-left" ng-show="event.privacy == 'inviteOnly'" tooltip="Invite Only" tooltip-placement="top"></i>
 				<h3 class="flush">
 					<a ng-href="/event/{{event._id}}">
 						{{ event.title }}
@@ -44,16 +44,19 @@
 	</div>
 	<div class="event-footer table full-width soft-quarter--ends">
 		<div class="tr">
-			<div class="td three-fourths">
+			<div class="td three-fifths vertical-align-middle">
 				<ul class="tags">
 					<li ng-class="{true:'pointer', false:''}[isCurrentPage('/explore')]" ng-repeat="tag in event.tags" ng-bind="tag" ng-click="$parent.$parent.$parent.searchEvents = tag"></li>
 				</ul>
 			</div>
-			<div class="td one-fourth text-right soft-half--right vertical-align-middle">
-				<div class="action-buttons nudge-half--right">
-					<a class="first" ng-class="{green: isAttending(event)}" href ng-click="openAttending(event)" data-tooltip="People Attending"><span class="gamma" ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
+			<div class="td two-fifths text-right soft-half--right vertical-align-middle">
+				<div class="action-buttons nudge-quarter--right">
+					<a class="first" ng-class="{green: isAttending(event)}" href ng-click="openAttending(event)" tooltip="People Attending"><span class="gamma" ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
 					<a href ng-click="rsvpToEvent(event)" ng-hide="isAttending(event)"><i class="fa fa-thumbs-up"></i> RSVP</a>
 					<a href ng-click="unRsvpToEvent(event)" ng-show="isAttending(event)"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
+				</div>
+				<div class="action-buttons nudge-quarter--right">
+					<a href ng-click="openShare(event)" tooltip="Share"><i class="fa fa-share-square"></i></a>
 				</div>
 				<div class="action-buttons green">
 					<a href ng-href="/event/{{event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>

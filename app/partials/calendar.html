@@ -84,3 +84,25 @@
 		</div>
     </div>
 </script>
+
+<script type="text/ng-template" id="shareModal.html">
+    <div class="modal-header clearfix">
+        <h3 class="flush float-left weight--bold">Share Event</h2>
+        <i class="fa fa-times close" ng-click="ok()"></i>
+    </div>
+    <div class="modal-body">
+    	<h3 class="caps flush--top nudge-half--bottom">Event URL:</h3>
+    	<input type="text" class="full-width" ng-model="eventUrl" input-select readonly="readonly" />
+    	<div class="line nudge--top">
+	    	<div class="unit one-third soft--right">
+	        	<a ng-click="openTweet()" class="btn twitter full-width text-center"><i class="fa fa-twitter"></i> Tweet</a>
+			</div>
+			<div class="unit one-third soft-half--sides">
+				<a href ng-click="shareEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Share</a>
+			</div>
+			<div class="unit one-third last-unit soft--left">
+				<a href ng-click="sendEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Send</a>
+			</div>
+		</div>
+    </div>
+</script>

@@ -107,9 +107,17 @@
 										<li ng-repeat="tag in activity.event.tags" ng-bind="tag"></li>
 									</ul>
 								</div>
-								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
+								<div class="td two-fifths text-right soft-half--right vertical-align-middle">
+									<div class="action-buttons nudge-quarter--right">
+										<a class="first" ng-class="{green: isAttending(activity.event)}" href tooltip="People Attending"><span class="gamma" ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
+										<a href ng-click="rsvpToEvent(activity)" ng-hide="isAttending(activity.event)"><i class="fa fa-thumbs-up"></i> RSVP</a>
+										<a href ng-click="unRsvpToEvent(activity)" ng-show="isAttending(activity.event)"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
+									</div>
+									<div class="action-buttons nudge-quarter--right">
+										<a href ng-click="openShare(activity.event)" tooltip="Share"><i class="fa fa-share-square"></i></a>
+									</div>
 									<div class="action-buttons green">
-										<a ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
+										<a href ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
 									</div>
 								</div>
 							</div>
@@ -186,9 +194,17 @@
 										<li ng-repeat="tag in activity.event.tags" ng-bind="tag"></li>
 									</ul>
 								</div>
-								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
+								<div class="td two-fifths text-right soft-half--right vertical-align-middle">
+									<div class="action-buttons nudge-quarter--right">
+										<a class="first" ng-class="{green: isAttending(activity.event)}" href tooltip="People Attending"><span class="gamma" ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
+										<a href ng-click="rsvpToEvent(activity)" ng-hide="isAttending(activity.event)"><i class="fa fa-thumbs-up"></i> RSVP</a>
+										<a href ng-click="unRsvpToEvent(activity)" ng-show="isAttending(activity.event)"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
+									</div>
+									<div class="action-buttons nudge-quarter--right">
+										<a href ng-click="openShare(activity.event)" tooltip="Share"><i class="fa fa-share-square"></i></a>
+									</div>
 									<div class="action-buttons green">
-										<a ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
+										<a href ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
 									</div>
 								</div>
 							</div>
@@ -281,14 +297,22 @@
 						</div>
 						<div class="event-footer table full-width soft-quarter--ends">
 							<div class="tr">
-								<div class="td three-fourths">
+								<div class="td three-fifths">
 									<ul class="tags">
 										<li ng-repeat="tag in activity.event.tags" ng-bind="tag"></li>
 									</ul>
 								</div>
-								<div class="td one-fourth text-right soft-half--right vertical-align-middle">
+								<div class="td two-fifths text-right soft-half--right vertical-align-middle">
+									<div class="action-buttons nudge-quarter--right">
+										<a class="first" ng-class="{green: isAttending(activity.event)}" href tooltip="People Attending"><span class="gamma" ng-class="{green: isAttending(activity.event)}">{{ activity.event.attending.length }}</span></a>
+										<a href ng-click="rsvpToEvent(activity)" ng-hide="isAttending(activity.event)"><i class="fa fa-thumbs-up"></i> RSVP</a>
+										<a href ng-click="unRsvpToEvent(activity)" ng-show="isAttending(activity.event)"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
+									</div>
+									<div class="action-buttons nudge-quarter--right">
+										<a href ng-click="openShare(activity.event)" tooltip="Share"><i class="fa fa-share-square"></i></a>
+									</div>
 									<div class="action-buttons green">
-										<a ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
+										<a href ng-href="/event/{{activity.event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
 									</div>
 								</div>
 							</div>
@@ -310,18 +334,47 @@
 </div>
 
 <script type="text/ng-template" id="attendingModal.html">
-    <div class="modal-header">
-        <h2 class="flush">Attending</h2>
+    <div class="modal-header clearfix">
+        <h3 class="flush float-left weight--bold">Attending</h3>
+        <i class="fa fa-times close" ng-click="ok()"></i>
     </div>
     <div class="modal-body">
-        <div ng-repeat="attendingUser in items" class="user-img-modal nudge-half--right" ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
-			<a ng-href="profile/{{attendingUser.username}}" ng-click="clickLink()" tooltip="{{attendingUser.displayName}}" tooltip-placement="right"></a>
-		</div>
+    	<ul ng-show="items.length" class="modal-user-list table full-width">
+	        <li ng-repeat="attendingUser in items" class="tr full-width">
+	        	<div class="td one-tenth vertical-align-middle">
+	        		<div class="user-img-modal" ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
+	        			<a ng-href="profile/{{attendingUser.username}}" ng-click="clickLink()"></a>
+	        		</div>
+	        	</div>
+	        	<div class="td nine-tenths vertical-align-middle soft--left">
+	        		<a ng-href="profile/{{attendingUser.username}}" ng-click="clickLink()" class="weight--bold" ng-bind="attendingUser.displayName"></a>
+	        	</div>
+			</li>
+		</ul>
 		<div ng-hide="items.length">
-			<h2 class="flush text-center">No one has RSVPd to this event yet!</h2>
+			<h2 class="flush green text-center">No one has RSVPd to this event yet!</h2>
 		</div>
     </div>
-    <div class="modal-footer">
-        <button class="btn" ng-click="ok()">Close</button>
+</script>
+
+<script type="text/ng-template" id="shareModal.html">
+    <div class="modal-header clearfix">
+        <h3 class="flush float-left weight--bold">Share Event</h2>
+        <i class="fa fa-times close" ng-click="ok()"></i>
+    </div>
+    <div class="modal-body">
+    	<h3 class="caps flush--top nudge-half--bottom">Event URL:</h3>
+    	<input type="text" class="full-width" ng-model="eventUrl" input-select readonly="readonly" />
+    	<div class="line nudge--top">
+	    	<div class="unit one-third soft--right">
+	        	<a ng-click="openTweet()" class="btn twitter full-width text-center"><i class="fa fa-twitter"></i> Tweet</a>
+			</div>
+			<div class="unit one-third soft-half--sides">
+				<a href ng-click="shareEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Share</a>
+			</div>
+			<div class="unit one-third last-unit soft--left">
+				<a href ng-click="sendEvent()" class="btn fb full-width text-center"><i class="fa fa-facebook"></i> Send</a>
+			</div>
+		</div>
     </div>
 </script>

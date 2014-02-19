@@ -160,5 +160,17 @@ define(['./index'], function (controllers) {
               }
             });
         };
+
+        $scope.openShare = function(event) {
+            var modalInstance = $modal.open({
+              templateUrl: 'shareModal.html',
+              controller: 'shareEventModalCtrl',
+              resolve: {
+                event: function() {
+                        return event;
+                    }
+              }
+            });
+        };
     }]);
 });

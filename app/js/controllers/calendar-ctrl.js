@@ -248,7 +248,7 @@ define(['./index'], function (controllers) {
           return false;
       };
 
-  		$scope.openAttending = function (event) {
+  		$scope.openAttending = function(event) {
           var modalInstance = $modal.open({
             templateUrl: 'attendingModal.html',
             controller: 'attendingEventModalCtrl',
@@ -258,6 +258,18 @@ define(['./index'], function (controllers) {
               }
             }
           });
+      };
+
+      $scope.openShare = function(event) {
+        var modalInstance = $modal.open({
+          templateUrl: 'shareModal.html',
+          controller: 'shareEventModalCtrl',
+          resolve: {
+            event: function() {
+                    return event;
+                }
+          }
+        });
       };
 
       $scope.sortOptions = [{
