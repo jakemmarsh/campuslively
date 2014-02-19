@@ -27,12 +27,10 @@
 			</div>
 			<div class="td two-tenths normal-lh vertical-align-middle text-right">
 				<a href="/settings" class="btn" ng-show="profile._id == user._id"><i class="fa fa-cogs"></i> Settings</a>
-				<div ng-hide="profile._id == user._id" class="text-right">
-					<a href class="btn" ng-click="toggleSubscribe()" ng-hide="isSubscribed()"><i class="fa fa-star"></i> Subscribe</a>
-					<a href class="btn" ng-click="toggleSubscribe()" ng-show="isSubscribed()"><i class="fa fa-star-o"></i> Unsubscribe</a>
-					<a href ng-click="openSubscribers()" class="epsilon muted block nudge-quarter--top" ng-show="subscribers.length == 1" ng-bind="subscribers.length + ' subscriber'"></a>
-					<a href ng-click="openSubscribers()" class="epsilon muted block nudge-quarter--top" ng-show="subscribers.length > 1" ng-bind="subscribers.length + ' subscribers'"></a>
-				</div>
+				<a href class="btn" ng-click="toggleSubscribe()" ng-hide="isSubscribed() || profile._id == user._id"><i class="fa fa-star"></i> Subscribe</a>
+				<a href class="btn" ng-click="toggleSubscribe()" ng-show="isSubscribed() && profile._id != user._id"><i class="fa fa-star-o"></i> Unsubscribe</a>
+				<a href ng-click="openSubscribers()" class="epsilon muted block nudge-quarter--top" ng-show="subscribers.length == 1" ng-bind="subscribers.length + ' subscriber'"></a>
+				<a href ng-click="openSubscribers()" class="epsilon muted block nudge-quarter--top" ng-show="subscribers.length > 1" ng-bind="subscribers.length + ' subscribers'"></a>
 			</div>
 
 		</div>
