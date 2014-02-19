@@ -27,8 +27,12 @@
 			</div>
 			<div class="td two-tenths normal-lh vertical-align-middle text-right">
 				<a href="/settings" class="btn" ng-show="profile._id == user._id"><i class="fa fa-cogs"></i> Settings</a>
-				<a href class="btn" ng-click="toggleSubscribe()" ng-hide="isSubscribed() || profile._id == user._id"><i class="fa fa-star"></i> Subscribe</a>
-				<a href class="btn" ng-click="toggleSubscribe()" ng-show="isSubscribed() && profile._id != user._id"><i class="fa fa-star-o"></i> Unsubscribe</a>
+				<div ng-hide="profile._id == user._id" class="text-right">
+					<a href class="btn" ng-click="toggleSubscribe()" ng-hide="isSubscribed()"><i class="fa fa-star"></i> Subscribe</a>
+					<a href class="btn" ng-click="toggleSubscribe()" ng-show="isSubscribed()"><i class="fa fa-star-o"></i> Unsubscribe</a>
+					<a href ng-click="openSubscribers()" class="epsilon muted block nudge-quarter--top" ng-show="subscribers.length == 1" ng-bind="subscribers.length + ' subscriber'"></span>
+					<a href ng-click="openSubscribers()" class="epsilon muted block nudge-quarter--top" ng-show="subscribers.length > 1" ng-bind="subscribers.length + ' subscribers'"></span>
+				</div>
 			</div>
 
 		</div>
@@ -142,5 +146,29 @@
     </div>
     <div class="modal-body">
         <div ui-map="locationMap" ui-options="mapOptions" ui-event="{'map-tilesloaded': 'placeMarker(locationMap)'}" class="map nudge--ends"></div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="subscribersModal.html">
+    <div class="modal-header clearfix">
+        <h3 class="flush float-left weight--bold">Subscribers</h3>
+        <i class="fa fa-times close" ng-click="ok()"></i>
+    </div>
+    <div class="modal-body">
+    	<ul ng-show="items.length" class="modal-user-list table full-width">
+	        <li ng-repeat="attendingUser in items" class="tr full-width">
+	        	<div class="td one-tenth vertical-align-middle">
+	        		<div class="user-img-modal" ng-style="{'background-image': 'url(' + attendingUser.pictureUrl + ')'}">
+	        			<a ng-href="profile/{{attendingUser.username}}" ng-click="clickLink()"></a>
+	        		</div>
+	        	</div>
+	        	<div class="td nine-tenths vertical-align-middle soft--left">
+	        		<a ng-href="profile/{{attendingUser.username}}" ng-click="clickLink()" class="weight--bold" ng-bind="attendingUser.displayName"></a>
+	        	</div>
+			</li>
+		</ul>
+		<div ng-hide="items.length">
+			<h2 class="flush green text-center">No one has RSVPd to this event yet!</h2>
+		</div>
     </div>
 </script>

@@ -172,6 +172,39 @@ exports.getUser = function(req, res) {
 	});
 };
 
+exports.getSubscribers = function(req, res) {
+	var getUsers = function(userId) {
+		var deferred = Q.defer(),
+			populateObj = [
+                { path: 'subscriptions' },
+                { path: 'postedEvents' }, 
+                { path: 'attending' },
+                { path: 'school' }
+            ];
+
+        User.find({
+        	subscriptions: userId
+        })
+        .populate(populateObj)
+        .exec(function(err, retrievedUsers) {
+        	if (err || !retrievedUsers) {
+	        	deferred.reject(new Error("No users exist subscribed to specified ID."));
+	        }
+	        else {
+	        	deferred.resolve(retrievedUsers);
+	        }
+        });
+
+        return deferred.promise;
+	};
+
+	getUsers(req.params.userId).then(function(data) {
+		res.json(200, data);
+	}, function(err) {
+		res.send(500, err);
+	});
+};
+
 exports.getUserByName = function(req, res) {
 	var getUser = function(username) {
 		var deferred = Q.defer(),
