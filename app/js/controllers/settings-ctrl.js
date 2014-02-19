@@ -307,11 +307,14 @@ define(['./index'], function (controllers) {
 				if($scope.picturePage) {
 					updateParams.pictureUrl = 'http://graph.facebook.com/' + $scope.picturePage + '/picture?width=250&height=250';
 				}
-				if($scope.websiteAddress.length > 0 && $scope.websiteAddress !== $rootScope.user.website) {
+				if($scope.websiteAddress && $scope.websiteAddress !== $rootScope.user.website) {
 					if($scope.websiteAddress.indexOf('http://') === -1 && $scope.websiteAddress.indexOf('https://') === -1) {
 						$scope.websiteAddress = 'http://' + $scope.websiteAddress;
 					}
 					updateParams.website = $scope.websiteAddress;
+				}
+				else if(!$scope.websiteAddress) {
+					updateParams.website = null;
 				}
 			}
 			if($scope.userFacebookLink && $scope.userFacebookLink !== $rootScope.user.facebookLink) {
