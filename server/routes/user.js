@@ -545,89 +545,50 @@ exports.getActivities = function(req, res) {
 			],
 			today = new Date();
 
+		var query = Activity.find({
+						$and: [
+							{$or: [
+								{eventStartDate: {$exists: false}},
+								{eventStartDate: {$gte: today}}
+							]},
+							{$or: [
+								{recipient: user._id}, 
+								{eventCreator: user._id}, 
+								{
+									actor: {$in: user.subscriptions}, 
+									$or: [
+									 	{eventPrivacy: 'public'}, 
+									 	{event: {$in: user.attending}}, 
+									 	{event: {$in: user.invites}}
+								 	]
+								}, 
+								{event: {$in: user.attending}}
+							]}
+						],
+						actor: { $ne: user._id }
+					})
+					.sort({ _id: -1 });
+
 		if(req.params.limit) {
-			Activity.find({
-				$and: [
-					{$or: [
-						{eventStartDate: {$exists: false}},
-						{eventStartDate: {$gte: today}}
-					]},
-					{$or: [
-						{recipient: user._id}, 
-						{eventCreator: user._id}, 
-						{
-							actor: {$in: user.subscriptions}, 
-							$or: [
-							 	{eventPrivacy: 'public'}, 
-							 	{event: {$in: user.attending}}, 
-							 	{event: {$in: user.invites}}
-						 	]
-						}, 
-						{event: {$in: user.attending}}
-					]}
-				],
-				actor: { $ne: user._id }
-			})
-			.sort({ _id: -1 })
-			.limit(req.params.limit)
-			.populate(activityPopulateObj)
-			.exec(function(err, retrievedActivities) {
-				if(err || !retrievedActivities) {
-					deferred.reject(new Error("No events found."));
-				}
-				else {
-					User.populate(retrievedActivities, userPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedActivities);
-						}
-					});
-				}
-			});
+			query = query.limit(req.params.limit);
 		}
-		else {
-			Activity.find({ 
-				$and: [
-					{$or: [
-						{eventStartDate: {$exists: false}},
-						{eventStartDate: {$gte: today}}
-					]},
-					{$or: [
-						{recipient: user._id}, 
-						{eventCreator: user._id}, 
-						{
-							actor: {$in: user.subscriptions}, 
-							$or: [
-							 	{eventPrivacy: 'public'}, 
-							 	{event: {$in: user.attending}}, 
-							 	{event: {$in: user.invites}}
-						 	]
-						}, 
-						{event: {$in: user.attending}}
-					]}
-				],
-				actor: { $ne: user._id }
-			})
-			.sort({ _id: -1 })
-			.populate(activityPopulateObj)
-			.exec(function(err, retrievedActivities) {
-				if(err || !retrievedActivities) {
-					deferred.reject(new Error("No events found."));
-				}
-				else {
-					User.populate(retrievedActivities, eventPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedActivities);
-						}
-					});
-				}
-			});
-		}
+			
+		query.populate(activityPopulateObj)
+		.exec(function(err, retrievedActivities) {
+			if(err || !retrievedActivities) {
+				deferred.reject(new Error("No events found."));
+			}
+			else {
+				User.populate(retrievedActivities, userPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedActivities);
+					}
+				});
+			}
+		});
 
 		return deferred.promise;
 	};
@@ -675,90 +636,50 @@ exports.getActivitiesNewer = function(req, res) {
 			],
 			today = new Date();
 
+		var query = Activity.find({ 
+						$and: [
+							{$or: [
+								{eventStartDate: {$exists: false}},
+								{eventStartDate: {$gte: today}}
+							]},
+							{$or: [
+								{recipient: user._id}, 
+								{eventCreator: user._id}, 
+								{
+									actor: {$in: user.subscriptions}, 
+									$or: [
+									 	{eventPrivacy: 'public'}, 
+									 	{event: {$in: user.attending}}, 
+									 	{event: {$in: user.invites}}
+								 	]
+								}, 
+								{event: {$in: user.attending}}
+							]}
+						],
+						actor: { $ne: user._id }
+					});
+
 		if(newestId) {
-			Activity.find({ 
-				$and: [
-					{$or: [
-						{eventStartDate: {$exists: false}},
-						{eventStartDate: {$gte: today}}
-					]},
-					{$or: [
-						{recipient: user._id}, 
-						{eventCreator: user._id}, 
-						{
-							actor: {$in: user.subscriptions}, 
-							$or: [
-							 	{eventPrivacy: 'public'}, 
-							 	{event: {$in: user.attending}}, 
-							 	{event: {$in: user.invites}}
-						 	]
-						}, 
-						{event: {$in: user.attending}}
-					]}
-				],
-				actor: { $ne: user._id }, 
-				_id: { $gt: newestId }
-			})
-			.sort({ _id: -1 })
-			.populate(activityPopulateObj)
-			.exec(function(err, retrievedActivities) {
-				if(err || !retrievedActivities) {
-					deferred.reject(new Error("No events found."));
-				}
-				else {
-					User.populate(retrievedActivities, userPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedActivities);
-						}
-					});
-				}
-			});
+			query = query.where('_id').gt(newestId);
 		}
-		// TODO: why does this if/else exist?
-		else {
-			Activity.find({ 
-				$and: [
-					{$or: [
-						{eventStartDate: {$exists: false}},
-						{eventStartDate: {$gte: today}}
-					]},
-					{$or: [
-						{recipient: user._id}, 
-						{eventCreator: user._id}, 
-						{
-							actor: {$in: user.subscriptions}, 
-							$or: [
-							 	{eventPrivacy: 'public'}, 
-							 	{event: {$in: user.attending}}, 
-							 	{event: {$in: user.invites}}
-						 	]
-						}, 
-						{event: {$in: user.attending}}
-					]}
-				],
-				actor: { $ne: user._id }
-			})
-			.sort({ _id: -1 })
-			.populate(activityPopulateObj)
-			.exec(function(err, retrievedActivities) {
-				if(err || !retrievedActivities) {
-					deferred.reject(new Error("No events found."));
-				}
-				else {
-					User.populate(retrievedActivities, userPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedActivities);
-						}
-					});
-				}
-			});
-		}
+
+		query.sort({ _id: -1 })
+		.populate(activityPopulateObj)
+		.exec(function(err, retrievedActivities) {
+			if(err || !retrievedActivities) {
+				deferred.reject(new Error("No events found."));
+			}
+			else {
+				User.populate(retrievedActivities, userPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedActivities);
+					}
+				});
+			}
+		});
 
 		return deferred.promise;
 	};

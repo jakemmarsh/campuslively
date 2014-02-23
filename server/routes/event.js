@@ -148,65 +148,38 @@ exports.getEventsBySchool = function(req, res) {
 			],
 			today = new Date();
 
+		var query = Event.find({ 
+						school: schoolId, 
+						$or: [
+							{ privacy: 'public' }, 
+							{ invited: userId }, 
+							{ attending: userId }, 
+							{ creator: userId }
+						],
+						startDate: { $gte: today } 
+					})
+					.sort({ _id: -1 });
+
 		if(req.params.limit) {
-			Event.find({ 
-				school: schoolId, 
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today } 
-			})
-			.sort({ _id: -1 })
-			.limit(req.params.limit)
-			.populate(eventPopulateObj)
-			.exec(function (err, retrievedEvents) {
-		        if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvents);
-						}
-					});
-	         	}
-		    });
+			query = query.limit(req.params.limit);
 		}
-		else {
-			Event.find({ 
-				school: schoolId, 
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today }
-			})
-			.sort({ _id: -1 })
-			.populate(eventPopulateObj)
-			.exec(function (err, retrievedEvents) {
-		        if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvents);
-						}
-					});
-	         	}
-		    });
-		}
+		
+		query.populate(eventPopulateObj)
+		.exec(function (err, retrievedEvents) {
+	        if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvents);
+					}
+				});
+         	}
+	    });
 
 		return deferred.promise;
 	};
@@ -235,65 +208,39 @@ exports.getEventsBySchoolNewer = function(req, res) {
 			],
 			today = new Date();
 
+		var query = Event.find({ 
+						school: schoolId, 
+						_id: { $gt: newestId }, 
+						$or: [
+							{ privacy: 'public' }, 
+							{ invited: userId }, 
+							{ attending: userId }, 
+							{ creator: userId }
+						],
+						startDate: { $gte: today }
+					});
+
 		if(newestId) {
-			Event.find({ 
-				school: schoolId, 
-				_id: { $gt: newestId }, 
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today }
-			})
-			.sort({ _id: -1 })
-			.populate(eventPopulateObj)
-			.exec(function (err, retrievedEvents) {
-		        if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvents);
-						}
-					});
-	         	}
-		    });
+			query = query.where('_id').gt(newestId);
 		}
-		else {
-			Event.find({ 
-				school: schoolId,
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today }
-			})
-			.sort({ _id: -1 })
-			.populate(eventPopulateObj)
-			.exec(function (err, retrievedEvents) {
-		        if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvents);
-						}
-					});
-	         	}
-		    });
-		}
+
+		query.sort({ _id: -1 })
+		.populate(eventPopulateObj)
+		.exec(function (err, retrievedEvents) {
+	        if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvents);
+					}
+				});
+         	}
+	    });
 
 		return deferred.promise;
 	};
@@ -506,64 +453,38 @@ exports.getEventsByUser = function(req, res) {
 			],
 			today = new Date();
 
+		var query = Event.find({ 
+						creator: profileId, 
+						$or: [
+							{ privacy: 'public' }, 
+							{ invited: userId }, 
+							{ attending: userId }, 
+							{ creator: userId }
+						],
+						startDate: { $gte: today }
+					})
+					.sort({ _id: -1 });
+
 		if(req.params.limit) {
-			Event.find({ 
-				creator: profileId, 
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today }
-			})
-			.sort({ _id: -1 })
-			.limit(req.params.limit)
-			.populate(eventPopulateObj)
-			.exec(function (err, retrievedEvent) {
-		        if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvent);
-						}
-					});
-	         	}
-		    });
+			query = query.limit(req.params.limit);
 		}
-		else {
-			Event.find({ 
-				creator: profileId, 
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				] 
-			})
-			.sort({ _id: -1 })
-			.populate(eventPopulateObj)
-			.exec(function (err, retrievedEvent) {
-		        if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvent);
-						}
-					});
-	         	}
-		    });
-		}
+			
+		query.populate(eventPopulateObj)
+		.exec(function (err, retrievedEvent) {
+	        if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvent);
+					}
+				});
+         	}
+	    });
 
 		return deferred.promise;
 	};
@@ -592,65 +513,38 @@ exports.getEventsByUserNewer = function(req, res) {
 			],
 			today = new Date();
 
+		var query = Event.find({ 
+						creator: profileId,
+						$or: [
+							{ privacy: 'public' }, 
+							{ invited: userId }, 
+							{ attending: userId }, 
+							{ creator: userId }
+						],
+						startDate: { $gte: today }
+					});
+
 		if(newestId) {
-			Event.find({ 
-				creator: profileId, 
-				_id: { $gt: newestId }, 
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today }
-			})
-			.sort({ _id: -1 })
-			.populate(eventPopulateObj)
-			.exec(function (err, retrievedEvent) {
-		        if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvent);
-						}
-					});
-	         	}
-		    });
+			query = query.where('_id').gt(newestId);
 		}
-		else {
-			Event.find({ 
-				creator: profileId,
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today }
-			})
-			.sort({ _id: -1 })
-			.populate(eventPopulateObj)
-			.exec(function (err, retrievedEvent) {
-		        if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvent);
-						}
-					});
-	         	}
-		    });
-		}
+		
+		query.sort({ _id: -1 })
+		.populate(eventPopulateObj)
+		.exec(function (err, retrievedEvent) {
+	        if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvent);
+					}
+				});
+         	}
+	    });
 
 		return deferred.promise;
 	};
@@ -736,83 +630,47 @@ exports.getEventsByLocation = function(req, res) {
 			],
 			today = new Date();
 
+		var query = Event.find({
+						sponsored: true,
+						loc: { 
+							$near: { 
+								$geometry: {
+									type: "Point",
+									coordinates: [lng, lat]
+								},
+								$maxDistance: 8047 // five miles
+							}
+						}, 
+						$or: [
+							{ privacy: 'public' }, 
+							{ invited: userId }, 
+							{ attending: userId }, 
+							{ creator: userId }
+						],
+						startDate: { $gte: today }
+					})
+					.sort({ _id: -1 });
+
 		if(req.params.limit) {
-			Event.find({
-				sponsored: true,
-				loc: { 
-					$near: { 
-						$geometry: {
-							type: "Point",
-							coordinates: [lng, lat]
-						},
-						$maxDistance: 8047 // five miles
+			query = query.limit(req.params.limit);
+		}
+
+		query.populate(eventPopulateObj)
+		.exec(function(err, retrievedEvent) {
+			if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
 					}
-				}, 
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today }
-			})
-			.sort({ _id: -1 })
-			.limit(req.params.limit)
-			.populate(eventPopulateObj)
-			.exec(function(err, retrievedEvent) {
-				if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvent);
-						}
-					});
-	         	}
-	        });
-	    }
-	    else {
-			Event.find({
-				sponsored: true,
-				loc : {
-					$near: { 
-						$geometry: {
-							type: "Point",
-							coordinates: [lng, lat]
-						},
-						$maxDistance: 8047 // five miles
+					else {
+						deferred.resolve(retrievedEvent);
 					}
-				}, 
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today }
-			})
-			.sort({ _id: -1 })
-			.populate(eventPopulateObj)
-			.exec(function(err, retrievedEvent) {
-				if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvent);
-						}
-					});
-	         	}
-	        });
-	    }
+				});
+         	}
+        });
 
 		return deferred.promise;
 	};
@@ -845,73 +703,41 @@ exports.getEventsByLocationNewer = function(req, res) {
 			},
 			today = new Date();
 
+		var query = Event.find({
+			    		sponsored: true,
+						loc: { 
+							$near : locationPoint 
+						},
+						$or: [
+							{ privacy: 'public' }, 
+							{ invited: userId }, 
+							{ attending: userId }, 
+							{ creator: userId }
+						],
+						startDate: { $gte: today }
+					});
+
 		if(newestId) {
-			Event.find({
-				sponsored: true,
-				loc: { 
-					$near : locationPoint 
-				}, 
-				_id: { 
-					$gt: newestId 
-				}, 
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today }
-			})
-			.sort({ _id: -1 })
-			.populate(eventPopulateObj)
-			.exec(function(err, retrievedEvent) {
-				if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvent);
-						}
-					});
-	         	}
-	        });
+			query = query.where('_id').gt(newestId);
 	    }
-	    else {
-	    	Event.find({
-	    		sponsored: true,
-				loc: { 
-					$near : locationPoint 
-				},
-				$or: [
-					{ privacy: 'public' }, 
-					{ invited: userId }, 
-					{ attending: userId }, 
-					{ creator: userId }
-				],
-				startDate: { $gte: today }
-			})
-			.sort({ _id: -1 })
-			.populate(eventPopulateObj)
-			.exec(function(err, retrievedEvent) {
-				if(err) {
-	         		deferred.reject(err.message);
-	         	}
-	         	else {
-					Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
-						if(err) {
-							deferred.reject(err.message);
-						}
-						else {
-							deferred.resolve(retrievedEvent);
-						}
-					});
-	         	}
-	        });
-	    }
+
+    	query.sort({ _id: -1 })
+		.populate(eventPopulateObj)
+		.exec(function(err, retrievedEvent) {
+			if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+					if(err) {
+						deferred.reject(err.message);
+					}
+					else {
+						deferred.resolve(retrievedEvent);
+					}
+				});
+         	}
+        });
 
 		return deferred.promise;
 	};
