@@ -1,6 +1,6 @@
 define(['../index'], function (controllers) {
     'use strict';
-    controllers.controller('basicModalCtrl', ['$scope', '$rootScope', '$modalInstance', 'items', 'location', 'event', 'eventService', 'userService', function ($scope, $rootScope, $modalInstance, items, location, event, eventService, userService) {
+    controllers.controller('basicModalCtrl', ['$scope', '$rootScope', '$modalInstance', '$location', 'items', 'location', 'event', 'eventService', 'userService', function ($scope, $rootScope, $modalInstance, $location, items, location, event, eventService, userService) {
         if(items) {
             $scope.items = items;
         }
