@@ -48,6 +48,18 @@
 			border: 1px solid darken($primary, 7);
 		}
 
+	.btn--green {
+		@extend .btn;
+		@include gradient($green);
+		border: 1px solid $green;
+	}
+
+		.btn--green:hover, .btn--green:active, .btn--green:focus {
+			color: $white;
+			@include gradient($green, darken($green, 5));
+			border: 1px solid darken($green, 7);
+		}
+
 	.btn--red {
 		@extend .btn;
 		@include gradient($red);

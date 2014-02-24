@@ -2,30 +2,30 @@
 	<div id="dark_top">
 		<div class="inside_container">
 			<div class="section group">
-				<div class="col span_12_of_12 flush--top text-center">
+				<div class="col span_12_of_12 flush--ends text-center">
 					<img src="https://s3.amazonaws.com/campuslively/assets/img/logo.png" alt="Campuslively logo" id="logo" />
 				</div>
 			</div>
 			<div class="section group">
-				<div class="col span_12_of_12">
+				<div class="col span_12_of_12 flush--top">
 					<div header-switcher="h1">
-						<h1 class="huge flush white" style="display:none">Don't miss a thing</h1>
-						<h1 class="huge flush white" style="display:none">Increase attendance to your events</h1>
+						<h2 class="huge flush white" style="display:none">Don't miss a thing</h2>
+						<h2 class="huge flush white" style="display:none">Increase attendance to your events</h2>
 					</div>
-					<h2 class="flush muted">An easy way to view and share everything going on around your campus.</h2>
+					<h3 class="flush white">An easy way to view and share everything going on around your campus.</h3>
 				</div>
 			</div>
-			<div class="section group nudge--bottom">
-				<div class="col span_6_of_12 responsive_right nudge--bottom">
+			<div class="section group flush--bottom">
+				<div class="col span_6_of_12 responsive_right">
 					<a href="/login" title="Log In" class="btn--blue">Log In</a>
 				</div>
-				<div class="col span_6_of_12 responsive_left nudge--bottom">
-					<a href="/register" title="Sign Up" class="btn">Sign Up</a>
+				<div class="col span_6_of_12 responsive_left">
+					<a href="/register" title="Sign Up" class="btn--green">Sign Up</a>
 				</div>
 			</div>
-			<div class="section group nudge--top">
-				<div class="col span_12_of_12 text-center nudge--top flush--bottom">
-					<h3 class="flush muted soft--top">Currently available at these schools:</h3>
+			<div class="section group flush--top">
+				<div class="col span_12_of_12 text-center flush--bottom">
+					<h3 class="flush white soft--ends">Currently available at these schools:</h3>
 				</div>
 			</div>
 		</div>
@@ -52,70 +52,70 @@
 				<a href="/contact">Request Your School</a>
 			</div>
 		</div>
-	</div>
-</section>
-<section class="light_section soft--ends">
-	<div class="inside_container">
 		<div class="section group">
 			<div class="col span_12_of_12 text-center">
 				<h2 class="flush blue">You are a:</h2>
 				<ng-switch-toggle-group theme="candy" ng-model="currentView" choices="viewOptions" style="display: inline-block !important;"></ng-switch-toggle-group>
 			</div>
 		</div>
-		<div ng-show="currentView == 'student'">
-			<div class="section group soft--ends">
-				<div class="col span_4_of_12 index_item">
-					<h3><i class="fa fa-lock"></i> Only for your school</h3>
-					<p>Once registered and logged in, you can choose from a list of available schools. Once selected, you can view events specific to your school.</p>
-				</div>
-				<div class="col span_4_of_12 index_item">
-					<h3><i class="fa fa-refresh"></i> Sync with your current apps</h3>
-					<p>Campuslively syncs with both your Facebook and Google Calendar. Connect with your friends from Facebook, and keep your Google Calendar in-sync with your events on campus.</p>
-				</div>
-				<div class="col span_4_of_12 index_item">
-					<h3><i class="fa fa-list"></i> See everything happening on your campus</h3>
-					<p>Don’t miss out on a single event. Using the explore page, you will be able to search and find any event posted for your campus. No more having to search high and low to see what is going on at your school!</p>
-				</div>
+	</div>
+</section>
+<section class="light_section soft--ends" ng-show="currentView == 'student'" style="background-image: url('http://campuslively.s3.amazonaws.com/assets/img/students.png');">
+	<div class="inside_container">
+		<div class="section group soft--ends">
+			<div class="col span_4_of_12 index_item">
+				<h3><i class="fa fa-lock"></i> Only for your school</h3>
+				<p>Once registered and logged in, you can choose from a list of available schools. Once selected, you can view events specific to your school.</p>
 			</div>
-			<div class="section group soft--ends">
-				<div class="col span_4_of_12 index_item soft--bottom">
-					<h3><i class="fa fa-clock-o"></i> View events as a live feed</h3>
-					<p>When you're not in the mood to search for something to do, use your feed to easily see what events are happening with the people and groups that matter to you most.</p>
-				</div>
-				<div class="col span_4_of_12 index_item soft--bottom">
-					<h3><i class="fa fa-calendar"></i> Or view events as a calendar</h3>
-					<p>Planning ahead? View events as a calendar to easily plan what you are going to do in the coming weeks and months.</p>
-				</div>
-				<div class="col span_4_of_12 index_item soft--bottom">
-					<h3><i class="fa fa-plus"></i> Easily post your own events</h3>
-					<p>As a student, you are also able to post your own events. On any page, you will see the clear “Post Event” button. Want to get the word out about a party or event you’re organizing? Post it to Campuslively!</p>
-				</div>
+			<div class="col span_4_of_12 index_item">
+				<h3><i class="fa fa-refresh"></i> Sync with your current apps</h3>
+				<p>Campuslively syncs with both your Facebook and Google Calendar. Connect with your friends from Facebook, and keep your Google Calendar in-sync with your events on campus.</p>
+			</div>
+			<div class="col span_4_of_12 index_item">
+				<h3><i class="fa fa-list"></i> See everything happening on your campus</h3>
+				<p>Don’t miss out on a single event. Using the explore page, you will be able to search and find any event posted for your campus. No more having to search high and low to see what is going on at your school!</p>
 			</div>
 		</div>
-		<div ng-show="currentView == 'group'">
-			<div class="section group soft--ends">
-				<div class="col span_4_of_12 index_item">
-					<h3><i class="fa fa-plus"></i> Easily post your events</h3>
-					<p>Post an event in as little as 30 seconds! It's as simple as filling out one form and instantly reaching everyone at your school.</p>
-				</div>
-				<div class="col span_4_of_12 index_item">
-					<h3><i class="fa fa-thumbs-up"></i> Increase awareness and attendance to your events</h3>
-					<p>Campuslively is the only site that allows you to post your event to all students at your school. Make sure the maximum number of eyes see your event and increase your event's attendance!</p>
-				</div>
-				<div class="col span_4_of_12 index_item">
-					<h3><i class="fa fa-money"></i> Save time and money by posting on Campuslively</h3>
-					<p>Stop wasting time and money on fliers, posters, emails, and Facebook. Campuslively is the cheapest and most effective way to reach students at your school. With one click, thousands of students will have eyes on your event.</p>
-				</div>
+		<div class="section group soft--ends">
+			<div class="col span_4_of_12 index_item soft--bottom">
+				<h3><i class="fa fa-clock-o"></i> View events as a live feed</h3>
+				<p>When you're not in the mood to search for something to do, use your feed to easily see what events are happening with the people and groups that matter to you most.</p>
 			</div>
-			<div class="section group soft--ends">
-				<div class="col span_4_of_12 index_item">
-					<h3><i class="fa fa-link"></i> Automatically reach your current social media followers</h3>
-					<p>In addition to the new users you'll reach, we also offer the ability to instantly connect with your followers from other social media sites. This means you can maintain your current fanbase while continuing to grow with Campuslively!</p>
-				</div>
-				<div class="col span_4_of_12 index_item soft--bottom">
-					<h3><i class="fa fa-bullhorn"></i> Interact directly with your target audience</h3>
-					<p>Once you have registered as a Campuslively user, other users will be able to "subscribe" to you, allowing them to instantly get updates about your events. In addition, you can interact directly with your audience with quick comments and "like"s on the event details page!</p>
-				</div>
+			<div class="col span_4_of_12 index_item soft--bottom">
+				<h3><i class="fa fa-calendar"></i> Or view events as a calendar</h3>
+				<p>Planning ahead? View events as a calendar to easily plan what you are going to do in the coming weeks and months.</p>
+			</div>
+			<div class="col span_4_of_12 index_item soft--bottom">
+				<h3><i class="fa fa-plus"></i> Easily post your own events</h3>
+				<p>As a student, you are also able to post your own events. On any page, you will see the clear “Post Event” button. Want to get the word out about a party or event you’re organizing? Post it to Campuslively!</p>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="light_section soft--ends" ng-show="currentView == 'group'" style="background-image: url('http://campuslively.s3.amazonaws.com/assets/img/marching_band.png');">
+	<div class="inside_container">
+		<div class="section group soft--ends">
+			<div class="col span_4_of_12 index_item">
+				<h3><i class="fa fa-plus"></i> Easily post your events</h3>
+				<p>Post an event in as little as 30 seconds! It's as simple as filling out one form and instantly reaching everyone at your school.</p>
+			</div>
+			<div class="col span_4_of_12 index_item">
+				<h3><i class="fa fa-thumbs-up"></i> Increase awareness and attendance to your events</h3>
+				<p>Campuslively is the only site that allows you to post your event to all students at your school. Make sure the maximum number of eyes see your event and increase your event's attendance!</p>
+			</div>
+			<div class="col span_4_of_12 index_item">
+				<h3><i class="fa fa-money"></i> Save time and money by posting on Campuslively</h3>
+				<p>Stop wasting time and money on fliers, posters, emails, and Facebook. Campuslively is the cheapest and most effective way to reach students at your school. With one click, thousands of students will have eyes on your event.</p>
+			</div>
+		</div>
+		<div class="section group soft--ends">
+			<div class="col span_4_of_12 index_item">
+				<h3><i class="fa fa-link"></i> Automatically reach your current social media followers</h3>
+				<p>In addition to the new users you'll reach, we also offer the ability to instantly connect with your followers from other social media sites. This means you can maintain your current fanbase while continuing to grow with Campuslively!</p>
+			</div>
+			<div class="col span_4_of_12 index_item soft--bottom">
+				<h3><i class="fa fa-bullhorn"></i> Interact directly with your target audience</h3>
+				<p>Once you have registered as a Campuslively user, other users will be able to "subscribe" to you, allowing them to instantly get updates about your events. In addition, you can interact directly with your audience with quick comments and "like"s on the event details page!</p>
 			</div>
 		</div>
 	</div>

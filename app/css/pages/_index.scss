@@ -11,7 +11,7 @@
 }
 
 #white_top {
-	height: 160px;
+	height: 265px;
 	background: $white;
 }
 
@@ -42,9 +42,9 @@
 	}
 
 #dark_top {
-	height: 575px;
+	height: 650px;
 	background-color: $dark-grey;
-	background: url('../img/crowd.jpg') no-repeat center center fixed; 
+	background: url('../img/Marsh_Chapel.png') no-repeat center center fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -53,22 +53,26 @@
 
 	#dark_top #logo {
 		width: 90%;
-		max-width: 500px;
+		max-width: 350px;
 		min-width: 250px;
 	}
 
-.index_button {
-	display: inline-block;
-	width: 250px !important;
-}
-
 .light_section {
 	width: 100%;
+	background-color: $dark-grey;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 .index_item > h3 {
-	color: $dark-grey;
+	color: $white;
 	font-size: 140%;
+	font-weight: 500;
 }
 
 	.index_item > h3 > i {
@@ -76,7 +80,7 @@
 	}
 
 .index_item > p {
-	color: $dark-grey;
+	color: $white;
 }
 
 @media only screen and (max-width: 480px) {
