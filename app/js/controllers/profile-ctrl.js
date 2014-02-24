@@ -152,7 +152,7 @@ define(['./index'], function (controllers) {
         $scope.openAttending = function(event) {
             var modalInstance = $modal.open({
               templateUrl: 'attendingModal.html',
-              controller: 'attendingEventModalCtrl',
+              controller: 'peopleListModalCtrl',
               resolve: {
                 items: function() {
                     return event.attending;
@@ -164,7 +164,7 @@ define(['./index'], function (controllers) {
         $scope.openSubscribers = function() {
             var modalInstance = $modal.open({
               templateUrl: 'subscribersModal.html',
-              controller: 'attendingEventModalCtrl',
+              controller: 'peopleListModalCtrl',
               resolve: {
                 items: function() {
                     return $scope.subscribers;

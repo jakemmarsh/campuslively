@@ -26,7 +26,7 @@ define([
     'controllers/modals/editEventModal-ctrl',
     'controllers/modals/shareEventModal-ctrl',
     'controllers/modals/inviteEventModal-ctrl',
-    'controllers/modals/attendingEventModal-ctrl',
+    'controllers/modals/peopleListModal-ctrl',
     'directives/comment-expand',
     'directives/fixed-sidebar',
     'directives/ng-blur',

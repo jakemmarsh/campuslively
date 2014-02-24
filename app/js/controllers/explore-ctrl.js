@@ -233,7 +233,7 @@ define(['./index'], function (controllers) {
 		$scope.openAttending = function (event) {
 		    var modalInstance = $modal.open({
 		      templateUrl: 'attendingModal.html',
-		      controller: 'attendingEventModalCtrl',
+		      controller: 'peopleListModalCtrl',
 		      resolve: {
 		      	items: function() {
 		      		return event.attending;
