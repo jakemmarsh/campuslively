@@ -893,7 +893,8 @@ exports.uploadImage = function(req, res) {
 	        s3bucket.putObject(dataToPost, function(err, data) {
 				if (err) {
 				  deferred.reject(err.message);
-				} else {
+				} 
+				else {
 				  deferred.resolve(data);
 				}
 			});
@@ -1158,7 +1159,22 @@ exports.unRsvp = function(req, res) {
 };
 
 exports.deleteEvent = function(req, res) {
-	var deleteEvent = function(eventId) {
+	var getEvent = function(eventId) {
+		var deferred = Q.defer();
+
+		Event.findOne({ _id: eventId }, function(err, retrievedEvent) {
+			if(err) {
+				// resolve even with an error to prevent blocking
+				deferred.resolve();
+			}
+			else {
+				deferred.resolve(retrievedEvent);
+			}
+		});
+
+		return deferred.promise;
+	},
+	deleteEvent = function(eventId) {
 		var deferred = Q.defer();
 
 		// allow admin to delete any event
@@ -1182,6 +1198,32 @@ exports.deleteEvent = function(req, res) {
 					deferred.resolve();
 				}
 			});
+		}
+
+		return deferred.promise;
+	},
+	deleteImage = function(event) {
+		var deferred = Q.defer(),
+			s3bucket = new AWS.S3({params: {Bucket: config.aws.bucket}});
+
+		if(event.pictureUrl) {
+			var dataToPost = {
+		 		Bucket: config.aws.bucket,
+		 		Key: event.pictureUrl.substring(38)
+		 	};
+
+			s3bucket.deleteObject(dataToPost, function(err, data) {
+				if (err) {
+					// resolve even with an error to prevent blocking
+					deferred.resolve();
+				} 
+				else {
+					deferred.resolve(data);
+				}
+			});
+		}
+		else {
+			deferred.resolve();
 		}
 
 		return deferred.promise;
@@ -1252,23 +1294,31 @@ exports.deleteEvent = function(req, res) {
 		return deferred.promise;
 	};
 
-	deleteEvent(req.params.eventId).then(function() {
-		deleteComments(req.params.eventId).then(function() {
-			deleteActivities(req.params.eventId).then(function() {
-				deleteInvites(req.params.eventId).then(function() {
-					removeEventFromUsers(req.params.eventId).then(function() {
-						res.send(200, "Event and all related items deleted successfully.")
+	getEvent(req.params.eventId).then(function(retrievedEvent) {
+		deleteEvent(req.params.eventId).then(function() {
+			deleteImage(retrievedEvent).then(function() {
+				deleteComments(req.params.eventId).then(function() {
+					deleteActivities(req.params.eventId).then(function() {
+						deleteInvites(req.params.eventId).then(function() {
+							removeEventFromUsers(req.params.eventId).then(function() {
+								res.send(200, "Event and all related items deleted successfully.")
+							}, function(err) {
+								res.send(200, "Event deleted but failed to remove users from attending.");
+							});
+						}, function(err) {
+							res.send(200, "Event deleted but failed to find invitations.");
+						});
 					}, function(err) {
-						res.send(200, "Event deleted but failed to remove users from attending.");
+						res.send(200, "Event deleted but failed to delete activities.");
 					});
 				}, function(err) {
-					res.send(200, "Event deleted but failed to find invitations.");
+					res.send(200, "Event deleted but failed to delete comments.");
 				});
-			}, function(err) {
-				res.send(200, "Event deleted but failed to delete activities.");
+			}, function (err) {
+				res.send(500, err);
 			});
 		}, function(err) {
-			res.send(200, "Event deleted but failed to delete comments.");
+			res.send(500, err);
 		});
 	}, function(err) {
 		res.send(500, err);
