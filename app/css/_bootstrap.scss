@@ -336,6 +336,7 @@
   min-height: 200px;
   max-height: 600px;
   @extend .islet;
+  overflow-y: auto;
 }
 .modal-form {
   margin-bottom: 0;
