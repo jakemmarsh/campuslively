@@ -54,6 +54,7 @@
 						<p class="nudge-half--bottom">{{event.locationName}}<span ng-show="event.roomNumber" ng-bind="', Room ' + event.roomNumber"></span></p>
 					</div>
 				</div>
+				<div ui-map="locationMap" ui-options="mapOptions" ui-event="{'map-tilesloaded': 'placeMarker()'}" class="map nudge-half--bottom" ng-show="hasLocation"></div>
 				<div class="line" ng-show="event.description">
 					<div class="unit three-percent">
 						<h4 class="flush"><i class="muted fa fa-align-left"></i></h4>
@@ -62,7 +63,6 @@
 						<p class="pre-wrap" ng-bind-html="event.description | urlAndFormat"></p>
 					</div>
 				</div>
-				<div ui-map="locationMap" ui-options="mapOptions" ui-event="{'map-tilesloaded': 'placeMarker()'}" class="map nudge-half--top" ng-show="hasLocation"></div>
 			</div>
 			<form name="commentForm" class="full-width nudge-half--top clearfix" ng-submit="postComment()" ng-hide="eventPassed">
 				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" ng-model="commentBody" expand-comment required></textarea>
