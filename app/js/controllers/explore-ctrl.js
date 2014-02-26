@@ -186,12 +186,14 @@ define(['./index'], function (controllers) {
     	};
 
     	$scope.isAttending = function(event) {
-    		for(var i = 0; i < event.attending.length; i++) {
-    			if(event.attending[i]._id === $rootScope.user._id) {
-    				return true;
-    			}
+    		if(event.attending) {
+    			for(var i = 0; i < event.attending.length; i++) {
+	    			if(event.attending[i]._id === $rootScope.user._id) {
+	    				return true;
+	    			}
+	    		}
+	    		return false;
     		}
-    		return false;
     	};
 
 		$scope.loadMore = function() {
@@ -203,7 +205,7 @@ define(['./index'], function (controllers) {
 	                }
 	                if(data.length > 0) {
 	                	for(var i = 0; i < data.length; i++) {
-							$scope.events.push(data);
+							$scope.events.push(data[i]);
 						}
 						oldestId = data[data.length-1]._id;
 	                }
@@ -219,7 +221,7 @@ define(['./index'], function (controllers) {
 	                }
 	                if(data.length > 0) {
 	                	for(var i = 0; i < data.length; i++) {
-							$scope.events.push(data);
+							$scope.events.push(data[i]);
 						}
 						oldestId = data[data.length-1]._id;
 	                }

@@ -139,7 +139,7 @@ define(['./index'], function (controllers) {
                 }
                 if(data.length > 0) {
                     for(var i = 0; i < data.length; i++) {
-                        $scope.events.push(data);
+                        $scope.events.push(data[i]);
                     }
                     oldestId = data[data.length-1]._id;
                 }

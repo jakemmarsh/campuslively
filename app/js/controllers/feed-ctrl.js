@@ -93,7 +93,7 @@ define(['./index'], function (controllers) {
                 }
                 if(data.length > 0) {
                     for(var i = 0; i < data.length; i++) {
-                        $scope.activities.push(data);
+                        $scope.activities.push(data[i]);
                     }
                     oldestId = data[data.length-1]._id;
                 }
