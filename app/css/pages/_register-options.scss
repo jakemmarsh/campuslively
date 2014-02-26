@@ -27,14 +27,14 @@
 
 	.option:last-child {
 		@include corners(0, 2px, 2px, 0);
-		@include gradient($primary);
-		border: 1px solid $primary;
+		@include gradient($green);
+		border: 1px solid $green;
 	}
 
 		.option:last-child:hover, .option:last-child:active, .option:last-child:focus {
 			color: $white;
-			@include gradient($primary, darken($primary, 3));
-			border: 1px solid darken($primary, 5);
+			@include gradient($green, darken($green, 3));
+			border: 1px solid darken($green, 5);
 		}
 
 	.option:active {
