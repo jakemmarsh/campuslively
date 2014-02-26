@@ -31,7 +31,7 @@ define([
         'ngSanitize',
         'ngAnimate',
         'ui.bootstrap', 
-        'ui.state',
+        'ui.router',
         'ngSwitchToggle',
         'ui.map',
         'ui.calendar',
