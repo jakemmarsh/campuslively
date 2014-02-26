@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('registerGroupCtrl', ['$scope', 'authService', 'schoolService', function ($scope, authService, schoolService) {
+    controllers.controller('registerGroupCtrl', ['$scope', '$modal', 'authService', 'schoolService', function ($scope, $modal, authService, schoolService) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
@@ -48,5 +48,17 @@ define(['./index'], function (controllers) {
 	        	$scope.registerError = errorMessage;
 	        });
     	};
+
+        $scope.openTerms = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'termsModal.html',
+                controller: 'basicModalCtrl',
+                resolve: {
+                    items: null,
+                    location: null,
+                    event: null
+                }
+            });
+        };
     }]);
 });

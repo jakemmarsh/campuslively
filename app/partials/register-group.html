@@ -88,8 +88,16 @@
 					</div>
 				</div>
 				<div class="line">
+					<div class="unit three-percent label-container soft--right">
+						<input type="checkbox" ng-model="acceptTerms" />
+					</div>
+					<div class="unit ninety-seven-percent last-unit label-container soft--left">
+						<span><span class="red">*</span>I agree to the <a href ng-click="openTerms()">Terms and Conditions</a>.</span>
+					</div>
+				</div>
+				<div class="line">
 					<div class="unit full-width text-right last-unit">
-						<input type="submit" class="btn" value="Register" ng-disabled="registerForm.$invalid || usernameTaken" />
+						<input type="submit" class="btn" value="Register" ng-disabled="registerForm.$invalid || usernameTaken || !acceptTerms" />
 					</div>
 				</div>
 			</form>
@@ -138,3 +146,35 @@
 		<a href="/" class="btn">Front Page</a>
 	</div>
 </div>
+
+<script type="text/ng-template" id="termsModal.html">
+    <div class="modal-header clearfix">
+        <h3 class="flush float-left weight--bold">Terms and Conditions</h3>
+        <i class="fa fa-times close" ng-click="ok()"></i>
+    </div>
+    <div class="modal-body">
+        <p class="nudge-half--bottom">This Agreement was last modified on February 26, 2014.</p>
+
+		<p>Please read these Terms and Conditions ("Agreement", "Terms and Conditions") carefully before using www.campuslively.com ("the Site") operated by Campuslively ("us", "we", or "our"). This Agreement sets forth the legally binding terms and conditions for your use of the Site at www.campuslively.com.</p>
+		<p>By accessing or using the Site in any manner, including, but not limited to, visiting or browsing the Site or contributing content or other materials to the Site, you agree to be bound by these Terms and Conditions. Capitalized terms are defined in this Agreement.</p>
+
+		<h3 class="weight--bold nudge-half--ends">Intellectual Property</h3>
+		<p>The Site and its original content, features and functionality are owned by Campuslively and are protected by international copyright, trademark, patent, trade secret and other intellectual property or proprietary rights laws.</p>
+
+		<h3 class="weight--bold nudge-half--ends">Termination</h3>
+		<p>We may terminate your access to the Site, without cause or notice, which may result in the forfeiture and destruction of all information associated with you. All provisions of this Agreement that by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity, and limitations of liability.</p>
+
+		<h3 class="weight--bold nudge-half--ends">Links to Other Sites</h3>
+		<p>Our Site may contain links to third-party sites that are not owned or controlled by Campuslively.</p>
+		<p>Campuslively has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party sites or services. We strongly advise you to read the terms and conditions and privacy policy of any third-party site that you visit.</p>
+
+		<h3 class="weight--bold nudge-half--ends">Governing Law</h3>
+		<p>This Agreement (and any further rules, polices, or guidelines incorporated by reference) shall be governed and construed in accordance with the laws of Massachusetts, United States, without giving effect to any principles of conflicts of law.</p>
+
+		<h3 class="weight--bold nudge-half--ends">Changes to This Agreement</h3>
+		<p>We reserve the right, at our sole discretion, to modify or replace these Terms and Conditions by posting the updated terms on the Site. Your continued use of the Site after any such changes constitutes your acceptance of the new Terms and Conditions.</p>
+		<p>Please review this Agreement periodically for changes. If you do not agree to any of this Agreement or any changes to this Agreement, do not use, access or continue to access the Site or discontinue any use of the Site immediately.</p>
+
+		<p class="nudge-half--top">If you have any questions about this Agreement, please <a href="/contact" ng-click="clickLink()">contact us.</a></p>
+    </div>
+</script>

@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('registerStudentCtrl', ['$scope', 'schoolService', 'authService', function ($scope, schoolService, authService) {
+    controllers.controller('registerStudentCtrl', ['$scope', '$modal', 'schoolService', 'authService', function ($scope, $modal, schoolService, authService) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
     	}, function(errorMessage, status) {
@@ -49,5 +49,17 @@ define(['./index'], function (controllers) {
 	        	$scope.registerError = "Failed to register new user.";
 	        });
     	};
+
+        $scope.openTerms = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'termsModal.html',
+                controller: 'basicModalCtrl',
+                resolve: {
+                    items: null,
+                    location: null,
+                    event: null
+                }
+            });
+        };
     }]);
 });
