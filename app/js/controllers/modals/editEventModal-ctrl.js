@@ -12,7 +12,7 @@ define(['../index'], function (controllers) {
 
         if(event) {
             $scope.event = event;
-            $scope.newEvent = event;
+            $scope.newEvent = angular.copy(event);
 
             if(event.privacy === 'public') {
                 $scope.eventPrivacy = {
@@ -47,6 +47,10 @@ define(['../index'], function (controllers) {
             'tags': [],
             'tokenSeparators': [","],
             'maximumSelectionSize': 3
+        };
+
+        $scope.removePicture = function() {
+            $scope.newEvent.pictureUrl = null;
         };
 
         $scope.privacyOptions = [{
@@ -126,22 +130,64 @@ define(['../index'], function (controllers) {
 
             $scope.newEvent.privacy = $scope.eventPrivacy.value;
 
-            eventService.updateEvent($scope.event._id, $scope.newEvent).then(function (data, status) {
-                $modalInstance.close();
+            // if a new event image was chosen, confirm it is an image of the proper size, then upload it before updating the event
+            if($scope.newImage) {
+                console.log('has image');
+                // verify that uploaded file is of type "image/x"
+                if($scope.newImage.file.type.toLowerCase().indexOf("image") === -1) {
+                    $scope.postError = "The event picture must be an image.";
+                    return;
+                }
+                // verify that uploaded file is no larger than 3MB
+                else if($scope.newImage.file.size > 3145728) {
+                    $scope.postError = "That image is too large.";
+                    return;
+                }
 
-                // refresh page to show updated event
-                $state.transitionTo($state.current, $stateParams, { 
-                  reload: true, inherit: false, notify: false 
-                });
-            }, 
-            function (errorMessage, status) {
-                $modalInstance.close();
+                eventService.uploadImage($scope.newImage.file, $scope.event._id).then(function () {
+                    var getExtension = function(filename) {
+                        var i = filename.lastIndexOf('.');
+                        return (i < 0) ? '' : filename.substr(i);
+                    };
 
-                // refresh page to show updated event
-                $state.transitionTo($state.current, $stateParams, { 
-                  reload: true, inherit: false, notify: false 
+                    $scope.newEvent.pictureUrl = 'https://s3.amazonaws.com/campuslively/event_imgs/' + $scope.event._id + getExtension($scope.newImage.file.name);
+                    
+                    // add picture URL to event
+                    eventService.updateEvent($scope.event._id, $scope.newEvent).then(function(updatedEvent) {
+                        // $modalInstance.close();
+
+                        // // refresh page to show updated event
+                        // $state.transitionTo($state.current, $stateParams, { 
+                        //   reload: true, inherit: false, notify: true 
+                        // });
+                        $scope.editError = "success inside image upload";
+                    },
+                    function (errorMessage, status) {
+                        $scope.editError = errorMessage;
+                        return;
+                    });
+                }, 
+                function (errorMessage, status) {
+                    $scope.editError = errorMessage;
+                    return;
                 });
-            });
+            }
+            // if no new image was uploaded, just update event
+            else {
+                eventService.updateEvent($scope.event._id, $scope.newEvent).then(function (data, status) {
+                    // $modalInstance.close();
+
+                    // // refresh page to show updated event
+                    // $state.transitionTo($state.current, $stateParams, { 
+                    //   reload: true, inherit: false, notify: true 
+                    // });
+                    $scope.editError = "success inside else";
+                }, 
+                function (errorMessage, status) {
+                    $scope.editError = errorMessage;
+                    return;
+                });
+            }
         };
 
 		$scope.cancel = function() {
