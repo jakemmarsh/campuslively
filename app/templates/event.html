@@ -1,65 +1,72 @@
-<div class="box">
-	<div class="event-header soft-half--ends soft-quarter--sides">
-		<div class="table full-width full-height">
-			<div class="td three-fifths vertical-align-middle">
-				<i class="beta fa fa-circle nudge-half--right float-left" ng-show="event.privacy == 'public'" tooltip="Public" tooltip-placement="top"></i>
-				<i class="beta fa fa-circle-o nudge-half--right float-left" ng-show="event.privacy == 'inviteOnly'" tooltip="Invite Only" tooltip-placement="top"></i>
-				<h3 class="flush">
-					<a ng-href="/event/{{event._id}}">
-						{{ event.title }}
-					</a>
-				</h3>
-			</div>
-			<div class="td two-fifths vertical-align-middle text-right epsilon muted">
-				Posted <span ng-show="event.creator">by </span>
-				 <a ng-href="/profile/{{event.creator.username}}" class="muted" ng-show="event.creator">{{event.creator.displayName}}</a>
-				 {{ event.timestamp | timePast }}
-			</div>
-		</div>
+<div class="unit one-twelfth text-center">
+	<div class="user-img-event" ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}" ng-show="event.creator">
+		<a href tooltip="{{event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{event.creator.username}}"></a>
 	</div>
-	<div class="islet">
-		<div class="line">
-			<div class="unit full-width last-unit text-center">
-				<span class="epsilon">
-					<span ng-show="event.locationName" class="nudge--right">
-						<i class="fa fa-map-marker muted"></i> <span>{{event.locationName}}<span ng-show="event.roomNumber" ng-bind="', Room ' + event.roomNumber"></span></span> 
-					</span>
-					<span ng-show="event.startDate" class="nudge--right">
-						<i class="fa fa-calendar-o muted"></i> <span>{{ event.startDate | readableDate }}</span>
-					</span>
-					<span ng-show="event.startTime">
-						<i class="fa fa-clock-o muted"></i> <span ng-bind="event.startTime"></span> <span ng-show="event.endTime">- <span ng-bind="event.endTime"></span></span>
-					</span>
-				</span>
+</div>
+<div class="unit eleven-twelfths last-unit">
+	<div class="box">
+		<div class="event-header soft-half--ends soft-quarter--sides">
+			<div class="table full-width full-height">
+				<div class="td three-fifths vertical-align-middle">
+					<i class="beta fa fa-circle nudge-half--right float-left" ng-show="event.privacy == 'public'" tooltip="Public" tooltip-placement="top"></i>
+					<i class="beta fa fa-circle-o nudge-half--right float-left" ng-show="event.privacy == 'inviteOnly'" tooltip="Invite Only" tooltip-placement="top"></i>
+					<h3 class="flush">
+						<a ng-href="/event/{{event._id}}">
+							{{ event.title }}
+						</a>
+					</h3>
+				</div>
+				<div class="td two-fifths vertical-align-middle text-right epsilon muted">
+					Posted <span ng-show="event.creator">by </span>
+					 <a ng-href="/profile/{{event.creator.username}}" class="muted" ng-show="event.creator">{{event.creator.displayName}}</a>
+					 {{ event.timestamp | timePast }}
+				</div>
 			</div>
 		</div>
-		<div class="line soft-half--ends" ng-show="event.description">
-			<div class="unit three-percent">
-				<i class="muted epsilon fa fa-align-left"></i>
+		<div class="islet">
+			<div class="line">
+				<div class="unit full-width last-unit text-center">
+					<span class="epsilon">
+						<span ng-show="event.locationName" class="nudge--right">
+							<i class="fa fa-map-marker muted"></i> <span>{{event.locationName}}<span ng-show="event.roomNumber" ng-bind="', Room ' + event.roomNumber"></span></span> 
+						</span>
+						<span ng-show="event.startDate" class="nudge--right">
+							<i class="fa fa-calendar-o muted"></i> <span>{{ event.startDate | readableDate }}</span>
+						</span>
+						<span ng-show="event.startTime">
+							<i class="fa fa-clock-o muted"></i> <span ng-bind="event.startTime"></span> <span ng-show="event.endTime">- <span ng-bind="event.endTime"></span></span>
+						</span>
+					</span>
+				</div>
 			</div>
-			<div class="unit last-unit ninety-seven-percent">
-				<p class="pre-wrap" ng-show="event.description" ng-bind-html="event.description | urlAndFormat"></p>
+			<div class="line soft-half--ends" ng-show="event.description">
+				<div class="unit three-percent">
+					<i class="muted epsilon fa fa-align-left"></i>
+				</div>
+				<div class="unit last-unit ninety-seven-percent">
+					<p class="pre-wrap" ng-show="event.description" ng-bind-html="event.description | urlAndFormat | words:100:event._id"></p>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="event-footer table full-width soft-quarter--ends">
-		<div class="tr">
-			<div class="td three-fifths vertical-align-middle">
-				<ul class="tags">
-					<li ng-class="{true:'pointer', false:''}[isCurrentPage('/explore')]" ng-repeat="tag in event.tags" ng-bind="tag" ng-click="$parent.$parent.$parent.searchEvents = tag"></li>
-				</ul>
-			</div>
-			<div class="td two-fifths text-right soft-half--right vertical-align-middle">
-				<div class="action-buttons nudge-quarter--right">
-					<a class="first" ng-class="{green: isAttending(event)}" href ng-click="openAttending(event)" tooltip="People Attending"><span class="gamma" ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
-					<a href ng-click="rsvpToEvent(event)" ng-hide="isAttending(event)"><i class="fa fa-thumbs-up"></i> RSVP</a>
-					<a href ng-click="unRsvpToEvent(event)" ng-show="isAttending(event)"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
+		<div class="event-footer table full-width soft-quarter--ends">
+			<div class="tr">
+				<div class="td three-fifths vertical-align-middle">
+					<ul class="tags">
+						<li ng-class="{true:'pointer', false:''}[isCurrentPage('/explore')]" ng-repeat="tag in event.tags" ng-bind="tag" ng-click="$parent.$parent.$parent.searchEvents = tag"></li>
+					</ul>
 				</div>
-				<div class="action-buttons nudge-quarter--right">
-					<a href ng-click="openShare(event)" tooltip="Share"><i class="fa fa-share-square"></i></a>
-				</div>
-				<div class="action-buttons green">
-					<a href ng-href="/event/{{event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
+				<div class="td two-fifths text-right soft-half--right vertical-align-middle">
+					<div class="action-buttons nudge-quarter--right">
+						<a class="first" ng-class="{green: isAttending(event)}" href ng-click="openAttending(event)" tooltip="People Attending"><span class="gamma" ng-class="{green: isAttending(event)}">{{ event.attending.length }}</span></a>
+						<a href ng-click="rsvpToEvent(event)" ng-hide="isAttending(event)"><i class="fa fa-thumbs-up"></i> RSVP</a>
+						<a href ng-click="unRsvpToEvent(event)" ng-show="isAttending(event)"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
+					</div>
+					<div class="action-buttons nudge-quarter--right">
+						<a href ng-click="openShare(event)" tooltip="Share"><i class="fa fa-share-square"></i></a>
+					</div>
+					<div class="action-buttons green">
+						<a href ng-href="/event/{{event._id}}">Details <i class="fa fa-chevron-right epsilon"></i></a>
+					</div>
 				</div>
 			</div>
 		</div>

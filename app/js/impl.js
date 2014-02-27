@@ -45,5 +45,6 @@ define([
     'filters/url-format',
     'filters/readable-date',
     'filters/time-past',
+    'filters/truncate',
     'animations/loading'
 ], function () {});

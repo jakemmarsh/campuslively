@@ -51,12 +51,7 @@
 		</div>
 		<hr />
 		<div class="line fade nudge--ends" ng-repeat="event in dayEvents | orderBy:currentSort.value">
-			<div class="unit one-twelfth">
-				<div class="user-img-event" ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}" ng-show="event.creator">
-					<a href tooltip="{{event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{event.creator.username}}"></a>
-				</div>
-			</div>
-			<div class="unit eleven-twelfths last-unit" ng-include="'templates/event.html'"></div>
+			<article ng-include="'templates/event.html'"></article>
 		</div><!-- event end -->
 	</div>
 </div>

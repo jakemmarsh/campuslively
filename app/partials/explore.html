@@ -49,13 +49,8 @@
 	<a href ng-click="addNew()" class="btn full-width text-center" ng-show="newEvents.length == 1 && !loading">Show 1 New Event</a>
 	<a href ng-click="addNew()" class="btn full-width text-center" ng-show="newEvents.length > 1 && !loading">Show {{ newEvents.length }} New Events</a>
 	<div class="line fade nudge--ends" ng-repeat="event in filteredEvents = (events | filter:searchEvents | orderBy:currentSort.value)">
-		<div class="unit one-twelfth">
-			<div class="user-img-event" ng-style="{'background-image': 'url(' + event.creator.pictureUrl + ')'}" ng-show="event.creator">
-				<a href tooltip="{{event.creator.displayName}}" tooltip-placement="left" ng-href="/profile/{{event.creator.username}}"></a>
-			</div>
-		</div>
-		<div class="unit eleven-twelfths last-unit" ng-include="'templates/event.html'"></div>
-	</div><!-- event end -->
+		<article ng-include="'templates/event.html'"></article><!-- event end -->
+	</div>
 	<hr ng-show="events.length >= 20 && filteredEvents.length" />
 	<a href ng-click="loadMore()" class="btn full-width text-center" ng-show="moreToLoadSchool && !loadingMore && !loading">Load More</a>
 	<a href class="btn full-width text-center" ng-show="loadingMore && !loading">Loading more...</a>
