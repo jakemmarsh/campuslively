@@ -249,7 +249,7 @@
 	    	</div>
 
 	    	<label class="muted delta block" for="eventLocation">Location</label>
-	    	<input type="text" name="eventLocation" id="eventLocation" ng-model="newEvent.locationName" class="full-width nudge-quarter--top nudge-half--bottom" ng-blur="checkLocation()" required />
+	    	<input type="text" name="eventLocation" id="eventLocation" ng-model="newEvent.locationName" class="foursquare full-width nudge-quarter--top nudge-half--bottom" typeahead="venue.name for venue in venues | filter:$viewValue | limitTo:8" typeahead-min-length="0" ng-blur="checkLocation()" required />
 
 	    	<label class="muted delta block" for="roomNumber">Room Number</label>
 	    	<input type="text" name="roomNumber" id="roomNumber" ng-model="newEvent.roomNumber" class="full-width nudge-quarter--top nudge-half--bottom" />
