@@ -17,7 +17,10 @@ define(['./index'], function (controllers) {
 	    // call to foursquare to get list of venues near user's location
     	var getVenues = function(position) {
     		locationService.getFoursquareVenues(position).then(function (data) {
-    			$scope.venues = (data.response.venues);
+    			$scope.venues = [];
+                for(var i = 0; i < data.response.groups.length; i++) {
+                    $scope.venues = $scope.venues.concat(data.response.groups[i].items);
+                }
 		    },
 		    function (errorMessage) {
 		    });
