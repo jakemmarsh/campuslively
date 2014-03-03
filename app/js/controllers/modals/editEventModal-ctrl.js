@@ -157,13 +157,12 @@ define(['../index'], function (controllers) {
                     
                     // add picture URL to event
                     eventService.updateEvent($scope.event._id, $scope.newEvent).then(function(updatedEvent) {
-                        // $modalInstance.close();
+                        $modalInstance.close();
 
-                        // // refresh page to show updated event
-                        // $state.transitionTo($state.current, $stateParams, { 
-                        //   reload: true, inherit: false, notify: true 
-                        // });
-                        $scope.editError = "success inside image upload";
+                        // refresh page to show updated event
+                        $state.transitionTo($state.current, $stateParams, { 
+                          reload: true, inherit: false, notify: true 
+                        });
                     },
                     function (errorMessage, status) {
                         $scope.editError = errorMessage;
@@ -178,13 +177,12 @@ define(['../index'], function (controllers) {
             // if no new image was uploaded, just update event
             else {
                 eventService.updateEvent($scope.event._id, $scope.newEvent).then(function (data, status) {
-                    // $modalInstance.close();
+                    $modalInstance.close();
 
-                    // // refresh page to show updated event
-                    // $state.transitionTo($state.current, $stateParams, { 
-                    //   reload: true, inherit: false, notify: true 
-                    // });
-                    $scope.editError = "success inside else";
+                    // refresh page to show updated event
+                    $state.transitionTo($state.current, $stateParams, { 
+                      reload: true, inherit: false, notify: true 
+                    });
                 }, 
                 function (errorMessage, status) {
                     $scope.editError = errorMessage;
