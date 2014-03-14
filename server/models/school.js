@@ -21,14 +21,6 @@ var schoolSchema = new mongoose.Schema({
     color: {
         type: String,
         set: deleteEmpty
-    },
-    subscribers: {
-    	type: Number,
-    	default: 0
-    },
-    events: {
-        type: Number,
-        default: 0
     }
 });
 
