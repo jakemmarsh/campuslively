@@ -1,6 +1,7 @@
 define(['../index'], function (controllers) {
     'use strict';
     controllers.controller('editEventModalCtrl', ['$scope', '$rootScope', '$modalInstance', '$state', '$stateParams', 'event', 'eventService', 'locationService', function ($scope, $rootScope, $modalInstance, $state, $stateParams, event, eventService, locationService) {
+        $scope.newImage = {};
         // call to foursquare to get list of venues near user's location
         var getVenues = function(position) {
             locationService.getFoursquareVenues(position).then(function (data) {
@@ -134,26 +135,26 @@ define(['../index'], function (controllers) {
             $scope.newEvent.privacy = $scope.eventPrivacy.value;
 
             // if a new event image was chosen, confirm it is an image of the proper size, then upload it before updating the event
-            if($scope.newImage) {
+            if($scope.newImage.image) {
                 console.log('has image');
                 // verify that uploaded file is of type "image/x"
-                if($scope.newImage.file.type.toLowerCase().indexOf("image") === -1) {
-                    $scope.postError = "The event picture must be an image.";
+                if($scope.newImage.image.file.type.toLowerCase().indexOf("image") === -1) {
+                    $scope.editError = "The event picture must be an image.";
                     return;
                 }
                 // verify that uploaded file is no larger than 3MB
-                else if($scope.newImage.file.size > 3145728) {
-                    $scope.postError = "That image is too large.";
+                else if($scope.newImage.image.file.size > 3145728) {
+                    $scope.editError = "That image is too large.";
                     return;
                 }
 
-                eventService.uploadImage($scope.newImage.file, $scope.event._id).then(function () {
+                eventService.uploadImage($scope.newImage.image.file, $scope.event._id).then(function () {
                     var getExtension = function(filename) {
                         var i = filename.lastIndexOf('.');
                         return (i < 0) ? '' : filename.substr(i);
                     };
 
-                    $scope.newEvent.pictureUrl = 'https://s3.amazonaws.com/campuslively/event_imgs/' + $scope.event._id + getExtension($scope.newImage.file.name);
+                    $scope.newEvent.pictureUrl = 'https://s3.amazonaws.com/campuslively/event_imgs/' + $scope.event._id + getExtension($scope.newImage.image.file.name);
                     
                     // add picture URL to event
                     eventService.updateEvent($scope.event._id, $scope.newEvent).then(function(updatedEvent) {

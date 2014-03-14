@@ -260,10 +260,10 @@
 	    	<label class="muted delta block" for="eventTags">Tags</label>
 	    	<input type="text" id="eventTags" name="eventTags" class="full-width nudge-quarter--top" ui-select2="tagOptions" ng-model="newEvent.tags" placeholder="Enter up to 3 tags" />
 
-	    	<label class="muted delta block full-width clearfix nudge-half--top" ng-show="newEvent.pictureUrl">Picture <a href ng-show="newEvent.pictureUrl" class="red epsilon float-right" ng-click="removePicture()">Remove Picture</a></label>
+	    	<label class="muted delta block full-width clearfix nudge-half--top">Picture <a href ng-show="newEvent.pictureUrl" class="red epsilon float-right" ng-click="removePicture()">Remove Picture</a></label>
 	    	<div class="event-img nudge-half--bottom" ng-show="newEvent.pictureUrl" ng-style="{'background-image': 'url(' + newEvent.pictureUrl + ')'}"></div>
-	    	<input class="full-width nudge-quarter--top" ng-hide="newEvent.pictureUrl || true" id="newImage" name="newImage" type="file" accept="image/*" image="newImage" />
-	    	<div class="event-img nudge-quarter--top nudge-half--bottom" ng-show="newImage" ng-style="{'background-image': 'url(' + newImage.url + ')'}"></div>
+	    	<input class="full-width nudge-quarter--top" ng-hide="newEvent.pictureUrl" id="newImage" name="newImage" type="file" accept="image/*" image="newImage.image" />
+	    	<div class="event-img nudge-quarter--top nudge-half--bottom" ng-show="newImage.image" ng-style="{'background-image': 'url(' + newImage.image.url + ')'}"></div>
 	    	
 	    	<label class="muted delta block nudge-half--ends">Privacy</label>
 	    	<div class="dropdown nudge-half--bottom">
