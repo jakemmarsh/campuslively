@@ -22,7 +22,7 @@ exports.getCount = function(req, res) {
 
 		Event.count({}, function(err, count){
 		    if(err) {
-				deferred.reject(err);
+				deferred.reject(err.message);
 			}
 			else {
 				deferred.resolve(count);
@@ -911,7 +911,50 @@ exports.uploadImage = function(req, res) {
 };
 
 exports.updateEvent = function(req, res) {
-	var getUpdateParams = function() {
+	var findEvent = function(eventId) {
+		var deferred = Q.defer(),
+			populateObj = [
+				{ path: 'location' },
+                { path: 'creator' }, 
+                { path: 'attending' },
+                { path: 'invited' },
+                { path: 'school' }
+			];
+
+		Event.findOne({ _id: eventId })
+		.populate(populateObj)
+		.exec(function(err, retrievedEvent) {
+         	if(err) {
+         		deferred.reject(err.message);
+         	}
+         	else {
+				deferred.resolve(retrievedEvent);
+         	}
+	    });
+
+	    return deferred.promise;
+	},
+	deleteImage = function(imageUrl) {
+		var deferred = Q.defer(),
+			s3bucket = new AWS.S3({params: {Bucket: config.aws.bucket}}),
+			dataToPost = {
+		 		Bucket: config.aws.bucket,
+		 		Key: imageUrl.substring(38)
+		 	};
+
+		s3bucket.deleteObject(dataToPost, function(err, data) {
+			if (err) {
+				// resolve even with an error to prevent blocking
+				deferred.resolve();
+			} 
+			else {
+				deferred.resolve(data);
+			}
+		});
+
+		return deferred.promise;
+	},
+	getUpdateParams = function() {
 		var updateParams = {};
 
 		// loop through posted properties
@@ -935,6 +978,15 @@ exports.updateEvent = function(req, res) {
 						idArray.push(req.body[key][i]['_id']);
 					}
 					updateParams[key] = idArray;
+				}
+
+				// if deleting the event's image, retrieve the event to get the URL and delete from S3
+				if(key === 'pictureUrl' && req.body[key] === null) {
+					findEvent(req.params.eventId).then(function(data) {
+						if(data.pictureUrl) {
+							deleteImage(data.pictureUrl);
+						}
+					});
 				}
 			}
 		}
@@ -1329,7 +1381,6 @@ exports.inviteUsers = function(req, res) {
 	var updateAndGetEvent = function(eventId, recipientIds) {
 		var deferred = Q.defer();
 
-		Event.findOne({ _id: eventId })
 		Event.findOneAndUpdate({ _id: eventId }, { $addToSet: { invited: { $each: recipientIds } } })
 		.select('creator privacy')
 		.exec(function(err, retrievedEvent) {
