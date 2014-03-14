@@ -105,7 +105,7 @@ define(['./index'], function (controllers) {
         };
 
         $scope.isAttending = function(event) {
-            if(event) {
+            if(event && $rootScope.user) {
                 if(event.attending) {
                     for(var i = 0; i < event.attending.length; i++) {
                         if(event.attending[i]._id === $rootScope.user._id || event.attending[i] === $rootScope.user._id) {
