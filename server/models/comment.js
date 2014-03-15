@@ -1,5 +1,4 @@
-var mongoose   = require('mongoose'),
-	User       = require('./user');
+var mongoose = require('mongoose');
 
 var subCommentSchema = new mongoose.Schema({
     body: {

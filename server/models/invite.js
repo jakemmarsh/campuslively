@@ -1,6 +1,4 @@
-var mongoose = require('mongoose'),
-	User     = require('./user'),
-	Event    = require('./event');
+var mongoose = require('mongoose');
 
 var inviteSchema = new mongoose.Schema({
     sender: {

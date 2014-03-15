@@ -1,6 +1,6 @@
 var path       = require('path'),
     express    = require('express'),
-    MongoStore = require('connect-mongo')(express)
+    MongoStore = require('connect-mongo')(express),
     app        = express(),
     mongoose   = require('mongoose'),
     routes     = require(path.join(__dirname, 'routes')),

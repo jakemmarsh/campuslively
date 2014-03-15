@@ -2,7 +2,6 @@ define(['./index'], function (services) {
   'use strict';
   // expand input and show post button on focus
   services.service('eventService', ['$q', '$http', function($q, $http) {
-  	function checkStatus() {}
     return {
     	apiPath: '/api/v1/event/',
     	getEvent: function(eventId) {
@@ -378,6 +377,6 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		}
-    }
+    };
   }]);
 });

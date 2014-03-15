@@ -1,7 +1,4 @@
-var mongoose = require('mongoose'),
-	User     = require('./user'),
-    Event    = require('./event'),
-    Comment  = require('./comment');
+var mongoose = require('mongoose');
 
 function deleteEmpty (v) {
    if(v == null || v.length === 0){

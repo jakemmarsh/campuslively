@@ -9,8 +9,6 @@ define(['../index'], function (controllers) {
                 for(var i = 0; i < data.response.groups.length; i++) {
                     $scope.venues = $scope.venues.concat(data.response.groups[i].items);
                 }
-            },
-            function (errorMessage) {
             });
         };
 
@@ -36,8 +34,6 @@ define(['../index'], function (controllers) {
                     $rootScope.userPosition = data;
 
                     getVenues($rootScope.userPosition);
-                },
-                function (errorMessage) {
                 });
             }
             else {
@@ -97,8 +93,6 @@ define(['../index'], function (controllers) {
                         }
                     }
                     return;
-                },
-                function (errorMessage) {
                 });
 
                 // if still nothing is found, set to the nonsensical coordinates
@@ -121,8 +115,8 @@ define(['../index'], function (controllers) {
 
             // add time to event's startDate for proper querying
             var timeArray = $scope.newEvent.startTime.split(':'),
-                hours = parseInt(timeArray[0]),
-                minutes = parseInt(timeArray[1].replace(/\D/g,''));
+                hours = parseInt(timeArray[0], 10),
+                minutes = parseInt(timeArray[1].replace(/\D/g,''), 10);
 
             // adjust 24-hour format for am/pm
             if(timeArray[1].toLowerCase().indexOf('pm') !== -1) {

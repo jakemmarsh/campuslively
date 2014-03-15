@@ -26,15 +26,15 @@ define(['./index'], function (controllers) {
         });
 
 		$rootScope.$watch('fbStatus', function() {
+			var daysSinceReminder = 8;
+			
 			// only show facebook reminder if they haven't been reminded for at least a week
 			if($rootScope.user && $rootScope.user.facebook.lastReminded) {
 				var oneDay = 1000*60*60*24,
 					today = new Date().getTime(),
-					lastReminded = new Date($rootScope.user.facebook.lastReminded).getTime(),
-					daysSinceReminder = Math.round((today - lastReminded)/oneDay);
-			}
-			else {
-				var daysSinceReminder = 8;
+					lastReminded = new Date($rootScope.user.facebook.lastReminded).getTime();
+				
+				daysSinceReminder = Math.round((today - lastReminded)/oneDay);
 			}
 
 			if($rootScope.user && $rootScope.fbStatus && $rootScope.user.facebook.hasLinked === false && daysSinceReminder >= 7 && !$rootScope.user.fbId && $rootScope.fbStatus.status !== 'connected') {
@@ -54,8 +54,6 @@ define(['./index'], function (controllers) {
 						type: 'message'
 					};
 					$scope.notifications.unshift(fbMessage);
-				},
-				function (errorMessage, status) {
 				});
 			}
 		});

@@ -9,12 +9,12 @@ define(['./index'], function (services) {
         navigator.geolocation.getCurrentPosition(function (pos) {
           $rootScope.$apply(function () {
             deferred.resolve(angular.copy(pos.coords));
-          })
+          });
         }, function (error) {
           $rootScope.$apply(function () {
             deferred.reject(error);
-          })
-        })
+          });
+        });
 
         return deferred.promise;
       },
@@ -58,6 +58,6 @@ define(['./index'], function (services) {
 
         return deferred.promise;
       }
-    }
+    };
   }]);
 });

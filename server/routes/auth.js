@@ -1,8 +1,6 @@
 var Q          = require('q'),
     crypto     = require('crypto'),
     User       = require('../models/user'),
-    Event      = require('../models/event'),
-    config     = require('../config'),
     mailer     = require('../mailer');
 
 /**
@@ -26,10 +24,14 @@ function hash(pwd, salt, fn) {
     } else {
         fn = salt;
         crypto.randomBytes(len, function(err, salt){
-            if (err) return fn(err);
+            if (err) {
+                return fn(err);
+            }
             salt = salt.toString('base64');
             crypto.pbkdf2(pwd, salt, iterations, len, function(err, hash){
-                if (err) return fn(err);
+                if (err) {
+                    return fn(err);
+                }
                 fn(null, salt, hash.toString('hex'));
             });
         });
@@ -67,8 +69,12 @@ function authenticate(name, pass, fn) {
         // the hash against the pass / salt, if there is a match we
         // found the user
         hash(pass, data.salt, function(err, hash){
-            if (err) return fn(err);
-            if (hash.toString('hex') === data.hash) return fn(null, data);
+            if (err) {
+                return fn(err);
+            }
+            if (hash.toString('hex') === data.hash) {
+                return fn(null, data);
+            }
             return fn('Invalid password.');
         });
     }, function() {
@@ -160,7 +166,9 @@ exports.register = function(req, res) {
 
     // generate a salt and hash the password
     hash(req.body.password, function(err, salt, hash){
-        if (err) throw err;
+        if (err) {
+            throw err;
+        }
 
         // create user object from traits that are shared between student and group accounts
         newUser = new User({
@@ -175,7 +183,7 @@ exports.register = function(req, res) {
 
         // check for account type
         if(req.body.type.toLowerCase() === 'student') {
-            if((newUser.email.substring(newUser.email.length - 4)).toLowerCase() != '.edu') {
+            if((newUser.email.substring(newUser.email.length - 4)).toLowerCase() !== '.edu') {
                 res.send(400, 'Email address must end in .edu.');
             }
 
@@ -235,7 +243,7 @@ exports.resendActivation = function(req, res) {
         });
     }, function(err) {
         res.send(404, "User could not be found.");
-    })
+    });
 };
 
 exports.activate = function(req, res) {

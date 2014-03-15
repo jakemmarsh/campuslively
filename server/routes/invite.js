@@ -1,8 +1,5 @@
-var Q        = require('q'),
-	crypto   = require('crypto'),
-    User     = require('../models/user'),
-    Event    = require('../models/event'),
-    Invite   = require('../models/invite');
+var Q      = require('q'),
+    Invite = require('../models/invite');
 
 exports.getUnreadInvites = function(req, res) {
 	var getInvites = function(userId) {

@@ -1,6 +1,6 @@
 define(['../index'], function (controllers) {
     'use strict';
-    controllers.controller('basicModalCtrl', ['$scope', '$rootScope', '$modalInstance', '$location', 'items', 'location', 'event', 'eventService', 'userService', function ($scope, $rootScope, $modalInstance, $location, items, location, event, eventService, userService) {
+    controllers.controller('basicModalCtrl', ['$scope', '$rootScope', '$modalInstance', '$location', 'items', 'location', 'event', 'eventService', 'userService', 'localStorageService', function ($scope, $rootScope, $modalInstance, $location, items, location, event, eventService, userService, localStorageService) {
         if(items) {
             $scope.items = items;
         }
@@ -47,9 +47,6 @@ define(['../index'], function (controllers) {
                 localStorageService.clearAll();
                 $rootScope.user = null;
                 $location.path('/');
-            }, 
-            function (errorMessage, status) {
-
             });
         };
 
@@ -58,8 +55,6 @@ define(['../index'], function (controllers) {
                 eventService.deleteEvent($scope.event._id).then(function (data) {
                     $modalInstance.close();
                     $location.path('/feed');
-                },
-                function (errorMessage, status) {
                 });
             }
         };

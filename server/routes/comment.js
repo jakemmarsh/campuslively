@@ -195,7 +195,7 @@ exports.likeComment = function(req, res) {
 	    });
 
 		return deferred.promise;
-	}
+	};
 
 	updateComment(req.params.commentId, req.params.userId).then(function(updatedComment) {
 		res.json(200, updatedComment);
@@ -224,7 +224,7 @@ exports.unlikeComment = function(req, res) {
 	    });
 
 		return deferred.promise;
-	}
+	};
 
 	updateComment(req.params.commentId, req.params.userId).then(function(updatedComment) {
 		res.json(updatedComment);

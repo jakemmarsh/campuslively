@@ -1,7 +1,4 @@
-var mongoose   = require('mongoose'),
-    User       = require('./user'),
-    Comment    = require('./comment'),
-    School     = require('./school');
+var mongoose = require('mongoose');
 
 function deleteEmpty (v) {
    if(v == null || v.length === 0){

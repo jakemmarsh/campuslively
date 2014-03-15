@@ -2,8 +2,7 @@ define(['./index'], function (services) {
   'use strict';
   // expand input and show post button on focus
   services.service('userService', ['$q', '$http', function($q, $http) {
-  	function checkStatus() {}
-    return {
+  	return {
     	apiPath: '/api/v1/user/',
     	getAllUsers: function() {
 			var deferred = $q.defer();
@@ -185,6 +184,6 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		}
-    }
+    };
   }]);
 });

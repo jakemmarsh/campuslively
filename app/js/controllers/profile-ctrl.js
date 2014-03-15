@@ -5,7 +5,6 @@ define(['./index'], function (controllers) {
             updateSubscribers = function() {
                 userService.getSubscribers($scope.profile._id).then(function (data, status) {
                     $scope.subscribers = data;
-                }, function(err, status) {
                 });
             };
 

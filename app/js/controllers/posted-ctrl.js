@@ -45,6 +45,7 @@ define(['./index'], function (controllers) {
                     $scope.invitesSent = true;
                 },
                 function (errorMessage) {
+                    $scope.inviteError = errorMessage;
                 });
             }
         };

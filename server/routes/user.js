@@ -38,7 +38,7 @@ function hashSync(pwd, salt, fn) {
         salt = crypto.randomBytes(len).toString('base64');
         fn(null, salt, crypto.pbkdf2Sync(pwd, salt, iterations, len).toString('hex'));
     }
-};
+}
 
 exports.getAllUsers = function(req, res) {
 	var getUsers = function() {

@@ -26,6 +26,6 @@ define(['./index'], function (services) {
 
 			return deferred.promise;
 		}
-    }
+    };
   }]);
 });
