@@ -3,7 +3,6 @@ define(['./index'], function (controllers) {
     controllers.controller('registerStudentCtrl', ['$scope', '$modal', 'schoolService', 'authService', function ($scope, $modal, schoolService, authService) {
     	schoolService.getAllSchools().then(function (data, status) {
     		$scope.schools = data;
-    	}, function(errorMessage, status) {
     	});
 
     	$scope.checkUsername = function() {
@@ -30,17 +29,17 @@ define(['./index'], function (controllers) {
 	    	}
     	};
 
-    	$scope.register = function() {
+    	$scope.register = function(newUser) {
             // populate remaining fields
-    		$scope.user.type = 'student';
+    		newUser.type = 'student';
             // make nonsensical location by default
             // TODO: fix this logic?
-            $scope.user.loc = {
+            newUser.loc = {
                 type: 'Point',
                 coordinates: [-180, -90]
             };
 
-    		authService.register($scope.user).then(function (data, status) {
+    		authService.register(newUser).then(function (data, status) {
     			$scope.usernameTaken = false;
     			$scope.emailTaken = false;
     			$scope.emailSent = true;
