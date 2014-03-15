@@ -208,9 +208,9 @@ exports.register = function(req, res) {
             newUser.loc = req.body.loc;
         }
         registerUser(newUser).then(function(savedUser) {
-            mailer.sendActivationEmail(savedUser).then(function(data) {
+            mailer.sendActivationEmail(savedUser).then(function() {
                 res.send(200, 'User registered and email sent.');
-            }, function(err) {
+            }, function() {
                 res.send(200, 'User registered but failed to send activation email.');
             });
         }, function(err) {
@@ -236,12 +236,12 @@ exports.resendActivation = function(req, res) {
     };
 
     findUser(req.params.username).then(function(retrievedUser) {
-        mailer.sendActivationEmail(retrievedUser).then(function(data) {
+        mailer.sendActivationEmail(retrievedUser).then(function() {
             res.send(200, "Activation email resent.");
         }, function() {
             res.send(500, "Failed to resend activation email.");
         });
-    }, function(err) {
+    }, function() {
         res.send(404, "User could not be found.");
     });
 };
@@ -269,7 +269,7 @@ exports.activate = function(req, res) {
         else {
             res.send(500, "User doesn't exist or is already activated.");
         }
-    }, function(err) {
+    }, function() {
         res.send(500, "Could not activate user.");
     });
 };
@@ -294,7 +294,7 @@ exports.forgotPassword = function(req, res) {
 
     getUserAndSetKey(req.body.username).then(function(savedUser) {
         if(savedUser) {
-            mailer.sendResetEmail(savedUser).then(function(data) {
+            mailer.sendResetEmail(savedUser).then(function() {
                 res.send(200, "Successfully set user's password reset key.");
             }, function() {
                 res.send(500, "Password reset key set, but failed to send email.");
@@ -350,9 +350,9 @@ exports.resetPassword = function(req, res) {
         return deferred.promise;
     };
 
-    getUserAndUpdatePassword(req.body.userId, req.body.resetKey).then(function(data) {
+    getUserAndUpdatePassword(req.body.userId, req.body.resetKey).then(function() {
         res.send(200, "Successfully updated user's password.");
-    }, function(err){
+    }, function(){
         res.send(500, "Failed to update user's password.");
     });
 
@@ -381,7 +381,7 @@ exports.checkUsername = function(req, res) {
 
     checkIfUsernameTaken(req.params.username).then(function(data) {
         res.send(200, data);
-    }, function(err) {
+    }, function() {
         res.send(500, "Failed to check if username exists already.");
     });
 };
@@ -409,7 +409,7 @@ exports.checkEmail = function(req, res) {
 
     checkIfEmailUsed(req.params.email).then(function(data) {
         res.send(200, data);
-    }, function(err) {
+    }, function() {
         res.send(500, "Failed to check if email address is in use already.");
     });
 };

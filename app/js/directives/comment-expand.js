@@ -5,7 +5,7 @@ define(['./index'], function (directives) {
     return {
       restrict: 'A',
  
-      link: function(scope, element, attrs) {
+      link: function(scope, element) {
         $(element).css({
           'line-height': '30px'
         });

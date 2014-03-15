@@ -29,7 +29,7 @@ define(['./index'], function (controllers) {
     	};
 
     	$scope.resendActivation = function(username) {
-    		authService.resendActivation(username).then(function (data) {
+    		authService.resendActivation(username).then(function() {
     			$scope.emailResent = true;
     		}, function (errorMessage) {
     			$scope.emailResent = false;

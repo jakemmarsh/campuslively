@@ -42,7 +42,7 @@ define(['./index'], function (controllers) {
             if($scope.invitees.length > 0) {
                 dataToSend.recipientIds = $scope.invitees;
 
-                eventService.inviteUsers($scope.postedEvent._id, $rootScope.user._id, dataToSend).then(function (data) {
+                eventService.inviteUsers($scope.postedEvent._id, $rootScope.user._id, dataToSend).then(function() {
                     $scope.invitesSent = true;
                 },
                 function (errorMessage) {

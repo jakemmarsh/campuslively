@@ -136,16 +136,12 @@ define(['./index'], function (controllers) {
                         }
                     );
                 }
-            },
-            function (errorMessage) {
             });
         };
 
         $scope.unRsvpToEvent = function(activity) {
             eventService.unRsvp(activity.event._id, $rootScope.user._id).then(function (data) {
                 activity.event = data;
-            },
-            function (errorMessage) {
             });
         };
 

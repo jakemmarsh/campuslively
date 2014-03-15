@@ -99,7 +99,7 @@ define(['./index'], function (controllers) {
         }
       });
 
-    	$scope.dayClick = function( date, allDay, jsEvent, view ){
+    	$scope.dayClick = function(date, allDay, jsEvent, view){
     		if(!$scope.$$phase) {        
           		$scope.$apply(function() {
         				$scope.selectedDay = date;
@@ -165,10 +165,10 @@ define(['./index'], function (controllers) {
                       break;
                   }
               }
-              for (var i = 0; i < $scope.events.length; i++) {
-                if($scope.events[i].id === event._id) {
+              for (var j = 0; j < $scope.events.length; j++) {
+                if($scope.events[j].id === event._id) {
                   // highlight event on calendar
-                  $scope.events[i].backgroundColor = '#4fbda2';
+                  $scope.events[j].backgroundColor = '#4fbda2';
                   $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
                   $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
                   break;
@@ -185,8 +185,6 @@ define(['./index'], function (controllers) {
                   }
                 );
               }
-          },
-          function (errorMessage) {
           });
       };
 
@@ -198,17 +196,15 @@ define(['./index'], function (controllers) {
                       break;
                   }
               }
-              for (var i = 0; i < $scope.events.length; i++) {
-                if($scope.events[i].id === event._id) {
+              for (var j = 0; j < $scope.events.length; j++) {
+                if($scope.events[j].id === event._id) {
                   // un-highlight event on calendar
-                  $scope.events[i].backgroundColor = $rootScope.schoolColor;
+                  $scope.events[j].backgroundColor = $rootScope.schoolColor;
                   $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
                   $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
                   break;
                 }
               }
-          },
-          function (errorMessage) {
           });
       };
 

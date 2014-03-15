@@ -42,7 +42,7 @@ define(['../index'], function (controllers) {
     	};
 
         $scope.deleteUser = function() {
-            userService.deleteUser($rootScope.user._id).then(function (data) {
+            userService.deleteUser($rootScope.user._id).then(function() {
                 $modalInstance.close();
                 localStorageService.clearAll();
                 $rootScope.user = null;
@@ -57,7 +57,7 @@ define(['../index'], function (controllers) {
 
         $scope.deleteEvent = function() {
             if($scope.event.creator._id === $rootScope.user._id || $rootScope.user.admin) {
-                eventService.deleteEvent($scope.event._id).then(function (data) {
+                eventService.deleteEvent($scope.event._id).then(function() {
                     $modalInstance.close();
                     $location.path('/feed');
                 }, function() {

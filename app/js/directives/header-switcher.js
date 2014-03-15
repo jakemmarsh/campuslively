@@ -7,7 +7,7 @@ define(['./index'], function (directives) {
       scope: {
         elementType: '='
       },
-      link: function(scope, element, attrs) {
+      link: function(scope, element) {
         var headers = $(element).children(scope.elementType),
             headerIndex = -1;
 

@@ -1,7 +1,7 @@
 define(['./index', 'https://apis.google.com/js/client.js'], function (services) {
   'use strict';
   // expand input and show post button on focus
-  services.service('googleService', ['$q', '$http', '$rootScope', function($q, $http, $rootScope) {
+  services.service('googleService', ['$q', '$http', function($q, $http) {
     var deferred = $q.defer();
     return {
       clientId: '257320210287.apps.googleusercontent.com',
@@ -31,12 +31,11 @@ define(['./index', 'https://apis.google.com/js/client.js'], function (services) 
               deferred.reject();
           }
       },
-      handleAuthClick: function(event) {
+      handleAuthClick: function() {
           gapi.auth.authorize({ 
-              client_id: clientId, 
-              scope: scopes, 
-              immediate: false, 
-              hd: domain 
+              client_id: this.clientId, 
+              scope: this.scopes, 
+              immediate: false,
           }, this.handleAuthResult);
           return false;
       },

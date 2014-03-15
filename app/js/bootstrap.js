@@ -133,8 +133,8 @@ define([
                             }
                             updateParams.facebook = {};
                             updateParams.facebook.subscriptions = fbSubscriptions;
-                            userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
-                                userService.addFacebookSubscriptions($rootScope.user._id).then(function (data, status) {
+                            userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
+                                userService.addFacebookSubscriptions($rootScope.user._id).then(function (data) {
                                     $rootScope.user = data;
                                     localStorageService.add('user', data);
                                 });

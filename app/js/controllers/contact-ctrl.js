@@ -10,7 +10,7 @@ define(['./index'], function (controllers) {
     		contactService.sendMessage($scope.message).then(function (data) {
 				$scope.sendError = null;
 				$scope.messageSent = true;
-			}, function(errorMessage) {
+			}, function() {
 				$scope.sendError = "Failed to send email. Please try again";
 			});
     	};

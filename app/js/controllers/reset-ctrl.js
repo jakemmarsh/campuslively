@@ -8,7 +8,7 @@ define(['./index'], function (controllers) {
                 password: $scope.password
             };
 
-            authService.resetPassword(dataToSend).then(function (data) {
+            authService.resetPassword(dataToSend).then(function() {
                 $scope.resetError = null;
                 $scope.passwordChanged = true;
             },

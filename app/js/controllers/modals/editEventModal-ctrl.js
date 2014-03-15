@@ -151,7 +151,7 @@ define(['../index'], function (controllers) {
                     $scope.newEvent.pictureUrl = 'https://s3.amazonaws.com/campuslively/event_imgs/' + $scope.event._id + getExtension($scope.newImage.image.file.name);
                     
                     // add picture URL to event
-                    eventService.updateEvent($scope.event._id, $scope.newEvent).then(function(updatedEvent) {
+                    eventService.updateEvent($scope.event._id, $scope.newEvent).then(function() {
                         $modalInstance.close();
 
                         // refresh page to show updated event
@@ -171,7 +171,7 @@ define(['../index'], function (controllers) {
             }
             // if no new image was uploaded, just update event
             else {
-                eventService.updateEvent($scope.event._id, $scope.newEvent).then(function (data) {
+                eventService.updateEvent($scope.event._id, $scope.newEvent).then(function() {
                     $modalInstance.close();
 
                     // refresh page to show updated event

@@ -101,10 +101,10 @@ define(['./index'], function (services) {
 			$http.post(this.apiPath + userId + '/image', formData, {
 				transformRequest: angular.identity,
 				headers: { 'Content-Type': undefined }
-			}).success(function(data, status) {
+			}).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -145,7 +145,7 @@ define(['./index'], function (services) {
 				$http.get(this.apiPath + userId + '/activities/newer/').success(function(data) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
-					deferred.reject(err);
+					deferred.reject(err, status);
 				});
 			}
 

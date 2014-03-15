@@ -2,7 +2,7 @@ define(['./index'], function (directives) {
   'use strict';
   // expand input and show post button on focus
   directives.directive('fixedSidebar', function() {
-    return function(scope, element, attrs) {
+    return function(scope, element) {
     	$(element).hover(
     		// expand sidebar and slide over main content on hover
     		function() {

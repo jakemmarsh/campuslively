@@ -6,7 +6,7 @@ define(['./index'], function (controllers) {
     	});
 
     	$scope.checkUsername = function() {
-    		authService.checkUsername($scope.user.username).then(function (isTaken) {
+    		authService.checkUsername($scope.user.username).then(function(isTaken) {
     			if(isTaken === 'true') {
     				$scope.usernameTaken = true;
     			}
@@ -18,7 +18,7 @@ define(['./index'], function (controllers) {
 
     	$scope.checkEmail = function() {
     		if($scope.user.email.length > 0) {
-	    		authService.checkEmail($scope.user.email).then(function (isTaken) {
+	    		authService.checkEmail($scope.user.email).then(function(isTaken) {
 	    			if(isTaken === 'true') {
 	    				$scope.emailTaken = true;
 	    			}
@@ -38,7 +38,7 @@ define(['./index'], function (controllers) {
                 coordinates: [-180, -90]
             };
 
-    		authService.register(newUser).then(function (data) {
+    		authService.register(newUser).then(function() {
     			$scope.usernameTaken = false;
     			$scope.emailTaken = false;
     			$scope.emailSent = true;

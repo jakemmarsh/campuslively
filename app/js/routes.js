@@ -53,10 +53,10 @@ define(['./app'], function (app) {
             access: 'notLoggedIn',
             resolve: {
                 resolvedActivation: ['$stateParams', '$rootScope', '$location', 'authService', function($stateParams, $rootScope, $location, authService){
-                    return authService.activateUser($stateParams.userId, $stateParams.activateKey).then(function (data, status) {
+                    return authService.activateUser($stateParams.userId, $stateParams.activateKey).then(function(data) {
                         return true;
                     },
-                    function () {
+                    function() {
                         $location.path('/');
                     });
                 }]
@@ -70,10 +70,10 @@ define(['./app'], function (app) {
             access: 'notLoggedIn',
             resolve: {
                 resolvedEmailSent: ['$stateParams', '$rootScope', '$location', 'authService', function($stateParams, $rootScope, $location, authService){
-                    return authService.resendActivation($stateParams.username).then(function (data, status) {
+                    return authService.resendActivation($stateParams.username).then(function(data) {
                         return true;
                     },
-                    function () {
+                    function() {
                         $location.path('/');
                     });
                 }]
@@ -95,12 +95,12 @@ define(['./app'], function (app) {
             resolve: {
                 checkResetKey: ['$stateParams', 'authService', '$location', function($stateParams, authService, $location) {
                     if($stateParams.resetKey) {
-                        return authService.checkResetKey($stateParams.resetKey).then(function (data, status) {
+                        return authService.checkResetKey($stateParams.resetKey).then(function(data) {
                             if(!data) {
                                 $location.path('/login');
                             }
                         },
-                        function () {
+                        function() {
                             $location.path('/login');
                         });
                     }
@@ -137,11 +137,11 @@ define(['./app'], function (app) {
             controller: 'eventCtrl',
             resolve: {
                 resolvedEvent: ['$stateParams', '$rootScope', 'eventService', '$location', function($stateParams, $rootScope, eventService, $location){
-                    return eventService.getEvent($stateParams.eventId).then(function (data, status) {
+                    return eventService.getEvent($stateParams.eventId).then(function(data) {
                         $rootScope.pageTitle = data.title;
                         return data;
                     },
-                    function () {
+                    function() {
                         $rootScope.originalDestination = $location.path();
                         $location.path('/feed');
                     });
@@ -169,12 +169,12 @@ define(['./app'], function (app) {
             controller: 'profileCtrl',
             resolve: {
                 resolvedUser: ['$stateParams', '$rootScope', 'userService', '$location', function($stateParams, $rootScope, userService, $location){
-                    return userService.getUserByName($stateParams.username).then(function (data, status) {
+                    return userService.getUserByName($stateParams.username).then(function(data) {
                         $rootScope.pageTitle = data.displayName;
                         
                         return data;
                     },
-                    function () {
+                    function() {
                         $rootScope.originalDestination = $location.path();
                         $location.path('/feed');
                     });

@@ -32,7 +32,7 @@ define(['../index'], function (controllers) {
             if($scope.invitees.length > 0) {
                 dataToSend.recipientIds = $scope.invitees;
 
-                eventService.inviteUsers($scope.event._id, $rootScope.user._id, dataToSend).then(function (data) {
+                eventService.inviteUsers($scope.event._id, $rootScope.user._id, dataToSend).then(function() {
                     $modalInstance.close();
                 },
                 function (errorMessage) {

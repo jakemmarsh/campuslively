@@ -137,7 +137,7 @@ exports.getUsersForInvite = function(req, res) {
 	}, function(err) {
 		res.send(500, err);
 	});
-}
+};
 
 exports.getUser = function(req, res) {
 	var getUser = function(userId) {

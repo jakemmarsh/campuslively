@@ -19,7 +19,7 @@ define(['./index'], function (controllers) {
 	    			}
 	    			gotInvites = true;
 		        },
-		        function (errorMessage) {
+		        function() {
 		        	gotInvites = true;
 		        });
         	}
@@ -47,7 +47,7 @@ define(['./index'], function (controllers) {
 					lastReminded: new Date()
 				};
 
-				userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
+				userService.updateUser($rootScope.user._id, updateParams).then(function() {
                 	var fbMessage = { 
 						msg: 'You haven\'t linked your account to Facebook yet. '+
 							 '<a href="/settings">Try it out in your account settings!</a>',
@@ -60,7 +60,7 @@ define(['./index'], function (controllers) {
 
 		$scope.closeNotification = function(index) {
 			if($scope.notifications[index].type === 'invite') {
-				inviteService.markAsRead($scope.notifications[index].inviteId).then(function (data) {
+				inviteService.markAsRead($scope.notifications[index].inviteId).then(function() {
 	    			$scope.notifications.splice(index, 1);
 		        },
 		        function (errorMessage) {
