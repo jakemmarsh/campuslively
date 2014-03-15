@@ -7,10 +7,10 @@ define(['./index'], function (controllers) {
                 $scope.message.replyAddress = $rootScope.user.email;
             }
             
-    		contactService.sendMessage($scope.message).then(function (data, status) {
+    		contactService.sendMessage($scope.message).then(function (data) {
 				$scope.sendError = null;
 				$scope.messageSent = true;
-			}, function(err, status) {
+			}, function(errorMessage) {
 				$scope.sendError = "Failed to send email. Please try again";
 			});
     	};

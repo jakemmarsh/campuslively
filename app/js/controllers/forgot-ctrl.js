@@ -6,11 +6,11 @@ define(['./index'], function (controllers) {
     			username: $scope.username
     		};
 
-    		authService.forgotPassword(dataToSend).then(function (data, status) {
+    		authService.forgotPassword(dataToSend).then(function (data) {
     			$scope.forgotError = null;
     			$scope.emailSent = true;
 	        },
-	        function (errorMessage, status) {
+	        function (errorMessage) {
 	        	$scope.forgotError = errorMessage;
 	        });
     	};

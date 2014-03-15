@@ -290,21 +290,21 @@ define(['./index'], function (controllers) {
 									);
 				                }
 				    		},
-				    		function (errorMessage, status) {
+				    		function (errorMessage) {
 				    			$scope.postError = errorMessage;
 				    			return;
 				    		});
 				    	},
-				    	function (errorMessage, status) {
+				    	function (errorMessage) {
 				    		$scope.postError = errorMessage;
 				    	});
 			    	}, 
-			    	function (errorMessage, status) {
+			    	function (errorMessage) {
 			    		$scope.postError = errorMessage;
 			    		return;
 			    	});
 			    },
-			    function (errorMessage, status) {
+			    function (errorMessage) {
 			    	$scope.postError = errorMessage.message;
 			    	return;
 			    });
@@ -334,17 +334,17 @@ define(['./index'], function (controllers) {
 								);
 			                }
 			    		},
-			    		function (errorMessage, status) {
+			    		function (errorMessage) {
 			    			$scope.postError = errorMessage;
 			    			return;
 			    		});
 			    	},
-			    	function (errorMessage, status) {
+			    	function (errorMessage) {
 			    		$scope.postError = errorMessage;
 			    		return;
 			    	});
 			    },
-			    function (errorMessage, status) {
+			    function (errorMessage) {
 			    	$scope.postError = errorMessage.message;
 			    	return;
 			    });

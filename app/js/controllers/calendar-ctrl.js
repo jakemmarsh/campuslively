@@ -2,7 +2,7 @@ define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('calendarCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$modal', 'eventService', 'locationService', 'googleService', '$FB', function ($scope, $rootScope, $location, $anchorScroll, $modal, eventService, locationService, googleService, $FB) {
     	var getSchoolEvents = function() {
-        eventService.getEventsBySchool($rootScope.user.school._id).then(function (data, status) {
+        eventService.getEventsBySchool($rootScope.user.school._id).then(function (data) {
           for(var i = 0; i < data.length; i++) {
             var event = {
               title: data[i].title,
@@ -21,12 +21,13 @@ define(['./index'], function (controllers) {
           $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
           $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
           $scope.loading = false;
-        }, function(err, status) {
+        }, function(errorMessage) {
           $scope.loading = false;
+          $scope.loadError = errorMessage;
         });
       },
       getNearbyEvents = function() {
-        eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data, status) {
+        eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2)).then(function (data) {
           for(var i = 0; i < data.length; i++) {
             var event = {
               title: data[i].title,
@@ -46,8 +47,9 @@ define(['./index'], function (controllers) {
           $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
           $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
           $scope.loading = false;
-        }, function(err, status) {
+        }, function(errorMessage) {
           $scope.loading = false;
+          $scope.loadError = errorMessage;
         });
       };
 
@@ -88,6 +90,7 @@ define(['./index'], function (controllers) {
               getNearbyEvents();
             },
             function (errorMessage) {
+              $scope.loadError = errorMessage;
             });
           }
           else {
@@ -103,7 +106,7 @@ define(['./index'], function (controllers) {
                 $scope.loadingDayEvents = true;
                 $scope.dayEvents = [];
                 if($scope.currentView === 'school') {
-                  eventService.getEventsBySchoolAndDay($rootScope.user.school._id, $scope.selectedDay).then(function (data, status) {
+                  eventService.getEventsBySchoolAndDay($rootScope.user.school._id, $scope.selectedDay).then(function (data) {
                     $scope.loadingDayEvents = false;
                     $scope.dayEvents = data;
                     $scope.showDay = true;
@@ -117,11 +120,12 @@ define(['./index'], function (controllers) {
                           $location.hash(old);
                         }
                     });
-                  }, function(err, status) {
+                  }, function(errorMessage) {
+                    $scope.dayError = errorMessage;
                   });
                 }
                 else if($scope.currentView === 'nearby') {
-                  eventService.getEventsByLocationAndDay($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.selectedDay).then(function (data, status) {
+                  eventService.getEventsByLocationAndDay($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.selectedDay).then(function (data) {
                     $scope.loadingDayEvents = false;
                     $scope.dayEvents = data;
                     $scope.showDay = true;
@@ -135,7 +139,8 @@ define(['./index'], function (controllers) {
                           $location.hash(old);
                         }
                     });
-                  }, function(err, status) {
+                  }, function(errorMessage) {
+                    $scope.dayError = errorMessage;
                   });
                 }
           		});        

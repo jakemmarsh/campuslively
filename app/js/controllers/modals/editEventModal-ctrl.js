@@ -159,19 +159,19 @@ define(['../index'], function (controllers) {
                           reload: true, inherit: false, notify: true 
                         });
                     },
-                    function (errorMessage, status) {
+                    function (errorMessage) {
                         $scope.editError = errorMessage;
                         return;
                     });
                 }, 
-                function (errorMessage, status) {
+                function (errorMessage) {
                     $scope.editError = errorMessage;
                     return;
                 });
             }
             // if no new image was uploaded, just update event
             else {
-                eventService.updateEvent($scope.event._id, $scope.newEvent).then(function (data, status) {
+                eventService.updateEvent($scope.event._id, $scope.newEvent).then(function (data) {
                     $modalInstance.close();
 
                     // refresh page to show updated event
@@ -179,7 +179,7 @@ define(['../index'], function (controllers) {
                       reload: true, inherit: false, notify: true 
                     });
                 }, 
-                function (errorMessage, status) {
+                function (errorMessage) {
                     $scope.editError = errorMessage;
                     return;
                 });

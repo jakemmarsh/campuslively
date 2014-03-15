@@ -1,12 +1,12 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('registerStudentCtrl', ['$scope', '$modal', 'schoolService', 'authService', function ($scope, $modal, schoolService, authService) {
-    	schoolService.getAllSchools().then(function (data, status) {
+    	schoolService.getAllSchools().then(function (data) {
     		$scope.schools = data;
     	});
 
     	$scope.checkUsername = function() {
-    		authService.checkUsername($scope.user.username).then(function (isTaken, status) {
+    		authService.checkUsername($scope.user.username).then(function (isTaken) {
     			if(isTaken === 'true') {
     				$scope.usernameTaken = true;
     			}
@@ -18,7 +18,7 @@ define(['./index'], function (controllers) {
 
     	$scope.checkEmail = function() {
     		if($scope.user.email) {
-	    		authService.checkEmail($scope.user.email).then(function (isTaken, status) {
+	    		authService.checkEmail($scope.user.email).then(function (isTaken) {
 	    			if(isTaken === 'true') {
 	    				$scope.emailTaken = true;
 	    			}
@@ -39,12 +39,12 @@ define(['./index'], function (controllers) {
                 coordinates: [-180, -90]
             };
 
-    		authService.register(newUser).then(function (data, status) {
+    		authService.register(newUser).then(function (data) {
     			$scope.usernameTaken = false;
     			$scope.emailTaken = false;
     			$scope.emailSent = true;
 	        },
-	        function (errorMessage, status) {
+	        function() {
 	        	$scope.registerError = "Failed to register new user.";
 	        });
     	};

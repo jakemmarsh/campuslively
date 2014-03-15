@@ -56,7 +56,7 @@ define(['./app'], function (app) {
                     return authService.activateUser($stateParams.userId, $stateParams.activateKey).then(function (data, status) {
                         return true;
                     },
-                    function (errorMessage, status) {
+                    function () {
                         $location.path('/');
                     });
                 }]
@@ -73,7 +73,7 @@ define(['./app'], function (app) {
                     return authService.resendActivation($stateParams.username).then(function (data, status) {
                         return true;
                     },
-                    function (errorMessage, status) {
+                    function () {
                         $location.path('/');
                     });
                 }]
@@ -100,7 +100,7 @@ define(['./app'], function (app) {
                                 $location.path('/login');
                             }
                         },
-                        function (errorMessage, status) {
+                        function () {
                             $location.path('/login');
                         });
                     }
@@ -141,7 +141,7 @@ define(['./app'], function (app) {
                         $rootScope.pageTitle = data.title;
                         return data;
                     },
-                    function (errorMessage, status) {
+                    function () {
                         $rootScope.originalDestination = $location.path();
                         $location.path('/feed');
                     });
@@ -174,7 +174,7 @@ define(['./app'], function (app) {
                         
                         return data;
                     },
-                    function (errorMessage, status) {
+                    function () {
                         $rootScope.originalDestination = $location.path();
                         $location.path('/feed');
                     });

@@ -47,7 +47,7 @@ define(['./index'], function (controllers) {
 					lastReminded: new Date()
 				};
 
-				userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+				userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
                 	var fbMessage = { 
 						msg: 'You haven\'t linked your account to Facebook yet. '+
 							 '<a href="/settings">Try it out in your account settings!</a>',

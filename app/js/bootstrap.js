@@ -30,7 +30,6 @@ define([
 
                 // set school color
                 $rootScope.schoolColor = $rootScope.user.school.color;
-            }, function(err, status) {
             });
         }
 
@@ -138,11 +137,7 @@ define([
                                 userService.addFacebookSubscriptions($rootScope.user._id).then(function (data, status) {
                                     $rootScope.user = data;
                                     localStorageService.add('user', data);
-                                },
-                                function (errorMessage, status) {
                                 });
-                            },
-                            function (errorMessage, status) {
                             });
                         });
                     }
@@ -162,12 +157,15 @@ define([
 
         // global function to log user out
         $rootScope.logout = function() {
-            authService.logout($rootScope.user).then(function (data, status) {
+            authService.logout($rootScope.user).then(function (data) {
                 $rootScope.user = null;
                 localStorageService.clearAll();
                 $location.path('/');
             },
-            function (errorMessage, status) {
+            function () {
+                $rootScope.user = null;
+                localStorageService.clearAll();
+                $location.path('/');
             });
         };
     }]);

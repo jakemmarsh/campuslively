@@ -7,10 +7,10 @@ define(['./index'], function (services) {
       getAllSchools: function() {
         var deferred = $q.defer();
 
-        $http.get(this.apiPath + 'all').success(function(data, status) {
+        $http.get(this.apiPath + 'all').success(function(data) {
           deferred.resolve(data);
         }).error(function(err, status) {
-          deferred.reject(err);
+          deferred.reject(err, status);
         });
 
         return deferred.promise;

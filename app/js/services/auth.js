@@ -7,10 +7,10 @@ define(['./index'], function (services) {
 		isLoggedIn: function() {
 			var deferred = $q.defer();
 			
-			$http.get(this.apiPath + 'check').success(function(data, status) {
+			$http.get(this.apiPath + 'check').success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.resolve(err);
+				deferred.resolve(err, status);
 			});
 
 			return deferred.promise;
@@ -18,8 +18,8 @@ define(['./index'], function (services) {
 		login: function(user) {
 			var deferred = $q.defer();
 
-			$http.post(this.apiPath + 'login', user).success(function(data, status) {
-				deferred.resolve(data, status);
+			$http.post(this.apiPath + 'login', user).success(function(data) {
+				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err, status);
 			});
@@ -29,8 +29,8 @@ define(['./index'], function (services) {
 		register: function(newUser) {
 			var deferred = $q.defer();
 
-			$http.put(this.apiPath + 'register', newUser).success(function(data, status) {
-				deferred.resolve(data, status);
+			$http.put(this.apiPath + 'register', newUser).success(function(data) {
+				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err, status);
 			});
@@ -40,10 +40,10 @@ define(['./index'], function (services) {
 		checkUsername: function(username) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'username/' + username).success(function(data, status) {
+			$http.get(this.apiPath + 'username/' + username).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -51,10 +51,10 @@ define(['./index'], function (services) {
 		checkEmail: function(email) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'email/' + email).success(function(data, status) {
+			$http.get(this.apiPath + 'email/' + email).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -62,8 +62,8 @@ define(['./index'], function (services) {
 		activateUser: function(userId, activateKey) {
 			var deferred = $q.defer();
 
-			$http.post(this.apiPath + 'user/' + userId + '/activate/' + activateKey).success(function(data, status) {
-				deferred.resolve(data, status);
+			$http.post(this.apiPath + 'user/' + userId + '/activate/' + activateKey).success(function(data) {
+				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err, status);
 			});
@@ -73,8 +73,8 @@ define(['./index'], function (services) {
 		resendActivation: function(username) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'user/' + username + '/resend').success(function(data, status) {
-				deferred.resolve(data, status);
+			$http.get(this.apiPath + 'user/' + username + '/resend').success(function(data) {
+				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err, status);
 			});
@@ -84,8 +84,8 @@ define(['./index'], function (services) {
 		forgotPassword: function(username) {
 			var deferred = $q.defer();
 
-			$http.post(this.apiPath + 'forgot', username).success(function(data, status) {
-				deferred.resolve(data, status);
+			$http.post(this.apiPath + 'forgot', username).success(function(data) {
+				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err, status);
 			});
@@ -95,8 +95,8 @@ define(['./index'], function (services) {
 		checkResetKey: function(resetKey) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + 'checkKey/' + resetKey).success(function(data, status) {
-				deferred.resolve(data, status);
+			$http.get(this.apiPath + 'checkKey/' + resetKey).success(function(data) {
+				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err, status);
 			});
@@ -106,8 +106,8 @@ define(['./index'], function (services) {
 		resetPassword: function(password) {
 			var deferred = $q.defer();
 
-			$http.post(this.apiPath + 'reset', password).success(function(data, status) {
-				deferred.resolve(data, status);
+			$http.post(this.apiPath + 'reset', password).success(function(data) {
+				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err, status);
 			});
@@ -117,8 +117,8 @@ define(['./index'], function (services) {
 		logout: function(user) {
 			var deferred = $q.defer();
 
-			$http.post(this.apiPath + 'logout', user).success(function(data, status) {
-				deferred.resolve(data, status);
+			$http.post(this.apiPath + 'logout', user).success(function(data) {
+				deferred.resolve(data);
 			}).error(function(err, status) {
 				deferred.reject(err, status);
 			});

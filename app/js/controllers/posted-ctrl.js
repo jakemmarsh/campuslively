@@ -8,12 +8,13 @@ define(['./index'], function (controllers) {
 
     			$scope.invitees = [];
 		    	$scope.loadingUsers = true;
-		    	userService.getUsersForInvite($rootScope.user._id, $scope.postedEvent._id).then(function (data, status) {
+		    	userService.getUsersForInvite($rootScope.user._id, $scope.postedEvent._id).then(function (data) {
 		            $scope.users = data;
 		            $scope.loadingUsers = false;
 		        },
-		        function (errorMessage, status) {
+		        function (errorMessage) {
 		        	$scope.loadingUsers = false;
+                    $scope.loadUserError = errorMessage;
 		        });
 		        gotPosted = true;
     		}

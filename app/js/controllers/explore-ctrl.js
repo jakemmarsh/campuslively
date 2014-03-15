@@ -3,7 +3,7 @@ define(['./index'], function (controllers) {
     controllers.controller('exploreCtrl', ['$scope', '$rootScope', '$modal', 'locationService', 'eventService', '$timeout', '$FB', function ($scope, $rootScope, $modal, locationService, eventService, $timeout, $FB) {
     	var oldestId, newestId,
     	getSchoolEvents = function() {
-    		eventService.getEventsBySchool($rootScope.user.school._id, 20).then(function (data, status) {
+    		eventService.getEventsBySchool($rootScope.user.school._id, 20).then(function (data) {
 				$scope.events = data;
 				$scope.loading = false;
 				if(data.length === 20) {
@@ -17,12 +17,13 @@ define(['./index'], function (controllers) {
 		            newestId = data[0]._id;
 		        }
 		        $scope.checkForEvents();
-			}, function(err, status) {
+			}, function(errorMessage) {
 				$scope.loading = false;
+				$scope.loadError = errorMessage;
 			});
     	},
     	getNearbyEvents = function() {
-    		eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data, status) {
+    		eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data) {
 				$scope.events = data;
 				$scope.loading = false;
 				if(data.length === 20) {
@@ -36,8 +37,9 @@ define(['./index'], function (controllers) {
 		            newestId = data[0]._id;
 		        }
 		        $scope.checkForEvents();
-			}, function(err, status) {
+			}, function(errorMessage) {
 				$scope.loading = false;
+				$scope.loadError = errorMessage;
 			});
     	};
 
@@ -199,7 +201,7 @@ define(['./index'], function (controllers) {
 		$scope.loadMore = function() {
 			$scope.loadingMore = true;
 			if($scope.currentView === 'school') {
-				eventService.getEventsBySchoolOlder($rootScope.user.school._id, oldestId, 20).then(function (data, status) {
+				eventService.getEventsBySchoolOlder($rootScope.user.school._id, oldestId, 20).then(function (data) {
 					if(data.length < 20) {
 	                    $scope.moreToLoadSchool = false;
 	                }
@@ -210,12 +212,12 @@ define(['./index'], function (controllers) {
 						oldestId = data[data.length-1]._id;
 	                }
 	                $scope.loadingMore = false;
-				}, function(err, status) {
+				}, function(errorMessage) {
 					$scope.loadingMore = false;
 				});
 			}
 			else if($scope.currentView === 'nearby') {
-				eventService.getEventsByLocationOlder($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), oldestId, 20).then(function (data, status) {
+				eventService.getEventsByLocationOlder($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), oldestId, 20).then(function (data) {
 					if(data.length < 20) {
 	                    $scope.moreToLoadNearby = false;
 	                }
@@ -226,7 +228,7 @@ define(['./index'], function (controllers) {
 						oldestId = data[data.length-1]._id;
 	                }
 	                $scope.loadingMore = false;
-				}, function(err, status) {
+				}, function(errorMessage) {
 					$scope.loadingMore = false;
 				});
 			}

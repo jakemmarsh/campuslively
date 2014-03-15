@@ -7,7 +7,7 @@ define(['./index'], function (controllers) {
     			password: $scope.password
     		};
 
-    		authService.login(user).then(function (data, status) {
+    		authService.login(user).then(function (data) {
     			$scope.showResend = false;
     			$scope.emailResent = false;
     			$scope.loginError = null;
@@ -15,7 +15,7 @@ define(['./index'], function (controllers) {
                 localStorageService.add('user', data);
                 interceptorService.loginConfirmed();
 	        },
-	        function (errorMessage, status) {
+	        function (errorMessage) {
 	        	if(errorMessage.toLowerCase().indexOf('activate') !== -1) {
 	        		$scope.showResend = true;
 	        		$scope.emailResent = false;
@@ -29,9 +29,9 @@ define(['./index'], function (controllers) {
     	};
 
     	$scope.resendActivation = function(username) {
-    		authService.resendActivation(username).then(function (data, status) {
+    		authService.resendActivation(username).then(function (data) {
     			$scope.emailResent = true;
-    		}, function (errorMessage, status) {
+    		}, function (errorMessage) {
     			$scope.emailResent = false;
     			$scope.showResend = false;
     			$scope.loginError = errorMessage;

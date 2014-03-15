@@ -3,9 +3,8 @@ define(['./index'], function (controllers) {
     controllers.controller('settingsCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'schoolService', 'authService', 'locationService', '$FB', 'localStorageService', '$q', 'googleService', function ($scope, $rootScope, $modal, userService, schoolService, authService, locationService, $FB, localStorageService, $q, googleService) {
     	var updateParams = {};
 
-    	schoolService.getAllSchools().then(function (data, status) {
+    	schoolService.getAllSchools().then(function (data) {
     		$scope.schools = data;
-    	}, function(errorMessage, status) {
     	});
 
     	$scope.userSchool = $rootScope.user.school._id;
@@ -57,7 +56,7 @@ define(['./index'], function (controllers) {
 	    $scope.checkEmail = function() {
 	    	if($scope.userEmailStudent) {
 		    	if($scope.userEmailStudent.length > 0 && $scope.userEmailStudent !== $rootScope.user.email) {
-		    		authService.checkEmail($scope.userEmailStudent).then(function (isTaken, status) {
+		    		authService.checkEmail($scope.userEmailStudent).then(function (isTaken) {
 		    			if(isTaken === 'true') {
 		    				$scope.emailTaken = true;
 		    			}
@@ -69,7 +68,7 @@ define(['./index'], function (controllers) {
 		    }
 	    	else if($scope.userEmailGroup) {
 	    		if($scope.userEmailGroup.length > 0 && $scope.userEmailGroup !== $rootScope.user.email) {
-		    		authService.checkEmail($scope.userEmailGroup).then(function (isTaken, status) {
+		    		authService.checkEmail($scope.userEmailGroup).then(function (isTaken) {
 		    			if(isTaken === 'true') {
 		    				$scope.emailTaken = true;
 		    			}
@@ -129,15 +128,11 @@ define(['./index'], function (controllers) {
                             }
                             updateParams.facebook.subscriptions = fbSubscriptions;
                             updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?width=250&height=250';
-							userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
-								userService.addFacebookSubscriptions($rootScope.user._id).then(function (data, status) {
+							userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
+								userService.addFacebookSubscriptions($rootScope.user._id).then(function (data) {
 									$rootScope.user = data;
 									localStorageService.add('user', data);
-								},
-								function (errorMessage, status) {
 								});
-							},
-							function (errorMessage, status) {
 							});
                         });
 					}
@@ -173,11 +168,9 @@ define(['./index'], function (controllers) {
                             	managedPages.push(rsvList[2].data[k]);
                             }
                             updateParams.facebook.managedPages = managedPages;
-							userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+							userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
 								$rootScope.user = data;
 								localStorageService.add('user', data);
-							},
-							function (errorMessage, status) {
 							});
                         });
 					}
@@ -198,11 +191,9 @@ define(['./index'], function (controllers) {
 
 			// get value from checkbox
 
-			userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+			userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
 				$rootScope.user = data;
 				localStorageService.add('user', data);
-			},
-			function (errorMessage, status) {
 			});
 		};
 
@@ -219,30 +210,33 @@ define(['./index'], function (controllers) {
 			updateParams.facebookLink = null;
 
 			// update user in database before making Facebook API call
-			userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+			userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
 				$rootScope.user = data;
 				$rootScope.user.facebookLink = null;
 				localStorageService.add('user', data);
 				$FB.logout(function () {
 					$rootScope.updateFbStatus($rootScope.updateApiMe);
 				});
-			},
-			function (errorMessage, status) {
 			});
 		};
 
 		$scope.googleLogin = function() {
 			var updateParams = {};
+			// login to Google API
             googleService.login().then(function (data) {
             	updateParams.google = {};
             	updateParams.google.id = data.id;
-                userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
-					$rootScope.user = data;
-					localStorageService.add('user', data);
-				},
-				function (errorMessage, status) {
-				});
-            }, function (errorMessage) {
+            	// get user's Google Calendar ID
+            	googleService.getUserCalendar().then(function (data) {
+            		updateParams.google.calendarId = data;
+
+            		// update user's account
+            		userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
+						$rootScope.user = data;
+						localStorageService.add('user', data);
+						console.log($rootScope.user);
+					});
+	            });
             });
         };
 
@@ -250,11 +244,9 @@ define(['./index'], function (controllers) {
         	var updateParams = {};
         	updateParams.google = {};
         	updateParams.google.id = null;
-        	userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+        	userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
 				$rootScope.user = data;
 				localStorageService.add('user', data);
-			},
-			function (errorMessage, status) {
 			});
         };
 
@@ -347,27 +339,27 @@ define(['./index'], function (controllers) {
 					$scope.saveError = "That image is too large.";
 					return;
 				}
-				userService.uploadImage($scope.newUserImage.file, $rootScope.user._id).then(function (data, status) {
+				userService.uploadImage($scope.newUserImage.file, $rootScope.user._id).then(function (data) {
 					var getExtension = function(filename) {
 					    var i = filename.lastIndexOf('.');
 		    			return (i < 0) ? '' : filename.substr(i);
 					};
 	                $scope.saveError = null;
 	                updateParams.pictureUrl = 'https://s3.amazonaws.com/campuslively/user_imgs/' + $rootScope.user._id + getExtension($scope.newUserImage.file.name);
-	                userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+	                userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
 	                	$scope.emailTaken = false;
 						$scope.changesSaved = true;
 						$rootScope.user = data;
 						localStorageService.add('user', data);
 					},
-					function (errorMessage, status) {
+					function() {
 						$scope.emailTaken = false;
 						$scope.changesSaved = false;
 						$scope.saveError = "Error occurred while saving changes.";
 						return;
 					});
 	            },
-	            function (errorMessage, status) {
+	            function() {
 	            	$scope.emailTaken = false;
 	            	$scope.changesSaved = false;
 	                $scope.saveError = "Error occurred while uploading image.";
@@ -379,13 +371,13 @@ define(['./index'], function (controllers) {
 					return;
 				}
 				else {
-					userService.updateUser($rootScope.user._id, updateParams).then(function (data, status) {
+					userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
 						$scope.emailTaken = false;
 						$scope.changesSaved = true;
 						$rootScope.user = data;
 						localStorageService.add('user', data);
 					},
-					function (errorMessage, status) {
+					function() {
 						$scope.emailTaken = false;
 						$scope.changesSaved = false;
 						$scope.saveError = "Error occurred while saving changes.";
@@ -420,11 +412,11 @@ define(['./index'], function (controllers) {
       	};
 
 		$scope.removeSubscription = function(subscriptionId) {
-			userService.unsubscribe($rootScope.user._id, subscriptionId).then(function (data, status) {
+			userService.unsubscribe($rootScope.user._id, subscriptionId).then(function (data) {
                 $rootScope.user = data;
                 localStorageService.add('user', data);
             },
-            function (errorMessage, status) {
+            function() {
                 $scope.unsubscribeError = "Error occurred while unsubscribing from user.";
             });
 		}

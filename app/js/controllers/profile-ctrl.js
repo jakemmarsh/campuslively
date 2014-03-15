@@ -3,7 +3,7 @@ define(['./index'], function (controllers) {
     controllers.controller('profileCtrl', ['$scope', '$rootScope', '$modal', 'resolvedUser', 'userService', 'eventService', 'localStorageService', '$FB', function ($scope, $rootScope, $modal, resolvedUser, userService, eventService, localStorageService, $FB) {
         var oldestId,
             updateSubscribers = function() {
-                userService.getSubscribers($scope.profile._id).then(function (data, status) {
+                userService.getSubscribers($scope.profile._id).then(function (data) {
                     $scope.subscribers = data;
                 });
             };
@@ -11,7 +11,7 @@ define(['./index'], function (controllers) {
         $scope.profile = resolvedUser;
     	$scope.loading = true;
 
-        eventService.getEventsByUser($scope.profile._id, 20).then(function (data, status) {
+        eventService.getEventsByUser($scope.profile._id, 20).then(function (data) {
             $scope.events = data;
             $scope.loading = false;
             if(data.length === 20) {
@@ -23,8 +23,9 @@ define(['./index'], function (controllers) {
             if(data.length > 0) {
                 oldestId = data[data.length-1]._id;
             }
-        }, function(err, status) {
+        }, function(errorMessage) {
             $scope.loading = false;
+            $scope.loadEventsError = errorMessage;
         });
 
         updateSubscribers();
@@ -60,24 +61,24 @@ define(['./index'], function (controllers) {
 
         $scope.toggleSubscribe = function() {
             if($scope.isSubscribed()) {
-                userService.unsubscribe($rootScope.user._id, $scope.profile._id).then(function (data, status) {
+                userService.unsubscribe($rootScope.user._id, $scope.profile._id).then(function (data) {
                     $rootScope.user = data;
                     localStorageService.add('user', data);
 
                     updateSubscribers();
                 },
-                function (errorMessage, status) {
+                function() {
                     $scope.subscribeError = "Error occurred while subscribing to user.";
                 });
             }
             else {
-                userService.subscribe($rootScope.user._id, $scope.profile._id).then(function (data, status) {
+                userService.subscribe($rootScope.user._id, $scope.profile._id).then(function (data) {
                     $rootScope.user = data;
                     localStorageService.add('user', data);
 
                     updateSubscribers();
                 },
-                function (errorMessage, status) {
+                function() {
                     $scope.subscribeError = "Error occurred while subscribing to user.";
                 });
             }
@@ -132,7 +133,7 @@ define(['./index'], function (controllers) {
 
         $scope.loadMore = function() {
             $scope.loadingMore = true;
-            eventService.getEventsByUserOlder($scope.profile._id, oldestId, 20).then(function (data, status) {
+            eventService.getEventsByUserOlder($scope.profile._id, oldestId, 20).then(function (data) {
                 if(data.length < 20) {
                     $scope.moreToLoad = false;
                 }
@@ -143,7 +144,7 @@ define(['./index'], function (controllers) {
                     oldestId = data[data.length-1]._id;
                 }
                 $scope.loadingMore = false;
-            }, function(err, status) {
+            }, function() {
                 $scope.loadingMore = false;
             });
         };

@@ -7,10 +7,10 @@ define(['./index'], function (services) {
     	getAllUsers: function() {
 			var deferred = $q.defer();
 			
-			$http.get(this.apiPath).success(function(data, status) {
+			$http.get(this.apiPath).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -18,10 +18,10 @@ define(['./index'], function (services) {
 		getSubscribers: function(userId) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + userId + '/subscribers').success(function(data, status) {
+			$http.get(this.apiPath + userId + '/subscribers').success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -29,10 +29,10 @@ define(['./index'], function (services) {
 		getUsersForInvite: function(userId, eventId) {
 			var deferred = $q.defer();
 			
-			$http.get(this.apiPath + userId + '/inviteTo/event/' + eventId).success(function(data, status) {
+			$http.get(this.apiPath + userId + '/inviteTo/event/' + eventId).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -40,10 +40,10 @@ define(['./index'], function (services) {
     	getUserById: function(userId) {
 			var deferred = $q.defer();
 			
-			$http.get(this.apiPath + userId).success(function(data, status) {
+			$http.get(this.apiPath + userId).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -51,10 +51,10 @@ define(['./index'], function (services) {
 		getUserByName: function(username) {
 			var deferred = $q.defer();
 			
-			$http.get(this.apiPath + 'username/' + username).success(function(data, status) {
+			$http.get(this.apiPath + 'username/' + username).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -62,10 +62,10 @@ define(['./index'], function (services) {
 		updateUser: function(userId, updatedParams) {
 			var deferred = $q.defer();
 
-			$http({method: 'PATCH', url: this.apiPath + userId, data: updatedParams}).success(function(data, status) {
+			$http({method: 'PATCH', url: this.apiPath + userId, data: updatedParams}).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -73,10 +73,10 @@ define(['./index'], function (services) {
 		subscribe: function(userId, subscriptionId) {
 			var deferred = $q.defer();
 			
-			$http.post(this.apiPath + userId + '/subscribe/' + subscriptionId).success(function(data, status) {
+			$http.post(this.apiPath + userId + '/subscribe/' + subscriptionId).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -84,10 +84,10 @@ define(['./index'], function (services) {
 		unsubscribe: function(userId, subscriptionId) {
 			var deferred = $q.defer();
 			
-			$http.post(this.apiPath + userId + '/unsubscribe/' + subscriptionId).success(function(data, status) {
+			$http.post(this.apiPath + userId + '/unsubscribe/' + subscriptionId).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -114,17 +114,17 @@ define(['./index'], function (services) {
 				limit = (typeof limit === "undefined") ? null : limit;
 
 			if(limit) {
-				$http.get(this.apiPath + userId + '/activities/limit/' + limit).success(function(data, status) {
+				$http.get(this.apiPath + userId + '/activities/limit/' + limit).success(function(data) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
-					deferred.reject(err);
+					deferred.reject(err, status);
 				});
 			}
 			else {
-				$http.get(this.apiPath + userId + '/activities').success(function(data, status) {
+				$http.get(this.apiPath + userId + '/activities').success(function(data) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
-					deferred.reject(err);
+					deferred.reject(err, status);
 				});
 			}
 
@@ -135,14 +135,14 @@ define(['./index'], function (services) {
 				newestId = (typeof newestId === "undefined") ? null : newestId;
 
 			if(newestId) {
-				$http.get(this.apiPath + userId + '/activities/newer/' + newestId).success(function(data, status) {
+				$http.get(this.apiPath + userId + '/activities/newer/' + newestId).success(function(data) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
-					deferred.reject(err);
+					deferred.reject(err, status);
 				});
 			}
 			else {
-				$http.get(this.apiPath + userId + '/activities/newer/').success(function(data, status) {
+				$http.get(this.apiPath + userId + '/activities/newer/').success(function(data) {
 					deferred.resolve(data);
 				}).error(function(err, status) {
 					deferred.reject(err);
@@ -154,10 +154,10 @@ define(['./index'], function (services) {
 		getActivitiesOlder: function(userId, oldestId, limit) {
 			var deferred = $q.defer();
 
-			$http.get(this.apiPath + userId + '/activities/older/' + oldestId + '/limit/' + limit).success(function(data, status) {
+			$http.get(this.apiPath + userId + '/activities/older/' + oldestId + '/limit/' + limit).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -165,10 +165,10 @@ define(['./index'], function (services) {
 		addFacebookSubscriptions: function(userId) {
 			var deferred = $q.defer();
 
-			$http.post(this.apiPath + userId + '/addFacebookSubscriptions').success(function(data, status) {
+			$http.post(this.apiPath + userId + '/addFacebookSubscriptions').success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;
@@ -176,10 +176,10 @@ define(['./index'], function (services) {
 		deleteUser: function(userId) {
 			var deferred = $q.defer();
 
-			$http.delete(this.apiPath + userId).success(function(data, status) {
+			$http.delete(this.apiPath + userId).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.reject(err);
+				deferred.reject(err, status);
 			});
 
 			return deferred.promise;

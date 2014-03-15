@@ -7,10 +7,10 @@ define(['./index'], function (services) {
 		getUnreadInvites: function(userId) {
 			var deferred = $q.defer();
 			
-			$http.get(this.apiPath + 'user/' + userId).success(function(data, status) {
+			$http.get(this.apiPath + 'user/' + userId).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.resolve(err);
+				deferred.resolve(err, status);
 			});
 
 			return deferred.promise;
@@ -18,10 +18,10 @@ define(['./index'], function (services) {
 		markAsRead: function(inviteId) {
 			var deferred = $q.defer();
 			
-			$http.post(this.apiPath + inviteId + '/read').success(function(data, status) {
+			$http.post(this.apiPath + inviteId + '/read').success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.resolve(err);
+				deferred.resolve(err, status);
 			});
 
 			return deferred.promise;

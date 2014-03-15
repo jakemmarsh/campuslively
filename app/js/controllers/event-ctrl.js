@@ -202,10 +202,8 @@ define(['./index'], function (controllers) {
 	                    return $scope.event;
 	                },
 			      	items: function() {
-			      		return userService.getUsersForInvite($rootScope.user._id, $scope.event._id).then(function (data, status) {
+			      		return userService.getUsersForInvite($rootScope.user._id, $scope.event._id).then(function (data) {
 	                        return data;
-	                    },
-	                    function (errorMessage, status) {
 	                    }); 
 			      	}
 			      }

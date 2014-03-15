@@ -7,10 +7,10 @@ define(['./index'], function (services) {
 		sendMessage: function(message) {
 			var deferred = $q.defer();
 			
-			$http.post(this.apiPath, message).success(function(data, status) {
+			$http.post(this.apiPath, message).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(err, status) {
-				deferred.resolve(err);
+				deferred.resolve(err, status);
 			});
 
 			return deferred.promise;

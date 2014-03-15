@@ -8,11 +8,11 @@ define(['./index'], function (controllers) {
                 password: $scope.password
             };
 
-            authService.resetPassword(dataToSend).then(function (data, status) {
+            authService.resetPassword(dataToSend).then(function (data) {
                 $scope.resetError = null;
                 $scope.passwordChanged = true;
             },
-            function (errorMessage, status) {
+            function (errorMessage) {
                 $scope.resetError = errorMessage;
             });
         };
