@@ -43,7 +43,7 @@ function authenticate(name, pass, fn) {
         var deferred = Q.defer(),
             populateObj = [
                 { path: 'subscriptions' },
-                { path: 'postedEvents' }, 
+                { path: 'postedEvents' },
                 { path: 'attending' },
                 { path: 'invites' },
                 { path: 'school' }
@@ -113,7 +113,7 @@ exports.login = function(req, res) {
             }
             else {
                 // Regenerate session when signing in
-                // to prevent fixation 
+                // to prevent fixation
                 req.session.regenerate(function(){
                     var newUser = {
                         admin: user.admin,
@@ -134,7 +134,7 @@ exports.login = function(req, res) {
                     res.json(200, returnUser);
                 });
             }
-        } 
+        }
         else {
             res.send(403, "Username or password incorrect.");
         }
@@ -364,7 +364,7 @@ exports.checkUsername = function(req, res) {
 
         User.find({ username: username }, function(err, retrievedUsers) {
             if (err) {
-                deferred.reject(err.message)
+                deferred.reject(err.message);
             }
             else {
                 if(retrievedUsers.length > 0) {
@@ -392,7 +392,7 @@ exports.checkEmail = function(req, res) {
 
         User.find({ email: email }, function(err, retrievedUsers) {
             if (err) {
-                deferred.reject(err.message)
+                deferred.reject(err.message);
             }
             else {
                 if(retrievedUsers.length > 0) {
