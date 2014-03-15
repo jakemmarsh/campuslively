@@ -14,7 +14,7 @@ mongoose.set('debug', true);
 function restrict(req, res, next) {
   if (req.session.user) {
     next();
-  } 
+  }
   else {
     res.send(401, "No session exists for current user.");
   }
@@ -40,7 +40,7 @@ app.configure(function() {
         // Set to true if you need the website to include cookies in the requests sent
         // to the API (e.g. in case you use sessions)
         res.setHeader('Access-Control-Allow-Credentials', true);
-        
+
         // Pass to next layer of middleware
         next();
     });
@@ -95,7 +95,7 @@ app.configure(function() {
     app.post('/api/v1/user/:userId/addFacebookSubscriptions', restrict, routes.user.addFacebookSubscriptions);
 
     app.delete('/api/v1/user/:userId', restrict, routes.user.deleteUser);
-    
+
     app.get('/api/v1/user/:userId/activities', restrict, routes.user.getActivities);
     app.get('/api/v1/user/:userId/activities/limit/:limit', restrict, routes.user.getActivities);
     app.get('/api/v1/user/:userId/activities/newer/:newestId?', restrict, routes.user.getActivitiesNewer);
@@ -152,12 +152,15 @@ app.configure(function() {
     app.get('/api/v1/invite/user/:userId', restrict, routes.invite.getUnreadInvites);
     app.post('/api/v1/invite/:inviteId/read', restrict, routes.invite.markInviteAsRead);
 
+    // venues
+    app.get('/api/v1/venues/:schoolId', restrict, routes.venue.getVenuesBySchool);
+
     // serve index.html for all remaining routes, in order to leave routing up to angular
     app.all("/*", function(req, res, next) {
         res.sendfile("index.html", { root: __dirname + "/../app" });
     });
     app.use(express.errorHandler({
-        dumpExceptions: true, 
+        dumpExceptions: true,
         showStack: true
     }));
 });
