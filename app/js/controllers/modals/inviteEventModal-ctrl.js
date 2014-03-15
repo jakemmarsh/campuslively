@@ -36,6 +36,7 @@ define(['../index'], function (controllers) {
                     $modalInstance.close();
                 },
                 function (errorMessage) {
+                    $scope.inviteError = errorMessage;
                 });
             }
         };

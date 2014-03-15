@@ -196,9 +196,14 @@
 		<h2 class="green text-center" ng-show="!items.length">No users left to invite!</h2>
 		<h2 class="blue text-center" ng-show="!filteredItems.length">No users match your search.</h2>
     </div>
-    <div class="modal-footer">
-        <button class="btn" ng-click="sendInvites()" ng-disabled="!invitees.length">Send Invites</button>
-        <button class="btn--muted" ng-click="cancel()">Cancel</button>
+    <div class="modal-footer table">
+    	<div class="td one-half vertical-align-middle text-left">
+    		<span class="weight--bold red" ng-bind="inviteError"></span>
+    	</div>
+    	<div class="td one-half vertical-align-middle">
+        	<button class="btn" ng-click="sendInvites()" ng-disabled="!invitees.length">Send Invites</button>
+        	<button class="btn--muted" ng-click="cancel()">Cancel</button>
+        </div>
     </div>
 </script>
 
