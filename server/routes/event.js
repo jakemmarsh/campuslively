@@ -1,7 +1,5 @@
 var Q          = require('q'),
-    crypto     = require('crypto'),
     User       = require('../models/user'),
-    School     = require('../models/school'),
     Activity   = require('../models/activity'),
     Event      = require('../models/event'),
     Comment    = require('../models/comment'),
@@ -66,7 +64,7 @@ exports.getAllEvents = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -110,7 +108,7 @@ exports.getEvent = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -170,7 +168,7 @@ exports.getEventsBySchool = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -231,7 +229,7 @@ exports.getEventsBySchoolNewer = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -286,7 +284,7 @@ exports.getEventsBySchoolOlder = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -348,7 +346,7 @@ exports.getEventsBySchoolAndDay = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -415,7 +413,7 @@ exports.getEventsByLocationAndDay = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvents.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -475,7 +473,7 @@ exports.getEventsByUser = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -535,7 +533,7 @@ exports.getEventsByUserNewer = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -592,7 +590,7 @@ exports.getEventsByUserOlder = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -661,7 +659,7 @@ exports.getEventsByLocation = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -728,7 +726,7 @@ exports.getEventsByLocationNewer = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -747,7 +745,7 @@ exports.getEventsByLocationNewer = function(req, res) {
     }, function(err) {
         res.send(500, err);
     });
-}
+};
 
 exports.getEventsByLocationOlder = function(req, res) {
     var getEvents = function(userId, lat, lng, oldestId, limit) {
@@ -790,7 +788,7 @@ exports.getEventsByLocationOlder = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err, data){
+                Comment.populate(retrievedEvent.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -862,9 +860,9 @@ exports.postEvent = function(req, res) {
     };
 
     postEvent(req.body).then(function(returnedEvent) {
-        createActivity(returnedEvent).then(function(returnedActivity) {
+        createActivity(returnedEvent).then(function() {
             res.json(200, returnedEvent);
-        }, function(err) {
+        }, function() {
             res.send(200, "Event posted but unable to create activity.");
         });
     }, function(err) {
@@ -873,7 +871,7 @@ exports.postEvent = function(req, res) {
 };
 
 exports.uploadImage = function(req, res) {
-    postToS3 = function(image, eventId) {
+    var postToS3 = function(image, eventId) {
         var s3bucket = new AWS.S3({params: {Bucket: config.aws.bucket}}),
             deferred = Q.defer(),
             getExtension = function(filename) {
@@ -1015,7 +1013,7 @@ exports.updateEvent = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(updatedEvent.comments, commentPopulateObj, function(err, data){
+                Comment.populate(updatedEvent.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -1074,7 +1072,7 @@ exports.rsvp = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(updatedEvent.comments, commentPopulateObj, function(err, data){
+                Comment.populate(updatedEvent.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -1110,11 +1108,11 @@ exports.rsvp = function(req, res) {
         return deferred.promise;
     };
 
-    updateUser(req.params.userId, req.params.eventId).then(function(updatedUser) {
+    updateUser(req.params.userId, req.params.eventId).then(function() {
         updateEvent(req.params.eventId, req.params.userId).then(function(updatedEvent) {
-            createActivity(updatedEvent, req.params.userId).then(function(savedActivity) {
+            createActivity(updatedEvent, req.params.userId).then(function() {
                 res.json(200, updatedEvent);
-            }, function(err) {
+            }, function() {
                 res.json(200, updatedEvent);
             });
         }, function(err) {
@@ -1163,7 +1161,7 @@ exports.unRsvp = function(req, res) {
                 deferred.reject(err.message);
             }
             else {
-                Comment.populate(updatedEvent.comments, commentPopulateObj, function(err, data){
+                Comment.populate(updatedEvent.comments, commentPopulateObj, function(err){
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -1199,7 +1197,7 @@ exports.unRsvp = function(req, res) {
         updateEvent(req.params.eventId, req.params.userId).then(function(updatedEvent) {
             deleteActivity(req.params.eventId, req.params.userId).then(function() {
                 res.json(200, updatedEvent);
-            }, function(err) {
+            }, function() {
                 res.json(200, updatedEvent);
             });
         }, function(err) {
@@ -1329,9 +1327,7 @@ exports.deleteEvent = function(req, res) {
 
         User.update({}, {
             $pull: {
-                attending: eventId
-            },
-            $pull: {
+                attending: eventId,
                 invites: eventId
             }
         }, function(err) {
@@ -1353,17 +1349,17 @@ exports.deleteEvent = function(req, res) {
                     deleteActivities(req.params.eventId).then(function() {
                         deleteInvites(req.params.eventId).then(function() {
                             removeEventFromUsers(req.params.eventId).then(function() {
-                                res.send(200, "Event and all related items deleted successfully.")
-                            }, function(err) {
+                                res.send(200, "Event and all related items deleted successfully.");
+                            }, function() {
                                 res.send(200, "Event deleted but failed to remove users from attending.");
                             });
-                        }, function(err) {
+                        }, function() {
                             res.send(200, "Event deleted but failed to find invitations.");
                         });
-                    }, function(err) {
+                    }, function() {
                         res.send(200, "Event deleted but failed to delete activities.");
                     });
-                }, function(err) {
+                }, function() {
                     res.send(200, "Event deleted but failed to delete comments.");
                 });
             }, function (err) {
@@ -1430,7 +1426,7 @@ exports.inviteUsers = function(req, res) {
         for(var i = 0; i < recipientIds.length; i++) {
             (function(i) {
                 User.findOneAndUpdate({ _id: recipientIds[i] }, { $addToSet: { invites: eventId } })
-                .exec(function(err, updatedUser) {
+                .exec(function(err) {
                     if(err) {
                         deferred.reject(err.message);
                     }
@@ -1480,13 +1476,13 @@ exports.inviteUsers = function(req, res) {
             updateUsers(req.body.recipientIds, req.params.eventId).then(function() {
                 createActivities(createdInvites, retrievedEvent).then(function(createdActivities) {
                     res.send(200, "Invites and activities all successfully created.");
-                }, function(err) {
+                }, function() {
                     res.send(200, "Invites created but failed to create activities.");
                 });
-            }, function(err) {
+            }, function() {
                 res.send(200, "Invites created but failed to update users.");
             });
-        }, function(err) {
+        }, function() {
             res.send(200, "Invites created but failed to retrieve event or create activities.");
         });
     }, function(err) {
