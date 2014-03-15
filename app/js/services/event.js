@@ -16,8 +16,9 @@ define(['./index'], function (services) {
             return deferred.promise;
         },
         getEventsBySchool: function(schoolId, limit) {
-            var deferred = $q.defer(),
-                limit = (typeof limit === "undefined") ? null : limit;
+            var deferred = $q.defer();
+
+            limit = (typeof limit === "undefined") ? null : limit;
 
             if(limit) {
                 $http.get(this.apiPath + 'school/' + schoolId + '/limit/' + limit).success(function(data) {
@@ -37,8 +38,9 @@ define(['./index'], function (services) {
             return deferred.promise;
         },
         getEventsBySchoolNewer: function(schoolId, newestId) {
-            var deferred = $q.defer(),
-                newestId = (typeof newestId === "undefined") ? null : newestId;
+            var deferred = $q.defer();
+
+            newestId = (typeof newestId === "undefined") ? null : newestId;
 
             if(newestId) {
                 $http.get(this.apiPath + 'school/' + schoolId + '/newer/' + newestId).success(function(data) {
@@ -69,8 +71,9 @@ define(['./index'], function (services) {
             return deferred.promise;
         },
         getEventsByLocation: function(lat, lng, limit) {
-            var deferred = $q.defer(),
-                limit = (typeof limit === "undefined") ? null : limit;
+            var deferred = $q.defer();
+
+            limit = (typeof limit === "undefined") ? null : limit;
 
             if(limit) {
                 $http.get(this.apiPath + 'near/' + lat + '/' + lng + '/limit/' + limit).success(function(data) {
@@ -90,8 +93,9 @@ define(['./index'], function (services) {
             return deferred.promise;
         },
         getEventsByLocationNewer: function(lat, lng, newestId) {
-            var deferred = $q.defer(),
-                newestId = (typeof newestId === "undefined") ? null : newestId;
+            var deferred = $q.defer();
+
+            newestId = (typeof newestId === "undefined") ? null : newestId;
 
             if(newestId) {
                 $http.get(this.apiPath + 'near/' + lat + '/' + lng + '/newer/' + newestId).success(function(data) {
@@ -144,8 +148,9 @@ define(['./index'], function (services) {
             return deferred.promise;
         },
         getEventsByUser: function(profileId, limit) {
-            var deferred = $q.defer(),
-                limit = (typeof limit === "undefined") ? null : limit;
+            var deferred = $q.defer();
+
+            limit = (typeof limit === "undefined") ? null : limit;
 
             if(limit) {
                 $http.get(this.apiPath + 'profile/' + profileId + '/limit/' + limit).success(function(data) {
@@ -165,8 +170,9 @@ define(['./index'], function (services) {
             return deferred.promise;
         },
         getEventsByUserNewer: function(profileId, newestId) {
-            var deferred = $q.defer(),
-                newestId = (typeof newestId === "undefined") ? null : newestId;
+            var deferred = $q.defer();
+
+            newestId = (typeof newestId === "undefined") ? null : newestId;
 
             if(newestId) {
                 $http.get(this.apiPath + 'profile/' + profileId + '/newer/' + newestId).success(function(data) {
