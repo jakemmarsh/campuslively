@@ -1,7 +1,4 @@
 var Q          = require('q'),
-    crypto     = require('crypto'),
-    User       = require('../models/user'),
-    School     = require('../models/school'),
     Activity   = require('../models/activity'),
     Event      = require('../models/event'),
     Comment    = require('../models/comment');
@@ -125,16 +122,16 @@ exports.postComment = function(req, res) {
 
     postComment(req.params.eventId, req.body).then(function(savedComment) {
         addToEvent(req.params.eventId, savedComment._id).then(function(returnedEvent) {
-            createActivity(savedComment, returnedEvent).then(function(savedActivity) {
+            createActivity(savedComment, returnedEvent).then(function() {
                 getPostedComment(savedComment._id).then(function(retrievedComment) {
                     res.json(200, retrievedComment);
-                }, function(err) {
+                }, function() {
                     res.send(200, "Comment created but failed to retrieve.");
                 });
-            }, function(err) {
+            }, function() {
                 res.send(200, "Comment created and added to event but failed to create activity.");
             });
-        }, function(err) {
+        }, function() {
             res.send(200, "Comment created but failed to add to event.");
         });
     }, function(err) {
@@ -199,7 +196,7 @@ exports.likeComment = function(req, res) {
 
     updateComment(req.params.commentId, req.params.userId).then(function(updatedComment) {
         res.json(200, updatedComment);
-    }, function(err) {
+    }, function() {
         res.send(500, "Failed to like comment.");
     });
 };
@@ -228,7 +225,7 @@ exports.unlikeComment = function(req, res) {
 
     updateComment(req.params.commentId, req.params.userId).then(function(updatedComment) {
         res.json(updatedComment);
-    }, function(err) {
+    }, function() {
         res.send(500, "Failed to unlike comment.");
     });
 };
@@ -296,10 +293,10 @@ exports.deleteComment = function(req, res) {
         removeFromEvent(req.params.eventId, req.params.commentId).then(function(updatedEvent) {
             deleteActivity(req.params.eventId, req.params.commentId).then(function() {
                 res.json(200, updatedEvent);
-            }, function(err) {
+            }, function() {
                 res.json(200, updatedEvent);
             });
-        }, function(err) {
+        }, function() {
             res.send(200, "Comment deleted but not removed from event.");
         });
     }, function(err) {
@@ -308,7 +305,7 @@ exports.deleteComment = function(req, res) {
 };
 
 exports.deleteSubComment = function(req, res) {
-    removeFromComment = function(subCommentId, commentId) {
+    var removeFromComment = function(subCommentId, commentId) {
         var deferred = Q.defer(),
             populateObj = [
                 { path: 'creator' },
