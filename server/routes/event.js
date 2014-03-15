@@ -1193,7 +1193,7 @@ exports.unRsvp = function(req, res) {
         return deferred.promise;
     };
 
-    updateUser(req.params.userId, req.params.eventId).then(function(updatedUser) {
+    updateUser(req.params.userId, req.params.eventId).then(function() {
         updateEvent(req.params.eventId, req.params.userId).then(function(updatedEvent) {
             deleteActivity(req.params.eventId, req.params.userId).then(function() {
                 res.json(200, updatedEvent);
@@ -1474,7 +1474,7 @@ exports.inviteUsers = function(req, res) {
     createInvites(req.params.eventId, req.params.senderId, req.body.recipientIds).then(function(createdInvites) {
         updateAndGetEvent(req.params.eventId, req.body.recipientIds).then(function(retrievedEvent) {
             updateUsers(req.body.recipientIds, req.params.eventId).then(function() {
-                createActivities(createdInvites, retrievedEvent).then(function(createdActivities) {
+                createActivities(createdInvites, retrievedEvent).then(function() {
                     res.send(200, "Invites and activities all successfully created.");
                 }, function() {
                     res.send(200, "Invites created but failed to create activities.");

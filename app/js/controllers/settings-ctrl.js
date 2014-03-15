@@ -92,8 +92,6 @@ define(['./index'], function (controllers) {
                             };
                         }
                     }
-                },
-                function (errorMessage) {
                 });
             }
         };
@@ -128,7 +126,7 @@ define(['./index'], function (controllers) {
                             }
                             updateParams.facebook.subscriptions = fbSubscriptions;
                             updateParams.pictureUrl = 'http://graph.facebook.com/' + res.authResponse.userID + '/picture?width=250&height=250';
-                            userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
+                            userService.updateUser($rootScope.user._id, updateParams).then(function() {
                                 userService.addFacebookSubscriptions($rootScope.user._id).then(function (data) {
                                     $rootScope.user = data;
                                     localStorageService.add('user', data);
@@ -339,7 +337,7 @@ define(['./index'], function (controllers) {
                     $scope.saveError = "That image is too large.";
                     return;
                 }
-                userService.uploadImage($scope.newUserImage.file, $rootScope.user._id).then(function (data) {
+                userService.uploadImage($scope.newUserImage.file, $rootScope.user._id).then(function() {
                     var getExtension = function(filename) {
                         var i = filename.lastIndexOf('.');
                         return (i < 0) ? '' : filename.substr(i);
@@ -367,7 +365,7 @@ define(['./index'], function (controllers) {
             }
             else {
                 if($.isEmptyObject(updateParams)) {
-                    $scope.saveError = "You haven't made any changes!"
+                    $scope.saveError = "You haven't made any changes!";
                     return;
                 }
                 else {
@@ -419,6 +417,6 @@ define(['./index'], function (controllers) {
             function() {
                 $scope.unsubscribeError = "Error occurred while unsubscribing from user.";
             });
-        }
+        };
     }]);
 });
