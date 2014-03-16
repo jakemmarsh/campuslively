@@ -280,19 +280,25 @@ define(['./index'], function (controllers) {
 
                                 // automatically post to Facebook if user is linked and has option enabled
                                 if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && updatedEvent.privacy === 'public') {
-                                    $FB.api(
-                                        '/me/campuslively:post',
-                                        'post',
-                                        { event: updatedEvent.facebookId },
-                                        function(response) {
-                                            if (!response || response.error) {
-                                                //console.log(response.error);
-                                            }
-                                            else {
-                                                //alert('Publish was successful! Action ID: ' + response.id);
-                                            }
+                                    $FB.login(function (res) {
+                                        if (res.authResponse) {
+                                            $rootScope.updateFbStatus($rootScope.updateApiMe);
+                                            $rootScope.updateApiMe();
+                                            $FB.api(
+                                                '/me/campuslively:post',
+                                                'post',
+                                                { event: updatedEvent.facebookId },
+                                                function(response) {
+                                                    if (!response || response.error) {
+                                                        alert(response.error);
+                                                    }
+                                                    else {
+                                                        alert('Publish was successful! Action ID: ' + response.id);
+                                                    }
+                                                }
+                                            );
                                         }
-                                    );
+                                    });
                                 }
                             },
                             function (errorMessage) {
@@ -330,13 +336,19 @@ define(['./index'], function (controllers) {
 
                             // automatically post to Facebook if user is linked and has option enabled
                             if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && updatedEvent.privacy === 'public') {
-                                $FB.api(
-                                    '/me/campuslively:post',
-                                    'post',
-                                    { event: updatedEvent.facebookId },
-                                    function(response) {
+                                $FB.login(function (res) {
+                                    if (res.authResponse) {
+                                        $rootScope.updateFbStatus($rootScope.updateApiMe);
+                                        $rootScope.updateApiMe();
+                                        $FB.api(
+                                            '/me/campuslively:post',
+                                            'post',
+                                            { event: updatedEvent.facebookId },
+                                            function(response) {
+                                            }
+                                        );
                                     }
-                                );
+                                });
                             }
                         },
                         function (errorMessage) {

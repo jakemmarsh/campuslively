@@ -128,13 +128,19 @@ define(['./index'], function (controllers) {
 
                 // automatically post to Facebook if user is linked and has option enabled
                 if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && activity.event.facebookId && activity.event.privacy === 'public') {
-                    $FB.api(
-                        '/me/campuslively:rsvp_to',
-                        'post',
-                        { event: activity.event.facebookId },
-                        function(response) {
+                    $FB.login(function (res) {
+                        if(res.authResponse) {
+                            $rootScope.updateFbStatus($rootScope.updateApiMe);
+                            $rootScope.updateApiMe();
+                            $FB.api(
+                                '/me/campuslively:rsvp_to',
+                                'post',
+                                { event: activity.event.facebookId },
+                                function(response) {
+                                }
+                            );
                         }
-                    );
+                    });
                 }
             });
         };
