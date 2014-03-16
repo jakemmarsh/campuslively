@@ -1,7 +1,7 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('calendarCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$modal', 'eventService', 'locationService', 'googleService', '$FB', function ($scope, $rootScope, $location, $anchorScroll, $modal, eventService, locationService, googleService, $FB) {
-    	var getSchoolEvents = function() {
+        var getSchoolEvents = function() {
         eventService.getEventsBySchool($rootScope.user.school._id).then(function (data) {
           for(var i = 0; i < data.length; i++) {
             var event = {
@@ -10,10 +10,10 @@ define(['./index'], function (controllers) {
               editable: false,
               id: data[i]._id
             };
-            
+
             // highlight events that user has RSVP'd to
             event.backgroundColor = $scope.isAttending(data[i]) ? '#4fbda2' : $rootScope.schoolColor;
-            
+
             $scope.events.push(event);
           }
 
@@ -35,13 +35,13 @@ define(['./index'], function (controllers) {
               editable: false,
               id: data[i]._id
             };
-            
+
             // highlight events that user has RSVP'd to
             event.backgroundColor = $scope.isAttending(data[i]) ? '#4fbda2' : $rootScope.schoolColor;
 
             $scope.events.push(event);
           }
-          
+
 
           // remove any previous events before adding to avoid duplicates
           $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
@@ -56,7 +56,7 @@ define(['./index'], function (controllers) {
       $scope.showDay = false;
 
       $scope.currentView = 'school';
-      
+
       $scope.viewOptions = [
         {
           label: 'My School',
@@ -86,7 +86,7 @@ define(['./index'], function (controllers) {
             locationService.getGeo().then(function (data) {
               $rootScope.userPosition = data;
               $scope.gettingPosition = false;
-              
+
               getNearbyEvents();
             },
             function (errorMessage) {
@@ -99,10 +99,10 @@ define(['./index'], function (controllers) {
         }
       });
 
-    	$scope.dayClick = function(date, allDay, jsEvent, view){
-    		if(!$scope.$$phase) {        
-          		$scope.$apply(function() {
-        				$scope.selectedDay = date;
+        $scope.dayClick = function(date, allDay, jsEvent, view){
+            if(!$scope.$$phase) {
+                $scope.$apply(function() {
+                        $scope.selectedDay = date;
                 $scope.loadingDayEvents = true;
                 $scope.dayEvents = [];
                 if($scope.currentView === 'school') {
@@ -143,9 +143,9 @@ define(['./index'], function (controllers) {
                     $scope.dayError = errorMessage;
                   });
                 }
-          		});        
-        	}
-	    };
+                });
+            }
+        };
 
       $scope.calendarOptions = {
           height: 600,
@@ -157,7 +157,7 @@ define(['./index'], function (controllers) {
           dayClick: $scope.dayClick
       };
 
-    	$scope.rsvpToEvent = function(event) {
+        $scope.rsvpToEvent = function(event) {
           eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
               for (var i = 0; i < $scope.dayEvents.length; i++) {
                   if($scope.dayEvents[i]._id === event._id) {
@@ -217,8 +217,8 @@ define(['./index'], function (controllers) {
           return false;
       };
 
-  		$scope.openAttending = function(event) {
-          var modalInstance = $modal.open({
+        $scope.openAttending = function(event) {
+          $modal.open({
             templateUrl: 'attendingModal.html',
             controller: 'peopleListModalCtrl',
             resolve: {
@@ -230,7 +230,7 @@ define(['./index'], function (controllers) {
       };
 
       $scope.openShare = function(event) {
-        var modalInstance = $modal.open({
+        $modal.open({
           templateUrl: 'shareModal.html',
           controller: 'shareEventModalCtrl',
           resolve: {
@@ -259,6 +259,6 @@ define(['./index'], function (controllers) {
       label: 'by start date',
       value: 'startDate'
     };
-        
+
     }]);
 });

@@ -1,109 +1,109 @@
 define(['./index'], function (controllers) {
     'use strict';
     controllers.controller('exploreCtrl', ['$scope', '$rootScope', '$modal', 'locationService', 'eventService', '$timeout', '$FB', function ($scope, $rootScope, $modal, locationService, eventService, $timeout, $FB) {
-    	var oldestId, newestId,
-    	getSchoolEvents = function() {
-    		eventService.getEventsBySchool($rootScope.user.school._id, 20).then(function (data) {
-				$scope.events = data;
-				$scope.loading = false;
-				if(data.length === 20) {
-	                $scope.moreToLoadSchool = true;
-	            }
-	            else {
-	                $scope.moreToLoadSchool = false;
-	            }
-	            if(data.length > 0) {
-		            oldestId = data[data.length-1]._id;
-		            newestId = data[0]._id;
-		        }
-		        $scope.checkForEvents();
-			}, function(errorMessage) {
-				$scope.loading = false;
-				$scope.loadError = errorMessage;
-			});
-    	},
-    	getNearbyEvents = function() {
-    		eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data) {
-				$scope.events = data;
-				$scope.loading = false;
-				if(data.length === 20) {
-                	$scope.moreToLoadNearby = true;
-	            }
-	            else {
-	                $scope.moreToLoadNearby = false;
-	            }
-	            if(data.length > 0) {
-		            oldestId = data[data.length-1]._id;
-		            newestId = data[0]._id;
-		        }
-		        $scope.checkForEvents();
-			}, function(errorMessage) {
-				$scope.loading = false;
-				$scope.loadError = errorMessage;
-			});
-    	};
+        var oldestId, newestId,
+        getSchoolEvents = function() {
+            eventService.getEventsBySchool($rootScope.user.school._id, 20).then(function (data) {
+                $scope.events = data;
+                $scope.loading = false;
+                if(data.length === 20) {
+                    $scope.moreToLoadSchool = true;
+                }
+                else {
+                    $scope.moreToLoadSchool = false;
+                }
+                if(data.length > 0) {
+                    oldestId = data[data.length-1]._id;
+                    newestId = data[0]._id;
+                }
+                $scope.checkForEvents();
+            }, function(errorMessage) {
+                $scope.loading = false;
+                $scope.loadError = errorMessage;
+            });
+        },
+        getNearbyEvents = function() {
+            eventService.getEventsByLocation($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), 20).then(function (data) {
+                $scope.events = data;
+                $scope.loading = false;
+                if(data.length === 20) {
+                    $scope.moreToLoadNearby = true;
+                }
+                else {
+                    $scope.moreToLoadNearby = false;
+                }
+                if(data.length > 0) {
+                    oldestId = data[data.length-1]._id;
+                    newestId = data[0]._id;
+                }
+                $scope.checkForEvents();
+            }, function(errorMessage) {
+                $scope.loading = false;
+                $scope.loadError = errorMessage;
+            });
+        };
 
-    	$scope.currentView = 'school';
-    	
-    	$scope.viewOptions = [
-    		{
-				label: 'My School',
-				value: 'school'
-			},
-			{
-				label: 'Nearby',
-				value: 'nearby'
-			}
-		];
+        $scope.currentView = 'school';
 
-		$scope.$watch('currentView', function() {
-			$scope.loading = true;
-			$scope.events = [];
-			if($scope.currentView === 'school') {
-				getSchoolEvents();
-			}
-			else if($scope.currentView === 'nearby') {
-				// get user's location before events if not already known
-				if(!$rootScope.userPosition) {
-					$scope.gettingPosition = true;
-					locationService.getGeo().then(function (data) {
-			            $rootScope.userPosition = data;
-			            $scope.gettingPosition = false;
-			            $scope.loading = true;
-			            
-			            getNearbyEvents();
-			        },
-			        function (errorMessage) {
-			        });
-				}
-				else {
-					getNearbyEvents();
-				}
-			}
-		});
+        $scope.viewOptions = [
+            {
+                label: 'My School',
+                value: 'school'
+            },
+            {
+                label: 'Nearby',
+                value: 'nearby'
+            }
+        ];
 
-		$scope.newEvents = [];
+        $scope.$watch('currentView', function() {
+            $scope.loading = true;
+            $scope.events = [];
+            if($scope.currentView === 'school') {
+                getSchoolEvents();
+            }
+            else if($scope.currentView === 'nearby') {
+                // get user's location before events if not already known
+                if(!$rootScope.userPosition) {
+                    $scope.gettingPosition = true;
+                    locationService.getGeo().then(function (data) {
+                        $rootScope.userPosition = data;
+                        $scope.gettingPosition = false;
+                        $scope.loading = true;
 
-		// get events with newer _id
-		$scope.loadNew = function() {
-			if($scope.currentView === 'school') {
-	            eventService.getEventsBySchoolNewer($rootScope.user.school._id, newestId).then(function (data) {
-	                if(data.length > 0) {
-	                    $scope.newEvents = data;
-	                }
-	            },
-	            function (errorMessage) {
-	            });
-        	}
-        	else if($scope.currentView === 'nearby') {
-        		eventService.getEventsByLocationNewer($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), newestId).then(function (data) {
-	                if(data.length > 0) {
-	                    $scope.newEvents = data;
-	                }
-	            },
-	            function (errorMessage) {
-	            });
-        	}
+                        getNearbyEvents();
+                    },
+                    function (errorMessage) {
+                    });
+                }
+                else {
+                    getNearbyEvents();
+                }
+            }
+        });
+
+        $scope.newEvents = [];
+
+        // get events with newer _id
+        $scope.loadNew = function() {
+            if($scope.currentView === 'school') {
+                eventService.getEventsBySchoolNewer($rootScope.user.school._id, newestId).then(function (data) {
+                    if(data.length > 0) {
+                        $scope.newEvents = data;
+                    }
+                },
+                function (errorMessage) {
+                });
+            }
+            else if($scope.currentView === 'nearby') {
+                eventService.getEventsByLocationNewer($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), newestId).then(function (data) {
+                    if(data.length > 0) {
+                        $scope.newEvents = data;
+                    }
+                },
+                function (errorMessage) {
+                });
+            }
         };
 
         // refresh feed every 30 seconds
@@ -117,13 +117,13 @@ define(['./index'], function (controllers) {
 
         // add newly retrieved events to view
         $scope.addNew = function() {
-        	if($scope.newEvents.length > 0) {
-	        	for(var i = 0; i < $scope.newEvents.length; i++) {
-	        		$scope.events.unshift($scope.newEvents[i]);
-	        	}
-	        	newestId = $scope.newEvents[0]._id;
-	        	$scope.newEvents = [];
-	        }
+            if($scope.newEvents.length > 0) {
+                for(var i = 0; i < $scope.newEvents.length; i++) {
+                    $scope.events.unshift($scope.newEvents[i]);
+                }
+                newestId = $scope.newEvents[0]._id;
+                $scope.newEvents = [];
+            }
         };
 
         // stop refreshing list upon page leave
@@ -131,132 +131,132 @@ define(['./index'], function (controllers) {
             $timeout.cancel(exploreTimeout);
         });
 
-		$scope.sortOptions = [{
-				label: 'by start date',
-				value: 'startDate'
-			},
-			{
-				label: 'by post date',
-				value: '-timestamp'
-			}
-		];
+        $scope.sortOptions = [{
+                label: 'by start date',
+                value: 'startDate'
+            },
+            {
+                label: 'by post date',
+                value: '-timestamp'
+            }
+        ];
 
-		$scope.changeSort = function(option) {
-			$scope.currentSort = option;
-		};
+        $scope.changeSort = function(option) {
+            $scope.currentSort = option;
+        };
 
-		$scope.currentSort = {
-			label: 'by start date',
-			value: 'startDate'
-		};
+        $scope.currentSort = {
+            label: 'by start date',
+            value: 'startDate'
+        };
 
-		$scope.rsvpToEvent = function(event) {
-    		eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
-    			for (var i = 0; i < $scope.events.length; i++) {
-    				if($scope.events[i]._id === event._id) {
-    					$scope.events[i] = data;
-    					break;
-    				}
-    			}
-    			
-    			// automatically post to Facebook if user is linked and has option enabled
-		    	if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy === 'public') {
-		    		$FB.api(
-						'/me/campuslively:rsvp_to',
-						'post',
-						{ event: event.facebookId },
-						function(response) {
-						}
-					);
+        $scope.rsvpToEvent = function(event) {
+            eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
+                for (var i = 0; i < $scope.events.length; i++) {
+                    if($scope.events[i]._id === event._id) {
+                        $scope.events[i] = data;
+                        break;
+                    }
                 }
-	        },
-	        function (errorMessage) {
-	        });
-    	};
 
-    	$scope.unRsvpToEvent = function(event) {
-    		eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
-    			for (var i = 0; i < $scope.events.length; i++) {
-    				if($scope.events[i]._id === event._id) {
-    					$scope.events[i] = data;
-    					break;
-    				}
-    			}
-	        },
-	        function (errorMessage) {
-	        });
-    	};
+                // automatically post to Facebook if user is linked and has option enabled
+                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy === 'public') {
+                    $FB.api(
+                        '/me/campuslively:rsvp_to',
+                        'post',
+                        { event: event.facebookId },
+                        function(response) {
+                        }
+                    );
+                }
+            },
+            function (errorMessage) {
+            });
+        };
 
-    	$scope.isAttending = function(event) {
-    		if(event.attending) {
-    			for(var i = 0; i < event.attending.length; i++) {
-	    			if(event.attending[i]._id === $rootScope.user._id) {
-	    				return true;
-	    			}
-	    		}
-	    		return false;
-    		}
-    	};
+        $scope.unRsvpToEvent = function(event) {
+            eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
+                for (var i = 0; i < $scope.events.length; i++) {
+                    if($scope.events[i]._id === event._id) {
+                        $scope.events[i] = data;
+                        break;
+                    }
+                }
+            },
+            function (errorMessage) {
+            });
+        };
 
-		$scope.loadMore = function() {
-			$scope.loadingMore = true;
-			if($scope.currentView === 'school') {
-				eventService.getEventsBySchoolOlder($rootScope.user.school._id, oldestId, 20).then(function (data) {
-					if(data.length < 20) {
-	                    $scope.moreToLoadSchool = false;
-	                }
-	                if(data.length > 0) {
-	                	for(var i = 0; i < data.length; i++) {
-							$scope.events.push(data[i]);
-						}
-						oldestId = data[data.length-1]._id;
-	                }
-	                $scope.loadingMore = false;
-				}, function(errorMessage) {
-					$scope.loadingMore = false;
-				});
-			}
-			else if($scope.currentView === 'nearby') {
-				eventService.getEventsByLocationOlder($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), oldestId, 20).then(function (data) {
-					if(data.length < 20) {
-	                    $scope.moreToLoadNearby = false;
-	                }
-	                if(data.length > 0) {
-	                	for(var i = 0; i < data.length; i++) {
-							$scope.events.push(data[i]);
-						}
-						oldestId = data[data.length-1]._id;
-	                }
-	                $scope.loadingMore = false;
-				}, function(errorMessage) {
-					$scope.loadingMore = false;
-				});
-			}
-		};
+        $scope.isAttending = function(event) {
+            if(event.attending) {
+                for(var i = 0; i < event.attending.length; i++) {
+                    if(event.attending[i]._id === $rootScope.user._id) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
 
-		$scope.openAttending = function (event) {
-		    var modalInstance = $modal.open({
-		      templateUrl: 'attendingModal.html',
-		      controller: 'peopleListModalCtrl',
-		      resolve: {
-		      	items: function() {
-		      		return event.attending;
-		      	}
-		      }
-		    });
-		};
+        $scope.loadMore = function() {
+            $scope.loadingMore = true;
+            if($scope.currentView === 'school') {
+                eventService.getEventsBySchoolOlder($rootScope.user.school._id, oldestId, 20).then(function (data) {
+                    if(data.length < 20) {
+                        $scope.moreToLoadSchool = false;
+                    }
+                    if(data.length > 0) {
+                        for(var i = 0; i < data.length; i++) {
+                            $scope.events.push(data[i]);
+                        }
+                        oldestId = data[data.length-1]._id;
+                    }
+                    $scope.loadingMore = false;
+                }, function(errorMessage) {
+                    $scope.loadingMore = false;
+                });
+            }
+            else if($scope.currentView === 'nearby') {
+                eventService.getEventsByLocationOlder($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), oldestId, 20).then(function (data) {
+                    if(data.length < 20) {
+                        $scope.moreToLoadNearby = false;
+                    }
+                    if(data.length > 0) {
+                        for(var i = 0; i < data.length; i++) {
+                            $scope.events.push(data[i]);
+                        }
+                        oldestId = data[data.length-1]._id;
+                    }
+                    $scope.loadingMore = false;
+                }, function(errorMessage) {
+                    $scope.loadingMore = false;
+                });
+            }
+        };
 
-		$scope.openShare = function(event) {
-	        var modalInstance = $modal.open({
-	          templateUrl: 'shareModal.html',
-	          controller: 'shareEventModalCtrl',
-	          resolve: {
-	            event: function() {
-	                    return event;
-	                }
-	          }
-	        });
-	    };
-    	
+        $scope.openAttending = function (event) {
+            $modal.open({
+              templateUrl: 'attendingModal.html',
+              controller: 'peopleListModalCtrl',
+              resolve: {
+                items: function() {
+                    return event.attending;
+                }
+              }
+            });
+        };
+
+        $scope.openShare = function(event) {
+            $modal.open({
+              templateUrl: 'shareModal.html',
+              controller: 'shareEventModalCtrl',
+              resolve: {
+                event: function() {
+                        return event;
+                    }
+              }
+            });
+        };
+
     }]);
 });

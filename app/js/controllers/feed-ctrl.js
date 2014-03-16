@@ -5,7 +5,7 @@ define(['./index'], function (controllers) {
         $scope.currentView = 'events';
         $scope.eventActivities = [];
         $scope.actionActivities = [];
-        
+
         $scope.viewOptions = [
             {
                 label: 'Events',
@@ -17,14 +17,14 @@ define(['./index'], function (controllers) {
             }
         ];
 
-    	$scope.loading = true;
+        $scope.loading = true;
 
         userService.getActivities($rootScope.user._id, 20).then(function (data) {
             // separate activities into "event activites" and "action activities" for proper filtering
             for(var i = 0; i < data.length; i++) {
-                if(data[i].activity === 'subscribed' || 
-                    data[i].activity === 'rsvpd' || 
-                    data[i].activity === 'commented' || 
+                if(data[i].activity === 'subscribed' ||
+                    data[i].activity === 'rsvpd' ||
+                    data[i].activity === 'commented' ||
                     data[i].activity === 'invited') {
                     $scope.actionActivities.push(data[i]);
                 }
@@ -54,9 +54,9 @@ define(['./index'], function (controllers) {
                 if(data.length > 0) {
                     // separate activities into "event activites" and "action activities" for proper filtering
                     for(var i = 0; i < data.length; i++) {
-                        if(data[i].activity === 'subscribed' || 
-                           data[i].activity === 'rsvpd' || 
-                           data[i].activity === 'commented' || 
+                        if(data[i].activity === 'subscribed' ||
+                           data[i].activity === 'rsvpd' ||
+                           data[i].activity === 'commented' ||
                            data[i].activity === 'invited') {
                             $scope.actionActivities.unshift(data[i]);
                         }
@@ -117,7 +117,7 @@ define(['./index'], function (controllers) {
             return false;
         };
 
-    	$scope.rsvpToEvent = function(activity) {
+        $scope.rsvpToEvent = function(activity) {
             eventService.rsvp(activity.event._id, $rootScope.user._id).then(function (data) {
                 activity.event = data;
 
@@ -145,8 +145,8 @@ define(['./index'], function (controllers) {
             });
         };
 
-		$scope.openAttending = function (event) {
-            var modalInstance = $modal.open({
+        $scope.openAttending = function (event) {
+            $modal.open({
               templateUrl: 'attendingModal.html',
               controller: 'peopleListModalCtrl',
               resolve: {
@@ -158,7 +158,7 @@ define(['./index'], function (controllers) {
         };
 
         $scope.openShare = function(event) {
-            var modalInstance = $modal.open({
+            $modal.open({
               templateUrl: 'shareModal.html',
               controller: 'shareEventModalCtrl',
               resolve: {

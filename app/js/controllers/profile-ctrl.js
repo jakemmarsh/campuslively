@@ -29,7 +29,7 @@ define(['./index'], function (controllers) {
         });
 
         updateSubscribers();
-    	
+
     	$scope.sortOptions = [{
                 label: 'by start date',
                 value: 'startDate'
@@ -150,7 +150,7 @@ define(['./index'], function (controllers) {
         };
 
         $scope.openAttending = function(event) {
-            var modalInstance = $modal.open({
+            $modal.open({
               templateUrl: 'attendingModal.html',
               controller: 'peopleListModalCtrl',
               resolve: {
@@ -162,7 +162,7 @@ define(['./index'], function (controllers) {
         };
 
         $scope.openSubscribers = function() {
-            var modalInstance = $modal.open({
+            $modal.open({
               templateUrl: 'subscribersModal.html',
               controller: 'peopleListModalCtrl',
               resolve: {
@@ -174,7 +174,7 @@ define(['./index'], function (controllers) {
         };
 
         $scope.openShare = function(event) {
-            var modalInstance = $modal.open({
+            $modal.open({
               templateUrl: 'shareModal.html',
               controller: 'shareEventModalCtrl',
               resolve: {
@@ -186,7 +186,7 @@ define(['./index'], function (controllers) {
         };
 
         $scope.openLocation = function(profile) {
-            var modalInstance = $modal.open({
+            $modal.open({
               templateUrl: 'locationModal.html',
               controller: 'basicModalCtrl',
               resolve: {

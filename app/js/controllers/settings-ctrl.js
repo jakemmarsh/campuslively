@@ -386,7 +386,7 @@ define(['./index'], function (controllers) {
         };
 
         $scope.openExplanation = function() {
-            var modalInstance = $modal.open({
+            $modal.open({
                 templateUrl: 'explanationModal.html',
                 controller: 'basicModalCtrl',
                 resolve: {
@@ -398,7 +398,7 @@ define(['./index'], function (controllers) {
         };
 
         $scope.openDelete = function() {
-            var modalInstance = $modal.open({
+            $modal.open({
                 templateUrl: 'deleteModal.html',
                 controller: 'basicModalCtrl',
                 resolve: {
