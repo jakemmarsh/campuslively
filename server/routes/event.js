@@ -14,6 +14,19 @@ AWS.config.update({
     secretAccessKey: config.aws.secret
 });
 
+var eventPopulateObj = [
+        { path: 'location' },
+        { path: 'creator' },
+        { path: 'attending' },
+        { path: 'invited' },
+        { path: 'comments' },
+        { path: 'school' }
+    ],
+    commentPopulateObj = [
+        { path: 'creator' },
+        { path: 'subComments.creator'}
+    ];
+
 exports.getCount = function(req, res) {
     var getCount = function() {
         var deferred = Q.defer();
@@ -43,19 +56,7 @@ exports.getCount = function(req, res) {
 
 exports.getAllEvents = function(req, res) {
     var getEvents = function() {
-        var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ];
+        var deferred = Q.defer();
 
         Event.find({})
         .populate(eventPopulateObj)
@@ -87,19 +88,7 @@ exports.getAllEvents = function(req, res) {
 
 exports.getEvent = function(req, res) {
     var getEvent = function(eventId) {
-        var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ];
+        var deferred = Q.defer();
 
         Event.findOne({ _id: eventId })
         .populate(eventPopulateObj)
@@ -132,18 +121,6 @@ exports.getEvent = function(req, res) {
 exports.getEventsBySchool = function(req, res) {
     var getEvents = function(userId, schoolId) {
         var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ],
             today = new Date();
 
         var query = Event.find({
@@ -192,18 +169,6 @@ exports.getEventsBySchool = function(req, res) {
 exports.getEventsBySchoolNewer = function(req, res) {
     var getEvents = function(userId, schoolId, newestId) {
         var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ],
             today = new Date();
 
         var query = Event.find({
@@ -252,19 +217,7 @@ exports.getEventsBySchoolNewer = function(req, res) {
 
 exports.getEventsBySchoolOlder = function(req, res) {
     var getEvents = function(userId, schoolId, oldestId, limit) {
-        var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ];
+        var deferred = Q.defer();
 
         Event.find({
             school: schoolId,
@@ -308,18 +261,6 @@ exports.getEventsBySchoolOlder = function(req, res) {
 exports.getEventsBySchoolAndDay = function(req, res) {
     var getEvents = function(userId, schoolId, day) {
         var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ],
             floorDay = new Date(day),
             ceilingDay = new Date(day);
 
@@ -370,18 +311,6 @@ exports.getEventsBySchoolAndDay = function(req, res) {
 exports.getEventsByLocationAndDay = function(req, res) {
     var getEvents = function(userId, lat, lng, day) {
         var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ],
             locationPoint = {
                     type: 'Point',
                     coordinates: [lat, lng]
@@ -437,18 +366,6 @@ exports.getEventsByLocationAndDay = function(req, res) {
 exports.getEventsByUser = function(req, res) {
     var getEvents = function(userId, profileId) {
         var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ],
             today = new Date();
 
         var query = Event.find({
@@ -497,18 +414,6 @@ exports.getEventsByUser = function(req, res) {
 exports.getEventsByUserNewer = function(req, res) {
     var getEvents = function(userId, profileId, newestId) {
         var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ],
             today = new Date();
 
         var query = Event.find({
@@ -557,18 +462,6 @@ exports.getEventsByUserNewer = function(req, res) {
 exports.getEventsByUserOlder = function(req, res) {
     var getEvents = function(userId, profileId, oldestId, limit) {
         var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ],
             today = new Date();
 
         Event.find({
@@ -614,18 +507,6 @@ exports.getEventsByUserOlder = function(req, res) {
 exports.getEventsByLocation = function(req, res) {
     var getEvents = function(userId, lat, lng) {
         var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ],
             today = new Date();
 
         var query = Event.find({
@@ -683,18 +564,6 @@ exports.getEventsByLocation = function(req, res) {
 exports.getEventsByLocationNewer = function(req, res) {
     var getEvents = function(userId, lat, lng, newestId) {
         var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ],
             locationPoint = {
                     type: 'Point',
                     coordinates: [lat, lng]
@@ -750,18 +619,6 @@ exports.getEventsByLocationNewer = function(req, res) {
 exports.getEventsByLocationOlder = function(req, res) {
     var getEvents = function(userId, lat, lng, oldestId, limit) {
         var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ],
             locationPoint = {
                     type: 'Point',
                     coordinates: [lat, lng]
@@ -910,17 +767,10 @@ exports.uploadImage = function(req, res) {
 
 exports.updateEvent = function(req, res) {
     var findEvent = function(eventId) {
-        var deferred = Q.defer(),
-            populateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'school' }
-            ];
+        var deferred = Q.defer();
 
         Event.findOne({ _id: eventId })
-        .populate(populateObj)
+        .populate(eventPopulateObj)
         .exec(function(err, retrievedEvent) {
             if(err) {
                 deferred.reject(err.message);
@@ -992,19 +842,7 @@ exports.updateEvent = function(req, res) {
         return updateParams;
     },
     updateEvent = function(eventId, updateParams) {
-        var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ];
+        var deferred = Q.defer();
 
         Event.findOneAndUpdate({ _id: eventId }, updateParams)
         .populate(eventPopulateObj)
@@ -1051,19 +889,7 @@ exports.rsvp = function(req, res) {
         return deferred.promise;
     },
     updateEvent = function(eventId, userId) {
-        var deferred = Q.defer(),
-            eventPopulateObj = [
-                { path: 'location' },
-                { path: 'creator' },
-                { path: 'attending' },
-                { path: 'invited' },
-                { path: 'comments' },
-                { path: 'school' }
-            ],
-            commentPopulateObj = [
-                { path: 'creator' },
-                { path: 'subComments.creator'}
-            ];
+        var deferred = Q.defer();
 
         Event.findOneAndUpdate({ _id: eventId }, { $addToSet: { attending: userId } })
         .populate(eventPopulateObj)
