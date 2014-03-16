@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('feedCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'eventService', '$timeout', '$FB', function ($scope, $rootScope, $modal, userService, eventService, $timeout, $FB) {
+    controllers.controller('feedCtrl', ['$scope', '$rootScope', '$modal', 'userService', 'eventService', '$timeout', '$FB', 'googleService', function ($scope, $rootScope, $modal, userService, eventService, $timeout, $FB, googleService) {
         var oldestId, newestId;
         $scope.currentView = 'events';
         $scope.eventActivities = [];
@@ -119,17 +119,10 @@ define(['./index'], function (controllers) {
 
         $scope.rsvpToEvent = function(activity) {
             eventService.rsvp(activity.event._id, $rootScope.user._id).then(function (data) {
-                activity.event = data;
-
-                // automatically post to Facebook if user is linked and has option enabled
-                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost) {
-                    // make call to facebook API to autopost RSVP event
-                }
-
                 // automatically post to Facebook if user is linked and has option enabled
                 if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && activity.event.facebookId && activity.event.privacy === 'public') {
                     $FB.login(function (res) {
-                        if(res.authResponse) {
+                        if (res.authResponse) {
                             $rootScope.updateFbStatus($rootScope.updateApiMe);
                             $rootScope.updateApiMe();
                             $FB.api(
@@ -137,10 +130,46 @@ define(['./index'], function (controllers) {
                                 'post',
                                 { event: activity.event.facebookId },
                                 function(response) {
+                                    console.log(response);
                                 }
                             );
                         }
                     });
+                }
+
+                // create Google Calendar event if user is linked
+                if($rootScope.user.google.id && $rootScope.user.google.calendarId) {
+                    googleService.addEvent($rootScope.user.google.calendarId, activity.event).then(function (data) {
+                        // update event with user's Google Calendar event ID
+                        eventService.addGoogleEventId(activity.event._id, $rootScope.user.username, data.id).then(function(updatedEvent) {
+                            activity.event = updatedEvent;
+                        });
+                    });
+                }
+                else {
+                    activity.event = data;
+                }
+            });
+        };
+
+        $scope.unRsvpToEvent = function(activity) {
+            eventService.unRsvp(activity.event._id, $rootScope.user._id).then(function (data) {
+                // remove from user's Google Calendar if linked
+                if($rootScope.user.google.id && $rootScope.user.google.calendarId && activity.event.googleCalendarIds) {
+                    var removeFromEvent = function() {
+                        // remove user's Google Calendar event ID from event
+                        eventService.removeGoogleEventId(activity.event._id, $rootScope.user.username).then(function(updatedEvent) {
+                            activity.event = updatedEvent;
+                        });
+                    };
+                    googleService.removeEvent($rootScope.user.google.calendarId, activity.event.googleCalendarIds[$rootScope.user.username]).then(function () {
+                        removeFromEvent();
+                    }, function() {
+                        removeFromEvent();
+                    });
+                }
+                else {
+                    activity.event = data;
                 }
             });
         };

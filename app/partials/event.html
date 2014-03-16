@@ -13,8 +13,8 @@
 				</h4>
 			</div>
 			<div class="td two-fifths vertical-align-middle text-right" ng-hide="eventPassed">
-				<a href class="btn nudge-half--right" ng-click="rsvpToEvent()" ng-hide="isAttending()"><i class="fa fa-thumbs-up"></i> RSVP</a>
-				<a href class="btn nudge-half--right" ng-click="unRsvpToEvent()" ng-show="isAttending()"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
+				<a href class="btn nudge-half--right" ng-click="rsvpToEvent(event)" ng-hide="isAttending()"><i class="fa fa-thumbs-up"></i> RSVP</a>
+				<a href class="btn nudge-half--right" ng-click="unRsvpToEvent(event)" ng-show="isAttending()"><i class="fa fa-thumbs-o-up"></i> Un-RSVP</a>
 				<a href class="btn nudge-half--right" ng-click="open('invite')"><i class="fa fa-plus-square"></i> Invite</a>
 				<a class="btn" ng-click="open('share')"><i class="fa fa-share-square"></i> Share</a>
 			</div>
@@ -237,7 +237,7 @@
     	<form name="editForm">
 	    	<label class="muted delta block" for="eventTitle">Event Title</label>
 	    	<input type="text" name="eventTitle" id="eventTitle" ng-model="newEvent.title" class="full-width nudge-quarter--top nudge-half--bottom" required />
-	    	
+
 	    	<div class="line nudge-half--bottom">
 	    		<div class="unit one-third soft-half--right">
 	    			<label class="muted delta block" for="eventTitle">Start Date</label>
@@ -258,10 +258,10 @@
 
 	    	<label class="muted delta block" for="roomNumber">Room Number</label>
 	    	<input type="text" name="roomNumber" id="roomNumber" ng-model="newEvent.roomNumber" class="full-width nudge-quarter--top nudge-half--bottom" />
-	    	
+
 	    	<label class="muted delta block" for="eventDescription">Event Description</label>
 	    	<textarea name="eventDescription" id="eventDescription" ng-model="newEvent.description" class="full-width medium nudge-quarter--top nudge-half--bottom"></textarea>
-	    	
+
 	    	<label class="muted delta block" for="eventTags">Tags</label>
 	    	<input type="text" id="eventTags" name="eventTags" class="full-width nudge-quarter--top" ui-select2="tagOptions" ng-model="newEvent.tags" placeholder="Enter up to 3 tags" />
 
@@ -269,7 +269,7 @@
 	    	<div class="event-img nudge-half--bottom" ng-show="newEvent.pictureUrl" ng-style="{'background-image': 'url(' + newEvent.pictureUrl + ')'}"></div>
 	    	<input class="full-width nudge-quarter--top" ng-hide="newEvent.pictureUrl" id="newImage" name="newImage" type="file" accept="image/*" image="newImage.image" />
 	    	<div class="event-img nudge-quarter--top nudge-half--bottom" ng-show="newImage.image" ng-style="{'background-image': 'url(' + newImage.image.url + ')'}"></div>
-	    	
+
 	    	<label class="muted delta block nudge-half--ends">Privacy</label>
 	    	<div class="dropdown nudge-half--bottom">
 				<a href class="dropdown-toggle">

@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('profileCtrl', ['$scope', '$rootScope', '$modal', 'resolvedUser', 'userService', 'eventService', 'localStorageService', '$FB', function ($scope, $rootScope, $modal, resolvedUser, userService, eventService, localStorageService, $FB) {
+    controllers.controller('profileCtrl', ['$scope', '$rootScope', '$modal', 'resolvedUser', 'userService', 'eventService', 'localStorageService', '$FB', 'googleService', function ($scope, $rootScope, $modal, resolvedUser, userService, eventService, localStorageService, $FB, googleService) {
         var oldestId,
             updateSubscribers = function() {
                 userService.getSubscribers($scope.profile._id).then(function (data) {
@@ -9,7 +9,7 @@ define(['./index'], function (controllers) {
             };
 
         $scope.profile = resolvedUser;
-    	$scope.loading = true;
+        $scope.loading = true;
 
         eventService.getEventsByUser($scope.profile._id, 20).then(function (data) {
             $scope.events = data;
@@ -30,7 +30,7 @@ define(['./index'], function (controllers) {
 
         updateSubscribers();
 
-    	$scope.sortOptions = [{
+        $scope.sortOptions = [{
                 label: 'by start date',
                 value: 'startDate'
             },
@@ -86,14 +86,16 @@ define(['./index'], function (controllers) {
         };
 
         $scope.rsvpToEvent = function(event) {
-            eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
+            var updateEvent = function(eventId, updatedEvent) {
                 for (var i = 0; i < $scope.events.length; i++) {
-                    if($scope.events[i]._id === event._id) {
-                        $scope.events[i] = data;
+                    if($scope.events[i]._id === eventId) {
+                        $scope.events[i] = updatedEvent;
                         break;
                     }
                 }
+            };
 
+            eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
                 // automatically post to Facebook if user is linked and has option enabled
                 if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy === 'public') {
                     $FB.login(function (res) {
@@ -111,29 +113,59 @@ define(['./index'], function (controllers) {
                         }
                     });
                 }
+
+                // create Google Calendar event if user is linked
+                if($rootScope.user.google.id && $rootScope.user.google.calendarId) {
+                    googleService.addEvent($rootScope.user.google.calendarId, event).then(function (data) {
+                        // update event with user's Google Calendar event ID
+                        eventService.addGoogleEventId(event._id, $rootScope.user.username, data.id).then(function(updatedEvent) {
+                            updateEvent(event._id, updatedEvent);
+                        });
+                    });
                 }
-            },
-            function (errorMessage) {
+                else {
+                    updateEvent(event._id, data);
+                }
             });
         };
 
         $scope.unRsvpToEvent = function(event) {
-            eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
+            var updateEvent = function(eventId, updatedEvent) {
                 for (var i = 0; i < $scope.events.length; i++) {
-                    if($scope.events[i]._id === event._id) {
-                        $scope.events[i] = data;
+                    if($scope.events[i]._id === eventId) {
+                        $scope.events[i] = updatedEvent;
                         break;
                     }
                 }
-            },
-            function (errorMessage) {
+            };
+
+            eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
+                // remove from user's Google Calendar if linked
+                if($rootScope.user.google.id && $rootScope.user.google.calendarId && event.googleCalendarIds) {
+                    var removeFromEvent = function() {
+                        // remove user's Google Calendar event ID from event
+                        eventService.removeGoogleEventId(event._id, $rootScope.user.username).then(function(updatedEvent) {
+                            updateEvent(event._id, updatedEvent);
+                        });
+                    };
+                    googleService.removeEvent($rootScope.user.google.calendarId, event.googleCalendarIds[$rootScope.user.username]).then(function () {
+                        removeFromEvent();
+                    }, function() {
+                        removeFromEvent();
+                    });
+                }
+                else {
+                    updateEvent(event._id, data);
+                }
             });
         };
 
         $scope.isAttending = function(event) {
-            for(var i = 0; i < event.attending.length; i++) {
-                if(event.attending[i]._id === $rootScope.user._id) {
-                    return true;
+            if(event.attending) {
+                for(var i = 0; i < event.attending.length; i++) {
+                    if(event.attending[i]._id === $rootScope.user._id) {
+                        return true;
+                    }
                 }
             }
             return false;

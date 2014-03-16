@@ -1,6 +1,6 @@
 define(['./index'], function (controllers) {
     'use strict';
-    controllers.controller('eventCtrl', ['$scope', '$rootScope', '$modal', 'eventService', 'userService', 'resolvedEvent', '$location',  function ($scope, $rootScope, $modal, eventService, userService, resolvedEvent, $location) {
+    controllers.controller('eventCtrl', ['$scope', '$rootScope', '$modal', 'eventService', 'userService', 'resolvedEvent', '$location', 'googleService', '$FB',  function ($scope, $rootScope, $modal, eventService, userService, resolvedEvent, $location, googleService, $FB) {
         $scope.event = resolvedEvent;
 
         // check to see if event has a legitimate location
@@ -137,42 +137,60 @@ define(['./index'], function (controllers) {
             return false;
         };
 
-        $scope.rsvpToEvent = function() {
-            eventService.rsvp($scope.event._id, $rootScope.user._id).then(function (data) {
-                $scope.event = data;
-
+        $scope.rsvpToEvent = function(event) {
+            eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
                 // automatically post to Facebook if user is linked and has option enabled
-                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && $scope.event.privacy === 'public') {
+                if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy === 'public') {
                     $FB.login(function (res) {
                         if (res.authResponse) {
                             $rootScope.updateFbStatus($rootScope.updateApiMe);
                             $rootScope.updateApiMe();
                             $FB.api(
-                                '/me/campuslively:post',
-                                'rsvp_to',
-                                { event: $scope.event.facebookId },
+                                '/me/campuslively:rsvp_to',
+                                'post',
+                                { event: event.facebookId },
                                 function(response) {
-                                    if (!response || response.error) {
-                                        //console.log(response.error);
-                                    }
-                                    else {
-                                        //alert('Publish was successful! Action ID: ' + response.id);
-                                    }
+                                    console.log(response);
                                 }
                             );
                         }
                     });
                 }
-            },
-            function (errorMessage) {
+
+                // create Google Calendar event if user is linked
+                if($rootScope.user.google.id && $rootScope.user.google.calendarId) {
+                    googleService.addEvent($rootScope.user.google.calendarId, event).then(function (data) {
+                        // update event with user's Google Calendar event ID
+                        eventService.addGoogleEventId(event._id, $rootScope.user.username, data.id).then(function(updatedEvent) {
+                            $scope.event = updatedEvent;
+                        });
+                    });
+                }
+                else {
+                    $scope.event = data;
+                }
             });
         };
 
-        $scope.unRsvpToEvent = function() {
-            eventService.unRsvp($scope.event._id, $rootScope.user._id).then(function (data) {
-                $scope.event = data;
-            },
-            function (errorMessage) {
+        $scope.unRsvpToEvent = function(event) {
+            eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
+                // remove from user's Google Calendar if linked
+                if($rootScope.user.google.id && $rootScope.user.google.calendarId && event.googleCalendarIds) {
+                    var removeFromEvent = function() {
+                        // remove user's Google Calendar event ID from event
+                        eventService.removeGoogleEventId(event._id, $rootScope.user.username).then(function(updatedEvent) {
+                            $scope.event = updatedEvent;
+                        });
+                    };
+                    googleService.removeEvent($rootScope.user.google.calendarId, event.googleCalendarIds[$rootScope.user.username]).then(function () {
+                        removeFromEvent();
+                    }, function() {
+                        removeFromEvent();
+                    });
+                }
+                else {
+                    $scope.event = data;
+                }
             });
         };
 

@@ -147,72 +147,108 @@ define(['./index'], function (controllers) {
             }
         };
 
-      $scope.calendarOptions = {
-          height: 600,
-          editable: false,
-          header:{
+    $scope.calendarOptions = {
+        height: 600,
+        editable: false,
+        header:{
             right: 'today prev,next'
-          },
-          events: $scope.events,
-          dayClick: $scope.dayClick
-      };
+        },
+        events: $scope.events,
+        dayClick: $scope.dayClick
+    };
 
-        $scope.rsvpToEvent = function(event) {
-          eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
-              for (var i = 0; i < $scope.dayEvents.length; i++) {
-                  if($scope.dayEvents[i]._id === event._id) {
-                      $scope.dayEvents[i] = data;
-                      break;
-                  }
-              }
-              for (var j = 0; j < $scope.events.length; j++) {
-                if($scope.events[j].id === event._id) {
-                  // highlight event on calendar
-                  $scope.events[j].backgroundColor = '#4fbda2';
-                  $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
-                  $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
-                  break;
+    $scope.rsvpToEvent = function(event) {
+        var updateEvent = function(eventId, updatedEvent) {
+            for (var i = 0; i < $scope.dayEvents.length; i++) {
+                if($scope.dayEvents[i]._id === eventId) {
+                    $scope.dayEvents[i] = updatedEvent;
+                    break;
                 }
-              }
+            }
+            for (var j = 0; j < $scope.events.length; j++) {
+                if($scope.events[j].id === eventId) {
+                    // highlight event on calendar
+                    $scope.events[j].backgroundColor = '#4fbda2';
+                    $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+                    $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+                    break;
+                }
+            }
+        };
 
-              // automatically post to Facebook if user is linked and has option enabled
-              if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy === 'public') {
+        eventService.rsvp(event._id, $rootScope.user._id).then(function (data) {
+            // automatically post to Facebook if user is linked and has option enabled
+            if($rootScope.user.facebook.id && $rootScope.user.facebook.autoPost && event.facebookId && event.privacy === 'public') {
                 $FB.login(function (res) {
                     if (res.authResponse) {
                         $rootScope.updateFbStatus($rootScope.updateApiMe);
                         $rootScope.updateApiMe();
                         $FB.api(
-                          '/me/campuslively:rsvp_to',
-                          'post',
-                          { event: event.facebookId },
-                          function(response) {
-                          }
+                            '/me/campuslively:rsvp_to',
+                            'post',
+                            { event: event.facebookId },
+                            function(response) {
+                                console.log(response);
+                            }
                         );
                     }
                 });
-              }
-          });
-      };
+            }
 
-      $scope.unRsvpToEvent = function(event) {
-          eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
-              for (var i = 0; i < $scope.dayEvents.length; i++) {
-                  if($scope.dayEvents[i]._id === event._id) {
-                      $scope.dayEvents[i] = data;
-                      break;
-                  }
-              }
-              for (var j = 0; j < $scope.events.length; j++) {
-                if($scope.events[j].id === event._id) {
-                  // un-highlight event on calendar
-                  $scope.events[j].backgroundColor = $rootScope.schoolColor;
-                  $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
-                  $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
-                  break;
+            // create Google Calendar event if user is linked
+            if($rootScope.user.google.id && $rootScope.user.google.calendarId) {
+                googleService.addEvent($rootScope.user.google.calendarId, event).then(function (data) {
+                    // update event with user's Google Calendar event ID
+                    eventService.addGoogleEventId(event._id, $rootScope.user.username, data.id).then(function(updatedEvent) {
+                        updateEvent(event._id, updatedEvent);
+                    });
+                });
+            }
+            else {
+                updateEvent(event._id, data);
+            }
+        });
+    };
+
+    $scope.unRsvpToEvent = function(event) {
+        var updateEvent = function(eventId, updatedEvent) {
+            for (var i = 0; i < $scope.dayEvents.length; i++) {
+                if($scope.dayEvents[i]._id === eventId) {
+                    $scope.dayEvents[i] = updatedEvent;
+                    break;
                 }
-              }
-          });
-      };
+            }
+            for (var j = 0; j < $scope.events.length; j++) {
+                if($scope.events[j].id === eventId) {
+                    // un-highlight event on calendar
+                    $scope.events[j].backgroundColor = $rootScope.schoolColor;
+                    $scope.eventCalendar.fullCalendar('removeEventSource', $scope.events);
+                    $scope.eventCalendar.fullCalendar('addEventSource', $scope.events);
+                    break;
+                }
+            }
+        };
+
+        eventService.unRsvp(event._id, $rootScope.user._id).then(function (data) {
+            // remove from user's Google Calendar if linked
+            if($rootScope.user.google.id && $rootScope.user.google.calendarId && event.googleCalendarIds) {
+                var removeFromEvent = function() {
+                    // remove user's Google Calendar event ID from event
+                    eventService.removeGoogleEventId(event._id, $rootScope.user.username).then(function(updatedEvent) {
+                        updateEvent(event._id, updatedEvent);
+                    });
+                };
+                googleService.removeEvent($rootScope.user.google.calendarId, event.googleCalendarIds[$rootScope.user.username]).then(function () {
+                    removeFromEvent();
+                }, function() {
+                    removeFromEvent();
+                });
+            }
+            else {
+                updateEvent(event._id, data);
+            }
+        });
+    };
 
       $scope.isAttending = function(event) {
           for(var i = 0; i < event.attending.length; i++) {
