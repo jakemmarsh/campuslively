@@ -139,6 +139,19 @@ exports.getUsersForInvite = function(req, res) {
     });
 };
 
+exports.searchForUsers = function(req, res) {
+    var getUsers = function(params) {
+        var deferred = Q.defer();
+
+        return deferred.promise;
+    };
+
+    // queryString is pulled from /api/v1/user/search?query=X
+    getUsers(req.query.query).then(function(data) {
+        res.json(200, data);
+    }, function(err) {
+        res.send(500, err);
+    });
 };
 
 exports.getUser = function(req, res) {
