@@ -6,8 +6,13 @@ define(['../index'], function (controllers) {
         var getVenues = function(position) {
             locationService.getFoursquareVenues(position).then(function (data) {
                 $scope.venues = [];
-                for(var i = 0; i < data.response.groups.length; i++) {
-                    $scope.venues = $scope.venues.concat(data.response.groups[i].items);
+                if(data.response.groups) {
+                    for(var i = 0; i < data.response.groups.length; i++) {
+                        $scope.venues = $scope.venues.concat(data.response.groups[i].items);
+                    }
+                }
+                else if(data.response.venues) {
+                    $scope.venues = data.response.venues;
                 }
             });
         };
@@ -149,21 +154,21 @@ define(['../index'], function (controllers) {
                     };
 
                     $scope.newEvent.pictureUrl = 'https://s3.amazonaws.com/campuslively/event_imgs/' + $scope.event._id + getExtension($scope.newImage.image.file.name);
-                    
+
                     // add picture URL to event
                     eventService.updateEvent($scope.event._id, $scope.newEvent).then(function() {
                         $modalInstance.close();
 
                         // refresh page to show updated event
-                        $state.transitionTo($state.current, $stateParams, { 
-                          reload: true, inherit: false, notify: true 
+                        $state.transitionTo($state.current, $stateParams, {
+                          reload: true, inherit: false, notify: true
                         });
                     },
                     function (errorMessage) {
                         $scope.editError = errorMessage;
                         return;
                     });
-                }, 
+                },
                 function (errorMessage) {
                     $scope.editError = errorMessage;
                     return;
@@ -175,10 +180,10 @@ define(['../index'], function (controllers) {
                     $modalInstance.close();
 
                     // refresh page to show updated event
-                    $state.transitionTo($state.current, $stateParams, { 
-                      reload: true, inherit: false, notify: true 
+                    $state.transitionTo($state.current, $stateParams, {
+                      reload: true, inherit: false, notify: true
                     });
-                }, 
+                },
                 function (errorMessage) {
                     $scope.editError = errorMessage;
                     return;

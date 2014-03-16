@@ -18,8 +18,13 @@ define(['./index'], function (controllers) {
         var getVenues = function(position) {
             locationService.getFoursquareVenues(position).then(function (data) {
                 $scope.venues = [];
-                for(var i = 0; i < data.response.groups.length; i++) {
-                    $scope.venues = $scope.venues.concat(data.response.groups[i].items);
+                if(data.response.groups) {
+                    for(var i = 0; i < data.response.groups.length; i++) {
+                        $scope.venues = $scope.venues.concat(data.response.groups[i].items);
+                    }
+                }
+                else if(data.response.venues) {
+                    $scope.venues = data.response.venues;
                 }
             },
             function (errorMessage) {
