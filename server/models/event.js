@@ -25,7 +25,7 @@ var eventSchema = new mongoose.Schema({
         set: deleteEmpty
     },
     loc: {
-      type: { type: String }, 
+      type: { type: String },
       coordinates: [Number]
     },
     description: {
@@ -53,7 +53,7 @@ var eventSchema = new mongoose.Schema({
         ref: 'User'
     },
     timestamp: {
-        type: Date, 
+        type: Date,
         default: Date.now
     },
     attending: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
@@ -71,6 +71,11 @@ var eventSchema = new mongoose.Schema({
     },
     facebookId: {
         type: String,
+        set: deleteEmpty
+    },
+    googleCalendarIds: {
+        type: mongoose.Schema.Types.Mixed,
+        default: {},
         set: deleteEmpty
     }
 });

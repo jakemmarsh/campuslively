@@ -138,6 +138,8 @@ app.configure(function() {
     app.post('/api/v1/event/:eventId/invite/sender/:senderId', restrict, routes.event.inviteUsers);
     app.post('/api/v1/event/:eventId/rsvp/:userId', restrict, routes.event.rsvp);
     app.delete('/api/v1/event/:eventId/unrsvp/:userId', restrict, routes.event.unRsvp);
+    app.post('/api/v1/event/:eventId/googleEventId/add/:googleEventId/username/:username', restrict, routes.event.addGoogleEventId);
+    app.delete('/api/v1/event/:eventId/googleEventId/remove/username/:username', restrict, routes.event.removeGoogleEventId);
 
     app.delete('/api/v1/event/:eventId', restrict, routes.event.deleteEvent);
 

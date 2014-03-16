@@ -6,11 +6,11 @@ define(['./index', 'https://apis.google.com/js/client.js'], function (services) 
     return {
       clientId: '257320210287.apps.googleusercontent.com',
       apiKey: 'AIzaSyDJHaZDPj_r8vjUiFTJjp8w8j31cQtIzgQ',
-      scopes: 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/plus.login',
+      scopes: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/plus.login',
       login: function () {
-          gapi.auth.authorize({ 
-              client_id: this.clientId, 
-              scope: this.scopes, 
+          gapi.auth.authorize({
+              client_id: this.clientId,
+              scope: this.scopes,
               immediate: false,
           }, this.handleAuthResult);
 
@@ -32,12 +32,43 @@ define(['./index', 'https://apis.google.com/js/client.js'], function (services) 
           }
       },
       handleAuthClick: function() {
-          gapi.auth.authorize({ 
-              client_id: this.clientId, 
-              scope: this.scopes, 
+          gapi.auth.authorize({
+              client_id: this.clientId,
+              scope: this.scopes,
               immediate: false,
           }, this.handleAuthResult);
           return false;
+      },
+      getUserCalendar: function() {
+        var deferred = $q.defer(),
+            getCalendars = function() {
+              gapi.client.load('calendar', 'v3', function() {
+                  var request = gapi.client.calendar.calendarList.list({});
+                  request.execute(function(resp) {
+                      if(!resp.error) {
+                        for(var i = 0; i < resp.items.length; i++) {
+                          // get the first calendar that isn't a Google default calendar
+                          if(resp.items[i].id.indexOf("calendar.google.com") === -1) {
+                            deferred.resolve(resp.items[i].id);
+                            break;
+                          }
+                        }
+                      }
+                      else {
+                        deferred.reject(resp.error);
+                      }
+                  });
+              });
+            };
+
+        // login to google API before making calls
+        gapi.auth.authorize({
+              client_id: this.clientId,
+              scope: this.scopes,
+              immediate: true,
+        }, getCalendars);
+
+        return deferred.promise;
       },
       getAllEvents: function() {
         var deferred = $q.defer(),
@@ -117,13 +148,107 @@ define(['./index', 'https://apis.google.com/js/client.js'], function (services) 
         };
 
         // login to google API before making calls
-        gapi.auth.authorize({ 
-              client_id: this.clientId, 
-              scope: this.scopes, 
-              immediate: true, 
+        gapi.auth.authorize({
+              client_id: this.clientId,
+              scope: this.scopes,
+              immediate: true,
         }, getAllEvents);
 
         return deferred.promise;
+      },
+      addEvent: function(calendarId, event) {
+        var deferred = $q.defer(),
+            insertEvent = function(calendarId, event) {
+              var resource = {
+                "summary": event.title,
+                "location": event.locationName,
+                "description": event.description,
+                "source": {
+                  "title": "Campuslively",
+                  "url": "http://www.campuslively.com/event/" + event._id
+                },
+                "start": {
+                  "dateTime": new Date(event.startDate)  //if not an all day event, "date" should be "dateTime" with a dateTime value formatted according to RFC 3339
+                }
+              };
+
+              // if the event has an end time, use that
+              if(event.endTime) {
+                var timeArray = event.endTime.split(':'),
+                  hours = parseInt(timeArray[0]),
+                  minutes = parseInt(timeArray[1].replace(/\D/g,''));
+
+                // adjust 24-hour format for am/pm
+                if(timeArray[1].toLowerCase().indexOf('pm') !== -1) {
+                  hours += 12;
+                }
+
+                var newEndDate = new Date(event.startDate);
+                newEndDate.setHours(hours);
+                newEndDate.setMinutes(minutes);
+              }
+              // otherwise, create an arbitrary end time of 2 hours later
+              else {
+                newEndDate = new Date(event.startDate);
+                newEndDate.setHours(newEndDate.getHours() + 2);
+              }
+              resource["end"] = {
+                "dateTime": newEndDate //if not an all day event, "date" should be "dateTime" with a dateTime value formatted according to RFC 3339
+              }
+
+              gapi.client.load('calendar', 'v3', function() {
+                var request = gapi.client.calendar.events.insert({
+                  'calendarId': calendarId,
+                  'resource': resource
+                });
+                request.execute(function(resp) {
+                  if (resp.id){
+                    deferred.resolve(resp);
+                  }
+                  else {
+                    deferred.reject();
+                  }
+                });
+              });
+            };
+
+        // login to google API before making calls
+        gapi.auth.authorize({
+              client_id: this.clientId,
+              scope: this.scopes,
+              immediate: true,
+        }, insertEvent(calendarId, event));
+
+        return deferred.promise;
+      },
+      removeEvent: function(calendarId, eventId) {
+        var deferred = $q.defer(),
+            deleteEvent = function(calendarId, eventId) {
+              gapi.client.load('calendar', 'v3', function() {
+                var request = gapi.client.calendar.events.delete({
+                  'calendarId': calendarId,
+                  'eventId': eventId
+                });
+
+                request.execute(function(resp) {
+                  if (typeof resp === 'undefined') {
+                    deferred.resolve();
+                  }
+                  else {
+                    deferred.reject();
+                  }
+                });
+              });
+            };
+
+          // login to google API before making calls
+          gapi.auth.authorize({
+                client_id: this.clientId,
+                scope: this.scopes,
+                immediate: true,
+          }, deleteEvent(calendarId, eventId));
+
+          return deferred.promise;
       }
     }
   }]);

@@ -249,6 +249,28 @@ define(['./index'], function (services) {
 
             return deferred.promise;
         },
+        addGoogleEventId: function(eventId, username, googleEventId) {
+            var deferred = $q.defer();
+
+            $http.post(this.apiPath + eventId + '/googleEventId/add/' + googleEventId + '/username/' + username).success(function(data) {
+                deferred.resolve(data);
+            }).error(function(err, status) {
+                deferred.reject(err, status);
+            });
+
+            return deferred.promise;
+        },
+        removeGoogleEventId: function(eventId, username) {
+            var deferred = $q.defer();
+
+            $http.delete(this.apiPath + eventId + '/googleEventId/remove/username/' + username).success(function(data) {
+                deferred.resolve(data);
+            }).error(function(err, status) {
+                deferred.reject(err, status);
+            });
+
+            return deferred.promise;
+        },
         postComment: function(eventId, comment) {
             var deferred = $q.defer();
 

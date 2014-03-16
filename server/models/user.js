@@ -127,6 +127,10 @@ var userSchema = new mongoose.Schema({
         id: {
             type: String,
             set: deleteEmpty
+        },
+        calendarId: {
+            type: String,
+            set: deleteEmpty
         }
     }
 });

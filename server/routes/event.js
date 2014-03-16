@@ -872,6 +872,90 @@ exports.updateEvent = function(req, res) {
     });
 };
 
+exports.addGoogleEventId = function(req, res) {
+    var addId = function(eventId, username, googleEventId) {
+        var deferred = Q.defer();
+
+        Event.findOne({ _id: eventId }, function(err, event) {
+            if(err) {
+                deferred.reject(err.message);
+            }
+            else {
+                event.googleCalendarIds[username] = googleEventId;
+                event.markModified('googleCalendarIds');
+                event.save(function(err, savedEvent) {
+                    if(err) {
+                        deferred.reject(err.message);
+                    }
+                    else {
+                        // find document again to allow for populating
+                        Event.findOne({ _id: eventId })
+                        .populate(eventPopulateObj)
+                        .exec(function(err, retrievedEvent) {
+                            if(err) {
+                                deferred.reject(err);
+                            }
+                            else {
+                                deferred.resolve(retrievedEvent);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    addId(req.params.eventId, req.params.username, req.params.googleEventId).then(function(data) {
+        res.json(200, data);
+    }, function(err) {
+        res.send(500, err);
+    });
+};
+
+exports.removeGoogleEventId = function(req, res) {
+    var removeId = function(eventId, username) {
+        var deferred = Q.defer();
+
+        Event.findOne({ _id: eventId }, function(err, event) {
+            if(err) {
+                deferred.reject(err.message);
+            }
+            else {
+                delete event.googleCalendarIds[username];
+                event.markModified('googleCalendarIds');
+                event.save(function(err, savedEvent) {
+                    if(err) {
+                        deferred.reject(err.message);
+                    }
+                    else {
+                        // find document again to allow for populating
+                        Event.findOne({ _id: eventId })
+                        .populate(eventPopulateObj)
+                        .exec(function(err, retrievedEvent) {
+                            if(err) {
+                                deferred.reject(err);
+                            }
+                            else {
+                                deferred.resolve(retrievedEvent);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    removeId(req.params.eventId, req.params.username).then(function(data) {
+        res.json(200, data);
+    }, function(err) {
+        res.send(500, err);
+    })
+};
+
 exports.rsvp = function(req, res) {
     var updateUser = function(userId, eventId) {
         var deferred = Q.defer();
