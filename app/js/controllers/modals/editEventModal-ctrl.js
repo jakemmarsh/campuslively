@@ -135,7 +135,6 @@ define(['../index'], function (controllers) {
 
             // if a new event image was chosen, confirm it is an image of the proper size, then upload it before updating the event
             if($scope.newImage.image) {
-                console.log('has image');
                 // verify that uploaded file is of type "image/x"
                 if($scope.newImage.image.file.type.toLowerCase().indexOf("image") === -1) {
                     $scope.editError = "The event picture must be an image.";

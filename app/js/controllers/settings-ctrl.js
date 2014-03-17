@@ -232,7 +232,6 @@ define(['./index'], function (controllers) {
                     userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
                         $rootScope.user = data;
                         localStorageService.add('user', data);
-                        console.log($rootScope.user);
                     });
                 });
             });
