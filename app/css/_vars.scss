@@ -1,31 +1,28 @@
 // COLORS
-$white: #fff;
-$dark-grey: #232528;
-$light-grey: #f9f8f8;
-$border-grey: #e7e7e7;
+$white: #fff !default;
+$dark-grey: #232528 !default;
+$light-grey: #f9f8f8 !default;
+$border-grey: #e7e7e7 !default;
 
-$twitter-blue: #00abf0;
-$fb-blue: #4c66a4;
-$google-red: #dd4b39;
+$muted-text: #9d9c9c !default;
 
-$red: #cd0001;
-$light-blue: #f2f7fe;
-$medium-blue: #b1c8dc;
-$green: #4fbda2;
-$blue: #3e90be;
+$twitter-blue: #00abf0 !default;
+$fb-blue: #4c66a4 !default;
+$google-red: #dd4b39 !default;
 
-$umaine-blue: #3e90be;
-$bu-red: #cc0000;
+$red: #cd0001 !default;
+$light-blue: #f2f7fe !default;
+$medium-blue: #b1c8dc !default;
+$green: #4fbda2 !default;
+$blue: #3e90be !default;
 
-$primary: $umaine-blue;
-$secondary: $primary;
-
-$muted-text: #9d9c9c;
+$primary: $blue !default;
+$secondary: $primary !default;
 
 
 // SPACING
-$full-space: 20px;
-$half-space: 10px;
+$full-space: 20px !default;
+$half-space: 10px !default;
 
 
 // MIX-INS
