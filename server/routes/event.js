@@ -264,10 +264,10 @@ exports.getEventsBySchoolAndDay = function(req, res) {
             floorDay = new Date(day),
             ceilingDay = new Date(day);
 
-        // set floor to last minute of previous day
-        floorDay.setHours(0, -1);
-        // set ceiling to first minute of next day
-        ceilingDay.setHours(23, 60);
+        // set floor to last second of previous day
+        floorDay.setHours(0, 0, -1);
+        // set ceiling to first second of next day
+        ceilingDay.setHours(23, 59, 60);
 
         Event.find({
             school: schoolId,
