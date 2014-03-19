@@ -15,7 +15,7 @@ define([
     app.config(['$FBProvider', function ($FBProvider) {
         $FBProvider.setInitParams({
             appId: '458852510898409'
-        }); 
+        });
     }]);
 
     app.run(['$rootScope', '$location', 'authService', 'localStorageService', '$FB', 'userService', '$q', function ($rootScope, $location, authService, localStorageService, $FB, userService, $q) {
@@ -82,7 +82,7 @@ define([
         $rootScope.isCurrentPage = function(path) {
             if ($location.path().substr(0, path.length) === path) {
               return true;
-            } 
+            }
             else {
               return false;
             }
@@ -153,6 +153,10 @@ define([
             $FB.api('/me', function (res) {
                 $rootScope.fbMe = res;
             });
+        };
+
+        $rootScope.eventPassed = function(eventDate) {
+            return new Date(eventDate) < new Date();
         };
 
         // global function to log user out
