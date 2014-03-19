@@ -100,50 +100,45 @@ define(['./index'], function (controllers) {
       });
 
         $scope.dayClick = function(date, allDay, jsEvent, view){
-            if(!$scope.$$phase) {
-                $scope.$apply(function() {
-                        $scope.selectedDay = date;
-                $scope.loadingDayEvents = true;
-                $scope.dayEvents = [];
-                if($scope.currentView === 'school') {
-                  eventService.getEventsBySchoolAndDay($rootScope.user.school._id, $scope.selectedDay).then(function (data) {
-                    $scope.loadingDayEvents = false;
-                    $scope.dayEvents = data;
-                    $scope.showDay = true;
+            $scope.selectedDay = date;
+            $scope.loadingDayEvents = true;
+            if($scope.currentView === 'school') {
+              eventService.getEventsBySchoolAndDay($rootScope.user.school._id, $scope.selectedDay).then(function (data) {
+                $scope.loadingDayEvents = false;
+                $scope.dayEvents = data;
+                $scope.showDay = true;
 
-                    $scope.$watch('showDay', function(newval){
-                        if(newval === true) {
-                          // scroll to specific day's events
-                          var old = $location.hash();
-                          $location.hash('dayEvents');
-                          $anchorScroll();
-                          $location.hash(old);
-                        }
-                    });
-                  }, function(errorMessage) {
-                    $scope.dayError = errorMessage;
-                  });
-                }
-                else if($scope.currentView === 'nearby') {
-                  eventService.getEventsByLocationAndDay($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.selectedDay).then(function (data) {
-                    $scope.loadingDayEvents = false;
-                    $scope.dayEvents = data;
-                    $scope.showDay = true;
-
-                    $scope.$watch('showDay', function(newval){
-                        if(newval === true) {
-                          // scroll to specific day's events
-                          var old = $location.hash();
-                          $location.hash('dayEvents');
-                          $anchorScroll();
-                          $location.hash(old);
-                        }
-                    });
-                  }, function(errorMessage) {
-                    $scope.dayError = errorMessage;
-                  });
-                }
+                $scope.$watch('showDay', function(newval){
+                    if(newval === true) {
+                      // scroll to specific day's events
+                      var old = $location.hash();
+                      $location.hash('dayEvents');
+                      $anchorScroll();
+                      $location.hash(old);
+                    }
                 });
+              }, function(errorMessage) {
+                $scope.dayError = errorMessage;
+              });
+            }
+            else if($scope.currentView === 'nearby') {
+              eventService.getEventsByLocationAndDay($rootScope.userPosition.latitude.toFixed(2), $rootScope.userPosition.longitude.toFixed(2), $scope.selectedDay).then(function (data) {
+                $scope.loadingDayEvents = false;
+                $scope.dayEvents = data;
+                $scope.showDay = true;
+
+                $scope.$watch('showDay', function(newval){
+                    if(newval === true) {
+                      // scroll to specific day's events
+                      var old = $location.hash();
+                      $location.hash('dayEvents');
+                      $anchorScroll();
+                      $location.hash(old);
+                    }
+                });
+              }, function(errorMessage) {
+                $scope.dayError = errorMessage;
+              });
             }
         };
 
