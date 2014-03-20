@@ -319,9 +319,10 @@ exports.getEventsByLocationAndDay = function(req, res) {
             floorDay = new Date(day),
             ceilingDay = new Date(day);
 
-        // set floor and ceiling for querying events
-        floorDay.setDate(floorDay.getDate() - 1);
-        ceilingDay.setDate(ceilingDay.getDate() + 1);
+        // set floor to last second of previous day
+        floorDay.setHours(0, 0, -1);
+        // set ceiling to first second of next day
+        ceilingDay.setHours(23, 59, 60);
 
         Event.find({
             sponsored: true,
