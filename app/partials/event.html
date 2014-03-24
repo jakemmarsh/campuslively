@@ -51,7 +51,7 @@
 						<h4 class="flush--top nudge-half--bottom"><i class="muted fa fa-map-marker"></i></h4>
 					</div>
 					<div class="unit ninety-seven-percent last-unit">
-						<p class="nudge-half--bottom">{{event.locationName}}<span ng-show="event.roomNumber" ng-bind="', Room ' + event.roomNumber"></span></p>
+						<p class="nudge-half--bottom">{{event.locationName}}<span ng-show="event.roomNumber" ng-bind="', Room: ' + event.roomNumber"></span></p>
 					</div>
 				</div>
 				<div ui-map="locationMap" ui-options="mapOptions" ui-event="{'map-tilesloaded': 'placeMarker()'}" class="map nudge-half--bottom" ng-show="hasLocation"></div>

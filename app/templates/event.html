@@ -28,7 +28,7 @@
 				<div class="unit full-width last-unit text-center">
 					<span class="epsilon">
 						<span ng-show="event.locationName" class="nudge--right">
-							<i class="fa fa-map-marker muted"></i> <span>{{event.locationName}}<span ng-show="event.roomNumber" ng-bind="', Room ' + event.roomNumber"></span></span>
+							<i class="fa fa-map-marker muted"></i> <span>{{event.locationName}}<span ng-show="event.roomNumber" ng-bind="', Room: ' + event.roomNumber"></span></span>
 						</span>
 						<span ng-show="event.startDate" class="nudge--right">
 							<i class="fa fa-calendar-o muted"></i> <span>{{ event.startDate | readableDate }}</span>
