@@ -183,7 +183,7 @@ define(['./index'], function (controllers) {
                             'post',
                             { event: event.facebookId },
                             function(response) {
-                                console.log(response);
+                                //console.log(response);
                             }
                         );
                     }

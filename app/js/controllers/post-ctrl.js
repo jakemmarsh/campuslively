@@ -165,42 +165,6 @@ define(['./index'], function (controllers) {
 
         // post event and show necessary message(s)
         $scope.postEvent = function() {
-            // create venue and send to foursquare if it is new
-       //   if($scope.showAddressInput && (address != null)) {
-       //       venue.name = $scope.eventLocation;
-
-       //       // extract all the information from google data to send to foursquare
-       //       var tempAddress;
-       //       for(var i = 0; i < address.address_components.length; i++) {
-       //           for(var j = 0; j < address.address_components[i].types.length; j++) {
-       //               if (address.address_components[i].types[j] === 'street_number') {
-       //                   tempAddress = address.address_components[i].long_name;
-       //               }
-       //               else if (address.address_components[i].types[j] === 'route') {
-       //                   tempAddress += ' ' + address.address_components[i].long_name;
-       //               }
-       //               else if (address.address_components[i].types[j] === 'administrative_area_level_1') {
-       //                   venue.state = address.address_components[i].long_name;
-       //               }
-       //               else if (address.address_components[i].types[j] === 'locality') {
-       //                   venue.city = address.address_components[i].long_name;
-       //               }
-       //               else if (address.address_components[i].types[j] === 'postal_code') {
-       //                   venue.zip = address.address_components[i].long_name;
-       //               }
-       //           }
-       //       }
-       //       venue.address = tempAddress;
-       //       venue.ll = address.geometry.location.lat.toFixed(2) + ',' + address.geometry.location.lng.toFixed(2);
-
-       //       // post new venue to foursquare
-       //       locationService.createFoursquareVenue(venue).then(function (data) {
-                //  console.log(data);
-                // },
-                // function (errorMessage) {
-                //  console.log(errorMessage);
-          //       });
-       //   }
             // populate remaining parts of event for posting
             if(($scope.event.tags.length > 0) && !($scope.event.tags instanceof Array)) {
                 $scope.event.tags = $scope.event.tags.split(',');
