@@ -202,7 +202,7 @@ define(['./index'], function (controllers) {
           //       });
        //   }
             // populate remaining parts of event for posting
-            if($scope.event.tags.length > 0) {
+            if(($scope.event.tags.length > 0) && !($scope.event.tags instanceof Array)) {
                 $scope.event.tags = $scope.event.tags.split(',');
             }
 
@@ -306,8 +306,10 @@ define(['./index'], function (controllers) {
                                 return;
                             });
                         },
-                        function (errorMessage) {
-                            $scope.postError = errorMessage;
+                        // register event as posted even if Facebook object creation fails
+                        function () {
+                            $scope.eventPosted = true;
+                            $scope.postedEvent = postedEvent;
                         });
                     },
                     function (errorMessage) {
@@ -350,15 +352,11 @@ define(['./index'], function (controllers) {
                                     }
                                 });
                             }
-                        },
-                        function (errorMessage) {
-                            $scope.postError = errorMessage;
-                            return;
                         });
-                    },
-                    function (errorMessage) {
-                        $scope.postError = errorMessage;
-                        return;
+                    // register event as posted even if Facebook object creation fails
+                    }, function() {
+                        $scope.eventPosted = true;
+                        $scope.postedEvent = postedEvent;
                     });
                 },
                 function (errorMessage) {

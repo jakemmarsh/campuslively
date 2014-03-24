@@ -212,6 +212,7 @@ define(['./index'], function (services) {
             }
 
             object = JSON.stringify(object);
+            privacy = JSON.stringify(privacy);
 
             $http.post('https://graph.facebook.com/app/objects/campuslively:event?access_token=' + accessToken + '&privacy=' + privacy + '&object=' + object).success(function(data) {
                 deferred.resolve(data);
