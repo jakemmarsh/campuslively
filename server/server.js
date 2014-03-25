@@ -25,6 +25,7 @@ app.configure(function() {
     app.use(express.compress());
     app.use(express.methodOverride());
     app.use(express.bodyParser());
+    app.set('json spaces', 0);
 
     // Add headers
     app.use(function (req, res, next) {
