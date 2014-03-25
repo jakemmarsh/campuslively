@@ -766,7 +766,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t\t\t\t\t\t\t<div class=\"unit full-width last-unit text-center\">\n" +
     "\t\t\t\t\t\t\t\t\t<span class=\"epsilon\">\n" +
     "\t\t\t\t\t\t\t\t\t\t<span ng-show=\"activity.event.locationName\" class=\"nudge--right\">\n" +
-    "\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-map-marker muted\"></i> <span ng-bind=\"activity.event.locationName\"></span> \n" +
+    "\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-map-marker muted\"></i> <span ng-bind=\"activity.event.locationName\"></span>\n" +
     "\t\t\t\t\t\t\t\t\t\t</span>\n" +
     "\t\t\t\t\t\t\t\t\t\t<span ng-show=\"activity.event.startDate\" class=\"nudge--right\">\n" +
     "\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-calendar-o muted\"></i> <span>{{ activity.event.startDate | readableDate }}</span>\n" +
@@ -788,7 +788,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t\t\t\t\t</div>\n" +
     "\t\t\t\t\t\t<div class=\"event-footer table full-width soft-quarter--ends\">\n" +
     "\t\t\t\t\t\t\t<div class=\"tr\">\n" +
-    "\t\t\t\t\t\t\t\t<div class=\"td three-fourths\">\n" +
+    "\t\t\t\t\t\t\t\t<div class=\"td three-fifths\">\n" +
     "\t\t\t\t\t\t\t\t\t<ul class=\"tags\">\n" +
     "\t\t\t\t\t\t\t\t\t\t<li ng-repeat=\"tag in activity.event.tags\" ng-bind=\"tag\"></li>\n" +
     "\t\t\t\t\t\t\t\t\t</ul>\n" +
@@ -853,7 +853,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t\t\t\t\t\t\t<div class=\"unit full-width last-unit text-center\">\n" +
     "\t\t\t\t\t\t\t\t\t<span class=\"epsilon\">\n" +
     "\t\t\t\t\t\t\t\t\t\t<span ng-show=\"activity.event.locationName\" class=\"nudge--right\">\n" +
-    "\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-map-marker muted\"></i> <span ng-bind=\"activity.event.locationName\"></span> \n" +
+    "\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-map-marker muted\"></i> <span ng-bind=\"activity.event.locationName\"></span>\n" +
     "\t\t\t\t\t\t\t\t\t\t</span>\n" +
     "\t\t\t\t\t\t\t\t\t\t<span ng-show=\"activity.event.startDate\" class=\"nudge--right\">\n" +
     "\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-calendar-o muted\"></i> <span>{{ activity.event.startDate | readableDate }}</span>\n" +
@@ -875,7 +875,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t\t\t\t\t</div>\n" +
     "\t\t\t\t\t\t<div class=\"event-footer table full-width soft-quarter--ends\">\n" +
     "\t\t\t\t\t\t\t<div class=\"tr\">\n" +
-    "\t\t\t\t\t\t\t\t<div class=\"td three-fourths\">\n" +
+    "\t\t\t\t\t\t\t\t<div class=\"td three-fifths\">\n" +
     "\t\t\t\t\t\t\t\t\t<ul class=\"tags\">\n" +
     "\t\t\t\t\t\t\t\t\t\t<li ng-repeat=\"tag in activity.event.tags\" ng-bind=\"tag\"></li>\n" +
     "\t\t\t\t\t\t\t\t\t</ul>\n" +
@@ -961,7 +961,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t\t\t\t\t\t\t<div class=\"unit full-width last-unit text-center\">\n" +
     "\t\t\t\t\t\t\t\t\t<span class=\"epsilon\">\n" +
     "\t\t\t\t\t\t\t\t\t\t<span ng-show=\"activity.event.locationName\" class=\"nudge--right\">\n" +
-    "\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-map-marker muted\"></i> <span ng-bind=\"activity.event.locationName\"></span> \n" +
+    "\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-map-marker muted\"></i> <span ng-bind=\"activity.event.locationName\"></span>\n" +
     "\t\t\t\t\t\t\t\t\t\t</span>\n" +
     "\t\t\t\t\t\t\t\t\t\t<span ng-show=\"activity.event.startDate\" class=\"nudge--right\">\n" +
     "\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-calendar-o muted\"></i> <span>{{ activity.event.startDate | readableDate }}</span>\n" +
