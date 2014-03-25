@@ -74,7 +74,7 @@ define(['../index'], function (controllers) {
 
         // attempt to get latitude and longitude as address is entered
         $scope.checkLocation = function() {
-            if($scope.newEvent.locationName) {
+            if($scope.newEvent.locationName && $scope.newEvent.locationName !== $scope.event.locationName) {
                 // first check for Foursquare venue
                 for(var i = 0; i < $scope.venues.length; i++) {
                     // if venue is known
@@ -95,9 +95,9 @@ define(['../index'], function (controllers) {
                                 type: 'Point',
                                 coordinates: [data.results[0].geometry.location.lng.toFixed(2), data.results[0].geometry.location.lat.toFixed(2)]
                             };
+                            return;
                         }
                     }
-                    return;
                 });
 
                 // if still nothing is found, set to the nonsensical coordinates
@@ -117,6 +117,10 @@ define(['../index'], function (controllers) {
         $scope.saveChanges = function() {
             $scope.checkLocation();
             $scope.newEvent.startDate = new Date($scope.newEvent.startDate);
+
+            if(($scope.newEvent.tags.length > 0) && !($scope.newEvent.tags instanceof Array)) {
+                $scope.newEvent.tags = $scope.newEvent.tags.split(',');
+            }
 
             // add time to event's startDate for proper querying
             var timeArray = $scope.newEvent.startTime.split(':'),
