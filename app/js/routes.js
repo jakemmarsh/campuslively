@@ -4,50 +4,50 @@
 define(['./app'], function (app) {
     'use strict';
     app.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', function ($stateProvider, $locationProvider, $urlRouterProvider) {
-        $locationProvider.html5Mode(true);          
+        $locationProvider.html5Mode(true);
 
         $stateProvider
         .state('index', {
             url: '/',
-            templateUrl: '/partials/home.html',
+            templateUrl: 'partials/home.html',
             controller: 'homeCtrl',
             title: 'Home',
             access: 'notLoggedIn'
         })
         .state('inner', {
-            templateUrl: '/partials/inner.html',
+            templateUrl: 'partials/inner.html',
             controller: 'innerCtrl'
         })
         .state('inner.login', {
             url: '/login',
-            templateUrl: '/partials/login.html',
+            templateUrl: 'partials/login.html',
             controller: 'loginCtrl',
             title: 'Login',
             access: 'notLoggedIn'
         })
         .state('inner.register', {
             url: '/register',
-            templateUrl: '/partials/register.html',
+            templateUrl: 'partials/register.html',
             title: 'Register',
             access: 'notLoggedIn'
         })
         .state('inner.registerGroup', {
             url: '/register/group',
-            templateUrl: '/partials/register-group.html',
+            templateUrl: 'partials/register-group.html',
             controller: 'registerGroupCtrl',
             title: 'Register',
             access: 'notLoggedIn'
         })
         .state('inner.registerStudent', {
             url: '/register/student',
-            templateUrl: '/partials/register-student.html',
+            templateUrl: 'partials/register-student.html',
             controller: 'registerStudentCtrl',
             title: 'Register',
             access: 'notLoggedIn'
         })
         .state('inner.activate', {
             url: '/activate/:userId/:activateKey',
-            templateUrl: '/partials/activate.html',
+            templateUrl: 'partials/activate.html',
             controller: 'activateCtrl',
             title: 'Activate Account',
             access: 'notLoggedIn',
@@ -64,7 +64,7 @@ define(['./app'], function (app) {
         })
         .state('inner.resend', {
             url: '/resend/:username',
-            templateUrl: '/partials/resend.html',
+            templateUrl: 'partials/resend.html',
             controller: 'resendCtrl',
             title: 'Activation Link Resent',
             access: 'notLoggedIn',
@@ -81,14 +81,14 @@ define(['./app'], function (app) {
         })
         .state('inner.forgot', {
             url: '/forgot',
-            templateUrl: '/partials/forgot.html',
+            templateUrl: 'partials/forgot.html',
             controller: 'forgotCtrl',
             title: 'Forgotten Password',
             access: 'notLoggedIn'
         })
         .state('inner.reset', {
             url: '/reset/:userId/:resetKey',
-            templateUrl: '/partials/reset.html',
+            templateUrl: 'partials/reset.html',
             controller: 'resetCtrl',
             title: 'Reset Password',
             access: 'notLoggedIn',
@@ -112,28 +112,28 @@ define(['./app'], function (app) {
         })
         .state('inner.feed', {
             url: '/feed',
-            templateUrl: '/partials/feed.html',
+            templateUrl: 'partials/feed.html',
             controller: 'feedCtrl',
             title: 'My Feed',
             access: 'loggedIn'
         })
         .state('inner.explore', {
             url: '/explore',
-            templateUrl: '/partials/explore.html',
+            templateUrl: 'partials/explore.html',
             controller: 'exploreCtrl',
             title: 'Explore',
             access: 'loggedIn'
         })
         .state('inner.calendar', {
             url: '/calendar',
-            templateUrl: '/partials/calendar.html',
+            templateUrl: 'partials/calendar.html',
             controller: 'calendarCtrl',
             title: 'Events Calendar',
             access: 'loggedIn'
         })
         .state('inner.event', {
             url: '/event/:eventId',
-            templateUrl: '/partials/event.html',
+            templateUrl: 'partials/event.html',
             controller: 'eventCtrl',
             resolve: {
                 resolvedEvent: ['$stateParams', '$rootScope', 'eventService', '$location', function($stateParams, $rootScope, eventService, $location){
@@ -151,27 +151,27 @@ define(['./app'], function (app) {
         })
         .state('inner.post', {
             url: '/post',
-            templateUrl: '/partials/post.html',
+            templateUrl: 'partials/post.html',
             controller: 'postCtrl',
             title: 'Post An Event',
             access: 'loggedIn'
         })
         .state('inner.settings', {
             url: '/settings',
-            templateUrl: '/partials/settings.html',
+            templateUrl: 'partials/settings.html',
             controller: 'settingsCtrl',
             title: 'Account Settings',
             access: 'loggedIn'
         })
         .state('inner.profile', {
             url: '/profile/:username',
-            templateUrl: '/partials/profile.html',
+            templateUrl: 'partials/profile.html',
             controller: 'profileCtrl',
             resolve: {
                 resolvedUser: ['$stateParams', '$rootScope', 'userService', '$location', function($stateParams, $rootScope, userService, $location){
                     return userService.getUserByName($stateParams.username).then(function(data) {
                         $rootScope.pageTitle = data.displayName;
-                        
+
                         return data;
                     },
                     function() {
@@ -184,23 +184,23 @@ define(['./app'], function (app) {
         })
         .state('inner.contact', {
             url: '/contact',
-            templateUrl: '/partials/contact.html',
+            templateUrl: 'partials/contact.html',
             controller: 'contactCtrl',
             title: 'Contact Us'
         })
         .state('inner.privacy', {
             url: '/privacy',
-            templateUrl: '/partials/privacy.html',
+            templateUrl: 'partials/privacy.html',
             title: 'Privacy Policy'
         })
         .state('inner.about', {
             url: '/about',
-            templateUrl: '/partials/about.html',
+            templateUrl: 'partials/about.html',
             title: 'About Us'
         })
         .state('inner.press', {
             url: '/press',
-            templateUrl: '/partials/press.html',
+            templateUrl: 'partials/press.html',
             title: 'Press'
         });
 

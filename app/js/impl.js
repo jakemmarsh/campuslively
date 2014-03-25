@@ -4,6 +4,7 @@
  * but implementations' `define`s placed elsewhere void the warranty
  */
 define([
+    './templates',
     'controllers/home-ctrl',
     'controllers/inner-ctrl',
     'controllers/login-ctrl',

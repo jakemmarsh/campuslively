@@ -14,7 +14,8 @@
         "grunt-contrib-sass" : ">=0.7.x",
         "grunt-contrib-requirejs" : ">=0.4.x",
         "grunt-s3" : ">=0.2.x",
-        "grunt-contrib-imagemin" : ">=0.5.x"
+        "grunt-contrib-imagemin" : ">=0.5.x",
+        "grunt-angular-templates" : ">=0.5.x"
     },
     "dependencies" : {
         "mongoose" :  ">=3.8.x",

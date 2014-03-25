@@ -4,6 +4,10 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         watch: {
+            templates: {
+                files: ['./app/partials/**/*.html', './app/templates/**/*.html'],
+                tasks: ['ngtemplates']
+            },
             scripts: {
                 files: ['./app/js/**/*.js'],
                 tasks: ['requirejs']
@@ -11,6 +15,28 @@ module.exports = function(grunt) {
             styles: {
                 files: ['./app/css/**/*.scss'],
                 tasks: ['sass']
+            }
+        },
+        ngtemplates: {
+            app: {
+                cwd: './app',
+                src: ['partials/**/*.html', 'templates/**/*.html'],
+                dest: './app/js/templates.js',
+                options: {
+                    bootstrap:  function(module, script) {
+                        return 'define([\'angular\', \'app\'], function(angular, app) { app.run([\'$templateCache\', function($templateCache) {' + script + '}]); });';
+                    }
+                },
+                htmlmin: {
+                    collapseBooleanAttributes:      true,
+                    collapseWhitespace:             true,
+                    removeAttributeQuotes:          true,
+                    removeComments:                 true,
+                    removeEmptyAttributes:          true,
+                    removeRedundantAttributes:      true,
+                    removeScriptTypeAttributes:     true,
+                    removeStyleLinkTypeAttributes:  true
+                }
             }
         },
         requirejs: {
@@ -101,11 +127,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-s3');
+    grunt.loadNpmTasks('grunt-angular-templates');
 
     // Production mode tasks
-    grunt.registerTask('prod', ['sass', 'requirejs', 'imagemin', 's3']);
+    grunt.registerTask('prod', ['sass', 'ngtemplates', 'requirejs', 'imagemin', 's3']);
 
     // Dev mode tasks
-    grunt.registerTask('default', ['sass', 'requirejs']);
+    grunt.registerTask('default', ['sass', 'ngtemplates', 'requirejs']);
 
 };
