@@ -63,6 +63,14 @@
 						<p class="pre-wrap" ng-bind-html="event.description | urlAndFormat"></p>
 					</div>
 				</div>
+                <div class="line nudge--top" ng-show="event.tags">
+                    <div class="unit three-percent"></div>
+                    <div class="unit ninety-seven-percent last-unit">
+                        <ul class="tags">
+                            <li ng-repeat="tag in event.tags" ng-bind="tag"></li>
+                        </ul>
+                    </div>
+                </div>
 			</div>
 			<form name="commentForm" class="full-width nudge-half--top clearfix" ng-submit="postComment()" ng-hide="eventPassed">
 				<textarea placeholder="Write a comment..." class="full-width no-resize to-expand" ng-model="commentBody" expand-comment required></textarea>

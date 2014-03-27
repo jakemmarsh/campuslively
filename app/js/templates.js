@@ -286,6 +286,14 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t\t\t\t\t<p class=\"pre-wrap\" ng-bind-html=\"event.description | urlAndFormat\"></p>\n" +
     "\t\t\t\t\t</div>\n" +
     "\t\t\t\t</div>\n" +
+    "                <div class=\"line nudge--top\" ng-show=\"event.tags\">\n" +
+    "                    <div class=\"unit three-percent\"></div>\n" +
+    "                    <div class=\"unit ninety-seven-percent last-unit\">\n" +
+    "                        <ul class=\"tags\">\n" +
+    "                            <li ng-repeat=\"tag in event.tags\" ng-bind=\"tag\"></li>\n" +
+    "                        </ul>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
     "\t\t\t</div>\n" +
     "\t\t\t<form name=\"commentForm\" class=\"full-width nudge-half--top clearfix\" ng-submit=\"postComment()\" ng-hide=\"eventPassed\">\n" +
     "\t\t\t\t<textarea placeholder=\"Write a comment...\" class=\"full-width no-resize to-expand\" ng-model=\"commentBody\" expand-comment required></textarea>\n" +
