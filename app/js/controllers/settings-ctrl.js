@@ -204,7 +204,7 @@ define(['./index'], function (controllers) {
                 autoPost: null,
                 lastReminded: $rootScope.user.facebook.lastReminded
             };
-            updateParams.pictureUrl = 'http://s3.amazonaws.com/campuslively/user_imgs/default.png';
+            updateParams.pictureUrl = 'http://assets.campuslively.com/user_imgs/default.png';
             updateParams.facebookLink = null;
 
             // update user in database before making Facebook API call
@@ -342,7 +342,7 @@ define(['./index'], function (controllers) {
                         return (i < 0) ? '' : filename.substr(i);
                     };
                     $scope.saveError = null;
-                    updateParams.pictureUrl = 'https://s3.amazonaws.com/campuslively/user_imgs/' + $rootScope.user._id + getExtension($scope.newUserImage.file.name);
+                    updateParams.pictureUrl = 'http://assets.campuslively.com/user_imgs/' + $rootScope.user._id + getExtension($scope.newUserImage.file.name);
                     userService.updateUser($rootScope.user._id, updateParams).then(function (data) {
                         $scope.emailTaken = false;
                         $scope.changesSaved = true;

@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-ng-bind="pageTitle + ' &mdash; Campuslively'">Campuslively</title>
   <base href="/">
-  <link href="http://s3.amazonaws.com/campuslively/assets/css/style.min.css" rel="stylesheet" media="screen" ng-if="!user.school">
-  <link ng-href="http://s3.amazonaws.com/campuslively/assets/css/style-{{user.school.shortcode}}.min.css" rel="stylesheet" media="screen" ng-if="user.school">
+  <link href="http://assets.campuslively.com/css/style.min.css" rel="stylesheet" media="screen" ng-if="!user.school">
+  <link ng-href="http://assets.campuslively.com/css/style-{{user.school.shortcode}}.min.css" rel="stylesheet" media="screen" ng-if="user.school">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
 
 </head>
 <body>
 	<div data-ui-view class="full-height"></div>
-	
-    <script data-main="http://s3.amazonaws.com/campuslively/assets/js/main.min.js" src="http://s3.amazonaws.com/campuslively/assets/js/lib/requirejs/require.js"></script>
+
+    <script data-main="http://assets.campuslively.com/js/main.min.js" src="http://assets.campuslively.com/js/lib/requirejs/require.js"></script>
 </body>
 </html>

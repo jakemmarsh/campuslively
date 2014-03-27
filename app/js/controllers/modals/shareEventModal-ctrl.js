@@ -22,7 +22,7 @@ define(['../index'], function (controllers) {
                     method: 'feed',
                     display: 'popup',
                     name: $scope.event.title,
-                    picture: 'http://campuslively.s3.amazonaws.com/assets/img/fb_logo.png',
+                    picture: 'http://assets.campuslively.com/img/fb_logo.png',
                     link: $scope.eventUrl,
                     description: $scope.event.description
                 }, null);
@@ -45,7 +45,7 @@ define(['../index'], function (controllers) {
                     method: 'send',
                     display: 'popup',
                     name: $scope.event.title,
-                    picture: 'http://campuslively.s3.amazonaws.com/assets/img/fb_logo.png',
+                    picture: 'http://assets.campuslively.com/img/fb_logo.png',
                     link: $scope.eventUrl,
                     description: $scope.event.description
                 }, null);
@@ -58,7 +58,7 @@ define(['../index'], function (controllers) {
                 left = (screen.width/2)-(width/2),
                 top = (screen.height/2)-(height/2),
                 url = 'https://twitter.com/share?url=http://www.campuslively.com/event/' + $scope.event._id + '&text=' + $scope.event.title + ' - &hashtags=campuslively';
-            
+
             window.open(url, 'Tweet Event', 'toolbar=no, location=yes, status=no, menubar=no, scrollbars=yes, resizable=yes, width='+width+', height='+height+', top='+top+', left='+left);
         };
 

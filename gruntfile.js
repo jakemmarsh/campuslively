@@ -97,7 +97,7 @@ module.exports = function(grunt) {
                 sync: [
                     {
                         src: './app/js/main.min.js',
-                        dest: 'assets/js/main.min.js',
+                        dest: 'js/main.min.js',
                         options: {
                             gzip: true,
                             verify: true
@@ -105,7 +105,7 @@ module.exports = function(grunt) {
                     },
                     {
                         src: './app/css/*.css',
-                        dest: 'assets/css',
+                        dest: 'css',
                         options: {
                             gzip: true,
                             verify: true
@@ -113,7 +113,7 @@ module.exports = function(grunt) {
                     },
                     {
                         src: './app/img/**/*.{png,jpg,gif}',
-                        dest: 'assets/img',
+                        dest: 'img',
                         options: { verify: true }
                     }
                 ]

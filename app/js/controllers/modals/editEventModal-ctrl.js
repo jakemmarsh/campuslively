@@ -156,7 +156,7 @@ define(['../index'], function (controllers) {
                         return (i < 0) ? '' : filename.substr(i);
                     };
 
-                    $scope.newEvent.pictureUrl = 'https://s3.amazonaws.com/campuslively/event_imgs/' + $scope.event._id + getExtension($scope.newImage.image.file.name);
+                    $scope.newEvent.pictureUrl = 'http://assets.campuslively.com/event_imgs/' + $scope.event._id + getExtension($scope.newImage.image.file.name);
 
                     // add picture URL to event
                     eventService.updateEvent($scope.event._id, $scope.newEvent).then(function() {

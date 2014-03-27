@@ -230,7 +230,7 @@ define(['./index'], function (controllers) {
                             return (i < 0) ? '' : filename.substr(i);
                         },
                         updateParams = {
-                            pictureUrl: 'https://s3.amazonaws.com/campuslively/event_imgs/' + postedEvent._id + getExtension($scope.eventImage.file.name)
+                            pictureUrl: 'http://assets.campuslively.com/event_imgs/' + postedEvent._id + getExtension($scope.eventImage.file.name)
                         };
                         // create corresponding Facebook open graph object
                         eventService.createFacebookObject(postedEvent).then(function (response) {

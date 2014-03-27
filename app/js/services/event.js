@@ -208,7 +208,7 @@ define(['./index'], function (services) {
                 object.image = event.pictureUrl;
             }
             else {
-                object.image = 'http://campuslively.s3.amazonaws.com/assets/img/fb_logo.png';
+                object.image = 'http://assets.campuslively.com/img/fb_logo.png';
             }
 
             object = JSON.stringify(object);

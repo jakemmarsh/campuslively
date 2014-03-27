@@ -18,16 +18,16 @@ var userSchema = new mongoose.Schema({
         default: false
     },
     timestamp: {
-        type: Date, 
+        type: Date,
         default: Date.now
     },
-    username: { 
-        type: String, 
-        required: true, 
+    username: {
+        type: String,
+        required: true,
         unique: true
     },
     salt: {
-        type: String, 
+        type: String,
         required: true,
         select: false
     },
@@ -64,7 +64,7 @@ var userSchema = new mongoose.Schema({
     businessPictureUrls: [String],
     address: String,
     loc: {
-      type: { type: String }, 
+      type: { type: String },
       coordinates: [Number]
     },
     website: {
@@ -73,7 +73,7 @@ var userSchema = new mongoose.Schema({
     },
     pictureUrl: {
         type: String,
-        default: 'http://s3.amazonaws.com/campuslively/user_imgs/default.png'
+        default: 'http://assets.campuslively.com/user_imgs/default.png'
     },
     subscriptions: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
     attending: [{type: mongoose.Schema.ObjectId, ref: 'Event'}],

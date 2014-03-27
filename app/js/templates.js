@@ -13,7 +13,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "<div class=\"container soft-half--ends\">\n" +
     "\t<div class=\"line soft--bottom\">\n" +
     "\t\t<div class=\"unit one-sixth soft-half--right\">\n" +
-    "\t\t\t<a href=\"/profile/jakemmarsh\"><div class=\"user-img-about\" style=\"background-image:url('http://s3.amazonaws.com/campuslively/assets/img/jake.jpg')\"></div></a>\n" +
+    "\t\t\t<a href=\"/profile/jakemmarsh\"><div class=\"user-img-about\" style=\"background-image:url('http://assets.campuslively.com/img/jake.jpg')\"></div></a>\n" +
     "\t\t</div>\n" +
     "\t\t<div class=\"unit five-sixths last-unit\">\n" +
     "\t\t\t<a href=\"/profile/jakemmarsh\" class=\"blue\"><h2 class=\"flush normal-lh\">Jake Marsh</h2></a>\n" +
@@ -27,7 +27,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t<hr />\n" +
     "\t<div class=\"line soft--top\">\n" +
     "\t\t<div class=\"unit one-sixth soft-half--right\">\n" +
-    "\t\t\t<a href=\"/profile/mslick32\"><div class=\"user-img-about\" style=\"background-image: url('http://s3.amazonaws.com/campuslively/assets/img/matt.jpg')\"></div></a>\n" +
+    "\t\t\t<a href=\"/profile/mslick32\"><div class=\"user-img-about\" style=\"background-image: url('http://assets.campuslively.com/img/matt.jpg')\"></div></a>\n" +
     "\t\t</div>\n" +
     "\t\t<div class=\"unit five-sixths last-unit\">\n" +
     "\t\t\t<a href=\"/profile/slickm32\" class=\"blue\"><h2 class=\"flush normal-lh\">Matt Sliwkowski</h2></a>\n" +
@@ -1108,7 +1108,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t<div class=\"inside_container\">\n" +
     "\t\t\t<div class=\"section group\">\n" +
     "\t\t\t\t<div class=\"col span_12_of_12 flush--ends text-center\">\n" +
-    "\t\t\t\t\t<img src=\"https://s3.amazonaws.com/campuslively/assets/img/logo.png\" alt=\"Campuslively logo\" id=\"logo\" />\n" +
+    "\t\t\t\t\t<img src=\"http://assets.campuslively.com/img/logo.png\" alt=\"Campuslively logo\" id=\"logo\" />\n" +
     "\t\t\t\t</div>\n" +
     "\t\t\t</div>\n" +
     "\t\t\t<div class=\"section group\">\n" +
@@ -1142,11 +1142,11 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t\t<div class=\"col span_3_of_12\">\n" +
     "\t\t\t</div>\n" +
     "\t\t\t<div class=\"col span_3_of_12\">\n" +
-    "\t\t\t\t<div class=\"school-img center-block\" style=\"background-image: url('https://s3.amazonaws.com/campuslively/assets/img/bu.png')\"></div>\n" +
+    "\t\t\t\t<div class=\"school-img center-block\" style=\"background-image: url('http://assets.campuslively.com/img/bu.png')\"></div>\n" +
     "\t\t\t\t<h3 class=\"text-center muted\">Boston University</h3>\n" +
     "\t\t\t</div>\n" +
     "\t\t\t<div class=\"col span_3_of_12\">\n" +
-    "\t\t\t\t<div class=\"school-img center-block\" style=\"background-image: url('https://s3.amazonaws.com/campuslively/assets/img/umaine.png')\"></div>\n" +
+    "\t\t\t\t<div class=\"school-img center-block\" style=\"background-image: url('http://assets.campuslively.com/img/umaine.png')\"></div>\n" +
     "\t\t\t\t<h3 class=\"text-center muted\">University of Maine</h3>\n" +
     "\t\t\t</div>\n" +
     "\t\t\t<div class=\"col span_3_of_12\">\n" +
@@ -1165,7 +1165,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t</div>\n" +
     "\t</div>\n" +
     "</section>\n" +
-    "<section class=\"light_section soft--ends\" ng-show=\"currentView == 'student'\" style=\"background-image: url('http://campuslively.s3.amazonaws.com/assets/img/students.png');\">\n" +
+    "<section class=\"light_section soft--ends\" ng-show=\"currentView == 'student'\" style=\"background-image: url('http://assets.campuslively.com/img/students.png');\">\n" +
     "\t<div class=\"inside_container\">\n" +
     "\t\t<div class=\"section group soft--ends\">\n" +
     "\t\t\t<div class=\"col span_4_of_12 index_item\">\n" +
@@ -1197,7 +1197,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t</div>\n" +
     "\t</div>\n" +
     "</section>\n" +
-    "<section class=\"light_section soft--ends\" ng-show=\"currentView == 'group'\" style=\"background-image: url('http://campuslively.s3.amazonaws.com/assets/img/marching_band.png');\">\n" +
+    "<section class=\"light_section soft--ends\" ng-show=\"currentView == 'group'\" style=\"background-image: url('http://assets.campuslively.com/img/marching_band.png');\">\n" +
     "\t<div class=\"inside_container\">\n" +
     "\t\t<div class=\"section group soft--ends\">\n" +
     "\t\t\t<div class=\"col span_4_of_12 index_item\">\n" +
@@ -1235,7 +1235,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "\t\t\t<div class=\"col span_1_of_12\">\n" +
     "\t\t\t</div>\n" +
     "\t\t\t<div class=\"col span_4_of_12\">\n" +
-    "\t\t\t\t<img src=\"https://s3.amazonaws.com/campuslively/assets/img/phones.png\" alt=\"mobile devices\" class=\"phones\" />\n" +
+    "\t\t\t\t<img src=\"http://assets.campuslively.com/img/phones.png\" alt=\"mobile devices\" class=\"phones\" />\n" +
     "\t\t\t</div>\n" +
     "\t\t\t<div class=\"col span_6_of_12\" id=\"get_mobile\">\n" +
     "\t\t\t\t<h1 id=\"white_header\">Coming soon to your mobile device!</h1>\n" +
@@ -1402,7 +1402,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "<div class=\"table full-width full-height__header\">\n" +
     "\t<div class=\"td vertical-align-middle text-center\">\n" +
     "\t\t<div class=\"box island inline-block text-left top-highlight\" style=\"width: 425px;\">\n" +
-    "\t\t\t<img src=\"https://s3.amazonaws.com/campuslively/assets/img/logo.png\" alt=\"Campuslively logo\" style=\"width: 250px;\" class=\"center-block\" />\n" +
+    "\t\t\t<img src=\"http://assets.campuslively.com/img/logo.png\" alt=\"Campuslively logo\" style=\"width: 250px;\" class=\"center-block\" />\n" +
     "\t\t\t<form name=\"loginForm\" ng-submit=\"login()\" class=\"nudge-half--ends\">\n" +
     "\t\t\t\t<label for=\"username\" class=\"muted\">Username</label>\n" +
     "\t\t\t\t<div class=\"input-prepend full nudge--bottom\">\n" +
@@ -1641,7 +1641,7 @@ define(['angular', 'app'], function(angular, app) { app.run(['$templateCache', f
     "<div class=\"container soft-half--ends\">\n" +
     "\t<div class=\"table full-width\">\n" +
     "\t\t<div class=\"td one-sixth\">\n" +
-    "\t\t\t<img src=\"http://campuslively.s3.amazonaws.com/assets/img/BU-Master-Logo.png\" class=\"full-width\" />\n" +
+    "\t\t\t<img src=\"http://assets.campuslively.com/img/BU-Master-Logo.png\" class=\"full-width\" />\n" +
     "\t\t</div>\n" +
     "\t\t<div class=\"td five-sixths vertical-align-middle soft--left\">\n" +
     "\t\t\t<a href=\"http://www.bu.edu/entrepreneurship/events/new-venture-competitions/pitch-pizza/\" target=\"_blank\"><h2 class=\"flush \">2014 Spring Pitch Pizza Competition Winners</h2></a>\n" +
