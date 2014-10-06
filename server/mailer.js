@@ -392,7 +392,7 @@ exports.sendContactEmail = function(req, res) {
         var deferred = Q.defer(),
             mailOptions = {
                 from: "Campuslively <jake@campuslively.com>",
-                to: "jake@campuslively.com, matt@campuslively.com",
+                to: "jakemmarsh@gmail.com, msliwk@yahoo.com",
                 html: '<strong>Message:</strong> ' + message.body + '<br /><br />'
                       + '<strong>Reply Email:</strong> ' + message.replyAddress
             };
