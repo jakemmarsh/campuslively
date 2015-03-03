@@ -4,10 +4,10 @@ var path       = require('path'),
     app        = express(),
     mongoose   = require('mongoose'),
     routes     = require(path.join(__dirname, 'routes')),
-    config     = require('./config'),
-    mailer     = require('./mailer');
+    mailer     = require('./mailer'),
+    dbString   = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@keamy.mongohq.com:10032/'+process.env.DB_NAME;
 
-mongoose.connect(config.db.dbString);
+mongoose.connect(dbString);
 
 mongoose.set('debug', true);
 
@@ -52,7 +52,7 @@ app.configure(function() {
             mongoose_connection: mongoose.connections[0],
             clear_interval: 3600
         }),
-        secret: config.secret,
+        secret: process.env.SECRET,
         // set cookie's maxAge to only 30 minutes until user logs in
         cookie: {
             maxAge: 1800000

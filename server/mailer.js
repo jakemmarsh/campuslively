@@ -1,11 +1,10 @@
 var Q          = require('q'),
-	config     = require('./config'),
     nodemailer = require('nodemailer');
 
 // set up amazon SES transport for sending emails
 var transport = nodemailer.createTransport("SES", {
-    AWSAccessKeyID: config.aws.key,
-    AWSSecretKey: config.aws.secret
+    AWSAccessKeyID: process.env.AWS_KEY,
+    AWSSecretKey: process.env.AWS_SECRET
 });
 
 exports.sendActivationEmail = function(user) {

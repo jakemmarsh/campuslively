@@ -6,3 +6,4 @@ errors.log
 build
 node_modules
 grunt-aws.json
+.env

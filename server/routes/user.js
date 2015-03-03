@@ -5,14 +5,13 @@ var Q        = require('q'),
     Activity = require('../models/activity'),
     Event    = require('../models/event'),
     Comment  = require('../models/comment'),
-    config   = require('../config'),
     fs       = require('fs'),
     AWS      = require('aws-sdk'),
     s3       = new AWS.S3();
 
 AWS.config.update({
-    accessKeyId: config.aws.key,
-    secretAccessKey: config.aws.secret
+    accessKeyId: process.env.AWS_KEY,
+    secretAccessKey: process.env.AWS_SECRET
 });
 
 /**
@@ -333,14 +332,14 @@ exports.updateUser = function(req, res) {
 
 exports.uploadImage = function(req, res) {
     postToS3 = function(image, userId) {
-        var s3bucket = new AWS.S3({params: {Bucket: config.aws.bucket}}),
+        var s3bucket = new AWS.S3({params: {Bucket: process.env.S3_BUCKET}}),
             deferred = Q.defer(),
             getExtension = function(filename) {
                 var i = filename.lastIndexOf('.');
                 return (i < 0) ? '' : filename.substr(i);
             },
             dataToPost = {
-                Bucket: config.aws.bucket,
+                Bucket: process.env.S3_BUCKET,
                 Key: 'user_imgs/' + userId + getExtension(image.name),
                 ACL: 'public-read',
                 ContentType: image.type

@@ -1,17 +1,16 @@
-var Q          = require('q'),
-    User       = require('../models/user'),
-    Activity   = require('../models/activity'),
-    Event      = require('../models/event'),
-    Comment    = require('../models/comment'),
-    Invite     = require('../models/invite'),
-    config   = require('../config'),
+var Q        = require('q'),
+    User     = require('../models/user'),
+    Activity = require('../models/activity'),
+    Event    = require('../models/event'),
+    Comment  = require('../models/comment'),
+    Invite   = require('../models/invite'),
     fs       = require('fs'),
     AWS      = require('aws-sdk'),
     s3       = new AWS.S3();
 
 AWS.config.update({
-    accessKeyId: config.aws.key,
-    secretAccessKey: config.aws.secret
+    accessKeyId: process.env.AWS_KEY,
+    secretAccessKey: process.env.AWS_SECRET
 });
 
 var eventPopulateObj = [
@@ -731,14 +730,14 @@ exports.postEvent = function(req, res) {
 
 exports.uploadImage = function(req, res) {
     var postToS3 = function(image, eventId) {
-        var s3bucket = new AWS.S3({params: {Bucket: config.aws.bucket}}),
+        var s3bucket = new AWS.S3({params: {Bucket: process.env.S3_BUCKET}}),
             deferred = Q.defer(),
             getExtension = function(filename) {
                 var i = filename.lastIndexOf('.');
                 return (i < 0) ? '' : filename.substr(i);
             },
             dataToPost = {
-                Bucket: config.aws.bucket,
+                Bucket: process.env.S3_BUCKET,
                 Key: 'event_imgs/' + eventId + getExtension(image.name),
                 ACL: 'public-read',
                 ContentType: image.type
@@ -786,9 +785,9 @@ exports.updateEvent = function(req, res) {
     },
     deleteImage = function(imageUrl) {
         var deferred = Q.defer(),
-            s3bucket = new AWS.S3({params: {Bucket: config.aws.bucket}}),
+            s3bucket = new AWS.S3({params: {Bucket: process.env.S3_BUCKET}}),
             dataToPost = {
-                Bucket: config.aws.bucket,
+                Bucket: process.env.S3_BUCKET,
                 Key: imageUrl.substring(38)
             };
 
@@ -1166,11 +1165,11 @@ exports.deleteEvent = function(req, res) {
     },
     deleteImage = function(event) {
         var deferred = Q.defer(),
-            s3bucket = new AWS.S3({params: {Bucket: config.aws.bucket}});
+            s3bucket = new AWS.S3({params: {Bucket: process.env.S3_BUCKET}});
 
         if(event.pictureUrl) {
             var dataToPost = {
-                Bucket: config.aws.bucket,
+                Bucket: process.env.S3_BUCKET,
                 Key: event.pictureUrl.substring(38)
             };
 
